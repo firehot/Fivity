@@ -7,8 +7,9 @@
 //
 
 #import "ActivityHomeViewController.h"
-#import "ChooseLocationViewController.h"
-#import "ChooseActivityViewController.h"
+#import "GroupPageViewController.h"
+
+#define kGroupCreateMax     2
 
 @interface ActivityHomeViewController ()
 
@@ -16,9 +17,10 @@
 
 @implementation ActivityHomeViewController
 
-#pragma mark - IBAction's 
 @synthesize chooseActivityButton;
 @synthesize chooseLocationButton;
+
+#pragma mark - IBAction's 
 
 - (IBAction)chooseActivity:(id)sender {
 	ChooseActivityViewController *activity = [[ChooseActivityViewController alloc] initWithNibName:@"ChooseActivityViewController" bundle:nil];
@@ -32,14 +34,37 @@
 	[self.navigationController pushViewController:location animated:YES];
 }
 
+#pragma mark - Helper Methods
+
+- (void)attemptCreateGroup {
+    
+    //TODO: Query to make sure they havent created more than 2 groups today
+    //TODO: Create query to create the group 
+    
+    //If both have been selected present the group
+	if (hasPickedActivity && hasPickedLocation) {
+		GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity];
+        [self.navigationController popViewControllerAnimated:NO];
+        [self.navigationController pushViewController:group animated:YES];
+        
+        //Reset GUI and vars 
+        [chooseActivityButton setEnabled:YES];
+        [chooseLocationButton setEnabled:YES];
+        selectedPlace = nil;
+        selectedActivity = nil;
+        hasPickedActivity = NO;
+        hasPickedLocation = NO;
+	}
+}
+
 #pragma mark - ChooseActivityViewController Delegate
 
 - (void)userPickedActivity:(NSString *)activityName {
 	hasPickedActivity = YES;
 	[chooseActivityButton setEnabled:NO];
-	if (hasPickedActivity && hasPickedLocation) {
-		
-	}
+    selectedActivity = activityName;
+    NSLog(@"%@", selectedActivity);
+    [self attemptCreateGroup];
 }
 
 #pragma mark - ChoosLocationViewController Delegate
@@ -47,9 +72,8 @@
 - (void)userPickedLocation:(GooglePlacesObject *)place {
 	hasPickedLocation = YES;
 	[chooseLocationButton setEnabled:NO];
-	if (hasPickedActivity && hasPickedLocation) {
-		
-	}
+    selectedPlace = place;
+    [self attemptCreateGroup];
 }
 
 #pragma mark - View Lifecycle

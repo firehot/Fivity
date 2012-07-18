@@ -15,6 +15,9 @@
 
 @interface ActivityHomeViewController : UIViewController <ChooseActivityViewControllerDelegate, ChooseLocationViewControllerDelegate> {
 	BOOL hasPickedActivity, hasPickedLocation;
+    
+    GooglePlacesObject *selectedPlace;
+    NSString *selectedActivity;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseActivityButton;

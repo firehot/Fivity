@@ -10,6 +10,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GroupPageViewController : UIViewController
+#import "GooglePlacesObject.h"
+
+@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a;
+
+@property (nonatomic, retain) GooglePlacesObject *place;
+@property (nonatomic, retain) NSString *activity;
+
+@property (weak, nonatomic) IBOutlet UILabel *activityLabel;
+@property (weak, nonatomic) IBOutlet UITableView *proposedTable;
 
 @end

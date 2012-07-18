@@ -203,7 +203,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	NSString *selected = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
+	NSString *selected = [[(ChooseActivityCell *)[tableView cellForRowAtIndexPath:indexPath] titleLabel] text];
 	
 	if ([delegate respondsToSelector:@selector(userPickedActivity:)]) {
 		[delegate userPickedActivity:selected];
