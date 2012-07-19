@@ -130,7 +130,6 @@
 #pragma mark - ChooseLocationCell Delegate 
 
 - (void)openMapForCell:(ChooseLocationCell *)cell {
-	NSLog(@"Pushed");
 	LocationMapViewController *map = [[LocationMapViewController alloc] initWithNibName:@"LocationMapViewController" bundle:nil place:[cell place]];
 	[self.navigationController pushViewController:map animated:YES];
 }

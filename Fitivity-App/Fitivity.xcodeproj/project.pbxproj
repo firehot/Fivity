@@ -37,6 +37,8 @@
 		6C08845A15B1C90A00670936 /* ChooseLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C08845915B1C90A00670936 /* ChooseLocationViewController.m */; };
 		6C08845B15B1CF0900670936 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C08845115B1C62F00670936 /* GTMNSString+URLArguments.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
 		6C08845D15B1D3D300670936 /* ChooseLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */; };
+		6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3E596915B7A447009E2A00 /* SettingsViewController.m */; };
+		6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */; };
 		6C50011B15B6311800029AFD /* ChooseActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50011A15B6311800029AFD /* ChooseActivityCell.m */; };
 		6C50011E15B6315300029AFD /* ChooseActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C50011D15B6315300029AFD /* ChooseActivityCell.xib */; };
 		6C50012315B6369C00029AFD /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50012215B6369C00029AFD /* ProfileCell.m */; };
@@ -242,6 +244,9 @@
 		6C08845815B1C90A00670936 /* ChooseLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseLocationViewController.h; sourceTree = "<group>"; };
 		6C08845915B1C90A00670936 /* ChooseLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseLocationViewController.m; sourceTree = "<group>"; };
 		6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseLocationViewController.xib; sourceTree = "<group>"; };
+		6C3E596815B7A447009E2A00 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		6C3E596915B7A447009E2A00 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Fitivity/SettingsViewController.xib; sourceTree = "<group>"; };
 		6C50011915B6311800029AFD /* ChooseActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityCell.h; sourceTree = "<group>"; };
 		6C50011A15B6311800029AFD /* ChooseActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityCell.m; sourceTree = "<group>"; };
 		6C50011D15B6315300029AFD /* ChooseActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseActivityCell.xib; sourceTree = "<group>"; };
@@ -931,6 +936,8 @@
 				6C50012015B6368900029AFD /* Cells */,
 				6CDCD5B815B1AE9700986AA2 /* UserProfileViewController.h */,
 				6CDCD5B915B1AE9700986AA2 /* UserProfileViewController.m */,
+				6C3E596815B7A447009E2A00 /* SettingsViewController.h */,
+				6C3E596915B7A447009E2A00 /* SettingsViewController.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -940,6 +947,7 @@
 			children = (
 				6C50011F15B6368500029AFD /* Cells */,
 				6CDCD5BA15B1AE9700986AA2 /* UserProfileViewController.xib */,
+				6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1139,6 +1147,7 @@
 				6C50015015B637CC00029AFD /* UserSettingsYesButtonNormalSelectedPushed.png in Resources */,
 				6C50015115B637CC00029AFD /* UserSettingsYesButtonNormalSelectedPushed@2.png in Resources */,
 				6C50015315B637F500029AFD /* LighterBlueBackplateTexture.png in Resources */,
+				6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1191,6 +1200,7 @@
 				575AECA415B6051200324958 /* GroupPageViewController.m in Sources */,
 				6C50011B15B6311800029AFD /* ChooseActivityCell.m in Sources */,
 				6C50012315B6369C00029AFD /* ProfileCell.m in Sources */,
+				6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

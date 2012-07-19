@@ -97,6 +97,12 @@
 	[self dismissModalViewControllerAnimated:NO];
 }
 
+- (void) presentLoginViewController {
+	LoginViewController *login = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+	[self presentModalViewController:login animated:YES];
+	[self performSelector:@selector(leftTabButtonPushed:) withObject:nil afterDelay:1.5]; //delay to prevent changing while animation is happening
+}
+
 - (void)unselectAllTabs {
 	[_leftTabButton setImage:[UIImage imageNamed:@"ApplicationFeedTabNormal.png"] forState:UIControlStateNormal];
 	[_centerTabButton setImage:[UIImage imageNamed:@"ApplicationActivityTabNormal.png"] forState:UIControlStateNormal];
@@ -162,6 +168,7 @@
         [self login];
     } 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissChildView) name:@"signedIn" object: nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentLoginViewController) name:@"userLoggedOut" object:nil];
 }
 
 -(void)viewWillUnload {

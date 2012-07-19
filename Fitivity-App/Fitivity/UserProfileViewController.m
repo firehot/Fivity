@@ -7,6 +7,7 @@
 //
 
 #import "UserProfileViewController.h"
+#import "SettingsViewController.h"
 #import "ProfileCell.h"
 
 #define kHeaderHeight		40
@@ -22,6 +23,13 @@
 @synthesize groupsTable;
 @synthesize userNameLabel;
 @synthesize userPicture;
+
+#pragma mark - Helper Methods 
+
+- (void) showSettings {
+	SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+	[self.navigationController pushViewController:settings animated:YES];
+}
 
 #pragma mark - UITableViewDelegate 
 
@@ -83,6 +91,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.userProfile = user;
+		
+		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
+		self.navigationItem.rightBarButtonItem = settings;
     }
     return self;
 }
