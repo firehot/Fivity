@@ -10,8 +10,6 @@
 #import "NSError+FITParseUtilities.h"
 #import "GroupPageViewController.h"
 
-#define kGroupCreateMax     2
-
 @interface ActivityHomeViewController ()
 
 @end
@@ -37,6 +35,16 @@
 
 #pragma mark - Helper Methods
 
+- (void)resetState {
+    //Reset GUI and vars 
+    [chooseActivityButton setEnabled:YES];
+    [chooseLocationButton setEnabled:YES];
+    selectedPlace = nil;
+    selectedActivity = nil;
+    hasPickedActivity = NO;
+    hasPickedLocation = NO;
+}
+
 - (void)attemptCreateGroup {
 	
 	if (![[FConfig instance] connected]) {
@@ -44,13 +52,19 @@
 		[alert show];
 		return;
 	}
-	
-    //TODO: Query to make sure they havent created more than 2 groups today
-	//PFQuery *createCountQuery = [[PFQuery alloc] initWithClassName:@"Groups"];
-	
+		
     //If both have been selected present the group
 	if (hasPickedActivity && hasPickedLocation) {
 		
+        // MAKE SURE THIS IS UNCOMMENTED OUT FOR FINAL TESTING!!!
+        /*
+        if (![[FConfig instance] canCreateGroup]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max (2) number of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            [self resetState];
+            return;
+        }*/
+        
 		//Create the group in the database
 		PFObject *group = [PFObject objectWithClassName:@"Groups"];
 		CLLocationCoordinate2D point = [selectedPlace coordinate];
@@ -59,43 +73,15 @@
 		[group setObject:loc forKey:@"location"];
 		[group setObject:[selectedPlace name] forKey:@"place"];
 		[group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			__block NSString *errorMessage = @"An unknown error occured while creating this group.";
+            NSString *errorMessage = @"An unknown error occured while creating this group.";
 			
 			if (succeeded) {
-				PFQuery *query = [PFQuery queryWithClassName:@"Groups"];
-				[query whereKey:@"activity" equalTo:selectedActivity];
-				[query whereKey:@"place" equalTo:[selectedPlace name]];
-				[query whereKey:@"location" equalTo:loc];
-				NSArray *usersPosts = [query findObjects];
-				
-				PFObject *retrievedGroup = nil;
-				if ([usersPosts count] > 0) {
-					retrievedGroup = [usersPosts objectAtIndex:0];
-				}
-				
-				if (retrievedGroup) {
-					PFUser *user = [PFUser currentUser];
-					PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
-					[post setObject:user forKey:@"user"];
-					[post setObject:[retrievedGroup objectId] forKey:@"group"];
-					[post setObject:selectedActivity forKey:@"activity"];
-					[post setObject:[selectedPlace name] forKey:@"place"];
-					[post setObject:loc forKey:@"lcation"];
-					[post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-						
-						if (succeeded) {
-							NSLog(@"Created Group");
-						}
-						else {
-							errorMessage = @"Could not associate you with this group.";
-						}
-					}];
-				}
-				else {
-					errorMessage = @"Could not get group ID. You were not added to this group.";
-				}
+				[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
 			}
 			else {
+                if (error) {
+                    errorMessage = [error userFriendlyParseErrorDescription:YES]; //Get a more descriptive error if possible
+                }
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
 			}
@@ -103,16 +89,11 @@
 		
 		//Show the group that was just saved
 		GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity];
-		[self.navigationController popViewControllerAnimated:NO];
+        [groupView setAutoJoin:YES];
+        [self.navigationController popViewControllerAnimated:NO];
 		[self.navigationController pushViewController:groupView animated:YES];
-		
-		//Reset GUI and vars 
-		[chooseActivityButton setEnabled:YES];
-		[chooseLocationButton setEnabled:YES];
-		selectedPlace = nil;
-		selectedActivity = nil;
-		hasPickedActivity = NO;
-		hasPickedLocation = NO;
+        
+        [self resetState];
 	}
 }
 

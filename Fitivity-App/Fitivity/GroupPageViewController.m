@@ -7,6 +7,7 @@
 //
 
 #import "GroupPageViewController.h"
+#import "NSError+FITParseUtilities.h"
 
 @interface GroupPageViewController ()
 
@@ -17,6 +18,68 @@
 @synthesize activityLabel;
 @synthesize proposedTable;
 @synthesize place, activity;
+
+#pragma mark - Helper Methods
+
+- (BOOL)isAutoJoin {
+    return autoJoin;
+}
+
+- (void)setAutoJoin:(BOOL)join {
+    autoJoin = join;
+}
+
+- (void)attemptJoinGroup {
+    
+    if (![[FConfig instance] connected]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to join a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+    }
+    
+    CLLocationCoordinate2D point = [place coordinate];
+    PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Groups"];
+    [query whereKey:@"activity" equalTo:activity];
+    [query whereKey:@"place" equalTo:[place name]];
+    [query whereKey:@"location" equalTo:loc];
+    NSArray *usersPosts = [query findObjects];
+    
+    PFObject *retrievedGroup = nil;
+    if ([usersPosts count] > 0) {
+        retrievedGroup = (PFObject *)[usersPosts objectAtIndex:0];
+    }
+    
+    if (retrievedGroup) {
+        PFUser *user = [PFUser currentUser];
+        PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
+        [post setObject:user forKey:@"user"];
+        [post setObject:[retrievedGroup objectId] forKey:@"group"];
+        [post setObject:activity forKey:@"activity"];
+        [post setObject:[place name] forKey:@"place"];
+        [post setObject:loc forKey:@"lcation"];
+        [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            
+            NSString *errorMessage = @"An unknown error uccoured while joining group.";
+            if (succeeded) {
+                NSLog(@"Created Group");
+            }
+            else {
+                if (error) {
+                    errorMessage = [error userFriendlyParseErrorDescription:YES];
+                }
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+            }
+        }];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:@"Error loading group metadata. You were not joined." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+
+}
 
 #pragma mark - UITableViewDelegate 
 
@@ -62,6 +125,14 @@
         [self.navigationItem setTitle:[self.place name]];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    if (autoJoin) {
+        //Join the user to the group
+        [self attemptJoinGroup];
+    }
 }
 
 - (void)viewDidLoad {

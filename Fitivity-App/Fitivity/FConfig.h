@@ -10,7 +10,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FConfig : NSObject
+@interface FConfig : NSObject {
+    NSMutableDictionary *groupCreationRecords;
+}
 
 // Get the singleton instance
 + (FConfig *)instance;
@@ -18,11 +20,14 @@
 // Determine if the device has an internet connection
 - (BOOL)connected;
 - (BOOL)shouldLogIn;
+- (BOOL)canCreateGroup;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
 - (NSString *)getFacebookAppID;
 - (NSString *)getGoogleAnalyticsID;
 - (NSString *)getGooglePlacesAPIKey;
+
+- (void)incrementGroupCreationForDate:(NSDate *)date;
 
 @end

@@ -31,10 +31,8 @@
 
 //Make sure that the user information entered is valid
 - (BOOL)inputIsValid {
-	NSString *emailText = self.emailField.text;
 	__block BOOL emailValid = [emailExpression stringIsConformant:self.emailField.text];
-	
-	__block BOOL userValid = [userNameExpression stringIsConformant:self.userNameField.text];
+    __block BOOL userValid = [userNameExpression stringIsConformant:self.userNameField.text];
 	
 	NSString *password1Text = self.passwordField.text;
 	NSString *password2Text = self.reenterPasswordField.text;

@@ -9,12 +9,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 #import "GooglePlacesObject.h"
 
-@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    BOOL autoJoin;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a;
+
+- (BOOL)isAutoJoin;
+- (void)setAutoJoin:(BOOL)join;
 
 @property (nonatomic, retain) GooglePlacesObject *place;
 @property (nonatomic, retain) NSString *activity;
