@@ -7,6 +7,7 @@
 //
 
 #import "GroupPageViewController.h"
+#import "LocationMapViewController.h"
 #import "NSError+FITParseUtilities.h"
 
 @interface GroupPageViewController ()
@@ -18,6 +19,21 @@
 @synthesize activityLabel;
 @synthesize proposedTable;
 @synthesize place, activity;
+
+#pragma mark - IBAction's
+
+- (IBAction)showGroupMap:(id)sender {
+	LocationMapViewController *mapView = [[LocationMapViewController alloc] initWithNibName:@"LocationMapViewController" bundle:nil place:self.place];
+	[self.navigationController pushViewController:mapView animated:YES];
+}
+
+- (IBAction)joinGroup:(id)sender {
+	[self attemptJoinGroup];
+}
+
+- (IBAction)proposeGroupActivity:(id)sender {
+	
+}
 
 #pragma mark - Helper Methods
 
@@ -103,6 +119,7 @@
     }
     return self;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     

@@ -19,6 +19,10 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c;
 
+- (IBAction)showGroupMap:(id)sender;
+- (IBAction)joinGroup:(id)sender;
+- (IBAction)proposeGroupActivity:(id)sender;
+
 - (BOOL)isAutoJoin;
 - (void)setAutoJoin:(BOOL)join;
 

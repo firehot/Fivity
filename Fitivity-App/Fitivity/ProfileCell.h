@@ -12,7 +12,6 @@
 
 @interface ProfileCell : UITableViewCell
 
-//@property (weak, nonatomic) IBOutlet UIImageView *newActivityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 

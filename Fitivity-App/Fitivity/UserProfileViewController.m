@@ -178,7 +178,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.userProfile = user;
-		self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 		
 		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
 		self.navigationItem.rightBarButtonItem = settings;
@@ -202,9 +201,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]];
 	
-	//If there is no user yet, and it is the users profile set it up with the current user
+	//If there is no user yet (hasn't logged in yet), and it is the users profile set it up with the current user
 	if (mainUser && userProfile == nil) {
 		[self.userNameLabel setText:[[PFUser currentUser] username]];
 		if (linkedWithFacebook) {

@@ -39,6 +39,11 @@
 		6C08845D15B1D3D300670936 /* ChooseLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */; };
 		6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3E596915B7A447009E2A00 /* SettingsViewController.m */; };
 		6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */; };
+		6C42C4F115B9F79C00ACB549 /* GroupMapButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4EF15B9F79C00ACB549 /* GroupMapButton.png */; };
+		6C42C4F215B9F79C00ACB549 /* GroupMembersButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */; };
+		6C42C4F515B9F81B00ACB549 /* GroupProposeActivity.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F415B9F81B00ACB549 /* GroupProposeActivity.png */; };
+		6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */; };
+		6C42C4F915B9F86100ACB549 /* GroupJoinGroupButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */; };
 		6C50011B15B6311800029AFD /* ChooseActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50011A15B6311800029AFD /* ChooseActivityCell.m */; };
 		6C50011E15B6315300029AFD /* ChooseActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C50011D15B6315300029AFD /* ChooseActivityCell.xib */; };
 		6C50012315B6369C00029AFD /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50012215B6369C00029AFD /* ProfileCell.m */; };
@@ -249,6 +254,11 @@
 		6C3E596815B7A447009E2A00 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6C3E596915B7A447009E2A00 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Fitivity/SettingsViewController.xib; sourceTree = "<group>"; };
+		6C42C4EF15B9F79C00ACB549 /* GroupMapButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupMapButton.png; sourceTree = "<group>"; };
+		6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupMembersButton.png; sourceTree = "<group>"; };
+		6C42C4F415B9F81B00ACB549 /* GroupProposeActivity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupProposeActivity.png; sourceTree = "<group>"; };
+		6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupChallengeButton.png; sourceTree = "<group>"; };
+		6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupJoinGroupButton.png; sourceTree = "<group>"; };
 		6C50011915B6311800029AFD /* ChooseActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityCell.h; sourceTree = "<group>"; };
 		6C50011A15B6311800029AFD /* ChooseActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityCell.m; sourceTree = "<group>"; };
 		6C50011D15B6315300029AFD /* ChooseActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseActivityCell.xib; sourceTree = "<group>"; };
@@ -836,6 +846,11 @@
 		6CC7FB1815AFB67600D21AA9 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				6C42C4EF15B9F79C00ACB549 /* GroupMapButton.png */,
+				6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */,
+				6C42C4F415B9F81B00ACB549 /* GroupProposeActivity.png */,
+				6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */,
+				6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */,
 				6C50013215B637C900029AFD /* UserSettingsNoButtonNormal.png */,
 				6C50013315B637C900029AFD /* UserSettingsNoButtonNormal@2.png */,
 				6C50013415B637C900029AFD /* UserSettingsNoButtonNormalPushed.png */,
@@ -1157,6 +1172,11 @@
 				6C50015315B637F500029AFD /* LighterBlueBackplateTexture.png in Resources */,
 				6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */,
 				6C91D3A415B8EA080074E7D6 /* SettingsCell.xib in Resources */,
+				6C42C4F115B9F79C00ACB549 /* GroupMapButton.png in Resources */,
+				6C42C4F215B9F79C00ACB549 /* GroupMembersButton.png in Resources */,
+				6C42C4F515B9F81B00ACB549 /* GroupProposeActivity.png in Resources */,
+				6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */,
+				6C42C4F915B9F86100ACB549 /* GroupJoinGroupButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
