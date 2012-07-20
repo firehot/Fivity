@@ -38,47 +38,23 @@
     }
     
     CLLocationCoordinate2D point = [place coordinate];
-    PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Groups"];
-    [query whereKey:@"activity" equalTo:activity];
-    [query whereKey:@"place" equalTo:[place name]];
-    [query whereKey:@"location" equalTo:loc];
-    NSArray *usersPosts = [query findObjects];
-    
-    PFObject *retrievedGroup = nil;
-    if ([usersPosts count] > 0) {
-        retrievedGroup = (PFObject *)[usersPosts objectAtIndex:0];
-    }
-    
-    if (retrievedGroup) {
-        PFUser *user = [PFUser currentUser];
-        PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
-        [post setObject:user forKey:@"user"];
-        [post setObject:[retrievedGroup objectId] forKey:@"group"];
-        [post setObject:activity forKey:@"activity"];
-        [post setObject:[place name] forKey:@"place"];
-        [post setObject:loc forKey:@"lcation"];
-        [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            
-            NSString *errorMessage = @"An unknown error uccoured while joining group.";
-            if (succeeded) {
-                NSLog(@"Created Group");
-            }
-            else {
-                if (error) {
-                    errorMessage = [error userFriendlyParseErrorDescription:YES];
-                }
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
-            }
-        }];
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:@"Error loading group metadata. You were not joined." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }
-
+	PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+	
+	PFUser *user = [PFUser currentUser];
+	PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
+	[post setObject:user forKey:@"user"];
+	[post setObject:activity forKey:@"activity"];
+	[post setObject:[place name] forKey:@"place"];
+	[post setObject:loc forKey:@"location"];
+	[post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		
+		NSString *errorMessage = @"An unknown error uccoured while joining group.";
+		if (error) {
+			errorMessage = [error userFriendlyParseErrorDescription:YES];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+		}
+	}];
 }
 
 #pragma mark - UITableViewDelegate 
@@ -116,11 +92,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.place = p;
         self.activity = a;
+		hasChallenge = c;
         
         [self.navigationItem setTitle:[self.place name]];
     }

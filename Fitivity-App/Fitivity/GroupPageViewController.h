@@ -14,10 +14,10 @@
 #import "GooglePlacesObject.h"
 
 @interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    BOOL autoJoin;
+    BOOL autoJoin, hasChallenge;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c;
 
 - (BOOL)isAutoJoin;
 - (void)setAutoJoin:(BOOL)join;

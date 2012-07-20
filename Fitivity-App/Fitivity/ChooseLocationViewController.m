@@ -285,26 +285,22 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+		[self.refreshHeaderView setLastRefreshDate:nil];    
+		responseData = [[NSMutableData data] init];
+		[[self locationManager] startUpdatingLocation];
+		
+		[tableView reloadData];
+		[tableView setContentOffset:CGPointZero animated:NO];
+		
+		[searchBar setDelegate:self];
+		
+		googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	[self.refreshHeaderView setLastRefreshDate:nil];    
-    
-    responseData = [[NSMutableData data] init];
-    
-    [[self locationManager] startUpdatingLocation];
-    
-    [tableView reloadData];
-    [tableView setContentOffset:CGPointZero animated:NO];
-    
-    [searchBar setDelegate:self];
-    
-    googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
 }
 
 - (void)viewDidUnload {

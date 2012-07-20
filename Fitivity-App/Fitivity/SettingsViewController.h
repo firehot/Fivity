@@ -14,5 +14,9 @@
 @interface SettingsViewController : UIViewController
 
 - (IBAction)signUserOut:(id)sender;
+- (IBAction)linkUserWithFacebook:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *facebookLinkButton;
+@property (weak, nonatomic) IBOutlet UITableView *accountInfoTable;
 
 @end

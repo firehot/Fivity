@@ -11,8 +11,13 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+#define kHeaderHeight		40
+
+@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PF_FBRequestDelegate> {
 	PFUser *userProfile;
+	
+	NSArray *groupResults;
+	NSMutableData *profilePictureData;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user;

@@ -77,6 +77,7 @@
 			
 			if (succeeded) {
 				[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"createdGroup" object:self];
 			}
 			else {
                 if (error) {
@@ -88,7 +89,7 @@
 		}];
 		
 		//Show the group that was just saved
-		GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity];
+		GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:NO];
         [groupView setAutoJoin:YES];
         [self.navigationController popViewControllerAnimated:NO];
 		[self.navigationController pushViewController:groupView animated:YES];

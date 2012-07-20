@@ -8,9 +8,10 @@
 
 #import "UserProfileViewController.h"
 #import "SettingsViewController.h"
+#import "NSError+FITParseUtilities.h"
+#import "GroupPageViewController.h"
+#import "GooglePlacesObject.h"
 #import "ProfileCell.h"
-
-#define kHeaderHeight		40
 
 @interface UserProfileViewController ()
 
@@ -31,6 +32,76 @@
 	[self.navigationController pushViewController:settings animated:YES];
 }
 
+- (void)attemptGetUserGroups {
+	
+	if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to create a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
+	PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
+	[query addDescendingOrder:@"updatedAt"];
+	[query whereKey:@"user" equalTo:[PFUser currentUser]];
+	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+		NSString *errorMessage = @"An unknown error occured while loading this users groups.";
+		if (error) {
+			errorMessage = [error userFriendlyParseErrorDescription:YES];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+		} 
+		else if ([objects count] > 0) {
+			groupResults = objects;
+			[groupsTable reloadData];
+		}
+	}];
+}
+
+- (void)requestFacebookData { 
+	
+	// Create request for user's facebook data
+    NSString *requestPath = @"me/?fields=name,picture&type=large";
+    
+    // Send request to facebook
+    [[PFFacebookUtils facebook] requestWithGraphPath:requestPath andDelegate:self];
+}
+
+#pragma mark - Facebook Delegate 
+
+-(void)request:(PF_FBRequest *)request didLoad:(id)result {
+    NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
+	
+	self.userNameLabel.text = [userData objectForKey:@"name"];
+	
+	profilePictureData = [[NSMutableData alloc] init];
+	NSString *picURL = [(NSDictionary *)[(NSDictionary *)[userData objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:picURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+	
+	[NSURLConnection connectionWithRequest:urlRequest delegate:self];
+}
+
+#pragma mark - NSURLConnectioin Delegate 
+
+// Called every time a chunk of the data is received
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [profilePictureData appendData:data]; // Build the image
+}
+
+// Called when the entire image is finished downloading
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Set the image in the header imageView
+    [self.userPicture setImage:[UIImage imageWithData:profilePictureData]];
+	
+	//Upload to parse for future use
+	PFFile *imageFile = [PFFile fileWithData:profilePictureData];
+	[imageFile save];
+	
+	PFUser *user = [PFUser currentUser];
+	[user setObject:imageFile forKey:@"image"];
+	[user save];
+	
+}
+
 #pragma mark - UITableViewDelegate 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -43,12 +114,17 @@
 		cell = [nib objectAtIndex:0];
     }
 	
+	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
+	
+	cell.locationLabel.text = [currentGroup objectForKey:@"place"];
+	cell.activityLabel.text = [currentGroup objectForKey:@"activity"];
+	
     return cell;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;//CHANGE TO DYNAMIC VALUE OF # OF GROUPS USER IN
+    return [groupResults count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -59,6 +135,9 @@
 	return 80;
 }
 
+/**
+ *	Since this header is so basic no need for a .xib file
+ */
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	
 	if (section == 0) {
@@ -81,7 +160,15 @@
 #pragma mark - UITableViewDataSource 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    //Get the group and present it
+	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
+	PFGeoPoint *point = [currentGroup objectForKey:@"location"];
+	
+	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[currentGroup objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
+	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:NO];
+	
+	[self.navigationController pushViewController:group animated:YES];
+	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -91,24 +178,49 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.userProfile = user;
+		self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 		
 		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
 		self.navigationItem.rightBarButtonItem = settings;
+		
+		//Make sure that the user exists first (for first launch)
+		if ([PFUser currentUser]) {
+			[self attemptGetUserGroups];
+		}
+		
+		if (userProfile && [PFFacebookUtils isLinkedWithUser:userProfile]) {
+			//Load FB name and Pic
+			[self requestFacebookData];
+		}
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"createdGroup" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-    
+	
+	BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]];
+	
 	//If there is no user yet, and it is the users profile set it up with the current user
 	if (mainUser && userProfile == nil) {
 		[self.userNameLabel setText:[[PFUser currentUser] username]];
+		if (linkedWithFacebook) {
+			[self requestFacebookData];
+		}
 	}
 	else {
-		[self.userNameLabel setText:[userProfile username]];
+		//We are going to use the facebook profile picture otherwise
+		if (!linkedWithFacebook) {
+			[self.userNameLabel setText:[userProfile username]];
+		}
+	}
+	
+	//If the results didn't load at init, try to reload them.
+	if (!groupResults) {
+		[self attemptGetUserGroups];
 	}
     
 }
@@ -117,9 +229,9 @@
 	[self setUserPicture:nil];
 	[self setUserNameLabel:nil];
 	[self setGroupsTable:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
