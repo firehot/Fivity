@@ -9,8 +9,10 @@
 #import "SettingsCell.h"
 
 @implementation SettingsCell
+
 @synthesize categoryLabel;
 @synthesize informationLabel;
+@synthesize pictureView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

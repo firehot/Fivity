@@ -16,7 +16,7 @@
 #define kPasswordIndex		2
 #define kProfilePicIndex	3
 
-#define kNumberOfRows		5
+#define kNumberOfRows		4
 
 @interface SettingsViewController ()
 
@@ -26,6 +26,7 @@
 
 @synthesize facebookLinkButton;
 @synthesize accountInfoTable;
+@synthesize footerView;
 
 #pragma mark - IBAction's 
 
@@ -91,17 +92,34 @@
 		case kEmailIndex:
 			[cell.categoryLabel setText:@"E-mail:"];
 			[cell.informationLabel setText:[user objectForKey:@"email"]];
+            [cell.pictureView setHidden:YES];
 			break;
 		case kPasswordIndex:
 			[cell.categoryLabel setText:@"Password:"];
-			[cell.informationLabel setText:[user objectForKey:@"password"]];
+			[cell.informationLabel setText:@"********"]; //Don't show a users password in plain text
+            [cell.pictureView setHidden:YES];
 			break;
 		case kUserNameIndex:
 			[cell.categoryLabel setText:@"Username:"];
 			[cell.informationLabel setText:[user objectForKey:@"username"]];
+            [cell.pictureView setHidden:YES];
 			break;
-		case kProfilePicIndex:
+		case kProfilePicIndex: {
+            [cell.pictureView setHidden:NO];
+            [cell.categoryLabel setHidden:YES];
+            PFFile *image = [[PFUser currentUser] objectForKey:@"Image"];
+            NSData *picData = [image getData];
+            
+            if (!picData) {
+                [cell.pictureView setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
+            }
+            else {
+                [cell.pictureView setImage:[UIImage imageWithData:picData]];
+            }
+            
+            [cell.informationLabel setText:@"Tap to change picture"];
 			break;
+        }
 		default:
 			break;
 	}
@@ -120,6 +138,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	return 55;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 115;
 }
 
 /**
@@ -144,10 +166,14 @@
 	return nil;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return footerView;
+}
+
 #pragma mark - UITableViewDataSource 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
+	NSLog(@"Tapped");
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -157,6 +183,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+        self.footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     }
     return self;
 }
@@ -170,6 +197,7 @@
 - (void)viewDidUnload {
 	[self setFacebookLinkButton:nil];
 	[self setAccountInfoTable:nil];
+    [self setFooterView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
