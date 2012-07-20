@@ -44,6 +44,7 @@
 		6C42C4F515B9F81B00ACB549 /* GroupProposeActivity.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F415B9F81B00ACB549 /* GroupProposeActivity.png */; };
 		6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */; };
 		6C42C4F915B9F86100ACB549 /* GroupJoinGroupButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */; };
+		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
 		6C50011B15B6311800029AFD /* ChooseActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50011A15B6311800029AFD /* ChooseActivityCell.m */; };
 		6C50011E15B6315300029AFD /* ChooseActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C50011D15B6315300029AFD /* ChooseActivityCell.xib */; };
 		6C50012315B6369C00029AFD /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50012215B6369C00029AFD /* ProfileCell.m */; };
@@ -259,6 +260,8 @@
 		6C42C4F415B9F81B00ACB549 /* GroupProposeActivity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupProposeActivity.png; sourceTree = "<group>"; };
 		6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupChallengeButton.png; sourceTree = "<group>"; };
 		6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupJoinGroupButton.png; sourceTree = "<group>"; };
+		6C42C50615BA196900ACB549 /* NDArtworkPopout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDArtworkPopout.h; sourceTree = "<group>"; };
+		6C42C50715BA196900ACB549 /* NDArtworkPopout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDArtworkPopout.m; sourceTree = "<group>"; };
 		6C50011915B6311800029AFD /* ChooseActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityCell.h; sourceTree = "<group>"; };
 		6C50011A15B6311800029AFD /* ChooseActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityCell.m; sourceTree = "<group>"; };
 		6C50011D15B6315300029AFD /* ChooseActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseActivityCell.xib; sourceTree = "<group>"; };
@@ -562,6 +565,15 @@
 				6C08845115B1C62F00670936 /* GTMNSString+URLArguments.m */,
 			);
 			name = GTM;
+			sourceTree = "<group>";
+		};
+		6C42C50515BA196100ACB549 /* Helper Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6C42C50615BA196900ACB549 /* NDArtworkPopout.h */,
+				6C42C50715BA196900ACB549 /* NDArtworkPopout.m */,
+			);
+			name = "Helper Classes";
 			sourceTree = "<group>";
 		};
 		6C50011F15B6368500029AFD /* Cells */ = {
@@ -956,6 +968,7 @@
 		6CDCD5AF15B1ADA500986AA2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				6C42C50515BA196100ACB549 /* Helper Classes */,
 				6C50012015B6368900029AFD /* Cells */,
 				6CDCD5B815B1AE9700986AA2 /* UserProfileViewController.h */,
 				6CDCD5B915B1AE9700986AA2 /* UserProfileViewController.m */,
@@ -1193,6 +1206,7 @@
 				6C08843E15B1C5A500670936 /* SBJsonParser.m in Sources */,
 				6C08843F15B1C5A700670936 /* SBJsonStreamParser.m in Sources */,
 				6C08844015B1C5AD00670936 /* SBJsonStreamParserAccumulator.m in Sources */,
+				6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */,
 				6C08844115B1C5AF00670936 /* SBJsonStreamParserAdapter.m in Sources */,
 				6C08844215B1C5B300670936 /* SBJsonStreamParserState.m in Sources */,
 				6C08844315B1C5B700670936 /* SBJsonStreamWriter.m in Sources */,

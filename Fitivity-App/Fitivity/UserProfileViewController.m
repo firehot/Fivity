@@ -12,6 +12,7 @@
 #import "GroupPageViewController.h"
 #import "GooglePlacesObject.h"
 #import "ProfileCell.h"
+#import "NDArtworkPopout.h"
 
 @interface UserProfileViewController ()
 
@@ -51,10 +52,33 @@
 			[alert show];
 		} 
 		else if ([objects count] > 0) {
-			groupResults = objects;
+			groupResults = [[NSMutableArray alloc] initWithArray:objects];
 			[groupsTable reloadData];
 		}
 	}];
+}
+
+- (void)setCorrectPicture {
+	PFFile *pic = [userProfile objectForKey:@"image"];
+	NSData *picData = [pic getData];
+	
+	if (picData) {
+		[self.userPicture setImage:[UIImage imageWithData:picData]];
+	}
+	else if ([PFFacebookUtils isLinkedWithUser:userProfile]) {
+		[self requestFacebookData];
+	}
+}
+
+- (BOOL)deleteUserFromGroupAtIndex:(NSInteger)index {
+	PFObject *deleteObject = [groupResults objectAtIndex:index];
+	BOOL ret = [deleteObject delete];
+	
+	//Only delete the group from the GUI if the delete was successful 
+	if (ret) {
+		[groupResults removeObjectAtIndex:index];
+	}
+	return ret;
 }
 
 - (void)requestFacebookData { 
@@ -172,6 +196,40 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	//Check to make sure that the table can be edited by the current user
+	if (!mainUser) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Permissions" message:@"You don't have permissions to delete this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+	}
+	else if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You need to be connected to edit your groups." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+	}
+	
+	//Delete the current group from the GUI and remove the entry in the database
+	if (editingStyle == UITableViewCellEditingStyleDelete) {
+		if ([self deleteUserFromGroupAtIndex:indexPath.row]) {
+			[tableView beginUpdates];
+			[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+			[tableView endUpdates];
+		}
+		else {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete Error" message:@"There was an error while deleting this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+		}
+	}  
+}
+
+#pragma mark - IBAction's 
+
+- (IBAction)enlargePicture:(id)sender {
+	PFFile *pic = [userProfile objectForKey:@"image"];
+	NDArtworkPopout *pop = [[NDArtworkPopout alloc] initWithImage:[UIImage imageWithData:[pic getData]]];
+	[pop show];
+}
+
 #pragma mark - View Lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user {
@@ -194,6 +252,7 @@
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"createdGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidLoad) name:@"changedInformation" object:nil];
     }
     return self;
 }
@@ -202,21 +261,16 @@
     [super viewDidLoad];
 	
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-	BOOL linkedWithFacebook = [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]];
 	
 	//If there is no user yet (hasn't logged in yet), and it is the users profile set it up with the current user
 	if (mainUser && userProfile == nil) {
-		[self.userNameLabel setText:[[PFUser currentUser] username]];
-		if (linkedWithFacebook) {
-			[self requestFacebookData];
-		}
+		[self setCorrectPicture];
 	}
 	else {
-		//We are going to use the facebook profile picture otherwise
-		if (!linkedWithFacebook) {
-			[self.userNameLabel setText:[userProfile username]];
-		}
+		[self setCorrectPicture];
 	}
+	
+	[self.userNameLabel setText:[userProfile username]];
 	
 	//If the results didn't load at init, try to reload them.
 	if (!groupResults) {

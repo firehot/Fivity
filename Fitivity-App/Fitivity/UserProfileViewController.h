@@ -16,11 +16,12 @@
 @interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PF_FBRequestDelegate> {
 	PFUser *userProfile;
 	
-	NSArray *groupResults;
+	NSMutableArray *groupResults;
 	NSMutableData *profilePictureData;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user;
+- (IBAction)enlargePicture:(id)sender;
 
 @property (nonatomic, getter = isMainUser) BOOL mainUser;
 
@@ -30,3 +31,4 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userPicture;
 
 @end
+

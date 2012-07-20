@@ -9,9 +9,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <Parse/Parse.h>
 
-@interface SettingsViewController : UIViewController
+@interface SettingsViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> 
 
 - (IBAction)signUserOut:(id)sender;
 - (IBAction)linkUserWithFacebook:(id)sender;

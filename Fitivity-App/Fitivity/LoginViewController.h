@@ -11,7 +11,7 @@
 
 #import "SignUpViewController.h"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate, SignUpViewControllerDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, SignUpViewControllerDelegate>
 
 - (IBAction)signUp:(id)sender;
 - (IBAction)signIn:(id)sender;

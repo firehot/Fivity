@@ -107,7 +107,7 @@
 		case kProfilePicIndex: {
             [cell.pictureView setHidden:NO];
             [cell.categoryLabel setHidden:YES];
-            PFFile *image = [[PFUser currentUser] objectForKey:@"Image"];
+            PFFile *image = [[PFUser currentUser] objectForKey:@"image"];
             NSData *picData = [image getData];
             
             if (!picData) {
@@ -173,8 +173,66 @@
 #pragma mark - UITableViewDataSource 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSLog(@"Tapped");
+	
+	switch (indexPath.row) {
+		case kEmailIndex:
+			break;
+		case kUserNameIndex:
+			break;
+		case kPasswordIndex: {
+			BOOL ret = [PFUser requestPasswordResetForEmail:[[PFUser currentUser] email]];
+			
+			if (ret) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password Reset" message:@"An email has been sent to your email address with instructions on how to reset your password." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+			}
+			else {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Password Reset Error" message:@"You are unable to reset your password at this time. Please try again later." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+			}
+			break;
+		}
+		case kProfilePicIndex: {
+			UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+			picker.allowsEditing = YES;
+			picker.delegate = self;
+			picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+			picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+			[self presentModalViewController:picker animated:YES];
+			break;
+		}
+		default:
+			break;
+	}
+	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIImagePickerController Delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+	
+	//Get the picture, update the GUI and send to server
+	UIImage *choosenPic = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+	PFFile *sendPic = [PFFile fileWithData:UIImagePNGRepresentation(choosenPic)];
+	[sendPic save];
+	
+	//Get the profile picture cell
+	SettingsCell *tempCell = (SettingsCell *)[self.accountInfoTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kProfilePicIndex inSection:0]];
+	[tempCell.pictureView setImage:choosenPic];
+	
+	PFUser *user = [PFUser currentUser];
+	[user setObject:sendPic forKey:@"image"];
+	[user save];
+	
+	//Notify the user profile view that the picture changed
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedInformation" object:self];
+	
+	[picker dismissModalViewControllerAnimated:YES];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+	[picker dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - View Life Cycle
