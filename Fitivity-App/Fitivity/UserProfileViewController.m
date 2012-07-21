@@ -43,7 +43,7 @@
 	
 	PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
 	[query addDescendingOrder:@"updatedAt"];
-	[query whereKey:@"user" equalTo:[PFUser currentUser]];
+	[query whereKey:@"user" equalTo:userProfile];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 		NSString *errorMessage = @"An unknown error occured while loading this users groups.";
 		if (error) {
@@ -195,7 +195,7 @@
 	PFGeoPoint *point = [currentGroup objectForKey:@"location"];
 	
 	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[currentGroup objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
-	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:NO];
+	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:NO autoJoin:NO];
 	
 	[self.navigationController pushViewController:group animated:YES];
 	
@@ -253,7 +253,7 @@
 			[self requestFacebookData];
 		}
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"createdGroup" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidLoad) name:@"changedInformation" object:nil];
     }

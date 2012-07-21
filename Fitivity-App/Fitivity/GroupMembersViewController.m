@@ -37,6 +37,7 @@
 	[query whereKey:@"activity" equalTo:activity];
 	[query whereKey:@"location" nearGeoPoint:point withinMiles:0.5];
 	[query whereKey:@"place" equalTo:[place name]];
+	[query addDescendingOrder:@"username"];
 	[query findObjectsInBackgroundWithBlock: ^(NSArray *objects, NSError *error) {
 		if (error) {
 			NSString *errorMessage = @"An unkown error occured while fetching members.";

@@ -13,18 +13,17 @@
 
 #import "GooglePlacesObject.h"
 
-@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
-    BOOL autoJoin, hasChallenge;
+@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
+    BOOL autoJoin, hasChallenge, alreadyJoined;
+
+	PFObject *group;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c autoJoin:(BOOL)yn;
 
 - (IBAction)showGroupMap:(id)sender;
 - (IBAction)joinGroup:(id)sender;
 - (IBAction)proposeGroupActivity:(id)sender;
-
-- (BOOL)isAutoJoin;
-- (void)setAutoJoin:(BOOL)join;
 
 @property (nonatomic, retain) GooglePlacesObject *place;
 @property (nonatomic, retain) NSString *activity;

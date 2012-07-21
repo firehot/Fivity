@@ -118,6 +118,9 @@
 		[_leftTabButton setImage:[UIImage imageNamed:@"ApplicationFeedTabSelected.png"] forState:UIControlStateNormal];
 		[self showLeftTab];
 	}
+	else {
+		[self.leftNavigationController popToRootViewControllerAnimated:YES];
+	}
 }
 
 -(IBAction)centerTabButtonPushed:(id)sender {
@@ -126,6 +129,9 @@
 		[_centerTabButton setImage:[UIImage imageNamed:@"ApplicationActivityTabSelected.png"] forState:UIControlStateNormal];
 		[self showCenterTab];
 	}
+	else {
+		[self.centerNavigationController popToRootViewControllerAnimated:YES];
+	}
 }
 
 -(IBAction)rightTabButtonPushed:(id)sender {
@@ -133,6 +139,9 @@
 		[self unselectAllTabs];
 		[_rightTabButton setImage:[UIImage imageNamed:@"ApplicationProfileTabSelected.png"] forState:UIControlStateNormal];
 		[self showRightTab];
+	}
+	else {
+		[self.rightNavigationController popToRootViewControllerAnimated:YES];
 	}
 }
 
