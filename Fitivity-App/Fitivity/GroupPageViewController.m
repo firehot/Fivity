@@ -9,6 +9,7 @@
 #import "GroupPageViewController.h"
 #import "LocationMapViewController.h"
 #import "NSError+FITParseUtilities.h"
+#import "GroupMembersViewController.h"
 
 @interface GroupPageViewController ()
 
@@ -73,6 +74,11 @@
 	}];
 }
 
+- (void)viewMemebers {
+	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
+	[self.navigationController pushViewController:members animated:YES];
+}
+
 #pragma mark - UITableViewDelegate 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,6 +114,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark - View Lifecycle
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -134,6 +142,9 @@
 
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.activityLabel.text = activity;
+	
+	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"GroupMembersButton.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(viewMemebers)];
+	self.navigationItem.rightBarButtonItem = members;
 }
 
 - (void)viewDidUnload {

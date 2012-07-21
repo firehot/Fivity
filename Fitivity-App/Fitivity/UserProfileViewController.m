@@ -68,6 +68,12 @@
 	else if ([PFFacebookUtils isLinkedWithUser:userProfile]) {
 		[self requestFacebookData];
 	}
+	
+	//Round the pictures edges and add border
+	[self.userPicture.layer setCornerRadius:10.0f];
+	[self.userPicture.layer setMasksToBounds:YES];
+	[self.userPicture.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+	[self.userPicture.layer setBorderWidth:5.5];
 }
 
 - (BOOL)deleteUserFromGroupAtIndex:(NSInteger)index {
@@ -237,9 +243,6 @@
     if (self) {
         self.userProfile = user;
 		
-		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
-		self.navigationItem.rightBarButtonItem = settings;
-		
 		//Make sure that the user exists first (for first launch)
 		if ([PFUser currentUser]) {
 			[self attemptGetUserGroups];
@@ -275,6 +278,12 @@
 	//If the results didn't load at init, try to reload them.
 	if (!groupResults) {
 		[self attemptGetUserGroups];
+	}
+	
+	//Only display settings button if on the main users profile
+	if (mainUser) {
+		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
+		self.navigationItem.rightBarButtonItem = settings;
 	}
     
 }

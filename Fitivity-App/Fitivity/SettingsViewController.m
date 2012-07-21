@@ -175,10 +175,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	switch (indexPath.row) {
-		case kEmailIndex:
+		case kEmailIndex: {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Change Email" message:@"What would you like to change your email address to?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+			[alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+			[alert setTag:2];
+			[alert show];
 			break;
-		case kUserNameIndex:
+		}
+		case kUserNameIndex: {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Change Username" message:@"What would you like to change your username to?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+			[alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+			[alert setTag:1];
+			[alert show];
 			break;
+		}
 		case kPasswordIndex: {
 			BOOL ret = [PFUser requestPasswordResetForEmail:[[PFUser currentUser] email]];
 			
@@ -206,6 +216,26 @@
 	}
 	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIAlertView Delegate 
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+	
+	//Changing Username
+	if ([title isEqualToString:@"Done"] && alertView.tag == 1) {
+		PFUser *user = [PFUser currentUser];
+		[user setUsername:[[alertView textFieldAtIndex:0] text]];
+		[user save];
+		[self.accountInfoTable reloadData];
+	}
+	else if ([title isEqualToString:@"Done"] && alertView.tag == 2) {
+		PFUser *user = [PFUser currentUser];
+		[user setEmail:[[alertView textFieldAtIndex:0] text]];
+		[user save];
+		[self.accountInfoTable reloadData];
+	}
 }
 
 #pragma mark - UIImagePickerController Delegate

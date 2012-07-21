@@ -10,6 +10,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define kHeaderHeight		40
 

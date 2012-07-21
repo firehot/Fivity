@@ -160,6 +160,10 @@
 		6CC7FB2715AFB67E00D21AA9 /* ChooseActivityChooseLocationPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB1F15AFB67D00D21AA9 /* ChooseActivityChooseLocationPushed.png */; };
 		6CC7FB2815AFB67E00D21AA9 /* ChooseActivityChooseLocationPushed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB2015AFB67D00D21AA9 /* ChooseActivityChooseLocationPushed@2x.png */; };
 		6CC7FB4B15AFB80900D21AA9 /* ApplicationProfileTabNormalPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB4A15AFB80700D21AA9 /* ApplicationProfileTabNormalPushed.png */; };
+		6CD705E615BB00AE002FFC53 /* GroupMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */; };
+		6CD705E715BB00AE002FFC53 /* GroupMembersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */; };
+		6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */; };
+		6CD705EC15BB17F6002FFC53 /* GroupMembersCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */; };
 		6CDCD5B615B1ADE300986AA2 /* ActivityHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDCD5B415B1ADE300986AA2 /* ActivityHomeViewController.m */; };
 		6CDCD5B715B1ADE300986AA2 /* ActivityHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CDCD5B515B1ADE300986AA2 /* ActivityHomeViewController.xib */; };
 		6CDCD5BB15B1AE9700986AA2 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CDCD5B915B1AE9700986AA2 /* UserProfileViewController.m */; };
@@ -423,6 +427,12 @@
 		6CC7FB4A15AFB80700D21AA9 /* ApplicationProfileTabNormalPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplicationProfileTabNormalPushed.png; sourceTree = "<group>"; };
 		6CD2F58715B0E77A0032FA34 /* NSRegularExpression+FITUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSRegularExpression+FITUtilities.h"; sourceTree = "<group>"; };
 		6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSRegularExpression+FITUtilities.m"; sourceTree = "<group>"; };
+		6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMembersViewController.h; sourceTree = "<group>"; };
+		6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMembersViewController.m; sourceTree = "<group>"; };
+		6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupMembersViewController.xib; path = Fitivity/GroupMembersViewController.xib; sourceTree = "<group>"; };
+		6CD705E815BB17B6002FFC53 /* GroupMembersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMembersCell.h; sourceTree = "<group>"; };
+		6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMembersCell.m; sourceTree = "<group>"; };
+		6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupMembersCell.xib; sourceTree = "<group>"; };
 		6CDCD5B315B1ADE300986AA2 /* ActivityHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHomeViewController.h; sourceTree = "<group>"; };
 		6CDCD5B415B1ADE300986AA2 /* ActivityHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHomeViewController.m; sourceTree = "<group>"; };
 		6CDCD5B515B1ADE300986AA2 /* ActivityHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ActivityHomeViewController.xib; path = Fitivity/ActivityHomeViewController.xib; sourceTree = "<group>"; };
@@ -644,6 +654,8 @@
 				6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */,
 				6C50011915B6311800029AFD /* ChooseActivityCell.h */,
 				6C50011A15B6311800029AFD /* ChooseActivityCell.m */,
+				6CD705E815BB17B6002FFC53 /* GroupMembersCell.h */,
+				6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -653,6 +665,7 @@
 			children = (
 				6C7722CC15B209900040DB1D /* ChooseLocationCell.xib */,
 				6C50011D15B6315300029AFD /* ChooseActivityCell.xib */,
+				6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -938,6 +951,30 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		6CD705E015BB006C002FFC53 /* Activity Creation */ = {
+			isa = PBXGroup;
+			children = (
+				6CDCD5B315B1ADE300986AA2 /* ActivityHomeViewController.h */,
+				6CDCD5B415B1ADE300986AA2 /* ActivityHomeViewController.m */,
+				6C08845815B1C90A00670936 /* ChooseLocationViewController.h */,
+				6C08845915B1C90A00670936 /* ChooseLocationViewController.m */,
+				6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */,
+				6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */,
+			);
+			name = "Activity Creation";
+			sourceTree = "<group>";
+		};
+		6CD705E215BB007A002FFC53 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				575AECA115B6051200324958 /* GroupPageViewController.h */,
+				575AECA215B6051200324958 /* GroupPageViewController.m */,
+				6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */,
+				6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */,
+			);
+			name = Groups;
+			sourceTree = "<group>";
+		};
 		6CDCD5AC15B1AD9300986AA2 /* Discover Stream */ = {
 			isa = PBXGroup;
 			children = (
@@ -953,14 +990,8 @@
 			children = (
 				575AEC9F15B604F200324958 /* Helper Classes */,
 				6C7722C715B209500040DB1D /* Cells */,
-				6CDCD5B315B1ADE300986AA2 /* ActivityHomeViewController.h */,
-				6CDCD5B415B1ADE300986AA2 /* ActivityHomeViewController.m */,
-				6C08845815B1C90A00670936 /* ChooseLocationViewController.h */,
-				6C08845915B1C90A00670936 /* ChooseLocationViewController.m */,
-				6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */,
-				6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */,
-				575AECA115B6051200324958 /* GroupPageViewController.h */,
-				575AECA215B6051200324958 /* GroupPageViewController.m */,
+				6CD705E015BB006C002FFC53 /* Activity Creation */,
+				6CD705E215BB007A002FFC53 /* Groups */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -997,6 +1028,7 @@
 				6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */,
 				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
 				575AECA315B6051200324958 /* GroupPageViewController.xib */,
+				6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1190,6 +1222,8 @@
 				6C42C4F515B9F81B00ACB549 /* GroupProposeActivity.png in Resources */,
 				6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */,
 				6C42C4F915B9F86100ACB549 /* GroupJoinGroupButton.png in Resources */,
+				6CD705E715BB00AE002FFC53 /* GroupMembersViewController.xib in Resources */,
+				6CD705EC15BB17F6002FFC53 /* GroupMembersCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,6 +1279,8 @@
 				6C50012315B6369C00029AFD /* ProfileCell.m in Sources */,
 				6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */,
 				6C91D3A215B8E9D90074E7D6 /* SettingsCell.m in Sources */,
+				6CD705E615BB00AE002FFC53 /* GroupMembersViewController.m in Sources */,
+				6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
