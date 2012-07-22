@@ -10,6 +10,7 @@
 #import "LocationMapViewController.h"
 #import "NSError+FITParseUtilities.h"
 #import "GroupMembersViewController.h"
+#import "ProposeGroupActivityViewController.h"
 
 @interface GroupPageViewController ()
 
@@ -33,7 +34,8 @@
 }
 
 - (IBAction)proposeGroupActivity:(id)sender {
-	
+	ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil];
+	[self.navigationController pushViewController:prop animated:YES];
 }
 
 #pragma mark - Helper Methods

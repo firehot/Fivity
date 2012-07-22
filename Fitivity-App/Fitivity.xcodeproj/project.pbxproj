@@ -45,6 +45,8 @@
 		6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */; };
 		6C42C4F915B9F86100ACB549 /* GroupJoinGroupButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */; };
 		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
+		6C4E34F115BC499100A6986C /* ProposeGroupActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4E34EF15BC499100A6986C /* ProposeGroupActivityViewController.m */; };
+		6C4E34F215BC499100A6986C /* ProposeGroupActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4E34F015BC499100A6986C /* ProposeGroupActivityViewController.xib */; };
 		6C50011B15B6311800029AFD /* ChooseActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50011A15B6311800029AFD /* ChooseActivityCell.m */; };
 		6C50011E15B6315300029AFD /* ChooseActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C50011D15B6315300029AFD /* ChooseActivityCell.xib */; };
 		6C50012315B6369C00029AFD /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50012215B6369C00029AFD /* ProfileCell.m */; };
@@ -266,6 +268,9 @@
 		6C42C4F715B9F86100ACB549 /* GroupJoinGroupButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupJoinGroupButton.png; sourceTree = "<group>"; };
 		6C42C50615BA196900ACB549 /* NDArtworkPopout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDArtworkPopout.h; sourceTree = "<group>"; };
 		6C42C50715BA196900ACB549 /* NDArtworkPopout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDArtworkPopout.m; sourceTree = "<group>"; };
+		6C4E34EE15BC499100A6986C /* ProposeGroupActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProposeGroupActivityViewController.h; sourceTree = "<group>"; };
+		6C4E34EF15BC499100A6986C /* ProposeGroupActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposeGroupActivityViewController.m; sourceTree = "<group>"; };
+		6C4E34F015BC499100A6986C /* ProposeGroupActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProposeGroupActivityViewController.xib; path = Fitivity/ProposeGroupActivityViewController.xib; sourceTree = "<group>"; };
 		6C50011915B6311800029AFD /* ChooseActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityCell.h; sourceTree = "<group>"; };
 		6C50011A15B6311800029AFD /* ChooseActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityCell.m; sourceTree = "<group>"; };
 		6C50011D15B6315300029AFD /* ChooseActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseActivityCell.xib; sourceTree = "<group>"; };
@@ -971,6 +976,8 @@
 				575AECA215B6051200324958 /* GroupPageViewController.m */,
 				6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */,
 				6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */,
+				6C4E34EE15BC499100A6986C /* ProposeGroupActivityViewController.h */,
+				6C4E34EF15BC499100A6986C /* ProposeGroupActivityViewController.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1029,6 +1036,7 @@
 				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
 				575AECA315B6051200324958 /* GroupPageViewController.xib */,
 				6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */,
+				6C4E34F015BC499100A6986C /* ProposeGroupActivityViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1224,6 +1232,7 @@
 				6C42C4F915B9F86100ACB549 /* GroupJoinGroupButton.png in Resources */,
 				6CD705E715BB00AE002FFC53 /* GroupMembersViewController.xib in Resources */,
 				6CD705EC15BB17F6002FFC53 /* GroupMembersCell.xib in Resources */,
+				6C4E34F215BC499100A6986C /* ProposeGroupActivityViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1281,6 +1290,7 @@
 				6C91D3A215B8E9D90074E7D6 /* SettingsCell.m in Sources */,
 				6CD705E615BB00AE002FFC53 /* GroupMembersViewController.m in Sources */,
 				6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */,
+				6C4E34F115BC499100A6986C /* ProposeGroupActivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

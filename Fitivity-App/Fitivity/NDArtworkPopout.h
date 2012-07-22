@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define kArtworkPopoutMaxWidth 240
 #define kArtworkPopoutMaxHeight 240
