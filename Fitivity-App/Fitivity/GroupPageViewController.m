@@ -30,6 +30,7 @@
 }
 
 - (IBAction)joinGroup:(id)sender {
+	joinFlag = YES;
 	[self attemptJoinGroup];
 }
 
@@ -89,7 +90,8 @@
 		[alert show];
 		return;
 	}
-    if (autoJoin) {
+	
+    if (joinFlag && autoJoin) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Just Created" message:@"You just created this group, do you really want to unjoin?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 		[alert show];
 		return; 
@@ -131,6 +133,7 @@
 	NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
 	
 	if ([title isEqualToString:@"Yes"]) {
+		autoJoin = NO;
 		[self attemptUnjoinGroup];
 	}
 }
@@ -191,6 +194,7 @@
     
     if (autoJoin) {
         //Join the user to the group
+		joinFlag = NO;
         [self attemptJoinGroup];
     }
 }
