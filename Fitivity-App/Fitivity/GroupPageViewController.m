@@ -64,17 +64,19 @@
 		return;
     }
 	
-	[group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		if (error) {
-			NSString *errorMessage = @"Something went wrong, and you weren't unjoined from this group.";
-			errorMessage = [error userFriendlyParseErrorDescription:YES];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unjoin Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			[alert show];
-		}
-		if (succeeded) {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
-		}
-	}];
+	@synchronized(self) {
+		[group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			if (error) {
+				NSString *errorMessage = @"Something went wrong, and you weren't unjoined from this group.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unjoin Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+			}
+			if (succeeded) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+			}
+		}];
+	}
 }
 
 - (void)attemptJoinGroup {
@@ -97,29 +99,31 @@
 		return; 
 	}
 	
-    CLLocationCoordinate2D point = [place coordinate];
-	PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
-	
-	PFUser *user = [PFUser currentUser];
-	PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
-	[post setObject:user forKey:@"user"];
-	[post setObject:activity forKey:@"activity"];
-	[post setObject:[place name] forKey:@"place"];
-	[post setObject:loc forKey:@"location"];
-	[post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+	@synchronized(self) {
+		CLLocationCoordinate2D point = [place coordinate];
+		PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
 		
-		NSString *errorMessage = @"An unknown error uccoured while joining group.";
-		if (error) {
-			errorMessage = [error userFriendlyParseErrorDescription:YES];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
-		}
-		if (succeeded) {
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"You are now part of this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
-		}
-	}];
+		PFUser *user = [PFUser currentUser];
+		PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
+		[post setObject:user forKey:@"user"];
+		[post setObject:activity forKey:@"activity"];
+		[post setObject:[place name] forKey:@"place"];
+		[post setObject:loc forKey:@"location"];
+		[post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			
+			NSString *errorMessage = @"An unknown error uccoured while joining group.";
+			if (error) {
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			if (succeeded) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"You are now part of this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+		}];
+	}
 }
 
 - (void)viewMemebers {

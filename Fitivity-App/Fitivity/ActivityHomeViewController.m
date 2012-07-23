@@ -45,6 +45,27 @@
     hasPickedLocation = NO;
 }
 
+- (void)attemptPostGroupToFeedWithID:(NSString *)id {
+	@synchronized(self) {
+		//Get the user, group just created, and a new activityevent
+		PFUser *user = [PFUser currentUser];
+		PFObject *event = [PFObject objectWithClassName:@"ActivityEvent"];
+		PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:id];
+		
+		//configure the activityevent
+		[event setObject:user forKey:@"creator"];
+		[event setObject:group forKey:@"group"];
+		[event setObject:[NSNumber numberWithInt:0] forKey:@"number"];
+		[event setObject:@"N/A" forKey:@"status"];
+		[event setObject:@"NORMAL" forKey:@"type"];
+		
+		//If it doesn't save the first time, don't worry about it and try again in the future.
+		if (![event save]) {
+			[event saveEventually];
+		}
+	}
+}
+
 - (void)attemptCreateGroup {
 	
 	if (![[FConfig instance] connected]) {
@@ -52,48 +73,52 @@
 		[alert show];
 		return;
 	}
-		
-    //If both have been selected present the group
-	if (hasPickedActivity && hasPickedLocation) {
-		
-        // MAKE SURE THIS IS UNCOMMENTED OUT FOR FINAL TESTING!!!
-        /*
-        if (![[FConfig instance] canCreateGroup]) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max (2) number of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-            [self resetState];
-            return;
-        }*/
-        
-		//Create the group in the database
-		PFObject *group = [PFObject objectWithClassName:@"Groups"];
-		CLLocationCoordinate2D point = [selectedPlace coordinate];
-		PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
-		[group setObject:selectedActivity forKey:@"activity"];
-		[group setObject:loc forKey:@"location"];
-		[group setObject:[selectedPlace name] forKey:@"place"];
-		[group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSString *errorMessage = @"An unknown error occured while creating this group.";
+	
+	@synchronized(self) {
+		//If both have been selected present the group
+		if (hasPickedActivity && hasPickedLocation) {
 			
-			if (succeeded) {
-				[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
-			}
-			else {
-                if (error) {
-                    errorMessage = [error userFriendlyParseErrorDescription:YES]; //Get a more descriptive error if possible
-                }
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[alert show];
-			}
-		}];
-		
-		//Show the group that was just saved
-		GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:NO autoJoin:YES];
-        [self.navigationController popViewControllerAnimated:NO];
-		[self.navigationController pushViewController:groupView animated:YES];
-        
-        [self resetState];
+			// MAKE SURE THIS IS UNCOMMENTED OUT FOR FINAL TESTING!!!
+			/*
+			 if (![[FConfig instance] canCreateGroup]) {
+			 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max (2) number of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			 [alert show];
+			 [self resetState];
+			 return;
+			 }*/
+			
+			//Create the group in the database
+			PFObject *group = [PFObject objectWithClassName:@"Groups"];
+			CLLocationCoordinate2D point = [selectedPlace coordinate];
+			PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+			[group setObject:selectedActivity forKey:@"activity"];
+			[group setObject:loc forKey:@"location"];
+			[group setObject:[selectedPlace name] forKey:@"place"];
+			[group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				NSString *errorMessage = @"An unknown error occured while creating this group.";
+				
+				if (succeeded) {
+					[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
+					[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+					
+					[self attemptPostGroupToFeedWithID:[group objectId]];
+				}
+				else {
+					if (error) {
+						errorMessage = [error userFriendlyParseErrorDescription:YES]; //Get a more descriptive error if possible
+					}
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+					[alert show];
+				}
+			}];
+			
+			//Show the group that was just saved
+			GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:NO autoJoin:YES];
+			[self.navigationController popViewControllerAnimated:NO];
+			[self.navigationController pushViewController:groupView animated:YES];
+			
+			[self resetState];
+		}	
 	}
 }
 
