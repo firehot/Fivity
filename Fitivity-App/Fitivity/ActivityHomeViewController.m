@@ -10,6 +10,8 @@
 #import "NSError+FITParseUtilities.h"
 #import "GroupPageViewController.h"
 
+#define kDistanceMileFilter		0.15
+
 @interface ActivityHomeViewController ()
 
 @end
@@ -31,6 +33,19 @@
 	ChooseLocationViewController *location = [[ChooseLocationViewController alloc] initWithNibName:@"ChooseLocationViewController" bundle:nil];
 	[location setDelegate: self];
 	[self.navigationController pushViewController:location animated:YES];
+}
+
+- (void)showGroupView:(BOOL)autojoin {
+	
+	/*
+	 *	Create the group with the selected information, pop the old view from the stack (unanimated) and present the new one so there is no odd transition.
+	 *	Once the views have finished presenting, reset the state of the picker view. 
+	 */
+	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:YES autoJoin:autojoin];
+	[self.navigationController popViewControllerAnimated:NO];
+	[self.navigationController pushViewController:groupView animated:YES];
+	
+	[self resetState];
 }
 
 #pragma mark - Helper Methods
@@ -66,6 +81,44 @@
 	}
 }
 
+//Checks to see if the group already exists, if so join the user to the group
+- (BOOL)groupAlreadyExists {
+	BOOL ret = NO;
+	
+	CLLocationCoordinate2D point = [selectedPlace coordinate];
+	PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+	
+	PFQuery *query = [PFQuery queryWithClassName:@"Groups"];
+	[query whereKey:@"location" nearGeoPoint:loc withinMiles:kDistanceMileFilter];
+	[query whereKey:@"place" equalTo:[selectedPlace name]];
+	[query whereKey:@"activity" equalTo:selectedActivity];
+	
+	//If we get a result we know that the group has already been created
+	PFObject *result = [query getFirstObject];
+	if (result) {
+		ret = YES;
+	}
+	
+	return ret;
+}
+
+- (BOOL)findUserAlreadyJoined {
+	BOOL ret = NO;
+	
+	//Find if they are already part of the group
+	PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
+	[query whereKey:@"user" equalTo:[PFUser currentUser]];
+	[query whereKey:@"activity" equalTo:selectedActivity];
+	[query whereKey:@"place" equalTo:[selectedPlace name]];
+	
+	PFObject *result = [query getFirstObject];
+	if (result) {
+		ret = YES;
+	}
+	
+	return ret;
+}
+
 - (void)attemptCreateGroup {
 	
 	if (![[FConfig instance] connected]) {
@@ -86,38 +139,46 @@
 			 [self resetState];
 			 return;
 			 }*/
-			
-			//Create the group in the database
-			PFObject *group = [PFObject objectWithClassName:@"Groups"];
-			CLLocationCoordinate2D point = [selectedPlace coordinate];
-			PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
-			[group setObject:selectedActivity forKey:@"activity"];
-			[group setObject:loc forKey:@"location"];
-			[group setObject:[selectedPlace name] forKey:@"place"];
-			[group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-				NSString *errorMessage = @"An unknown error occured while creating this group.";
-				
-				if (succeeded) {
-					[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
-					[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+						
+			//Check if the group has already been created
+			if (![self groupAlreadyExists]) {
+				//Create the group in the database
+				PFObject *group = [PFObject objectWithClassName:@"Groups"];
+				CLLocationCoordinate2D point = [selectedPlace coordinate];
+				PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+				[group setObject:selectedActivity forKey:@"activity"];
+				[group setObject:loc forKey:@"location"];
+				[group setObject:[selectedPlace name] forKey:@"place"];
+				[group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+					NSString *errorMessage = @"An unknown error occured while creating this group.";
 					
-					[self attemptPostGroupToFeedWithID:[group objectId]];
+					if (succeeded) {
+						[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
+						[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+						
+						[self showGroupView:YES];
+						[self attemptPostGroupToFeedWithID:[group objectId]];
+					}
+					else {
+						if (error) {
+							errorMessage = [error userFriendlyParseErrorDescription:YES]; //Get a more descriptive error if possible
+						}
+						UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+						[alert show];
+					}
+				}];
+			}
+			else {
+				//If they are already part of the group, just show the group. If they aren't part of the group show it and autojoin
+				if ([self findUserAlreadyJoined]) {
+					[self showGroupView:NO];
 				}
 				else {
-					if (error) {
-						errorMessage = [error userFriendlyParseErrorDescription:YES]; //Get a more descriptive error if possible
-					}
-					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-					[alert show];
+					[self showGroupView:YES];
 				}
-			}];
-			
-			//Show the group that was just saved
-			GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:YES autoJoin:YES];
-			[self.navigationController popViewControllerAnimated:NO];
-			[self.navigationController pushViewController:groupView animated:YES];
-			
-			[self resetState];
+				
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+			}
 		}	
 	}
 }
