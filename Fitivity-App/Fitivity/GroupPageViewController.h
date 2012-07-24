@@ -14,7 +14,7 @@
 #import "GooglePlacesObject.h"
 
 @interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
-    BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag;
+    BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel;
 
 	PFObject *group;
 }
@@ -24,6 +24,7 @@
 - (IBAction)showGroupMap:(id)sender;
 - (IBAction)joinGroup:(id)sender;
 - (IBAction)proposeGroupActivity:(id)sender;
+- (IBAction)showChallenges:(id)sender;
 
 @property (nonatomic, retain) GooglePlacesObject *place;
 @property (nonatomic, retain) NSString *activity;

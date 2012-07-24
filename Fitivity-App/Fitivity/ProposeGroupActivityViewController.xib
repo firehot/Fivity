@@ -232,12 +232,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">updateCharCount:</string>
+						<string key="label">textFieldDidUpdate:</string>
 						<reference key="source" ref="970244299"/>
 						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">13</int>
+						<int key="IBEventType">18</int>
 					</object>
-					<int key="connectionID">14</int>
+					<int key="connectionID">15</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -321,7 +321,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">14</int>
+			<int key="maxID">15</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -329,13 +329,13 @@
 					<string key="className">ProposeGroupActivityViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">updateCharCount:</string>
+						<string key="NS.key.0">textFieldDidUpdate:</string>
 						<string key="NS.object.0">id</string>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">updateCharCount:</string>
+						<string key="NS.key.0">textFieldDidUpdate:</string>
 						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">updateCharCount:</string>
+							<string key="name">textFieldDidUpdate:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</object>

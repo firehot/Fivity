@@ -7,6 +7,7 @@
 //
 
 #import "ProposeGroupActivityViewController.h"
+#import "NSError+FITParseUtilities.h"
 
 @interface ProposeGroupActivityViewController ()
 
@@ -18,16 +19,58 @@
 
 #pragma mark - IBAction's 
 
-- (IBAction)updateCharCount:(id)sender {
-	charCount = [[self.commentField text] length];
-	charLeft -= charCount;
+- (void)postToGroup {
 	
-	NSLog(@"Count = %i, Char's Left = %i", charCount, charLeft);
+	if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to post this." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
+	@synchronized(self) {
+		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
+		[comment setObject:[self.commentField text] forKey:@"message"];
+		[comment setObject:[PFUser currentUser] forKey:@"user"];
+		
+		//Try to save the comment, if can't show error message 
+		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedComment" object:self];
+			}
+			else if (error) {
+				NSString *errorMessage = @"An unknown error occurred while posting event.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			
+			[self.navigationController popViewControllerAnimated:YES];
+		}];
+	}
 }
 
-- (void)postToGroup {
-	//Implement posting logic here
-	[self.navigationController popViewControllerAnimated:YES];
+
+- (IBAction) textFieldDidUpdate:(id)sender {
+	
+	//Get the text field, then determine what the current count is.
+	UITextField * textField = (UITextField *)sender;
+	int charsLeft = kMaxCharCount - [textField.text length];
+	
+	if (charsLeft < 0) {
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"No more characters"
+														 message:[NSString stringWithFormat:@"You have reached the character limit of %d.",kMaxCharCount]
+														delegate:nil
+											   cancelButtonTitle:@"Ok"
+											   otherButtonTitles:nil];
+		[alert show];
+		
+		//Remove the text that went over
+		[textField setText:[[textField text] substringToIndex:kMaxCharCount]];
+		return;
+	}
+		
+	self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d",charsLeft];
 }
 
 #pragma mark - UITextField Delegate 
@@ -47,7 +90,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"BluePillNavBarIcon.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(postToGroup)];
+        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", kMaxCharCount] style:UIBarButtonItemStyleBordered target:self action:@selector(postToGroup)];
 		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;
@@ -55,10 +98,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	//Used for updating count labels
-	charCount = 0;
-	charLeft = kMaxCharCount;
 	
 	//Bring up the keyboard when view is shown
 	[self.commentField becomeFirstResponder];

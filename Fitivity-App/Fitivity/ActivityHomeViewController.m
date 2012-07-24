@@ -113,7 +113,7 @@
 			}];
 			
 			//Show the group that was just saved
-			GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:NO autoJoin:YES];
+			GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:YES autoJoin:YES];
 			[self.navigationController popViewControllerAnimated:NO];
 			[self.navigationController pushViewController:groupView animated:YES];
 			

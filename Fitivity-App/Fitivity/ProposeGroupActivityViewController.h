@@ -9,14 +9,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 #define kMaxCharCount	350
 
-@interface ProposeGroupActivityViewController : UIViewController <UITextFieldDelegate> {
-	NSInteger charCount, charLeft;
-}
+@interface ProposeGroupActivityViewController : UIViewController <UITextFieldDelegate>
 
-- (IBAction)updateCharCount:(id)sender;
+- (IBAction) textFieldDidUpdate:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITextField *commentField;
 

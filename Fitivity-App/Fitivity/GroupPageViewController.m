@@ -39,6 +39,10 @@
 	[self.navigationController pushViewController:prop animated:YES];
 }
 
+- (IBAction)showChallenges:(id)sender {
+	//Implement showing challenges
+}
+
 #pragma mark - Helper Methods
 
 - (void)findUserAlreadyJoined {
@@ -126,6 +130,10 @@
 	}
 }
 
+- (void)attemptGetComments {
+	//get comments and activities
+}
+
 - (void)viewMemebers {
 	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
 	[self.navigationController pushViewController:members animated:YES];
@@ -186,6 +194,7 @@
         self.activity = a;
 		hasChallenge = c;
         autoJoin = yn;
+		shouldCancel = NO;
 		
 		[self findUserAlreadyJoined];
         [self.navigationItem setTitle:[self.place name]];
@@ -194,30 +203,47 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     
-    if (autoJoin) {
+    if (autoJoin && !shouldCancel) {
         //Join the user to the group
 		joinFlag = NO;
         [self attemptJoinGroup];
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	if (autoJoin) {
+		shouldCancel = YES;
+		[self.navigationController popViewControllerAnimated:NO];
+	}
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+	//If there is a challenge we need to make the table view smaller
+	if (hasChallenge) {
+		CGRect frame = self.proposedTable.frame;
+		frame.origin.y += 35.0;
+		frame.size.height -= 35.0;
+		self.proposedTable.frame = frame;
+	}
+	
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.activityLabel.text = activity;
 	
 	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"GroupMembersButton.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewMemebers)];
 	self.navigationItem.rightBarButtonItem = members;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetComments) name:@"addedComment" object:nil];
 }
 
 - (void)viewDidUnload {
     [self setActivityLabel:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

@@ -109,7 +109,6 @@
 	[_rightTabButton setImage:[UIImage imageNamed:@"ApplicationProfileTabNormal.png"] forState:UIControlStateNormal];
 }
 
-
 #pragma mark - IBAction's
 
 -(IBAction)leftTabButtonPushed:(id)sender {
@@ -158,7 +157,7 @@
 		self.centerNavigationController = [[UINavigationController alloc] initWithRootViewController:self.centerRootViewController];
 		self.rightNavigationController = [[UINavigationController alloc] initWithRootViewController:self.rightRootViewController];
 		
-		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplate"] forBarMetrics:UIBarMetricsDefault];
+		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplate.png"] forBarMetrics:UIBarMetricsDefault];
 	}
 	return self;
 }
