@@ -32,17 +32,6 @@
 		customPinView.animatesDrop = YES;
 		customPinView.canShowCallout = YES;
 		
-		// add a detail disclosure button to the callout which will open a new view controller page
-		//
-		// note: you can assign a specific call out accessory view, or as MKMapViewDelegate you can implement:
-		//  - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
-		//
-		/*UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-         [rightButton addTarget:self
-         action:@selector(showDetails:)
-         forControlEvents:UIControlEventTouchUpInside];
-         customPinView.rightCalloutAccessoryView = rightButton;*/
-		
 		return customPinView;
 	}
 	else {
@@ -64,6 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	//Create the visible region for the map
 	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([place coordinate], 1000, 1000);
 	[mapView setRegion:region];
 	

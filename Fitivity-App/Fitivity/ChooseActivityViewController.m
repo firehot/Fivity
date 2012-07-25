@@ -27,7 +27,7 @@
 - (void)attemptQuery {	
 	
 	@synchronized(self) { 
-		
+		//Fetch all of the activities that are in the database
 		if (!query) {
 			query = [PFQuery queryWithClassName:@"Activity"];
 			[query setCachePolicy:kPFCachePolicyNetworkElseCache]; //If the user isn't connected, it will look on the device disk for a cached version
@@ -126,6 +126,7 @@
         deleteAnimation = UITableViewRowAnimationTop;
     }
 
+	//Make the changes to the tableview
 	[self.activitiesTable beginUpdates];
 	[self.activitiesTable insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
 	[self.activitiesTable deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
@@ -169,6 +170,8 @@
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section { 
+	
+	//Create a header view for each category 
 	NSString *title = @"";
 	if ([categories count] > 0) {
 		PFObject *firstObject = [(NSMutableArray *)[categories objectAtIndex:section] objectAtIndex:0];
@@ -218,6 +221,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		//set to empty array since we only want to show the headers at first
 		categories = [[NSMutableArray alloc] init];
 		resultsToShow = [[NSMutableArray alloc] init];
 		openSectionIndex = NSNotFound;

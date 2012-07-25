@@ -37,6 +37,7 @@
 }
 
 - (IBAction)linkUserWithFacebook:(id)sender {
+	//If they aren't linked with facebook, go to facebook and authenticate the app. Otherwise unlink the account
 	if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 		[PFFacebookUtils linkUser:[PFUser currentUser] permissions:nil block:^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
@@ -174,6 +175,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
+	//Determine what should be done for each row when selected
 	switch (indexPath.row) {
 		case kEmailIndex: {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Change Email" message:@"What would you like to change your email address to?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
@@ -230,6 +232,7 @@
 		[user save];
 		[self.accountInfoTable reloadData];
 	}
+	//Changing Email
 	else if ([title isEqualToString:@"Done"] && alertView.tag == 2) {
 		PFUser *user = [PFUser currentUser];
 		[user setEmail:[[alertView textFieldAtIndex:0] text]];

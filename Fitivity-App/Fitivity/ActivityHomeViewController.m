@@ -41,7 +41,7 @@
 	 *	Create the group with the selected information, pop the old view from the stack (unanimated) and present the new one so there is no odd transition.
 	 *	Once the views have finished presenting, reset the state of the picker view. 
 	 */
-	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:YES autoJoin:autojoin];
+	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:NO autoJoin:autojoin];
 	[self.navigationController popViewControllerAnimated:NO];
 	[self.navigationController pushViewController:groupView animated:YES];
 	
@@ -153,6 +153,7 @@
 					NSString *errorMessage = @"An unknown error occured while creating this group.";
 					
 					if (succeeded) {
+						//increment the daily creation count, and push group view
 						[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
 						[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 						

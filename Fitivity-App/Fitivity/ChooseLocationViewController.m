@@ -251,7 +251,6 @@
 
 #pragma mark - NSURLConnections
 
-//UPDATE - to handle filtering
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFinishLoadingWithGooglePlacesObjects:(NSMutableArray *)objects  {
     
     if ([objects count] == 0) {
@@ -264,14 +263,15 @@
     } 
 	else {
         locations = objects;
-        //UPDATED locationFilterResults for filtering later on
         locationsFilterResults = objects;
         [tableView reloadData];
     }
 }
 
 - (void) googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error finding place - Try again" 
+    
+	//Alert the user if the connection fails
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error finding place - Try again" 
                                                     message:[error localizedDescription] 
                                                    delegate:nil 
                                           cancelButtonTitle:@"OK" 

@@ -13,9 +13,13 @@
 
 #define kMaxCharCount	350
 
-@interface ProposeGroupActivityViewController : UIViewController <UITextFieldDelegate>
+@interface ProposeGroupActivityViewController : UIViewController <UITextFieldDelegate> {
+	BOOL isCommentView;
+}
 
 - (IBAction) textFieldDidUpdate:(id)sender;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil isComment:(BOOL)comment;
 
 @property (weak, nonatomic) IBOutlet UITextField *commentField;
 

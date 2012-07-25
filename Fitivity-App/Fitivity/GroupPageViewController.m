@@ -25,6 +25,7 @@
 #pragma mark - IBAction's
 
 - (IBAction)showGroupMap:(id)sender {
+	//Show the location of the group on a bigger map
 	LocationMapViewController *mapView = [[LocationMapViewController alloc] initWithNibName:@"LocationMapViewController" bundle:nil place:self.place];
 	[self.navigationController pushViewController:mapView animated:YES];
 }
@@ -35,7 +36,8 @@
 }
 
 - (IBAction)proposeGroupActivity:(id)sender {
-	ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil];
+	//Show the create proposed activity view controller
+	ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil isComment:NO];
 	[self.navigationController pushViewController:prop animated:YES];
 }
 
@@ -68,6 +70,7 @@
 		return;
     }
 	
+	//Delete the member from the group
 	@synchronized(self) {
 		[group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (error) {
@@ -213,6 +216,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+	//Fixes unjoin bug 
 	if (autoJoin) {
 		shouldCancel = YES;
 		[self.navigationController popViewControllerAnimated:NO];

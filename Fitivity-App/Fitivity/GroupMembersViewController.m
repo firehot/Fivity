@@ -30,6 +30,7 @@
 		return;
 	}
 	
+	//Query for members in a group that has all the attributes of the parent view's group
 	CLLocationCoordinate2D loc = [place coordinate];
 	PFGeoPoint *point = [PFGeoPoint geoPointWithLatitude:loc.latitude longitude:loc.longitude];
 	
@@ -63,6 +64,7 @@
 
     }
 	
+	//Get a reference to the object and set up the cell
 	PFObject *current = [members objectAtIndex:indexPath.row];
 	PFUser *user = [current objectForKey:@"user"];
 	[user fetchIfNeeded];
@@ -130,6 +132,7 @@
 	PFUser *user = [current objectForKey:@"user"];
 	[user fetchIfNeeded];
 	
+	//Push the user profile onto the navigation stack
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
 	[profile setMainUser:NO];
 	[self.navigationController pushViewController:profile animated:YES];
