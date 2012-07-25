@@ -200,6 +200,8 @@
 		6CF2C70F15B4EAF9001E3353 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70C15B4EAF9001E3353 /* Icon.png */; };
 		6CF2C71015B4EAF9001E3353 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70D15B4EAF9001E3353 /* Icon@2x.png */; };
 		6CF2C71115B4EAF9001E3353 /* FitivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */; };
+		F1CF676D15C01E5F0029E100 /* NavigationBarBackplateBlank.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF676B15C01E5F0029E100 /* NavigationBarBackplateBlank.png */; };
+		F1CF676E15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF676C15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -449,6 +451,8 @@
 		6CF2C70C15B4EAF9001E3353 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6CF2C70D15B4EAF9001E3353 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FitivityIcon.png; sourceTree = "<group>"; };
+		F1CF676B15C01E5F0029E100 /* NavigationBarBackplateBlank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavigationBarBackplateBlank.png; sourceTree = "<group>"; };
+		F1CF676C15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBackplateBlank@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -678,6 +682,8 @@
 		6C7722CE15B20BD80040DB1D /* Navigation Bar */ = {
 			isa = PBXGroup;
 			children = (
+				F1CF676B15C01E5F0029E100 /* NavigationBarBackplateBlank.png */,
+				F1CF676C15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png */,
 				6C8665AB15AFA5D3004D932F /* NavigationBarBackplate.png */,
 				6C8665AC15AFA5D3004D932F /* NavigationBarBackplate@2x.png */,
 				6CC7FB0F15AFB62C00D21AA9 /* BackButtonIcon.png */,
@@ -1233,6 +1239,8 @@
 				6CD705E715BB00AE002FFC53 /* GroupMembersViewController.xib in Resources */,
 				6CD705EC15BB17F6002FFC53 /* GroupMembersCell.xib in Resources */,
 				6C4E34F215BC499100A6986C /* ProposeGroupActivityViewController.xib in Resources */,
+				F1CF676D15C01E5F0029E100 /* NavigationBarBackplateBlank.png in Resources */,
+				F1CF676E15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
