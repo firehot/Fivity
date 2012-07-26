@@ -82,6 +82,15 @@ static FConfig *instance;
     [self saveData];
 }
 
+- (void)showLogoNavBar:(BOOL)status {
+	if (status) {
+		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplate.png"] forBarMetrics:UIBarMetricsDefault];
+	}
+	else {
+		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplateBlank.png"] forBarMetrics:UIBarMetricsDefault];
+	}
+}
+
 #pragma mark - BOOL methods
 
 - (BOOL)userHasReachedCreationLimitForDay:(NSDate *)today {

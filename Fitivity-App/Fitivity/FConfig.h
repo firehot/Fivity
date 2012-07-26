@@ -28,6 +28,7 @@
 - (NSString *)getGoogleAnalyticsID;
 - (NSString *)getGooglePlacesAPIKey;
 
+- (void)showLogoNavBar:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;
 
 @end

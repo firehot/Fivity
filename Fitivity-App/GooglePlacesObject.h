@@ -116,8 +116,7 @@
 #define	kVeterinaryCare	@"veterinary_care"
 #define	kZoo	@"zoo"
 
-@interface GooglePlacesObject : NSObject
-{
+@interface GooglePlacesObject : NSObject {
     NSString    *placesId;
     NSString    *reference;
     NSString    *name;

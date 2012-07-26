@@ -118,6 +118,7 @@
 		[self showLeftTab];
 	}
 	else {
+		[[FConfig instance] showLogoNavBar:YES];
 		[self.leftNavigationController popToRootViewControllerAnimated:YES];
 	}
 }
@@ -129,6 +130,7 @@
 		[self showCenterTab];
 	}
 	else {
+		[[FConfig instance] showLogoNavBar:YES];
 		[self.centerNavigationController popToRootViewControllerAnimated:YES];
 	}
 }
@@ -140,6 +142,7 @@
 		[self showRightTab];
 	}
 	else {
+		[[FConfig instance] showLogoNavBar:YES];
 		[self.rightNavigationController popToRootViewControllerAnimated:YES];
 	}
 }
@@ -157,7 +160,7 @@
 		self.centerNavigationController = [[UINavigationController alloc] initWithRootViewController:self.centerRootViewController];
 		self.rightNavigationController = [[UINavigationController alloc] initWithRootViewController:self.rightRootViewController];
 		
-		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplate.png"] forBarMetrics:UIBarMetricsDefault];
+		[[FConfig instance] showLogoNavBar:YES];
 	}
 	return self;
 }
