@@ -15,24 +15,25 @@
 
 @implementation ProposeGroupActivityViewController
 
+@synthesize group, proposedActivity;
 @synthesize commentField;
 
 #pragma mark - IBAction's 
 
-- (void)postToGroup {
-	
-	if (![[FConfig instance] connected]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to post this." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];
-		return;
-	}
-	
+- (void)postComment {
 	@synchronized(self) {
 		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
 		[comment setObject:[self.commentField text] forKey:@"message"];
 		[comment setObject:[PFUser currentUser] forKey:@"user"];
+		//Make sure that we have a good reference to the ProposedActivity
+		if (proposedActivity) {
+			[comment setObject:proposedActivity forKey:@"parent"];
+		}
+		else {
+			[comment setObject:[NSNull null] forKey:@"parent"];
+		}
 		
-		//Try to save the comment, if can't show error message 
+		//Try to save the comment, if can't show error message
 		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedComment" object:self];
@@ -47,6 +48,54 @@
 			
 			[self.navigationController popViewControllerAnimated:YES];
 		}];
+	}
+
+}
+
+- (void)postProposedActivity {
+	@synchronized(self) {
+		PFObject *activity = [PFObject objectWithClassName:@"ProposedActivity"];
+		[activity setObject:[PFUser currentUser] forKey:@"creator"];
+		[activity setObject:[commentField text] forKey:@"activityMessage"];
+		//Make sure that we have a good reference to the group
+		if (group) {
+			[activity setObject:self.group forKey:@"group"];
+		}
+		else {
+			[activity setObject:[NSNull null] forKey:@"group"];
+		}
+		
+		//Try to save the comment, if can't show error message
+		[activity saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedPA" object:self];
+			}
+			else if (error) {
+				NSString *errorMessage = @"An unknown error occurred while posting event.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			
+			[self.navigationController popViewControllerAnimated:YES];
+		}];
+	}
+}
+
+- (void)post {
+	
+	if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to post this." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
+	if (isCommentView) {
+		[self postComment];
+	}
+	else {
+		[self postProposedActivity];
 	}
 }
 
@@ -93,7 +142,7 @@
 		
 		isCommentView = comment;
 		
-        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", kMaxCharCount] style:UIBarButtonItemStyleBordered target:self action:@selector(postToGroup)];
+        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", kMaxCharCount] style:UIBarButtonItemStyleBordered target:self action:@selector(post)];
 		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;

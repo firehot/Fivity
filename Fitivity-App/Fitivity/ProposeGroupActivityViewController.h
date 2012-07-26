@@ -21,6 +21,9 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil isComment:(BOOL)comment;
 
+@property (nonatomic, retain) PFObject *proposedActivity;
+@property (nonatomic, retain) PFObject *group;
+
 @property (weak, nonatomic) IBOutlet UITextField *commentField;
 
 @end

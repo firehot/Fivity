@@ -36,9 +36,17 @@
 }
 
 - (IBAction)proposeGroupActivity:(id)sender {
-	//Show the create proposed activity view controller
-	ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil isComment:NO];
-	[self.navigationController pushViewController:prop animated:YES];
+	
+	if (alreadyJoined) {
+		//Show the create proposed activity view controller
+		ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil isComment:NO];
+		//[prop setGroup:group];
+		[self.navigationController pushViewController:prop animated:YES];
+	}
+	else {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Joined" message:@"You must be part of the group in order to propose an activity" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+	}
 }
 
 - (IBAction)showChallenges:(id)sender {
@@ -241,6 +249,7 @@
 	self.navigationItem.rightBarButtonItem = members;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetComments) name:@"addedComment" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetComments) name:@"addedPA" object:nil];
 }
 
 - (void)viewDidUnload {

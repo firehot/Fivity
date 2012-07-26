@@ -35,7 +35,7 @@
 	[self.navigationController pushViewController:location animated:YES];
 }
 
-- (void)showGroupView:(BOOL)autojoin {
+- (void)showGroupViewWithAutoJoin:(BOOL)autojoin {
 	
 	/*
 	 *	Create the group with the selected information, pop the old view from the stack (unanimated) and present the new one so there is no odd transition.
@@ -60,6 +60,12 @@
     hasPickedLocation = NO;
 }
 
+- (void)attemptUpdateGroupInfo {
+	@synchronized(self) {
+		//Update group member count & status logic
+	}
+}
+
 - (void)attemptPostGroupToFeedWithID:(NSString *)id {
 	@synchronized(self) {
 		//Get the user, group just created, and a new activityevent
@@ -70,9 +76,9 @@
 		//configure the activityevent
 		[event setObject:user forKey:@"creator"];
 		[event setObject:group forKey:@"group"];
-		[event setObject:[NSNumber numberWithInt:0] forKey:@"number"];
-		[event setObject:@"N/A" forKey:@"status"];
-		[event setObject:@"NORMAL" forKey:@"type"];
+		[event setObject:[NSNumber numberWithInt:1] forKey:@"number"]; //Only one user currently
+		[event setObject:@"NEW" forKey:@"status"];	//Just created groups are new
+		[event setObject:@"NORMAL" forKey:@"type"];	//Groups have type of NORMAL
 		
 		//If it doesn't save the first time, don't worry about it and try again in the future.
 		if (![event save]) {
@@ -157,7 +163,7 @@
 						[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
 						[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 						
-						[self showGroupView:YES];
+						[self showGroupViewWithAutoJoin:YES];
 						[self attemptPostGroupToFeedWithID:[group objectId]];
 					}
 					else {
@@ -172,10 +178,11 @@
 			else {
 				//If they are already part of the group, just show the group. If they aren't part of the group show it and autojoin
 				if ([self findUserAlreadyJoined]) {
-					[self showGroupView:NO];
+					[self showGroupViewWithAutoJoin:NO];
 				}
 				else {
-					[self showGroupView:YES];
+					[self attemptUpdateGroupInfo];
+					[self showGroupViewWithAutoJoin:YES];
 				}
 				
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
