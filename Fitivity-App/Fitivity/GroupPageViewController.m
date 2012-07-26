@@ -12,6 +12,8 @@
 #import "GroupMembersViewController.h"
 #import "ProposeGroupActivityViewController.h"
 
+#define kDistanceMileFilter		0.15
+
 @interface GroupPageViewController ()
 
 @end
@@ -40,7 +42,7 @@
 	if (alreadyJoined) {
 		//Show the create proposed activity view controller
 		ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil isComment:NO];
-		//[prop setGroup:group];
+		[prop setGroup:group];
 		[self.navigationController pushViewController:prop animated:YES];
 	}
 	else {
@@ -55,6 +57,19 @@
 
 #pragma mark - Helper Methods
 
+- (void)getGroupReference {
+    CLLocationCoordinate2D point = [self.place coordinate];
+	PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+	
+	PFQuery *query = [PFQuery queryWithClassName:@"Groups"];
+	[query whereKey:@"location" nearGeoPoint:loc withinMiles:kDistanceMileFilter];
+	[query whereKey:@"place" equalTo:[self.place name]];
+	[query whereKey:@"activity" equalTo:self.activity];
+	
+	//set as reference to this group
+	group = [query getFirstObject];
+}
+
 - (void)findUserAlreadyJoined {
 	alreadyJoined = autoJoin;
 	
@@ -67,7 +82,7 @@
 	PFObject *result = [query getFirstObject];
 	if (result) {
 		alreadyJoined = YES;
-		group = result; //Can use this later if they are unjoining
+		groupMember = result; //Can use this later if they are unjoining
 	}
 }
 
@@ -208,6 +223,7 @@
 		shouldCancel = NO;
 		
 		[self findUserAlreadyJoined];
+        [self getGroupReference];
         [self.navigationItem setTitle:[self.place name]];
     }
     return self;

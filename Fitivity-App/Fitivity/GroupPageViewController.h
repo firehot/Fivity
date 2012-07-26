@@ -16,7 +16,7 @@
 @interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
     BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel;
 
-	PFObject *group;
+	PFObject *groupMember, *group;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c autoJoin:(BOOL)yn;

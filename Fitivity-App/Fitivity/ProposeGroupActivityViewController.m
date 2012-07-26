@@ -20,6 +20,36 @@
 
 #pragma mark - IBAction's 
 
+- (void)postToFeedWithPAID:(NSString *)id {
+    @synchronized(self) {
+        PFObject *activity = [PFObject objectWithClassName:@"ActivityEvent"];
+        [activity setObject:[PFUser currentUser] forKey:@"creator"];
+        [activity setObject:[NSNumber numberWithInt:1] forKey:@"number"];
+        [activity setObject:@"N/A" forKey:@"status"];
+        [activity setObject:@"GROUP" forKey:@"type"];
+        [activity setObject:@"" forKey:@"proposedActivity"];
+        //Make sure that we have a good reference to the group
+		if (group) {
+			[activity setObject:self.group forKey:@"group"];
+		}
+		else {
+			[activity setObject:[NSNull null] forKey:@"group"];
+		}
+        
+        //Try to save the comment, if can't show error message
+		[activity saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+			if (error) {
+				NSString *errorMessage = @"An unknown error occurred while posting to feed.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+		}];
+        
+    }
+}
+
 - (void)postComment {
 	@synchronized(self) {
 		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
@@ -80,6 +110,8 @@
 			
 			[self.navigationController popViewControllerAnimated:YES];
 		}];
+        
+        [self postToFeedWithPAID:[activity objectId]];
 	}
 }
 
