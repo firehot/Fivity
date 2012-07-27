@@ -6,16 +6,16 @@
 //  Copyright (c) 2012 Fitivity. All rights reserved.
 //
 
-#import "ProposeGroupActivityViewController.h"
+#import "CreateProposeActivityViewController.h"
 #import "NSError+FITParseUtilities.h"
 
-@interface ProposeGroupActivityViewController ()
+@interface CreateProposeActivityViewController ()
 
 @end
 
-@implementation ProposeGroupActivityViewController
+@implementation CreateProposeActivityViewController
 
-@synthesize group, proposedActivity;
+@synthesize group;
 @synthesize commentField;
 
 #pragma mark - IBAction's 
@@ -76,38 +76,6 @@
     }
 }
 
-- (void)postComment {
-	@synchronized(self) {
-		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
-		[comment setObject:[self.commentField text] forKey:@"message"];
-		[comment setObject:[PFUser currentUser] forKey:@"user"];
-		//Make sure that we have a good reference to the ProposedActivity
-		if (proposedActivity) {
-			[comment setObject:proposedActivity forKey:@"parent"];
-		}
-		else {
-			[comment setObject:[NSNull null] forKey:@"parent"];
-		}
-		
-		//Try to save the comment, if can't show error message
-		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
-			if (succeeded) {
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedComment" object:self];
-			}
-			else if (error) {
-				NSString *errorMessage = @"An unknown error occurred while posting event.";
-				errorMessage = [error userFriendlyParseErrorDescription:YES];
-				
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[alert show];
-			}
-			
-			[self.navigationController popViewControllerAnimated:YES];
-		}];
-	}
-
-}
-
 - (void)postProposedActivity {
 	@synchronized(self) {
 		PFObject *activity = [PFObject objectWithClassName:@"ProposedActivity"];
@@ -146,11 +114,6 @@
 	if (![[FConfig instance] connected]) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to post this." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
-		return;
-	}
-	
-	if (isCommentView) {
-		[self postComment];
 	}
 	else {
 		[self postProposedActivity];
@@ -194,12 +157,9 @@
 
 #pragma mark - View Lifecycle 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil isComment:(BOOL)comment {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-		
-		isCommentView = comment;
-		
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", kMaxCharCount] style:UIBarButtonItemStyleBordered target:self action:@selector(post)];
 		[self.navigationItem setRightBarButtonItem:button];
     }

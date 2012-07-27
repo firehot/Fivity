@@ -10,7 +10,8 @@
 #import "LocationMapViewController.h"
 #import "NSError+FITParseUtilities.h"
 #import "GroupMembersViewController.h"
-#import "ProposeGroupActivityViewController.h"
+#import "CreateProposeActivityViewController.h"
+#import "ProposedActivityViewController.h"
 #import "ProposedActivityCell.h"
 
 #define kDistanceMileFilter		0.15
@@ -48,7 +49,7 @@
 	
 	if (alreadyJoined) {
 		//Show the create proposed activity view controller
-		ProposeGroupActivityViewController *prop = [[ProposeGroupActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil isComment:NO];
+		CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil];
 		[prop setGroup:group];
 		[self.navigationController pushViewController:prop animated:YES];
 	}
@@ -167,6 +168,7 @@
 	@synchronized(self) {
 		PFQuery *query = [PFQuery queryWithClassName:@"ProposedActivity"];
 		[query whereKey:@"group" equalTo:group];
+		[query addAscendingOrder: @"createdAt"];
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 			if (error) {
 				NSString *errorMessage = @"An unknown error occured while loading activities.";
@@ -178,12 +180,6 @@
 			results = [[NSMutableArray alloc] initWithArray:objects];
 			[self.proposedTable reloadData];
 		}];
-	}
-}
-
-- (void)attemptGetComments {
-	@synchronized(self) {
-		
 	}
 }
 
@@ -216,7 +212,7 @@
 //Calculate what the differece is between when the activity was posted and now
 - (NSString *)getTimeSincePost:(PFObject *)propActivity {
 	
-    NSDate *input = [propActivity objectForKey:@"createdAt"];
+    NSDate *input = [propActivity createdAt];
     NSDate *temp = [NSDate date];
 	
     NSTimeInterval diff = [temp timeIntervalSinceDate:input];
@@ -295,6 +291,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+	ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:[results objectAtIndex:indexPath.row]];
+	[self.navigationController pushViewController:pa animated:YES];
+	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -352,7 +351,6 @@
 	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"GroupMembersButton.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewMemebers)];
 	self.navigationItem.rightBarButtonItem = members;
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetComments) name:@"addedComment" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetProposedActivities) name:@"addedPA" object:nil];
 }
 
