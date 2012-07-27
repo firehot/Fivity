@@ -13,6 +13,10 @@
 
 #define kCellHeight				96.0f
 #define kHeaderHeight			110.0f
+#define kFooterHeight			45.0f
+
+#define kTextFieldMoveDistance          165
+#define kTextFieldAnimationDuration    0.3f
 
 @interface ProposedActivityViewController ()
 
@@ -25,15 +29,30 @@
 @synthesize creatorName;
 @synthesize activityMessage;
 @synthesize activityCreateTime;
+@synthesize activityFooter;
+@synthesize activityComment;
 @synthesize commentsTable;
 @synthesize parent;
 
 #pragma Actions
 
 - (void)postComment {
+	
+	if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to post a comment" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
+	if ([[self.activityComment text] isEqualToString:@""]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Valid" message:@"You must put something in the comment message." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
 	@synchronized(self) {
 		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
-		[comment setObject:@"" forKey:@"message"];
+		[comment setObject:[self.activityComment text] forKey:@"message"];
 		[comment setObject:[PFUser currentUser] forKey:@"user"];
 		//Make sure that we have a good reference to the ProposedActivity
 		if (parent) {
@@ -46,7 +65,9 @@
 		//Try to save the comment, if can't show error message
 		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedComment" object:self];
+				[self getProposedActivityHistory];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
 			}
 			else if (error) {
 				NSString *errorMessage = @"An unknown error occurred while posting event.";
@@ -55,8 +76,6 @@
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
 			}
-			
-			[self.navigationController popViewControllerAnimated:YES];
 		}];
 	}
 	
@@ -97,6 +116,14 @@
 	
 }
 
+#pragma mark - Helper Methods 
+
+- (NSString *)getFormattedStringForDate:(NSDate *)date {
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:@"hh:mm a MM/dd/yy"];
+	return [formatter stringFromDate:date];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,9 +161,13 @@
 	[cell.userPicture.layer setBorderWidth:4];
 	
 	//Set cell text
-	cell.activityMessage.text = [currentPA objectForKey:@"message"];
+	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[currentPA objectForKey:@"message"]];
+	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+	[attStr setTextColor:[UIColor whiteColor]];
+	
+	cell.activityMessage.attributedText = attStr;
 	cell.userName.text = [user objectForKey:@"username"];
-	cell.timeAgoLabel.text = @"";
+	cell.timeAgoLabel.text = [self getFormattedStringForDate:[currentPA createdAt]];
 	
     return cell;
 }
@@ -156,6 +187,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return kHeaderHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+	return kFooterHeight;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -185,12 +220,13 @@
 	[attStr setTextColor:[UIColor whiteColor]];
 	activityMessage.attributedText = attStr;
 	
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setFormatterBehavior:NSDateFormatterMediumStyle];
-	
-	//activityCreateTime.text = [formatter stringFromDate:[parent createdAt]];
+	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
 	
 	return activityHeader;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+	return activityFooter;
 }
 
 #pragma mark - UITableViewDataSource
@@ -198,6 +234,39 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UITextField Delegate
+
+//Move the text fields up so that the keyboard does not cover them
+- (void) animateTextField:(UITextField*)textField Up:(BOOL)up {
+    
+    int movement = (up ? -kTextFieldMoveDistance : kTextFieldMoveDistance);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: kTextFieldAnimationDuration];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+	[self animateTextField:textField Up:YES];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+	[self animateTextField:textField Up:NO];
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	
+	if ([textField isEqual:self.activityComment]) {
+		[self postComment];
+	}
+	
+	return NO;
 }
 
 #pragma mark - View Lifecycle
@@ -232,6 +301,8 @@
 	[self setCreatorName:nil];
 	[self setActivityMessage:nil];
 	[self setActivityCreateTime:nil];
+	[self setActivityFooter:nil];
+	[self setActivityComment:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

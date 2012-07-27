@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet OHAttributedLabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *activityCreateTime;
 
+@property (strong, nonatomic) IBOutlet UIView *activityFooter;
+@property (weak, nonatomic) IBOutlet UITextField *activityComment;
+
 @property (weak, nonatomic) IBOutlet UITableView *commentsTable;
 @property (nonatomic, retain) PFObject *parent;
 

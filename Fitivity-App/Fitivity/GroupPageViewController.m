@@ -9,6 +9,7 @@
 #import "GroupPageViewController.h"
 #import "LocationMapViewController.h"
 #import "NSError+FITParseUtilities.h"
+#import "NSAttributedString+Attributes.h"
 #import "GroupMembersViewController.h"
 #import "CreateProposeActivityViewController.h"
 #import "ProposedActivityViewController.h"
@@ -267,7 +268,10 @@
 	[cell.userPicture.layer setBorderWidth:4];
 	
 	//Set cell text
-	cell.activityMessage.text = [currentPA objectForKey:@"activityMessage"];
+	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[currentPA objectForKey:@"activityMessage"]];
+	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+	[attStr setTextColor:[UIColor whiteColor]];
+	cell.activityMessage.attributedText = attStr;
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
 	
