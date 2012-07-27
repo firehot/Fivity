@@ -91,7 +91,7 @@
 						<string key="NSFrame">{{8, 142}, {304, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="972906905"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -126,6 +126,7 @@
 						<string key="NSFrame">{{0, 142}, {320, 225}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="573134580"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="351746061"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -156,6 +157,11 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="487911278"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="745994818">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">GroupMapButtonPressed.png</string>
+						</object>
+						<reference key="IBUISelectedImage" ref="745994818"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">GroupMapButton.png</string>
@@ -181,6 +187,11 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="487911278"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="682146682">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">GroupJoinGroupButtonPressed.png</string>
+						</object>
+						<reference key="IBUISelectedImage" ref="682146682"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">GroupJoinGroupButton.png</string>
@@ -194,7 +205,7 @@
 						<string key="NSFrame">{{141, 38}, {171, 96}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="573134580"/>
+						<reference key="NSNextKeyView" ref="972906905"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -206,6 +217,11 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="487911278"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="930067445">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">GroupProposeButtonPressed.png</string>
+						</object>
+						<reference key="IBUISelectedImage" ref="930067445"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">GroupProposeActivity.png</string>
@@ -389,8 +405,11 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="13.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="14.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="15.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -464,8 +483,11 @@
 			<string key="DarkerBlueBackplateTexture.png">{320, 91}</string>
 			<string key="GroupChallengeButton.png">{300, 32}</string>
 			<string key="GroupJoinGroupButton.png">{197, 42}</string>
+			<string key="GroupJoinGroupButtonPressed.png">{191, 39}</string>
 			<string key="GroupMapButton.png">{192, 98}</string>
+			<string key="GroupMapButtonPressed.png">{192, 95}</string>
 			<string key="GroupProposeActivity.png">{300, 113}</string>
+			<string key="GroupProposeButtonPressed.png">{394, 142}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>

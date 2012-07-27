@@ -181,8 +181,14 @@
 	
 	creatorName.text = [creator objectForKey:@"username"];
 	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[parent objectForKey:@"activityMessage"]];
+	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+	[attStr setTextColor:[UIColor whiteColor]];
 	activityMessage.attributedText = attStr;
 	
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setFormatterBehavior:NSDateFormatterMediumStyle];
+	
+	//activityCreateTime.text = [formatter stringFromDate:[parent createdAt]];
 	
 	return activityHeader;
 }
