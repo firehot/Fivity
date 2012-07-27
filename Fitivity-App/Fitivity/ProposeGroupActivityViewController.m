@@ -20,6 +20,23 @@
 
 #pragma mark - IBAction's 
 
+- (PFObject *)getPARefFromServer {
+	PFObject *ret;
+	
+	PFQuery *query = [PFQuery queryWithClassName:@"ProposedActivity"];
+	[query whereKey:@"creator" equalTo:[PFUser currentUser]];
+	[query whereKey:@"group" equalTo:group];
+	[query whereKey:@"activityMessage" equalTo:[commentField text]];
+	ret = [query getFirstObject];
+	
+	//If for some reason can't find the p.a. return nil
+	if (!ret) {
+		return nil;
+	}
+	
+	return ret;
+}
+
 - (void)postToFeedWithPAID:(NSString *)id {
     @synchronized(self) {
         PFObject *activity = [PFObject objectWithClassName:@"ActivityEvent"];
@@ -27,7 +44,16 @@
         [activity setObject:[NSNumber numberWithInt:1] forKey:@"number"];
         [activity setObject:@"N/A" forKey:@"status"];
         [activity setObject:@"GROUP" forKey:@"type"];
-        [activity setObject:@"" forKey:@"proposedActivity"];
+		
+		//Get a reference to the proposed activity we just created and make sure it is valid
+		PFObject *pa = [self getPARefFromServer];
+		if (pa) {
+			[activity setObject:pa forKey:@"proposedActivity"];
+		}
+		else {
+			[activity setObject:[NSNull null] forKey:@"proposedAcitivity"];
+		}
+        
         //Make sure that we have a good reference to the group
 		if (group) {
 			[activity setObject:self.group forKey:@"group"];
@@ -160,7 +186,7 @@
 	[textField resignFirstResponder];
 	
 	if ([textField isEqual:self.commentField]) {
-		
+		[self post];
 	}
 	
 	return NO;

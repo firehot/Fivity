@@ -15,6 +15,8 @@
 
 @interface ProposeGroupActivityViewController : UIViewController <UITextFieldDelegate> {
 	BOOL isCommentView;
+	
+	PFObject *propActivity;
 }
 
 - (IBAction) textFieldDidUpdate:(id)sender;

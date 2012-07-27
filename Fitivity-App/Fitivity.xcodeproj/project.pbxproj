@@ -73,6 +73,8 @@
 		6C50015015B637CC00029AFD /* UserSettingsYesButtonNormalSelectedPushed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C50014015B637CB00029AFD /* UserSettingsYesButtonNormalSelectedPushed.png */; };
 		6C50015115B637CC00029AFD /* UserSettingsYesButtonNormalSelectedPushed@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C50014115B637CB00029AFD /* UserSettingsYesButtonNormalSelectedPushed@2.png */; };
 		6C50015315B637F500029AFD /* LighterBlueBackplateTexture.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C50015215B637F300029AFD /* LighterBlueBackplateTexture.png */; };
+		6C57B6F015C20BCE000048DD /* ProposedActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B6EF15C20BCE000048DD /* ProposedActivityCell.m */; };
+		6C57B6F315C20BE8000048DD /* ProposedActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */; };
 		6C61768A15B0F24600E74B95 /* NSError+FITParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */; };
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
 		6C7722AF15B1EB670040DB1D /* ChooseActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */; };
@@ -301,6 +303,9 @@
 		6C50014015B637CB00029AFD /* UserSettingsYesButtonNormalSelectedPushed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserSettingsYesButtonNormalSelectedPushed.png; sourceTree = "<group>"; };
 		6C50014115B637CB00029AFD /* UserSettingsYesButtonNormalSelectedPushed@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UserSettingsYesButtonNormalSelectedPushed@2.png"; sourceTree = "<group>"; };
 		6C50015215B637F300029AFD /* LighterBlueBackplateTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LighterBlueBackplateTexture.png; sourceTree = "<group>"; };
+		6C57B6EE15C20BCE000048DD /* ProposedActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProposedActivityCell.h; sourceTree = "<group>"; };
+		6C57B6EF15C20BCE000048DD /* ProposedActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposedActivityCell.m; sourceTree = "<group>"; };
+		6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProposedActivityCell.xib; sourceTree = "<group>"; };
 		6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityViewController.h; sourceTree = "<group>"; };
 		6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityViewController.m; sourceTree = "<group>"; };
 		6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseActivityViewController.xib; path = Fitivity/ChooseActivityViewController.xib; sourceTree = "<group>"; };
@@ -665,6 +670,8 @@
 				6C50011A15B6311800029AFD /* ChooseActivityCell.m */,
 				6CD705E815BB17B6002FFC53 /* GroupMembersCell.h */,
 				6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */,
+				6C57B6EE15C20BCE000048DD /* ProposedActivityCell.h */,
+				6C57B6EF15C20BCE000048DD /* ProposedActivityCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -675,6 +682,7 @@
 				6C7722CC15B209900040DB1D /* ChooseLocationCell.xib */,
 				6C50011D15B6315300029AFD /* ChooseActivityCell.xib */,
 				6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */,
+				6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1241,6 +1249,7 @@
 				6C4E34F215BC499100A6986C /* ProposeGroupActivityViewController.xib in Resources */,
 				F1CF676D15C01E5F0029E100 /* NavigationBarBackplateBlank.png in Resources */,
 				F1CF676E15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png in Resources */,
+				6C57B6F315C20BE8000048DD /* ProposedActivityCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,6 +1308,7 @@
 				6CD705E615BB00AE002FFC53 /* GroupMembersViewController.m in Sources */,
 				6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */,
 				6C4E34F115BC499100A6986C /* ProposeGroupActivityViewController.m in Sources */,
+				6C57B6F015C20BCE000048DD /* ProposedActivityCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

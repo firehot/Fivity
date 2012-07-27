@@ -10,12 +10,15 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "GooglePlacesObject.h"
 
 @interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
     BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel;
-
+	
+	NSMutableArray *results;
+	
 	PFObject *groupMember, *group;
 }
 

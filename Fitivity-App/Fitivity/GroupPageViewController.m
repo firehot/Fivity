@@ -11,8 +11,15 @@
 #import "NSError+FITParseUtilities.h"
 #import "GroupMembersViewController.h"
 #import "ProposeGroupActivityViewController.h"
+#import "ProposedActivityCell.h"
 
 #define kDistanceMileFilter		0.15
+#define kCellHeight				96.0f
+
+#define kMaxDisplayHours        23
+#define kSecondsInMin           60
+#define kSecondsInHour          3600
+#define kSecondsInDay           86400
 
 @interface GroupPageViewController ()
 
@@ -156,8 +163,28 @@
 	}
 }
 
+- (void)attemptGetProposedActivities {
+	@synchronized(self) {
+		PFQuery *query = [PFQuery queryWithClassName:@"ProposedActivity"];
+		[query whereKey:@"group" equalTo:group];
+		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+			if (error) {
+				NSString *errorMessage = @"An unknown error occured while loading activities.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			
+			results = [[NSMutableArray alloc] initWithArray:objects];
+			[self.proposedTable reloadData];
+		}];
+	}
+}
+
 - (void)attemptGetComments {
-	//get comments and activities
+	@synchronized(self) {
+		
+	}
 }
 
 - (void)viewMemebers {
@@ -165,7 +192,38 @@
 	[self.navigationController pushViewController:members animated:YES];
 }
 
-#pragma mark - UIAlertView Delegate 
+//Get the string for the time interval difference
+- (NSString *)getTimeIntervalDifference: (double)diff {
+	NSString *time = @"";
+    NSNumber *num = [NSNumber numberWithDouble:diff];
+    if (([num intValue]/kSecondsInHour) > kMaxDisplayHours) {
+        //show days
+        int days = ([num intValue]/kSecondsInDay < 1) ? 1 : [num intValue]/kSecondsInDay;
+        time = (days == 1) ? [NSString stringWithFormat:@"%i Day Ago", days] : [NSString stringWithFormat:@"%i Days Ago", days];
+    }
+    else if ([num intValue]/kSecondsInHour >= 1){
+        //show hours
+        int hours = ([num intValue]/kSecondsInHour < 1) ? 1 : [num intValue]/kSecondsInHour;
+        time = (hours == 1) ? [NSString stringWithFormat:@"%i Hour Ago", hours] : [NSString stringWithFormat:@"%i Hours Ago", hours];
+    }
+    else {
+        int mins = [num intValue]/kSecondsInMin;
+        time = (mins == 1) ? [NSString stringWithFormat:@"%i Minute Ago", mins] : [NSString stringWithFormat:@"%i Minutes Ago", mins];
+    }
+    return time;
+}
+
+//Calculate what the differece is between when the activity was posted and now
+- (NSString *)getTimeSincePost:(PFObject *)propActivity {
+	
+    NSDate *input = [propActivity objectForKey:@"createdAt"];
+    NSDate *temp = [NSDate date];
+	
+    NSTimeInterval diff = [temp timeIntervalSinceDate:input];
+    return [self getTimeIntervalDifference:diff];
+}
+
+#pragma mark - UIAlertView Delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
@@ -182,18 +240,47 @@
     static NSString *CellIdentifier = @"Cell";
     
     // Dequeue or create a cell of the appropriate type.
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    ProposedActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-
+		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ProposedActivityCell" owner:self options:nil];
+		cell = [nib objectAtIndex:0];
     }
+	
+	//Seperate the objects within a P.A.
+	PFObject *currentPA = [results objectAtIndex:indexPath.row];
+	[currentPA fetchIfNeeded];
+	
+	PFObject *user = [currentPA objectForKey:@"creator"];
+	
+	[user fetchIfNeeded];
+	
+	//Get the image
+	PFFile *pic = [user objectForKey:@"image"];
+	NSData *picData = [pic getData];
+	if (picData) {
+		[cell.userPicture setImage:[UIImage imageWithData:picData]];
+	}
+	else {
+		[cell.userPicture setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
+	}
+	
+	//Style picture
+	[cell.userPicture.layer setCornerRadius:10.0f];
+	[cell.userPicture.layer setMasksToBounds:YES];
+	[cell.userPicture.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+	[cell.userPicture.layer setBorderWidth:4];
+	
+	//Set cell text
+	cell.activityMessage.text = [currentPA objectForKey:@"activityMessage"];
+	cell.userName.text = [user objectForKey:@"username"];
+	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
 	
     return cell;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;//CHANGE TO DYNAMIC VALUE OF # OF GROUPS USER IN
+    return [results count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -201,7 +288,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 80;
+	return kCellHeight;
 }
 
 #pragma mark - UITableViewDataSource 
@@ -224,6 +311,7 @@
 		
 		[self findUserAlreadyJoined];
         [self getGroupReference];
+		[self attemptGetProposedActivities];
         [self.navigationItem setTitle:[self.place name]];
     }
     return self;
@@ -265,7 +353,7 @@
 	self.navigationItem.rightBarButtonItem = members;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetComments) name:@"addedComment" object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetComments) name:@"addedPA" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetProposedActivities) name:@"addedPA" object:nil];
 }
 
 - (void)viewDidUnload {
