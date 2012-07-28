@@ -168,7 +168,7 @@
 					<object class="IBUILabel" id="240123121">
 						<reference key="NSNextResponder" ref="131299995"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{93, 22}, {217, 68}}</string>
+						<string key="NSFrame">{{93, 26}, {217, 58}}</string>
 						<reference key="NSSuperview" ref="131299995"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -247,6 +247,7 @@
 							<int key="IBUIReturnKeyType">9</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
+						<int key="IBUIClearButtonMode">1</int>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
 							<double key="pointSize">14</double>

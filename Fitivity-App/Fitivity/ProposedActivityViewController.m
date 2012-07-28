@@ -34,7 +34,7 @@
 @synthesize commentsTable;
 @synthesize parent;
 
-#pragma Actions
+#pragma mark - Actions
 
 - (void)postComment {
 	
@@ -65,6 +65,7 @@
 		//Try to save the comment, if can't show error message
 		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
+				[self.activityComment setText:@""];
 				[self getProposedActivityHistory];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
@@ -241,13 +242,16 @@
 //Move the text fields up so that the keyboard does not cover them
 - (void) animateTextField:(UITextField*)textField Up:(BOOL)up {
     
-    int movement = (up ? -kTextFieldMoveDistance : kTextFieldMoveDistance);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: kTextFieldAnimationDuration];
-    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-    [UIView commitAnimations];
+	if ([results count] != 0) {
+		int movement = (up ? -kTextFieldMoveDistance : kTextFieldMoveDistance);
+		
+		[UIView beginAnimations: @"anim" context: nil];
+		[UIView setAnimationBeginsFromCurrentState: YES];
+		[UIView setAnimationDuration: kTextFieldAnimationDuration];
+		self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+		[UIView commitAnimations];
+
+	}
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -263,7 +267,6 @@
 	[textField resignFirstResponder];
 	
 	if ([textField isEqual:self.activityComment]) {
-		[self postComment];
 	}
 	
 	return NO;
@@ -284,6 +287,9 @@
 			[self getProposedActivityReference];
 			[self getProposedActivityHistory];
 		}
+		
+		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(postComment)];
+		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;
 }

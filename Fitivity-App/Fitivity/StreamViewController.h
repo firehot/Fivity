@@ -11,17 +11,17 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface StreamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface StreamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate> {
 	
 	NSMutableArray *fetchedQueryItems;
-	NSMutableDictionary *fetchedQueryItemsByObjectID;
 	
-	CLLocationDistance queryRadius;
+	CLLocationManager *locationManager;
 	PFGeoPoint *userGeoPoint;
-	PFQuery *query;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *feedTable;
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 @end

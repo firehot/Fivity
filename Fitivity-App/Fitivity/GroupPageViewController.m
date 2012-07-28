@@ -95,6 +95,13 @@
 	}
 }
 
+- (void)attemptUpdateGroupInfo {
+	@synchronized(self) {
+		//Update group member count & status logic
+		
+	}
+}
+
 - (void)attemptUnjoinGroup {
 	if (![[FConfig instance] connected]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to unjoin a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];

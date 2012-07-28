@@ -203,7 +203,7 @@
 	}
 	
 	locationManager = [[CLLocationManager alloc] init];
-	[locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
+	[locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
 	[locationManager setDelegate:self];
 	
 	return locationManager;
@@ -305,7 +305,9 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
+    [locationManager stopUpdatingLocation];
+	[locationManager setDelegate:nil];
+	locationManager = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

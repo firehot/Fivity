@@ -60,11 +60,6 @@
     hasPickedLocation = NO;
 }
 
-- (void)attemptUpdateGroupInfo {
-	@synchronized(self) {
-		//Update group member count & status logic
-	}
-}
 
 - (void)attemptPostGroupToFeedWithID:(NSString *)id {
 	@synchronized(self) {

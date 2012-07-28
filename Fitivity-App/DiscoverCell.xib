@@ -2,19 +2,19 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.SystemVersion">12A269</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
+		<string key="IBDocument.AppKitVersion">1187</string>
+		<string key="IBDocument.HIToolboxVersion">624.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">1498</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>IBUITableViewCell</string>
+			<string>IBProxyObject</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
-			<string>IBProxyObject</string>
+			<string>IBUITableViewCell</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -65,6 +65,10 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">FeedCellProfilePlaceholderPicture.png</string>
+								</object>
 							</object>
 							<object class="IBUILabel" id="381666310">
 								<reference key="NSNextResponder" ref="656576455"/>
@@ -90,12 +94,12 @@
 								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="232952457">
-									<int key="type">1</int>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="960775047">
+									<int key="type">2</int>
 									<double key="pointSize">14</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="655501900">
-									<string key="NSName">Helvetica</string>
+								<object class="NSFont" key="IBUIFont" id="792208913">
+									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">14</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -118,13 +122,13 @@
 								<reference key="IBUIHighlightedColor" ref="614456599"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
-								<reference key="IBUIFontDescription" ref="232952457"/>
-								<reference key="IBUIFont" ref="655501900"/>
+								<reference key="IBUIFontDescription" ref="960775047"/>
+								<reference key="IBUIFont" ref="792208913"/>
 							</object>
 							<object class="IBUILabel" id="525267604">
 								<reference key="NSNextResponder" ref="656576455"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{20, 74}, {60, 15}}</string>
+								<string key="NSFrame">{{11, 73}, {79, 15}}</string>
 								<reference key="NSSuperview" ref="656576455"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="566230197"/>
@@ -139,6 +143,7 @@
 								<reference key="IBUIHighlightedColor" ref="614456599"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
+								<int key="IBUITextAlignment">1</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1024641847">
 									<int key="type">1</int>
 									<double key="pointSize">12</double>
@@ -280,10 +285,10 @@
 							<reference ref="835877232"/>
 							<reference ref="381666310"/>
 							<reference ref="894854508"/>
-							<reference ref="525267604"/>
 							<reference ref="751105002"/>
 							<reference ref="654218770"/>
 							<reference ref="566230197"/>
+							<reference ref="525267604"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -416,8 +421,9 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="DarkerBlueBackplateTexture.png">{320, 91}</string>
+			<string key="FeedCellProfilePlaceholderPicture.png">{59, 59}</string>
 			<string key="FeedCellWhiteDisclosureIndicator.png">{17, 23}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>
