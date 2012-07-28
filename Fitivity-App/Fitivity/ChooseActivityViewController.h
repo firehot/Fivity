@@ -13,11 +13,7 @@
 
 #import "ChooseActivityHeaderView.h"
 
-@protocol ChooseActivityViewControllerDelegate <NSObject>
-
-- (void)userPickedActivity:(NSString *)activityName;
-
-@end
+@protocol ChooseActivityViewControllerDelegate;
 
 @interface ChooseActivityViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ChooseActivityHeaderViewDelegate> {
 	PFQuery *query;
@@ -28,5 +24,12 @@
 @property (nonatomic, assign) NSInteger openSectionIndex;
 
 @property (nonatomic, assign) id <ChooseActivityViewControllerDelegate> delegate;
+
+@end
+
+@protocol ChooseActivityViewControllerDelegate <NSObject>
+
+- (BOOL)shouldPopViewController:(ChooseActivityViewController *)view;
+- (void)userPickedActivity:(NSString *)activityName;
 
 @end

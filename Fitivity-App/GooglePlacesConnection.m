@@ -56,7 +56,6 @@
     
     NSString* gurl  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=5000&types=%@&sensor=true&key=%@",
                                     centerLat, centerLng, types, [[FConfig instance] getGooglePlacesAPIKey]];
-	NSLog(@"%@",gurl);
     
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl] 
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy 

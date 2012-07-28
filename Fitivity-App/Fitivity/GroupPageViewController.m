@@ -95,10 +95,28 @@
 	}
 }
 
-- (void)attemptUpdateGroupInfo {
+- (void)attemptUpdateGroupInfo:(BOOL)userJoining {
 	@synchronized(self) {
 		//Update group member count & status logic
+		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
+		[query whereKey:@"group" equalTo:group];
+		[query whereKey:@"type" equalTo:@"NORMAL"];
 		
+		PFObject *updateGroup = [query getFirstObject];
+		
+		if (updateGroup) {
+			NSNumber *num = [updateGroup objectForKey:@"number"];
+			if (userJoining) {
+				int temp = [num integerValue] + 1;
+				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+				[updateGroup setObject:@"OLD" forKey:@"status"];
+			}
+			else if ([num integerValue] > 0) {
+				int temp = [num integerValue] - 1;
+				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+			}
+			[updateGroup save];
+		}
 	}
 }
 
@@ -119,6 +137,8 @@
 				[alert show];
 			}
 			if (succeeded) {
+				alreadyJoined = NO;
+				[self attemptUpdateGroupInfo:NO];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 			}
 		}];
@@ -164,6 +184,7 @@
 				[alert show];
 			}
 			if (succeeded) {
+				[self attemptUpdateGroupInfo:YES];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"You are now part of this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];

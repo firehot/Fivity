@@ -14,11 +14,7 @@
 #import "GooglePlacesConnection.h"
 #import "ChooseLocationCell.h"
 
-@protocol ChooseLocationViewControllerDelegate <NSObject>
-
-- (void)userPickedLocation:(GooglePlacesObject *)place;
-
-@end
+@protocol ChooseLocationViewControllerDelegate;
 
 @interface ChooseLocationViewController : PullToRefreshTableViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,  CLLocationManagerDelegate, GooglePlacesConnectionDelegate, ChooseLocationCellDelegate> {
 	
@@ -46,5 +42,13 @@
 @property (nonatomic, retain) NSMutableArray    *locationsFilterResults;
 
 @property (nonatomic, assign) id <ChooseLocationViewControllerDelegate> delegate;
+
+@end
+
+
+@protocol ChooseLocationViewControllerDelegate <NSObject>
+
+- (BOOL)shouldPopViewControllerFromNavController:(ChooseLocationViewController *)view;
+- (void)userPickedLocation:(GooglePlacesObject *)place;
 
 @end

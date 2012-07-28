@@ -41,6 +41,10 @@
 		return;
 	}
 	
+	if (!userProfile) {
+		userProfile = [PFUser currentUser];
+	}
+	
 	PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
 	[query addDescendingOrder:@"updatedAt"];
 	[query whereKey:@"user" equalTo:userProfile];

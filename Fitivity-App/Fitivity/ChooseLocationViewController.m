@@ -187,7 +187,12 @@
 		[delegate userPickedLocation:place]; //Tell the delegate what was selected
 	}
 	
-	[self.navigationController popViewControllerAnimated:YES];
+	if ([delegate respondsToSelector:@selector(shouldPopViewControllerFromNavController:)]) {
+		if ([delegate shouldPopViewControllerFromNavController:self]) {
+			[self.navigationController popViewControllerAnimated:YES];
+		}
+	}
+	
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

@@ -212,7 +212,12 @@
 		[delegate userPickedActivity:selected];
 	}
 	
-	[self.navigationController popViewControllerAnimated:YES];
+	if ([delegate respondsToSelector:@selector(shouldPopViewController:)]) {
+		if ([delegate shouldPopViewController:self]) {
+			[self.navigationController popViewControllerAnimated:YES];
+		}
+	}
+	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

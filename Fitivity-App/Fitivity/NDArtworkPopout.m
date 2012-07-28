@@ -71,10 +71,10 @@
         self.artworkView = [[UIImageView alloc] initWithImage:artworkImage];
         self.artworkView.frame = CGRectMake(40, 115, kArtworkPopoutMaxWidth, kArtworkPopoutMaxHeight);
         
-		[self.artworkView.layer setCornerRadius:10.0f];
+		[self.artworkView.layer setCornerRadius:20.0f];
 		[self.artworkView.layer setMasksToBounds:YES];
 		[self.artworkView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-		[self.artworkView.layer setBorderWidth:5.5];
+		[self.artworkView.layer setBorderWidth:8];
 		
         self.dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.dismissButton.frame = self.frame;

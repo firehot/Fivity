@@ -133,13 +133,12 @@
 		if (hasPickedActivity && hasPickedLocation) {
 			
 			// MAKE SURE THIS IS UNCOMMENTED OUT FOR FINAL TESTING!!!
-			/*
-			 if (![[FConfig instance] canCreateGroup]) {
-			 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max (2) number of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			 [alert show];
-			 [self resetState];
-			 return;
-			 }*/
+			if (![[FConfig instance] canCreateGroup]) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max number (2) of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+				[self resetState];
+				return;
+			}
 						
 			//Check if the group has already been created
 			if (![self groupAlreadyExists]) {
@@ -176,7 +175,6 @@
 					[self showGroupViewWithAutoJoin:NO];
 				}
 				else {
-					[self attemptUpdateGroupInfo];
 					[self showGroupViewWithAutoJoin:YES];
 				}
 				
@@ -195,6 +193,10 @@
     [self attemptCreateGroup];
 }
 
+- (BOOL)shouldPopViewController:(ChooseActivityViewController *)view {
+	return !(hasPickedActivity && hasPickedLocation);
+}
+
 #pragma mark - ChoosLocationViewController Delegate
 
 - (void)userPickedLocation:(GooglePlacesObject *)place {
@@ -202,6 +204,10 @@
 	[chooseLocationButton setEnabled:NO];
     selectedPlace = place;
     [self attemptCreateGroup];
+}
+
+- (BOOL)shouldPopViewControllerFromNavController:(ChooseLocationViewController *)view {
+	return !(hasPickedActivity && hasPickedLocation);
 }
 
 #pragma mark - View Lifecycle
@@ -217,6 +223,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+	if (![PFUser currentUser]) {
+		NSLog(@"No user");
+	}
+	
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	hasPickedActivity = NO; //Nothing picked when loaded
 	hasPickedLocation = NO;
