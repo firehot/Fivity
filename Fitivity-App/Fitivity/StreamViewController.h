@@ -13,7 +13,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface StreamViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate> {
+#import "PullToRefreshTableViewController.h"
+
+@interface StreamViewController : PullToRefreshTableViewController <UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate> {
 	
 	NSMutableArray *fetchedQueryItems;
 	
@@ -21,7 +23,6 @@
 	PFGeoPoint *userGeoPoint;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *feedTable;
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
 @end

@@ -30,8 +30,6 @@
 
 @implementation StreamViewController
 
-@synthesize feedTable;
-
 #pragma mark - Helper Methods
 
 - (void)attemptFeedQuery {
@@ -51,7 +49,7 @@
 			}
 			else {
 				fetchedQueryItems = [[NSMutableArray alloc] initWithArray:results];
-				[self.feedTable reloadData];
+				[self.tableView reloadData];
 			}
 		}];
 	}
@@ -165,6 +163,20 @@
         return NO;
     }
     return YES;
+}
+
+#pragma mark - PullToRefresh
+
+- (void)reloadTableViewDataSource {
+    
+    [[self locationManager] startUpdatingLocation];
+    
+	[super performSelector:@selector(dataSourceDidFinishLoadingNewData) withObject:nil afterDelay:3.0];
+}
+
+- (void)dataSourceDidFinishLoadingNewData {
+    [refreshHeaderView setCurrentDate];  //  should check if data reload was successful
+    [super dataSourceDidFinishLoadingNewData];
 }
 
 #pragma mark - UITableViewDelegate 
