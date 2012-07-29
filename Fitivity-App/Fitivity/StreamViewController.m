@@ -10,6 +10,9 @@
 #import "DiscoverCell.h"
 #import "OHAttributedLabel.h"
 #import "NSAttributedString+Attributes.h"
+#import "GooglePlacesObject.h"
+#import "GroupPageViewController.h"
+#import "ProposedActivityViewController.h"
 
 #define kFeedLimit			20
 #define kCellHeight			92.0f
@@ -225,6 +228,42 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     PFObject *object = [fetchedQueryItems objectAtIndex:indexPath.row];
+	
+	//Get the data if it hasn't been pulled from the server yet
+	[object fetchIfNeeded];
+	
+	NSString *typeString = [object objectForKey:@"type"];
+	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : kCellTypePA;
+	
+	if (!object) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading" message:@"Cannot load this activity at this time" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
+	PFObject *group = [object objectForKey:@"group"];
+	[group fetchIfNeeded];
+	
+	switch (type) {
+		case kCellTypeGroup: {
+			PFGeoPoint *point = [group objectForKey:@"location"];
+			GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
+			GroupPageViewController *groupPage = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place
+																						 activity:[group objectForKey:@"activity"] challenge:NO autoJoin:NO];
+			[self.navigationController pushViewController:groupPage animated:YES];
+			break;
+		}
+		case kCellTypePA: {
+			PFObject *selectedPA = [object objectForKey:@"proposedActivity"];
+			[selectedPA fetchIfNeeded];
+			ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:selectedPA];
+			
+			[self.navigationController pushViewController:pa animated:YES];
+			break;
+		}
+		default:
+			break;
+	}
 	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

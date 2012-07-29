@@ -222,10 +222,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-	if (![PFUser currentUser]) {
-		NSLog(@"No user");
-	}
 	
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	hasPickedActivity = NO; //Nothing picked when loaded

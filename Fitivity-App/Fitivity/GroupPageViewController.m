@@ -106,14 +106,20 @@
 		
 		if (updateGroup) {
 			NSNumber *num = [updateGroup objectForKey:@"number"];
-			if (userJoining) {
+			if (userJoining && !autoJoin) {
+				//User is joining the group
 				int temp = [num integerValue] + 1;
 				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
 				[updateGroup setObject:@"OLD" forKey:@"status"];
 			}
-			else if ([num integerValue] > 0) {
+			else if (!userJoining && [num integerValue] > 0) {
+				//User is unjoining from the group
 				int temp = [num integerValue] - 1;
 				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+			}
+			else {
+				//User has just created and autojoined the group
+				return;
 			}
 			[updateGroup save];
 		}
@@ -129,7 +135,7 @@
 	
 	//Delete the member from the group
 	@synchronized(self) {
-		[group deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		[groupMember deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			if (error) {
 				NSString *errorMessage = @"Something went wrong, and you weren't unjoined from this group.";
 				errorMessage = [error userFriendlyParseErrorDescription:YES];

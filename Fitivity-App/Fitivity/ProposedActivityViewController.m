@@ -50,6 +50,12 @@
 		return;
 	}
 	
+	if (![self userIsPartOfParentGroup]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not a Member" message:@"You must be part of a group in order to comment on a proposed activity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
 	@synchronized(self) {
 		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
 		[comment setObject:[self.activityComment text] forKey:@"message"];
@@ -115,6 +121,28 @@
 		}];
 	}
 	
+}
+
+- (BOOL)userIsPartOfParentGroup {
+	BOOL ret = NO;
+	
+	//Get the P.A's parent group
+	PFObject *parentGroup = [parent objectForKey:@"group"];
+	[parentGroup fetchIfNeeded];
+	
+	//Search for the user in the group's members
+	PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
+	[query whereKey:@"user" equalTo:[PFUser currentUser]];
+	[query whereKey:@"activity" equalTo:[parentGroup objectForKey:@"activity"]];
+	[query whereKey:@"place" equalTo:[parentGroup objectForKey:@"place"]];
+	
+	//If we get a result we know the user is part of the group
+	PFObject *result = [query getFirstObject];
+	if (result) {
+		ret = YES;
+	}
+	
+	return ret;
 }
 
 #pragma mark - Helper Methods 
