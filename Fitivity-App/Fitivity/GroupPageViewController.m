@@ -191,6 +191,7 @@
 			}
 			if (succeeded) {
 				[self attemptUpdateGroupInfo:YES];
+				alreadyJoined = YES;
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"You are now part of this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
@@ -386,7 +387,14 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.activityLabel.text = activity;
 	
-	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"GroupMembersButton.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewMemebers)];
+	
+	UIImage *memberImage = [UIImage imageNamed:@"GroupMembersButton.png"];
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+	[button setImage:memberImage forState:UIControlStateNormal];
+	[button addTarget:self action:@selector(viewMemebers) forControlEvents:UIControlEventTouchUpInside];
+	button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
+	
+	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.navigationItem.rightBarButtonItem = members;
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetProposedActivities) name:@"addedPA" object:nil];

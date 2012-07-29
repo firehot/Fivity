@@ -21,6 +21,7 @@
 - (BOOL)connected;
 - (BOOL)shouldLogIn;
 - (BOOL)canCreateGroup;
+- (BOOL)doesHavePushNotifications;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
@@ -29,6 +30,7 @@
 - (NSString *)getGooglePlacesAPIKey;
 
 - (void)showLogoNavBar:(BOOL)status;
+- (void)setDoesHaveNotifications:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;
 
 @end

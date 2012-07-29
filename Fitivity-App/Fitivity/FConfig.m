@@ -15,6 +15,8 @@
 #define kGooglePlacesAPIKey	@"AIzaSyAsh5BYpzSxUXX4a1xYqm6FZTQle52l3L4" 
 #define kGoogleAnalyticsID	@""
 
+#define kPushStatus			@"status"
+
 #define kMaxCreatesPerDay   2
 
 @implementation FConfig
@@ -83,12 +85,18 @@ static FConfig *instance;
 }
 
 - (void)showLogoNavBar:(BOOL)status {
+		
 	if (status) {
 		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplate.png"] forBarMetrics:UIBarMetricsDefault];
 	}
 	else {
 		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplateBlank.png"] forBarMetrics:UIBarMetricsDefault];
 	}
+}
+
+- (void)setDoesHaveNotifications:(BOOL)status {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:status forKey:kPushStatus];
 }
 
 #pragma mark - BOOL methods
@@ -122,6 +130,11 @@ static FConfig *instance;
 - (BOOL)canCreateGroup {
     //If the user hasn't reached their limit let them create one
     return ![self userHasReachedCreationLimitForDay:[NSDate date]];
+}
+
+- (BOOL)doesHavePushNotifications {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	return [defaults boolForKey:kPushStatus];
 }
 
 #pragma mark - NSString methods 

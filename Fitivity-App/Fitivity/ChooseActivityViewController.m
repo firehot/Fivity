@@ -32,6 +32,7 @@
 			query = [PFQuery queryWithClassName:@"Activity"];
 			[query setCachePolicy:kPFCachePolicyNetworkElseCache]; //If the user isn't connected, it will look on the device disk for a cached version
 			[query orderByAscending:@"category"];
+			[query addAscendingOrder:@"name"];
 			[query setLimit:200]; //Defaults to 100, just incase ones are added later on set to 200
 			[query whereKeyExists:@"category"];
 			[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

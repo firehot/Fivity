@@ -67,11 +67,21 @@
     [PFPush storeDeviceToken:newDeviceToken];
     // Subscribe to the global broadcast channel.
     [PFPush subscribeToChannelInBackground:@""];
+	
+	//Save the push status for the settings gui
+	[[FConfig instance] setDoesHaveNotifications:YES];
 }
 
 //If the user has the app open when the push goes out
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];
+}
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if ([error code] == 3010) {
+        NSLog(@"Push notifications don't work in the simulator!");
+    } else {
+        NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@", error);
+    }
 }
 
 #pragma mark - Application

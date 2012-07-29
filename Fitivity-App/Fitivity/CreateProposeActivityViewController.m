@@ -105,7 +105,8 @@
 			[self.navigationController popViewControllerAnimated:YES];
 		}];
         
-        [self postToFeedWithPAID:[activity objectId]];
+		//Wait before trying to post to feed to ensure that the PA is created in the DB 
+		[self performSelector:@selector(postToFeedWithPAID:) withObject:[activity objectId] afterDelay:3];
 	}
 }
 

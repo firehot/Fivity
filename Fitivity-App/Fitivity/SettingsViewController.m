@@ -27,6 +27,8 @@
 @synthesize facebookLinkButton;
 @synthesize accountInfoTable;
 @synthesize footerView;
+@synthesize onButton;
+@synthesize offButton;
 
 #pragma mark - IBAction's 
 
@@ -72,6 +74,37 @@
 				[alert show];
 			}
 		}];
+	}
+}
+
+- (IBAction)turnOnPushNotifications:(id)sender {
+	
+	[[FConfig instance] setDoesHaveNotifications:YES];
+	
+	[self.offButton setEnabled:YES];
+	[self.onButton setEnabled:NO];
+}
+
+- (IBAction)turnOffPushNotifications:(id)sender {
+	
+	[[FConfig instance] setDoesHaveNotifications:NO];
+	
+	[self.offButton setEnabled:NO];
+	[self.onButton setEnabled:YES];
+}
+
+#pragma mark - Helper methods 
+
+- (void)setUpNotificationGUI {
+	BOOL status = [[FConfig instance] doesHavePushNotifications];
+	
+	if (status) {
+		[self.offButton setEnabled:YES];
+		[self.onButton setEnabled:NO];
+	}
+	else {
+		[self.offButton setEnabled:NO];
+		[self.onButton setEnabled:YES];
 	}
 }
 
@@ -283,12 +316,15 @@
     [super viewDidLoad];
 	
 	[facebookLinkButton.titleLabel setText:([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) ? @"Unlink Facebook" : @"Link with Facebook"];
+	[self setUpNotificationGUI];
 }
 
 - (void)viewDidUnload {
 	[self setFacebookLinkButton:nil];
 	[self setAccountInfoTable:nil];
     [self setFooterView:nil];
+	[self setOnButton:nil];
+	[self setOffButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
