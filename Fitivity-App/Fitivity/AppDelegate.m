@@ -44,8 +44,13 @@
 	//Present the opening view
 	[self.tabBarView presentModalViewController:self.openingView animated:NO];
 	
+	//Register for push notifications
+	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+	
     return YES;
 }
+
+#pragma mark - Facebook login handling 
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [PFFacebookUtils handleOpenURL:url];
@@ -54,6 +59,22 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 	return [PFFacebookUtils handleOpenURL:url]; 
 }
+
+#pragma mark - Notification handling
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
+    // Tell Parse about the device token.
+    [PFPush storeDeviceToken:newDeviceToken];
+    // Subscribe to the global broadcast channel.
+    [PFPush subscribeToChannelInBackground:@""];
+}
+
+//If the user has the app open when the push goes out
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
+}
+
+#pragma mark - Application
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
