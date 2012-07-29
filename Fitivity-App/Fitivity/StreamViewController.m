@@ -106,6 +106,7 @@
 		return;
 	}
 	
+	//Get the PA and the parent group 
 	PFObject *pa = [object objectForKey:@"proposedActivity"];
 	PFObject *group = [object objectForKey:@"group"];
 	
@@ -128,11 +129,35 @@
 	}
 }
 
-- (void)configureGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object { 
+- (void)configureGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object {
 	if (!object) {
 		return;
 	}
 	
+	int numberOfMembers = [[object objectForKey:@"number"] integerValue];
+	
+	[cell.titleLabel setText:[NSString stringWithFormat:@"%i people are doing", numberOfMembers]];
+	[cell.pictureView setImage:[UIImage imageNamed:@"FeedCellActiveGroupActivityIconImage.png"]];
+	
+	//Get the group reference
+	PFObject *group = [object objectForKey:@"group"];
+	
+	if (group) {
+		[group fetchIfNeeded];
+		
+		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
+		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
+		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
+		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
+	}
+}
+
+- (void)configureNewGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object {
+	if (!object) {
+		return;
+	}
+	
+	//Get the grour reference and the user that created it
 	PFObject *group = [object objectForKey:@"group"];
 	PFUser *user = [object objectForKey:@"creator"];
 	
@@ -159,7 +184,7 @@
 
 - (BOOL) isValidDistance:(CLLocation *)newLocation oldLocation:(CLLocation *)oldLocation {
     double distance = [newLocation distanceFromLocation:oldLocation] * kMetersToMiles;
-    if (distance > .65) {
+    if (distance > .5) {
         return NO;
     }
     return YES;
@@ -169,7 +194,7 @@
 
 - (void)reloadTableViewDataSource {
     
-    [[self locationManager] startUpdatingLocation];
+    [self attemptFeedQuery];
     
 	[super performSelector:@selector(dataSourceDidFinishLoadingNewData) withObject:nil afterDelay:3.0];
 }
@@ -191,13 +216,25 @@
     }
     
 	PFObject *currentObject = [fetchedQueryItems objectAtIndex:indexPath.row];
-	NSString *typeString = [currentObject objectForKey:@"type"];
+	[currentObject fetchIfNeeded];
 	
+	//Get the type of the activity
+	NSString *typeString = [currentObject objectForKey:@"type"];
 	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : kCellTypePA;
+	int numberOfMemebers = 0;
+	
+	if (type == kCellTypeGroup) {
+		numberOfMemebers = [[currentObject objectForKey:@"number"] integerValue];
+	}
 	
 	switch (type) {
 		case kCellTypeGroup:
-			[self configureGroupCell:cell withObject:currentObject];
+			if (numberOfMemebers > 1) {
+				[self configureGroupCell:cell withObject:currentObject];	//Configure for multiple people doing this
+			}
+			else {
+				[self configureNewGroupCell:cell withObject:currentObject];	//New event with only one user
+			}
 			break;
 		case kCellTypePA:
 			[self configurePACell:cell withObject:currentObject];

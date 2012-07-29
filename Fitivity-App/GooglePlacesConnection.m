@@ -54,7 +54,7 @@
     
     types = [types gtm_stringByEscapingForURLArgument];
     
-    NSString* gurl  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=5000&types=%@&sensor=true&key=%@",
+    NSString* gurl  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=10000&types=%@&sensor=true&key=%@",
                                     centerLat, centerLng, types, [[FConfig instance] getGooglePlacesAPIKey]];
     
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl] 
@@ -86,7 +86,7 @@
     query = [query gtm_stringByEscapingForURLArgument];
     types = [types gtm_stringByEscapingForURLArgument];
     
-    NSString *gurl = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=1000&types=%@&name=%@&sensor=true&key=%@",centerLat, centerLng, types, query, [[FConfig instance] getGooglePlacesAPIKey]];
+    NSString *gurl = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=10000&types=%@&name=%@&sensor=true&key=%@",centerLat, centerLng, types, query, [[FConfig instance] getGooglePlacesAPIKey]];
     
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     
