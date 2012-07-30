@@ -115,6 +115,12 @@
 	if (![[FConfig instance] connected]) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to post this." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
+		return;
+	}
+	else if ([[commentField text] isEqualToString:@""]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Nothing There!" message:@"You must write something!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
 	}
 	else {
 		[self postProposedActivity];
