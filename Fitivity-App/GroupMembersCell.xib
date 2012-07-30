@@ -46,12 +46,16 @@
 								<string key="NSFrameSize">{330, 95}</string>
 								<reference key="NSSuperview" ref="269341807"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="643234122"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">DarkerBlueBackplateTexture.png</string>
+								</object>
+								<object class="NSCustomResource" key="IBUIHighlightedImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">DarkerBlueBackplateTexturePushed.png</string>
 								</object>
 							</object>
 							<object class="IBUIImageView" id="643234122">
@@ -71,6 +75,7 @@
 								<string key="NSFrame">{{108, 37}, {192, 26}}</string>
 								<reference key="NSSuperview" ref="269341807"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -202,7 +207,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">8</int>
+			<int key="maxID">10</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -238,10 +243,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">DarkerBlueBackplateTexture.png</string>
-			<string key="NS.object.0">{320, 91}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="DarkerBlueBackplateTexture.png">{320, 91}</string>
+			<string key="DarkerBlueBackplateTexturePushed.png">{320, 91}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>

@@ -48,11 +48,14 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="835877232"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">DarkerBlueBackplateTexture.png</string>
+								</object>
+								<object class="NSCustomResource" key="IBUIHighlightedImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">DarkerBlueBackplateTexturePushed.png</string>
 								</object>
 							</object>
 							<object class="IBUIImageView" id="835877232">
@@ -88,10 +91,7 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
-								<object class="NSColor" key="IBUIHighlightedColor" id="614456599">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
-								</object>
+								<reference key="IBUIHighlightedColor" ref="230342750"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="960775047">
@@ -119,7 +119,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Activity</string>
 								<reference key="IBUITextColor" ref="230342750"/>
-								<reference key="IBUIHighlightedColor" ref="614456599"/>
+								<reference key="IBUIHighlightedColor" ref="230342750"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<reference key="IBUIFontDescription" ref="960775047"/>
@@ -140,7 +140,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Time</string>
 								<reference key="IBUITextColor" ref="230342750"/>
-								<reference key="IBUIHighlightedColor" ref="614456599"/>
+								<reference key="IBUIHighlightedColor" ref="230342750"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">1</int>
@@ -160,6 +160,7 @@
 								<string key="NSFrame">{{254, 73}, {60, 15}}</string>
 								<reference key="NSSuperview" ref="656576455"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -168,7 +169,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">Miles</string>
 								<reference key="IBUITextColor" ref="230342750"/>
-								<reference key="IBUIHighlightedColor" ref="614456599"/>
+								<reference key="IBUIHighlightedColor" ref="230342750"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<reference key="IBUIFontDescription" ref="1024641847"/>
@@ -421,6 +422,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="DarkerBlueBackplateTexture.png">{320, 91}</string>
+			<string key="DarkerBlueBackplateTexturePushed.png">{320, 91}</string>
 			<string key="FeedCellProfilePlaceholderPicture.png">{59, 59}</string>
 			<string key="FeedCellWhiteDisclosureIndicator.png">{17, 23}</string>
 		</dictionary>
