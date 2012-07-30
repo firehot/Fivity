@@ -91,7 +91,6 @@
 						<string key="NSFrame">{{8, 142}, {304, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -277,6 +276,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">joinButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="194896560"/>
+					</object>
+					<int key="connectionID">25</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="972906905"/>
 						<reference key="destination" ref="372490531"/>
@@ -407,7 +414,7 @@
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="13.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="14.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="14.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="15.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="20.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -419,7 +426,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">24</int>
+			<int key="maxID">25</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -452,12 +459,17 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="activityLabel">UILabel</string>
+						<string key="joinButton">UIButton</string>
 						<string key="proposedTable">UITableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="activityLabel">
 							<string key="name">activityLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="joinButton">
+							<string key="name">joinButton</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="proposedTable">
 							<string key="name">proposedTable</string>
@@ -482,11 +494,11 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="DarkerBlueBackplateTexture.png">{320, 91}</string>
 			<string key="GroupChallengeButton.png">{300, 32}</string>
-			<string key="GroupJoinGroupButton.png">{197, 42}</string>
+			<string key="GroupJoinGroupButton.png">{191, 39}</string>
 			<string key="GroupJoinGroupButtonPressed.png">{191, 39}</string>
 			<string key="GroupMapButton.png">{192, 98}</string>
 			<string key="GroupMapButtonPressed.png">{192, 95}</string>
-			<string key="GroupProposeActivity.png">{300, 113}</string>
+			<string key="GroupProposeActivity.png">{394, 147}</string>
 			<string key="GroupProposeButtonPressed.png">{394, 142}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1498</string>

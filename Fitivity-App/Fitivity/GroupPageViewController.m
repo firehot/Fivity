@@ -29,6 +29,7 @@
 
 @implementation GroupPageViewController
 
+@synthesize joinButton;
 @synthesize activityLabel;
 @synthesize proposedTable;
 @synthesize place, activity;
@@ -50,7 +51,7 @@
 	
 	if (alreadyJoined) {
 		//Show the create proposed activity view controller
-		CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"ProposeGroupActivityViewController" bundle:nil];
+		CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"CreateProposeActivityViewController" bundle:nil];
 		[prop setGroup:group];
 		[self.navigationController pushViewController:prop animated:YES];
 	}
@@ -79,6 +80,17 @@
 	group = [query getFirstObject];
 }
 
+- (void)updateJoiningGUI {
+	if (alreadyJoined) {
+		[joinButton setImage:[UIImage imageNamed:@"GroupUnjoinGroupButton.png"] forState:UIControlStateNormal];
+		[joinButton setImage:[UIImage imageNamed:@"GroupUnjoinGroupButtonPressed.png"] forState:UIControlStateHighlighted];
+	}
+	else {
+		[joinButton setImage:[UIImage imageNamed:@"GroupJoinGroupButton.png"] forState:UIControlStateNormal];
+		[joinButton setImage:[UIImage imageNamed:@"GroupJoinGroupButtonPressed.png"] forState:UIControlStateHighlighted];
+	}
+}
+
 - (void)findUserAlreadyJoined {
 	alreadyJoined = autoJoin;
 	
@@ -93,6 +105,8 @@
 		alreadyJoined = YES;
 		groupMember = result; //Can use this later if they are unjoining
 	}
+	
+	[self updateJoiningGUI];
 }
 
 - (void)attemptUpdateGroupInfo:(BOOL)userJoining {
@@ -404,6 +418,7 @@
     [self setActivityLabel:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+	[self setJoinButton:nil];
     [super viewDidUnload];
 }
 

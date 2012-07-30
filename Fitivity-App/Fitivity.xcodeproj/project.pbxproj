@@ -45,6 +45,10 @@
 		6C0F356C15C3327100ECDD6F /* GroupJoinGroupButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C0F356A15C3327100ECDD6F /* GroupJoinGroupButton.png */; };
 		6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3E596915B7A447009E2A00 /* SettingsViewController.m */; };
 		6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */; };
+		6C42413B15C742F7005B781D /* GroupUnjoinGroupButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42413715C742F7005B781D /* GroupUnjoinGroupButton.png */; };
+		6C42413C15C742F7005B781D /* GroupUnjoinGroupButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42413815C742F7005B781D /* GroupUnjoinGroupButton@2x.png */; };
+		6C42413D15C742F7005B781D /* GroupUnjoinGroupButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42413915C742F7005B781D /* GroupUnjoinGroupButtonPressed.png */; };
+		6C42413E15C742F7005B781D /* GroupUnjoinGroupButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42413A15C742F7005B781D /* GroupUnjoinGroupButtonPressed@2x.png */; };
 		6C42C4F115B9F79C00ACB549 /* GroupMapButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4EF15B9F79C00ACB549 /* GroupMapButton.png */; };
 		6C42C4F215B9F79C00ACB549 /* GroupMembersButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */; };
 		6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */; };
@@ -277,6 +281,10 @@
 		6C3E596815B7A447009E2A00 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6C3E596915B7A447009E2A00 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Fitivity/SettingsViewController.xib; sourceTree = "<group>"; };
+		6C42413715C742F7005B781D /* GroupUnjoinGroupButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupUnjoinGroupButton.png; sourceTree = "<group>"; };
+		6C42413815C742F7005B781D /* GroupUnjoinGroupButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GroupUnjoinGroupButton@2x.png"; sourceTree = "<group>"; };
+		6C42413915C742F7005B781D /* GroupUnjoinGroupButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupUnjoinGroupButtonPressed.png; sourceTree = "<group>"; };
+		6C42413A15C742F7005B781D /* GroupUnjoinGroupButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GroupUnjoinGroupButtonPressed@2x.png"; sourceTree = "<group>"; };
 		6C42C4EF15B9F79C00ACB549 /* GroupMapButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupMapButton.png; sourceTree = "<group>"; };
 		6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupMembersButton.png; sourceTree = "<group>"; };
 		6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupChallengeButton.png; sourceTree = "<group>"; };
@@ -903,6 +911,10 @@
 		6CC7FB1815AFB67600D21AA9 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				6C42413715C742F7005B781D /* GroupUnjoinGroupButton.png */,
+				6C42413815C742F7005B781D /* GroupUnjoinGroupButton@2x.png */,
+				6C42413915C742F7005B781D /* GroupUnjoinGroupButtonPressed.png */,
+				6C42413A15C742F7005B781D /* GroupUnjoinGroupButtonPressed@2x.png */,
 				6C0F356015C3310D00ECDD6F /* GroupJoinGroupButtonPressed.png */,
 				6C0F356115C3310D00ECDD6F /* GroupMapButtonPressed.png */,
 				6C0F356215C3310D00ECDD6F /* GroupMembersButtonPressed.png */,
@@ -1275,6 +1287,10 @@
 				6C0F356715C3310D00ECDD6F /* GroupProposeButtonPressed.png in Resources */,
 				6C0F356B15C3327100ECDD6F /* GroupProposeActivity.png in Resources */,
 				6C0F356C15C3327100ECDD6F /* GroupJoinGroupButton.png in Resources */,
+				6C42413B15C742F7005B781D /* GroupUnjoinGroupButton.png in Resources */,
+				6C42413C15C742F7005B781D /* GroupUnjoinGroupButton@2x.png in Resources */,
+				6C42413D15C742F7005B781D /* GroupUnjoinGroupButtonPressed.png in Resources */,
+				6C42413E15C742F7005B781D /* GroupUnjoinGroupButtonPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

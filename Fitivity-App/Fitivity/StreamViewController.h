@@ -21,6 +21,8 @@
 	
 	CLLocationManager *locationManager;
 	PFGeoPoint *userGeoPoint;
+	
+	BOOL alreadyLoading;
 }
 
 @property (nonatomic, retain) CLLocationManager *locationManager;

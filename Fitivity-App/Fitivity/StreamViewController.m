@@ -34,6 +34,8 @@
 
 - (void)attemptFeedQuery {
 	@synchronized(self) {
+		alreadyLoading = YES;
+		
 		//Need to find all groups/proposed activities that are close by
 		PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
 		[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
@@ -50,6 +52,7 @@
 			else {
 				fetchedQueryItems = [[NSMutableArray alloc] initWithArray:results];
 				[self.tableView reloadData];
+				alreadyLoading = NO;
 			}
 		}];
 	}
@@ -328,7 +331,10 @@
 	[locationManager stopUpdatingLocation];
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
-	[self attemptFeedQuery];
+	
+	if (!alreadyLoading) {
+		[self attemptFeedQuery];
+	}
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error  {
@@ -344,6 +350,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		
+		alreadyLoading = NO;
 		
 		if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];
