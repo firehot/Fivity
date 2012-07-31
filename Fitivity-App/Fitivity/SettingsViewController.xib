@@ -13,6 +13,7 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
+			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUITableView</string>
 			<string>IBUIView</string>
@@ -196,21 +197,27 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Sign out</string>
 						<reference key="IBUIHighlightedTitleColor" ref="856530153"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="714835285"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">SignOutButtonPressed.png</string>
+						</object>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">SignOutButton.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="824619374"/>
 						<reference key="IBUIFont" ref="440265429"/>
 					</object>
 					<object class="IBUIButton" id="113160939">
 						<reference key="NSNextResponder" ref="1059265250"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{25, 12}, {270, 42}}</string>
+						<string key="NSFrame">{{77, 12}, {218, 42}}</string>
 						<reference key="NSSuperview" ref="1059265250"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="23509673"/>
@@ -219,22 +226,44 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Link with Facebook</string>
 						<reference key="IBUIHighlightedTitleColor" ref="856530153"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="714835285"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="560971674">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">FBLinkedButtonPressed.png</string>
+						</object>
+						<reference key="IBUISelectedImage" ref="560971674"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">FBLinkButton.png</string>
+						</object>
 						<reference key="IBUIFontDescription" ref="824619374"/>
 						<reference key="IBUIFont" ref="440265429"/>
+					</object>
+					<object class="IBUIImageView" id="126392152">
+						<reference key="NSNextResponder" ref="1059265250"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{25, 11}, {44, 44}}</string>
+						<reference key="NSSuperview" ref="1059265250"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="113160939"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">Facebook.png</string>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 115}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="113160939"/>
+				<reference key="NSNextKeyView" ref="126392152"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -404,6 +433,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="23509673"/>
 							<reference ref="113160939"/>
+							<reference ref="126392152"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -417,6 +447,11 @@
 						<reference key="object" ref="113160939"/>
 						<reference key="parent" ref="1059265250"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">37</int>
+						<reference key="object" ref="126392152"/>
+						<reference key="parent" ref="1059265250"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -427,19 +462,22 @@
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="22.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="37.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="3" key="6.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="3" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="9.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">36</int>
+			<int key="maxID">37</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -515,6 +553,11 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="FBLinkButton.png">{224, 36}</string>
+			<string key="FBLinkedButtonPressed.png">{224, 37}</string>
+			<string key="Facebook.png">{43, 44}</string>
+			<string key="SignOutButton.png">{283, 37}</string>
+			<string key="SignOutButtonPressed.png">{285, 39}</string>
 			<string key="UserSettingsNoButtonNormal.png">{97, 76}</string>
 			<string key="UserSettingsNoButtonNormalSelected.png">{97, 76}</string>
 			<string key="UserSettingsNoButtonNormalSelectedPushed.png">{97, 76}</string>

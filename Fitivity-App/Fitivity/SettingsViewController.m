@@ -46,7 +46,8 @@
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"facebookLogin" object:self];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is now linked with Facebook!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
-				[facebookLinkButton.titleLabel setText:@"Unlink Facebook"];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButton.png"] forState:UIControlStateNormal];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButtonPressed.png"] forState:UIControlStateHighlighted];
 			}
 			
 			if (error) {
@@ -63,7 +64,8 @@
 			if (succeeded) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is no longer associated with Facebook." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
-				[facebookLinkButton.titleLabel setText:@"Link with Facebook"];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkButton.png"] forState:UIControlStateNormal];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkedButtonPressed.png"] forState:UIControlStateHighlighted];
 			}
 			
 			if (error) {
@@ -315,7 +317,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[facebookLinkButton.titleLabel setText:([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) ? @"Unlink Facebook" : @"Link with Facebook"];
+	if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+		[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButton.png"] forState:UIControlStateNormal];
+		[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButtonPressed.png"] forState:UIControlStateHighlighted];
+	}
+	else {
+		[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkButton.png"] forState:UIControlStateNormal];
+		[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkedButtonPressed.png"] forState:UIControlStateHighlighted];
+	}
+	
 	[self setUpNotificationGUI];
 }
 
