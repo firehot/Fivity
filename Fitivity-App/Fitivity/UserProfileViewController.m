@@ -212,10 +212,12 @@
 	if (!mainUser) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Permissions" message:@"You don't have permissions to delete this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
+        return;
 	}
 	else if (![[FConfig instance] connected]) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You need to be connected to edit your groups." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
+        return;
 	}
 	
 	//Delete the current group from the GUI and remove the entry in the database
