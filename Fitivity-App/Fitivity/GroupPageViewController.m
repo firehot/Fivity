@@ -81,6 +81,7 @@
 }
 
 - (void)updateJoiningGUI {
+	//When the user is part of the group display the unjoin button otherwise display the join button
 	if (alreadyJoined) {
 		[joinButton setImage:[UIImage imageNamed:@"GroupUnjoinGroupButton.png"] forState:UIControlStateNormal];
 		[joinButton setImage:[UIImage imageNamed:@"GroupUnjoinGroupButtonPressed.png"] forState:UIControlStateHighlighted];
@@ -105,8 +106,6 @@
 		alreadyJoined = YES;
 		groupMember = result; //Can use this later if they are unjoining
 	}
-	
-	[self updateJoiningGUI];
 }
 
 - (void)attemptUpdateGroupInfo:(BOOL)userJoining {
@@ -157,8 +156,10 @@
 				[alert show];
 			}
 			if (succeeded) {
+				//update vars & gui then notify other classes of the user unjoining
 				alreadyJoined = NO;
 				[self attemptUpdateGroupInfo:NO];
+				[self updateJoiningGUI];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 			}
 		}];
@@ -167,18 +168,21 @@
 
 - (void)attemptJoinGroup {
     
+	//User isnt connected
     if (![[FConfig instance] connected]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to join a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
 		return;
     }
 	
+	//User trying to unjoin from group
 	if (alreadyJoined && !autoJoin) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Already Member" message:@"You are already part of this group. Would you like to unjoin?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leave Group?" message:@"Are you sure you would like to unjoin this group?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 		[alert show];
 		return;
 	}
 	
+	//User just created this group, make sure they really want to unjoin it
     if (joinFlag && autoJoin) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Just Created" message:@"You just created this group, do you really want to unjoin?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 		[alert show];
@@ -204,8 +208,12 @@
 				[alert show];
 			}
 			if (succeeded) {
-				[self attemptUpdateGroupInfo:YES];
+				//update vars and gui
 				alreadyJoined = YES;
+				[self attemptUpdateGroupInfo:YES];
+				[self updateJoiningGUI];
+				
+				//Notify other classes & user that they joined the group
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"You are now part of this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
@@ -216,6 +224,7 @@
 
 - (void)attemptGetProposedActivities {
 	@synchronized(self) {
+		//Get all PA for this group
 		PFQuery *query = [PFQuery queryWithClassName:@"ProposedActivity"];
 		[query whereKey:@"group" equalTo:group];
 		[query addAscendingOrder: @"createdAt"];
@@ -377,6 +386,8 @@
 		joinFlag = NO;
         [self attemptJoinGroup];
     }
+	
+	[self updateJoiningGUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
