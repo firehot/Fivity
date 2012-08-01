@@ -161,6 +161,12 @@
 				[self attemptUpdateGroupInfo:NO];
 				[self updateJoiningGUI];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+				
+				//Unsubscribe to notifications
+				if ([[FConfig instance] doesHavePushNotifications]) {
+					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
+					[PFPush unsubscribeFromChannelInBackground:channel];
+				}
 			}
 		}];
 	}
@@ -199,6 +205,12 @@
 		[post setObject:activity forKey:@"activity"];
 		[post setObject:[place name] forKey:@"place"];
 		[post setObject:loc forKey:@"location"];
+		
+		if (group) {
+			[group fetchIfNeeded];
+			[post setObject:[group objectId] forKey:@"group"];
+		}
+		
 		[post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 			
 			NSString *errorMessage = @"An unknown error uccoured while joining group.";
@@ -212,6 +224,12 @@
 				alreadyJoined = YES;
 				[self attemptUpdateGroupInfo:YES];
 				[self updateJoiningGUI];
+				
+				//Subscribe to notifications
+				if ([[FConfig instance] doesHavePushNotifications]) {
+					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
+					[PFPush subscribeToChannelInBackground:channel];
+				}
 				
 				//Notify other classes & user that they joined the group
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
@@ -240,6 +258,27 @@
 			[self.proposedTable reloadData];
 		}];
 	}
+}
+
+- (BOOL)proposedActivityHasComments:(PFObject *)pa {
+	
+	[pa fetchIfNeeded];
+	BOOL ret = NO;
+	
+	@synchronized(self) {
+		
+		//Check if the proposed activity has any comments
+		PFQuery *q = [PFQuery queryWithClassName:@"Comments"];
+		[q whereKey:@"parent" equalTo:pa];
+		
+		//We only care if there is more than one comment
+		PFObject *object = [q getFirstObject];
+		if (object) {
+			ret = YES;
+		}
+	}
+	
+	return ret;
 }
 
 - (void)viewMemebers {
@@ -332,6 +371,10 @@
 	cell.activityMessage.attributedText = attStr;
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
+	
+	if ([self proposedActivityHasComments:currentPA]) {
+		[cell.notificationImage setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
+	}
 	
     return cell;
 }

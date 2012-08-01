@@ -80,8 +80,45 @@
 	[self.userPicture.layer setBorderWidth:5.5];
 }
 
+- (void)updateGroupCountFromMember:(PFObject *)groupMember {
+	@synchronized(self) {
+		
+		[groupMember fetchIfNeeded];
+		
+		//Get a reference to the group that is getting deleted
+		PFQuery *q = [PFQuery queryWithClassName:@"Groups"];
+		[q whereKey:@"activity" equalTo:[groupMember objectForKey:@"activity"]];
+		[q whereKey:@"place" equalTo:[groupMember objectForKey:@"place"]];
+		
+		PFObject *group = [q getFirstObject];
+		[group fetchIfNeeded];
+		
+		//Update group member count
+		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
+		[query whereKey:@"group" equalTo:group];
+		[query whereKey:@"type" equalTo:@"NORMAL"];
+		
+		PFObject *updateGroup = [query getFirstObject];
+		[updateGroup fetchIfNeeded];
+		
+		if (updateGroup) {
+			NSNumber *num = [updateGroup objectForKey:@"number"];
+			if ([num integerValue] > 0) {
+				//User is unjoining from the group
+				int temp = [num integerValue] - 1;
+				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+			}
+			[updateGroup save];
+		}
+	}
+}
+
 - (BOOL)deleteUserFromGroupAtIndex:(NSInteger)index {
 	PFObject *deleteObject = [groupResults objectAtIndex:index];
+	
+	//This ensures that the object doesn't get deleted while we still need the reference 
+	[self performSelectorOnMainThread:@selector(updateGroupCountFromMember:) withObject:deleteObject waitUntilDone:YES];
+	
 	BOOL ret = [deleteObject delete];
 	
 	//Only delete the group from the GUI if the delete was successful 

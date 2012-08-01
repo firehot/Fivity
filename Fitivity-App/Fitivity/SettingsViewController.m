@@ -79,7 +79,51 @@
 	}
 }
 
+- (void)unregisterPushNotificationsForCurrentUser {
+	@synchronized(self) {
+		
+		//Get all of the groups the user is part of
+		PFQuery *query = [PFQuery queryWithClassName:@"GroupsMembers"];
+		[query whereKey:@"user" equalTo:[PFUser currentUser]];
+		NSArray *results = [query findObjects];
+		
+		//Populate just the group objectID's since that is what the push channel is named after
+		NSMutableArray *groupIDS = [[NSMutableArray alloc] init];
+		for (PFObject *o in results) {
+			[groupIDS addObject:[o objectForKey:@"group"]];
+		}
+		
+		//For each objectID unsubscribe from the notifications
+		for (NSString *s in groupIDS) {
+			[PFPush unsubscribeFromChannelInBackground:[NSString stringWithFormat:@"Fitivity%@", s]];
+		}
+	}
+}
+
+- (void)registerPushNotificationsForCurrentUser {
+	@synchronized(self) {
+		//Get all of the groups the user is part of
+		PFQuery *query = [PFQuery queryWithClassName:@"GroupsMembers"];
+		[query whereKey:@"user" equalTo:[PFUser currentUser]];
+		NSArray *results = [query findObjects];
+		
+		//Populate just the group objectID's since that is what the push channel is named after
+		NSMutableArray *groupIDS = [[NSMutableArray alloc] init];
+		for (PFObject *o in results) {
+			[groupIDS addObject:[o objectForKey:@"group"]];
+		}
+		
+		//For each objectID subscribe from the notifications
+		for (NSString *s in groupIDS) {
+			[PFPush subscribeToChannelInBackground:[NSString stringWithFormat:@"Fitivity%@", s]];
+		}
+	}
+}
+
 - (IBAction)turnOnPushNotifications:(id)sender {
+	
+	//Run in background on another thread to avoid GUI lag
+	[self performSelectorInBackground:@selector(registerPushNotificationsForCurrentUser) withObject:nil];
 	
 	[[FConfig instance] setDoesHaveNotifications:YES];
 	
@@ -88,6 +132,9 @@
 }
 
 - (IBAction)turnOffPushNotifications:(id)sender {
+	
+	//Run in background on another thread to avoid GUI lag
+	[self performSelectorInBackground:@selector(unregisterPushNotificationsForCurrentUser) withObject:nil];
 	
 	[[FConfig instance] setDoesHaveNotifications:NO];
 	

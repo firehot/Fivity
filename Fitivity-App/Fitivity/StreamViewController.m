@@ -14,7 +14,7 @@
 #import "GroupPageViewController.h"
 #import "ProposedActivityViewController.h"
 
-#define kFeedLimit			20
+#define kFeedLimit			40
 #define kCellHeight			92.0f
 
 #define kCellTypeGroup		0

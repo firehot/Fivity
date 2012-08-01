@@ -19,6 +19,7 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil proposedActivity:(PFObject *)pa;
+- (IBAction) textFieldDidUpdate:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *activityHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *creatorPicture;

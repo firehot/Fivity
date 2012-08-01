@@ -17,6 +17,7 @@
 
 #define kTextFieldMoveDistance          165
 #define kTextFieldAnimationDuration    0.3f
+#define kMaxCharCount	350
 
 @interface ProposedActivityViewController ()
 
@@ -35,6 +36,29 @@
 @synthesize parent;
 
 #pragma mark - Actions
+
+- (IBAction) textFieldDidUpdate:(id)sender {
+	
+	//Get the text field, then determine what the current count is.
+	UITextField * textField = (UITextField *)sender;
+	int charsLeft = kMaxCharCount - [textField.text length];
+	
+	if (charsLeft < 0) {
+		UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"No more characters"
+														 message:[NSString stringWithFormat:@"You have reached the character limit of %d.",kMaxCharCount]
+														delegate:nil
+											   cancelButtonTitle:@"Ok"
+											   otherButtonTitles:nil];
+		[alert show];
+		
+		//Remove the text that went over
+		[textField setText:[[textField text] substringToIndex:kMaxCharCount]];
+		return;
+	}
+	
+	self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d",charsLeft];
+}
+
 
 - (void)postComment {
 	
@@ -149,7 +173,7 @@
 
 - (NSString *)getFormattedStringForDate:(NSDate *)date {
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateFormat:@"hh:mm a MM/dd/yy"];
+	[formatter setDateFormat:@"hh:mm a MM/dd"];
 	return [formatter stringFromDate:date];
 }
 

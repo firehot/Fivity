@@ -92,6 +92,14 @@
 		//Try to save the comment, if can't show error message
 		[activity saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
+				
+				//push notification to everyone in the group
+				if (group && [[FConfig instance] doesHavePushNotifications]) {
+					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
+					[PFPush sendPushMessageToChannelInBackground:channel withMessage:
+									[NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"name"]]];
+				}
+				
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedPA" object:self];
 			}
 			else if (error) {
