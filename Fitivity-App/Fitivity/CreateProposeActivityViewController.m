@@ -97,7 +97,7 @@
 				if (group && [[FConfig instance] doesHavePushNotifications]) {
 					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
 					[PFPush sendPushMessageToChannelInBackground:channel withMessage:
-									[NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"name"]]];
+									[NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"place"]]];
 				}
 				
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedPA" object:self];

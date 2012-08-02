@@ -83,7 +83,7 @@
 	@synchronized(self) {
 		
 		//Get all of the groups the user is part of
-		PFQuery *query = [PFQuery queryWithClassName:@"GroupsMembers"];
+		PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
 		[query whereKey:@"user" equalTo:[PFUser currentUser]];
 		NSArray *results = [query findObjects];
 		
@@ -95,7 +95,13 @@
 		
 		//For each objectID unsubscribe from the notifications
 		for (NSString *s in groupIDS) {
-			[PFPush unsubscribeFromChannelInBackground:[NSString stringWithFormat:@"Fitivity%@", s]];
+			[PFPush unsubscribeFromChannelInBackground:[NSString stringWithFormat:@"Fitivity%@", s] block:^(BOOL succeeded, NSError *error) {
+				if (succeeded) {
+#ifdef DEBUG
+					NSLog(@"%@ succeeded unsubscribing", s);
+#endif
+				}
+			}];
 		}
 	}
 }
@@ -103,7 +109,7 @@
 - (void)registerPushNotificationsForCurrentUser {
 	@synchronized(self) {
 		//Get all of the groups the user is part of
-		PFQuery *query = [PFQuery queryWithClassName:@"GroupsMembers"];
+		PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
 		[query whereKey:@"user" equalTo:[PFUser currentUser]];
 		NSArray *results = [query findObjects];
 		
@@ -115,7 +121,13 @@
 		
 		//For each objectID subscribe from the notifications
 		for (NSString *s in groupIDS) {
-			[PFPush subscribeToChannelInBackground:[NSString stringWithFormat:@"Fitivity%@", s]];
+			[PFPush subscribeToChannelInBackground:[NSString stringWithFormat:@"Fitivity%@", s] block:^(BOOL succeeded, NSError *error) {
+				if (succeeded) {
+#ifdef DEBUG
+					NSLog(@"%@ succeeded subscribing", s);
+#endif
+				}
+			}];
 		}
 	}
 }
