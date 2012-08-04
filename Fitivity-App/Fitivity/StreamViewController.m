@@ -32,6 +32,36 @@
 
 #pragma mark - Helper Methods
 
+- (void)loadDataForInitailFeed {
+    
+    for (PFObject *o in fetchedQueryItems) {
+        [o fetchIfNeeded];
+        
+        //Get the type of the activity
+//        NSString *typeString = [o objectForKey:@"type"];
+//        int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : kCellTypePA;
+//        int numberOfMemebers = 0;
+//        
+//        if (type == kCellTypeGroup) {
+//            numberOfMemebers = [[o objectForKey:@"number"] integerValue];
+//        }
+//        
+//        switch (type) {
+//            case kCellTypeGroup:
+//                if (numberOfMemebers > 1) {
+//                }
+//                else {
+//                    
+//                }
+//                break;
+//            case kCellTypePA:
+//                break;
+//            default: 
+//                break;
+//        }
+    }
+}
+
 - (void)attemptFeedQuery {
 	@synchronized(self) {
 		alreadyLoading = YES;
@@ -52,6 +82,7 @@
 			else {
 				fetchedQueryItems = [[NSMutableArray alloc] initWithArray:results];
 				[self.tableView reloadData];
+                [self performSelectorOnMainThread:@selector(loadDataForInitailFeed) withObject:nil waitUntilDone:NO];
 				alreadyLoading = NO;
 			}
 		}];
