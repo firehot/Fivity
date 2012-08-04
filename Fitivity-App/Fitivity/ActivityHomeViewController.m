@@ -18,6 +18,8 @@
 
 @implementation ActivityHomeViewController
 
+@synthesize activityLabel;
+@synthesize locationLabel;
 @synthesize chooseActivityButton;
 @synthesize chooseLocationButton;
 
@@ -51,9 +53,11 @@
 #pragma mark - Helper Methods
 
 - (void)resetState {
-    //Reset GUI and vars 
-    [chooseActivityButton setEnabled:YES];
-    [chooseLocationButton setEnabled:YES];
+    //Reset GUI and vars
+    [locationLabel setText:@""];
+    [activityLabel setText:@""];
+    [chooseActivityButton setImage:[UIImage imageNamed:@"ChooseActivityChooseActivity.png"] forState:UIControlStateNormal];
+    [chooseLocationButton setImage:[UIImage imageNamed:@"ChooseActivityChooseLocation.png"] forState:UIControlStateNormal];
     selectedPlace = nil;
     selectedActivity = nil;
     hasPickedActivity = NO;
@@ -188,8 +192,9 @@
 
 - (void)userPickedActivity:(NSString *)activityName {
 	hasPickedActivity = YES;
-	[chooseActivityButton setEnabled:NO];
+    [chooseActivityButton setImage:[UIImage imageNamed:@"ChooseActivityChooseActivityPushed.png"] forState:UIControlStateNormal];
     selectedActivity = activityName;
+    [activityLabel setText:activityName];
     [self attemptCreateGroup];
 }
 
@@ -201,8 +206,9 @@
 
 - (void)userPickedLocation:(GooglePlacesObject *)place {
 	hasPickedLocation = YES;
-	[chooseLocationButton setEnabled:NO];
+    [chooseLocationButton setImage:[UIImage imageNamed:@"ChooseActivityChooseLocationPushed.png"] forState:UIControlStateNormal];
     selectedPlace = place;
+    [locationLabel setText:[place name]];
     [self attemptCreateGroup];
 }
 
@@ -231,6 +237,8 @@
 - (void)viewDidUnload {
 	[self setChooseActivityButton:nil];
 	[self setChooseLocationButton:nil];
+    [self setActivityLabel:nil];
+    [self setLocationLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

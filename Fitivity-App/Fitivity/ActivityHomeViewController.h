@@ -20,6 +20,8 @@
     NSString *selectedActivity;
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *activityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIButton *chooseActivityButton;
 @property (weak, nonatomic) IBOutlet UIButton *chooseLocationButton;
 
