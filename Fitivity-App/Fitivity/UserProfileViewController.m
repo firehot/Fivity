@@ -189,8 +189,8 @@
 	PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
 	[group fetchIfNeeded];
 	
-	// Check if there is any new activity
-	if ([[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
+	// Check if there is any new activity only if you are looking at your profile
+	if (mainUser && [[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
 		[cell.activityIndicator setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
 	}
 	
