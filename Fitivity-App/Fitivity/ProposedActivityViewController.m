@@ -104,6 +104,10 @@
 		return;
 	}
 	
+	if (posting) {
+		return;
+	}
+	
 	@synchronized(self) {
 		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
 		[comment setObject:[self.activityComment text] forKey:@"message"];
@@ -124,6 +128,7 @@
 				[self getProposedActivityHistory];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
+				posting = NO;
 			}
 			else if (error) {
 				NSString *errorMessage = @"An unknown error occurred while posting event.";
@@ -374,6 +379,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+	posting = NO;
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 

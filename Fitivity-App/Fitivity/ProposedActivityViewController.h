@@ -16,6 +16,8 @@
 
 @interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
 	NSMutableArray *results;
+	
+	BOOL posting;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil proposedActivity:(PFObject *)pa;
