@@ -38,6 +38,15 @@ static FConfig *instance;
         groupCreationRecords = [[NSMutableDictionary alloc] init];
         [groupCreationRecords writeToFile:path atomically:YES];
     }
+	
+	//Load group activity records
+	path = [documentsDirectory stringByAppendingString:@"groupActivityRecords.plist"];
+	groupActivityRecords  = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+	
+	if (groupActivityRecords == nil) {
+		groupActivityRecords = [[NSMutableDictionary alloc] init];
+		[groupActivityRecords writeToFile:path atomically:YES];
+	}
 }
 
 + (FConfig *)instance {
@@ -52,12 +61,24 @@ static FConfig *instance;
 
 #pragma mark - void methods 
 
-- (void)saveData {
+- (void)saveCreateData {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *path = [documentsDirectory stringByAppendingString:@"createRecords.plist"];
     
     if ([groupCreationRecords writeToFile:path atomically:YES]) {
+#ifdef DEBUG
+        NSLog(@"Saved to plist");
+#endif
+    }
+}
+
+- (void)saveAcitivtyData {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingString:@"groupActivityRecords.plist"];
+    
+    if ([groupActivityRecords writeToFile:path atomically:YES]) {
 #ifdef DEBUG
         NSLog(@"Saved to plist");
 #endif
@@ -81,7 +102,12 @@ static FConfig *instance;
         count = [NSNumber numberWithInt:1];
         [groupCreationRecords setObject:count forKey:key];
     }
-    [self saveData];
+    [self saveCreateData];
+}
+
+- (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i {
+	[groupActivityRecords setObject:i forKey:objectID];
+	[self saveAcitivtyData];
 }
 
 - (void)showLogoNavBar:(BOOL)status {
@@ -100,6 +126,18 @@ static FConfig *instance;
 }
 
 #pragma mark - BOOL methods
+
+- (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n {
+	BOOL ret = NO;
+	
+	NSNumber *num = (NSNumber *)[groupActivityRecords objectForKey:objectID];
+	
+	if (!num || [num compare:n] == NSOrderedAscending) {
+		ret = YES;
+	}
+	
+	return ret;
+}
 
 - (BOOL)userHasReachedCreationLimitForDay:(NSDate *)today {
     if (groupCreationRecords) {

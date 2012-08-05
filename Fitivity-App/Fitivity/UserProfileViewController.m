@@ -36,7 +36,7 @@
 - (void)attemptGetUserGroups {
 	
 	if (![[FConfig instance] connected]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to create a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to view groups" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
 		return;
 	}
@@ -186,6 +186,13 @@
     }
 	
 	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
+	PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
+	[group fetchIfNeeded];
+	
+	// Check if there is any new activity
+	if ([[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
+		[cell.activityIndicator setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
+	}
 	
 	cell.locationLabel.text = [currentGroup objectForKey:@"place"];
 	cell.activityLabel.text = [currentGroup objectForKey:@"activity"];
@@ -231,16 +238,23 @@
 #pragma mark - UITableViewDataSource 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //Get the group and present it
+    
+	//Get the group and present it
 	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
 	PFGeoPoint *point = [currentGroup objectForKey:@"location"];
 	
 	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[currentGroup objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
 	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:NO autoJoin:NO];
 	
-	[self.navigationController pushViewController:group animated:YES];
 	
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
+	[g fetchIfNeeded];
+	
+	//Update the local count
+	[[FConfig instance] updateGroup:[g objectId] withActivityCount:[g objectForKey:@"activityCount"]]; 
+	
+	[self.navigationController pushViewController:group animated:YES];
+	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -301,6 +315,10 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidLoad) name:@"changedInformation" object:nil];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[groupsTable reloadData];
 }
 
 - (void)viewDidLoad {

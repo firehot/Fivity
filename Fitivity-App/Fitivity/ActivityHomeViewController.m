@@ -152,6 +152,7 @@
 				PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
 				[group setObject:selectedActivity forKey:@"activity"];
 				[group setObject:loc forKey:@"location"];
+				[group setObject:[NSNumber numberWithInt:0] forKey:@"activityCount"];
 				[group setObject:[selectedPlace name] forKey:@"place"];
 				[group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 					NSString *errorMessage = @"An unknown error occured while creating this group.";

@@ -37,6 +37,25 @@
 	return ret;
 }
 
+- (void)updateGroupActivityCount {
+	@synchronized(self) {
+		if (group) {
+			//Get reference to the group from server 
+			PFObject *updateGroup = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[group objectId]];
+			[updateGroup fetchIfNeeded];
+			
+			//Get the count from the server and increment it
+			NSNumber *num = [updateGroup objectForKey:@"activityCount"];
+			[updateGroup setObject:[NSNumber numberWithInt:[num integerValue] + 1] forKey:@"activityCount"];
+			
+			//Save the group
+			if (![updateGroup save]) {
+				[updateGroup saveEventually];
+			}
+		}
+	}
+}
+
 - (void)postToFeedWithPAID:(NSString *)id {
     @synchronized(self) {
         PFObject *activity = [PFObject objectWithClassName:@"ActivityEvent"];
@@ -100,6 +119,7 @@
 									[NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"place"]]];
 				}
 				
+				[self updateGroupActivityCount];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedPA" object:self];
 			}
 			else if (error) {

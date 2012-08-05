@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 
 @interface FConfig : NSObject {
-    NSMutableDictionary *groupCreationRecords;
+    NSMutableDictionary *groupCreationRecords, *groupActivityRecords;
 }
 
 // Get the singleton instance
@@ -22,6 +22,7 @@
 - (BOOL)shouldLogIn;
 - (BOOL)canCreateGroup;
 - (BOOL)doesHavePushNotifications;
+- (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
@@ -32,5 +33,6 @@
 - (void)showLogoNavBar:(BOOL)status;
 - (void)setDoesHaveNotifications:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;
+- (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i;
 
 @end

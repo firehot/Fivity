@@ -186,14 +186,16 @@
 	
 	PFObject *comment = [object objectForKey:@"comment"];
 	PFObject *pa = [object objectForKey:@"proposedActivity"];
-	PFObject *group = [pa objectForKey:@"parent"];
+	[pa fetchIfNeeded];
+	
+	PFObject *group = [pa objectForKey:@"group"];
 	PFUser *user = [object objectForKey:@"creator"];
 	
+	[comment fetchIfNeeded];
+	[group fetchIfNeeded];
+	[user fetchIfNeeded];
+	
 	if (comment && pa && group && user) {
-		[comment fetchIfNeeded];
-		[pa fetchIfNeeded];
-		[group fetchIfNeeded];
-		[user fetchIfNeeded];
 		
 		PFFile *pic = [user objectForKey:@"image"];
 		
@@ -244,7 +246,8 @@
 	
 	//Get the type of the activity
 	NSString *typeString = [currentObject objectForKey:@"type"];
-	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : kCellTypePA;
+	NSString *statusString = [currentObject objectForKey:@"status"];
+	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : ([statusString isEqualToString:@"COMMENT"]) ? kCellTypeComment : kCellTypePA;
 	int numberOfMemebers = 0;
 	
 	if (type == kCellTypeGroup) {
@@ -263,23 +266,11 @@
 		case kCellTypePA:
 			[self configurePACell:cell withObject:currentObject];
 			break;
-		default: {
-			NSString *text = @"Basketball at YMCA";
-			NSMutableAttributedString *attrStr = [NSMutableAttributedString attributedStringWithString:text];
-			[attrStr setTextColor:[UIColor whiteColor]];
-			[attrStr setFont:[UIFont fontWithName:@"Helvetica" size:14]];
-			
-			// now we change the color of the activity & location
-			[attrStr setTextColor:[UIColor blueColor] range:[text rangeOfString:@"Basketball"]];
-			[attrStr setTextColor:[UIColor yellowColor] range:[text rangeOfString:@"YMCA"]];
-			cell.activityLabel.attributedText = attrStr;
-			
-			[cell.pictureView setImage:[UIImage imageNamed:@"FeedCellActiveGroupActivityIconImage.png"]];
-			[cell.timeLabel setText:@"3:45 PM"];
-			[cell.titleLabel setText:@"6 people are doing"];
-			[cell.milesAwayLabel setText:@"3.4 Miles"];
+		case kCellTypeComment:
+			[self configureCommentCell:cell withObject:currentObject];
 			break;
-		}
+		default:
+			break;
 	}
 	
     return cell;

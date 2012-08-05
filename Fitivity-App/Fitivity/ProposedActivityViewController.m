@@ -63,6 +63,7 @@
 	@synchronized(self) {
 		PFObject *feed = [PFObject objectWithClassName:@"ActivityEvent"];
 		[feed setObject:parent forKey:@"proposedActivity"];
+		[feed setObject:[parent objectForKey:@"group"] forKey:@"group"];
 		[feed setObject:[NSNumber numberWithInt:1] forKey:@"number"];
 		[feed setObject:@"COMMENT" forKey:@"status"];
 		[feed setObject:@"GROUP" forKey:@"type"];
