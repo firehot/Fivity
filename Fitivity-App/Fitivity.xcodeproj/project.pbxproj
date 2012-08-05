@@ -105,6 +105,7 @@
 		6C57B71815C21C42000048DD /* CreateProposeActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */; };
 		6C61768A15B0F24600E74B95 /* NSError+FITParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */; };
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
+		6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C647DF515CEE6B800366A74 /* ActivityEvent.m */; };
 		6C7722AF15B1EB670040DB1D /* ChooseActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */; };
 		6C7722B015B1EB670040DB1D /* ChooseActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */; };
 		6C7722BD15B1F14D0040DB1D /* FeedCellActiveGroupActivityIconImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C7722B315B1F14D0040DB1D /* FeedCellActiveGroupActivityIconImage.png */; };
@@ -363,6 +364,8 @@
 		6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposedActivityViewController.m; sourceTree = "<group>"; };
 		6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProposedActivityViewController.xib; path = Fitivity/ProposedActivityViewController.xib; sourceTree = "<group>"; };
 		6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProposeActivityViewController.m; sourceTree = "<group>"; };
+		6C647DF415CEE6B800366A74 /* ActivityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEvent.h; sourceTree = "<group>"; };
+		6C647DF515CEE6B800366A74 /* ActivityEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEvent.m; sourceTree = "<group>"; };
 		6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityViewController.h; sourceTree = "<group>"; };
 		6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityViewController.m; sourceTree = "<group>"; };
 		6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseActivityViewController.xib; path = Fitivity/ChooseActivityViewController.xib; sourceTree = "<group>"; };
@@ -675,6 +678,15 @@
 				6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		6C647DF215CEE69700366A74 /* Helper Class */ = {
+			isa = PBXGroup;
+			children = (
+				6C647DF415CEE6B800366A74 /* ActivityEvent.h */,
+				6C647DF515CEE6B800366A74 /* ActivityEvent.m */,
+			);
+			name = "Helper Class";
 			sourceTree = "<group>";
 		};
 		6C7722B215B1F1460040DB1D /* Cells */ = {
@@ -1084,6 +1096,7 @@
 		6CDCD5AC15B1AD9300986AA2 /* Discover Stream */ = {
 			isa = PBXGroup;
 			children = (
+				6C647DF215CEE69700366A74 /* Helper Class */,
 				5700D1B315B470A7003C96F3 /* Cells */,
 				6CA2691C15AE2FB900CD205C /* StreamViewController.h */,
 				6CA2691D15AE2FB900CD205C /* StreamViewController.m */,
@@ -1423,6 +1436,7 @@
 				6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */,
 				6C57B6F015C20BCE000048DD /* ProposedActivityCell.m in Sources */,
 				6C57B71315C21ADC000048DD /* ProposedActivityViewController.m in Sources */,
+				6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

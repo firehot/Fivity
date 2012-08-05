@@ -59,6 +59,29 @@
 	self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d",charsLeft];
 }
 
+- (void)postToFeedWithID:(NSString *)id {
+	@synchronized(self) {
+		PFObject *feed = [PFObject objectWithClassName:@"ActivityEvent"];
+		[feed setObject:parent forKey:@"proposedActivity"];
+		[feed setObject:[NSNumber numberWithInt:1] forKey:@"number"];
+		[feed setObject:@"COMMENT" forKey:@"status"];
+		[feed setObject:@"GROUP" forKey:@"type"];
+		[feed setObject:[PFUser currentUser] forKey:@"creator"];
+		
+		PFObject *comment = [PFObject objectWithoutDataWithClassName:@"Comments" objectId:id];
+		[comment fetch];
+		
+		if (comment) {
+			[feed setObject:comment forKey:@"comment"];
+		} else {
+			[feed setObject:[NSNull null] forKey:@"comment"];
+		}
+		
+		if (![feed save]) {
+			[feed saveEventually];
+		}
+}
+}
 
 - (void)postComment {
 	
@@ -95,6 +118,7 @@
 		//Try to save the comment, if can't show error message
 		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
+				[self postToFeedWithID:[comment objectId]];
 				[self.activityComment setText:@""];
 				[self getProposedActivityHistory];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

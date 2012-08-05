@@ -32,36 +32,6 @@
 
 #pragma mark - Helper Methods
 
-- (void)loadDataForInitailFeed {
-    
-    for (PFObject *o in fetchedQueryItems) {
-        [o fetchIfNeeded];
-        
-        //Get the type of the activity
-//        NSString *typeString = [o objectForKey:@"type"];
-//        int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : kCellTypePA;
-//        int numberOfMemebers = 0;
-//        
-//        if (type == kCellTypeGroup) {
-//            numberOfMemebers = [[o objectForKey:@"number"] integerValue];
-//        }
-//        
-//        switch (type) {
-//            case kCellTypeGroup:
-//                if (numberOfMemebers > 1) {
-//                }
-//                else {
-//                    
-//                }
-//                break;
-//            case kCellTypePA:
-//                break;
-//            default: 
-//                break;
-//        }
-    }
-}
-
 - (void)attemptFeedQuery {
 	@synchronized(self) {
 		alreadyLoading = YES;
@@ -82,7 +52,6 @@
 			else {
 				fetchedQueryItems = [[NSMutableArray alloc] initWithArray:results];
 				[self.tableView reloadData];
-                [self performSelectorOnMainThread:@selector(loadDataForInitailFeed) withObject:nil waitUntilDone:NO];
 				alreadyLoading = NO;
 			}
 		}];
@@ -213,6 +182,27 @@
 - (void)configureCommentCell:(DiscoverCell *)cell withObject:(PFObject *)object {
 	if (!object) {
 		return;
+	}
+	
+	PFObject *comment = [object objectForKey:@"comment"];
+	PFObject *pa = [object objectForKey:@"proposedActivity"];
+	PFObject *group = [pa objectForKey:@"parent"];
+	PFUser *user = [object objectForKey:@"creator"];
+	
+	if (comment && pa && group && user) {
+		[comment fetchIfNeeded];
+		[pa fetchIfNeeded];
+		[group fetchIfNeeded];
+		[user fetchIfNeeded];
+		
+		PFFile *pic = [user objectForKey:@"image"];
+		
+		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
+		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
+		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ commented on proposed activity", [user username]]];
+		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
+		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
+		[self imageView:cell.pictureView setImage:pic styled:YES];
 	}
 }
 
