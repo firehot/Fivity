@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NSError+FITParseUtilities.h"
 #import "FTabBarViewController.h"
 #import "OpeningLogoViewController.h"
 #import "StreamViewController.h"
@@ -41,6 +42,9 @@
 	self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 	
+	//Reset badge count upon reopen of the app
+	[application setApplicationIconBadgeNumber:0];
+	
 	//Present the opening view
 	[self.tabBarView presentModalViewController:self.openingView animated:NO];
 	
@@ -74,7 +78,28 @@
 
 //If the user has the app open when the push goes out
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
+	
+	tempPushInfo = userInfo;
+	NSString *message = [(NSDictionary *)[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+	
+	if ([PFUser currentUser]) {
+		
+		//Check to see if the user is the one who sent it, if so dont show the message
+		NSRange range = [message rangeOfString:[NSString stringWithFormat:@"%@",[[PFUser currentUser] username]]];
+		if (range.location == NSNotFound) {
+			
+			[PFPush handlePush:userInfo];
+			NSInteger count = [application applicationIconBadgeNumber];
+			NSString *badgeType = [userInfo objectForKey:@"badge_type"];
+			
+			if ([badgeType isEqualToString:@"increment"]) {
+				[application setApplicationIconBadgeNumber:++count];
+			}
+			
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Acitivty" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Join", nil];
+			[alert show];
+		}
+	}
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -83,6 +108,56 @@
     } else {
         NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@", error);
     }
+}
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+	
+	if ([title isEqualToString:@"Join"]) {
+		[self attemptJoinGroupWithID:[tempPushInfo objectForKey:@"group_id"]];
+	}
+}
+
+#pragma mark - Queries for Push Notification Handling
+
+- (void)attemptJoinGroupWithID:(NSString *)objectID {
+	
+	if (![[FConfig instance] connected]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to join a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+    }
+	
+	@synchronized([AppDelegate class]) {
+		//Get the refference to the group
+		PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:objectID];
+		[group fetchIfNeeded];
+		
+		if (group) {
+			PFObject *joinGroup = [PFObject objectWithClassName:@"GroupMembers"];
+			[joinGroup setObject:[PFUser currentUser] forKey:@"user"];
+			[joinGroup setObject:[group objectForKey:@"activity"] forKey:@"activity"];
+			[joinGroup setObject:[group objectForKey:@"place"] forKey:@"place"];
+			[joinGroup setObject:[group objectForKey:@"location"] forKey:@"location"];
+			[joinGroup setObject:group forKey:@"group"];
+			
+			[joinGroup saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+				
+				if (succeeded) {
+					//Post "I'm In" comment, post to feed
+				}
+				else if (error) {
+					NSString *errorMessage = @"An unknown error occurred while joining the group.";
+					errorMessage = [error userFriendlyParseErrorDescription:YES];
+					
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Joining Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+					[alert show];
+				}
+			}];
+		}
+	}
 }
 
 #pragma mark - Application
@@ -103,6 +178,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+	// Reset badge count
+	[application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

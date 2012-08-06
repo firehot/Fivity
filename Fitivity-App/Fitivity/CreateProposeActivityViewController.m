@@ -115,8 +115,16 @@
 				//push notification to everyone in the group
 				if (group && [[FConfig instance] doesHavePushNotifications]) {
 					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
-					[PFPush sendPushMessageToChannelInBackground:channel withMessage:
-									[NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"place"]]];
+					NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+										  [NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"place"]], @"alert",
+										  @"increment", @"badge_type",
+										  [group objectId], @"group_id", nil];
+					
+					PFPush *push = [[PFPush alloc] init];
+					[push setChannel:channel];
+					[push setData:data];
+					[push expireAfterTimeInterval:86400];
+					[push sendPushInBackground];
 				}
 				
 				[self updateGroupActivityCount];

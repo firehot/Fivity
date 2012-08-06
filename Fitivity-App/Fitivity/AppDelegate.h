@@ -11,7 +11,9 @@
 
 @class OpeningLogoViewController, FTabBarViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
+	NSDictionary *tempPushInfo;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) OpeningLogoViewController *openingView;
