@@ -373,7 +373,7 @@
 	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
 	
 	if ([self proposedActivityHasComments:currentPA]) {
-		[cell.notificationImage setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
+		[cell.notificationImage setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
 	}
 	
     return cell;

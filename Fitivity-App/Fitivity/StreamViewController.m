@@ -42,7 +42,7 @@
 				
 		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
 		[query whereKey:@"group" matchesQuery:innerGroupQuery];
-		[query addDescendingOrder: @"createdAt"];
+		[query addDescendingOrder: @"updatedAt"];
 		[query setLimit:kFeedLimit];
 		[query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
 			if (error) {
@@ -93,8 +93,24 @@
 
 - (NSString *)stringForDate:(NSDate *)date {
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateFormat:@"hh:mm a M/dd"];
+	[formatter setDateFormat:@"hh:mm a"];
 	return [formatter stringFromDate:date];
+}
+
+- (BOOL)happendToday:(NSDate *)date {
+	
+	BOOL ret = NO;
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:@"MM/dd/yyyy"];
+	
+	NSDate *today = [NSDate date];
+	NSString *todayString = [formatter stringFromDate:today];
+	
+	if ([todayString isEqualToString:[formatter stringFromDate:date]]) {
+		ret = YES;
+	}
+	
+	return ret;
 }
 
 - (NSString *)getDistanceAwayString:(PFGeoPoint *)locationTo {
@@ -129,6 +145,13 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		if ([self happendToday:[pa updatedAt]]) {
+			[cell.todayIndicator setHidden:NO];
+		}
+		else {
+			[cell.todayIndicator setHidden:YES];
+		}
 	}
 }
 
@@ -152,6 +175,13 @@
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
+		
+		if ([self happendToday:[group updatedAt]]) {
+			[cell.todayIndicator setHidden:NO];
+		}
+		else {
+			[cell.todayIndicator setHidden:YES];
+		}
 	}
 }
 
@@ -176,6 +206,13 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		if ([self happendToday:[group updatedAt]]) {
+			[cell.todayIndicator setHidden:NO];
+		}
+		else {
+			[cell.todayIndicator setHidden:YES];
+		}
 	}
 }
 
@@ -205,6 +242,13 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		if ([self happendToday:[group updatedAt]]) {
+			[cell.todayIndicator setHidden:NO];
+		}
+		else {
+			[cell.todayIndicator setHidden:YES];
+		}
 	}
 }
 

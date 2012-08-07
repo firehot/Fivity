@@ -47,8 +47,6 @@ static FConfig *instance;
 		groupActivityRecords = [[NSMutableDictionary alloc] init];
 		[groupActivityRecords writeToFile:path atomically:YES];
 	}
-	
-	NSLog(@"group create = %@, activity count = %@", [groupCreationRecords description], [groupActivityRecords description]);
 }
 
 + (FConfig *)instance {

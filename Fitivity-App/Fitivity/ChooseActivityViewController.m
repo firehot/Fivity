@@ -24,6 +24,25 @@
 
 #pragma mark - Helper Methods
 
+- (void)correctOrderingOfData {
+	NSString *key = @"Sports";
+		
+	for (int i = 0; i < [categories count]; i++) {
+		NSString *title;
+		if ([categories count] > 0) {
+			PFObject *firstObject = [(NSMutableArray *)[categories objectAtIndex:i] objectAtIndex:0];;
+			[firstObject fetchIfNeeded];
+			title = [firstObject objectForKey:@"category"];
+		}
+		
+		if ([title isEqualToString:key]) {
+			NSMutableArray *temp = [categories objectAtIndex:0];
+			[categories replaceObjectAtIndex:0 withObject:[categories objectAtIndex:i]];
+			[categories replaceObjectAtIndex:i withObject:temp];
+		}
+	}
+}
+
 - (void)attemptQuery {	
 	
 	@synchronized(self) { 
@@ -71,6 +90,7 @@
 						[resultsToShow addObject:[[NSMutableArray alloc] init]];
 					}
 					
+					[self correctOrderingOfData];
 					[activitiesTable reloadData];
 				}
 				else {

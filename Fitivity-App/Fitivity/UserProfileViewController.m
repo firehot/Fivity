@@ -191,7 +191,7 @@
 	
 	// Check if there is any new activity only if you are looking at your profile
 	if (mainUser && [[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
-		[cell.activityIndicator setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
+		[cell.activityIndicator setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
 	}
 	
 	cell.locationLabel.text = [currentGroup objectForKey:@"place"];
