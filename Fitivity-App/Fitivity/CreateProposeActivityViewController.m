@@ -116,9 +116,9 @@
 				if (group && [[FConfig instance] doesHavePushNotifications]) {
 					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
 					NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-										  [NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"place"]], @"alert",
+										  [NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"activity"]], @"alert",
 										  @"increment", @"badge_type",
-										  [group objectId], @"group_id", nil];
+										  [activity objectId], @"pa_id", nil];
 					
 					PFPush *push = [[PFPush alloc] init];
 					[push setChannel:channel];

@@ -29,7 +29,7 @@ static FConfig *instance;
     //Load past group creation records 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingString:@"createRecords.plist"];
+    NSString *path = [documentsDirectory stringByAppendingString:@"/createRecords.plist"];
     
     groupCreationRecords = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     
@@ -40,13 +40,15 @@ static FConfig *instance;
     }
 	
 	//Load group activity records
-	path = [documentsDirectory stringByAppendingString:@"groupActivityRecords.plist"];
+	path = [documentsDirectory stringByAppendingString:@"/groupActivityRecords.plist"];
 	groupActivityRecords  = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
 	
 	if (groupActivityRecords == nil) {
 		groupActivityRecords = [[NSMutableDictionary alloc] init];
 		[groupActivityRecords writeToFile:path atomically:YES];
 	}
+	
+	NSLog(@"group create = %@, activity count = %@", [groupCreationRecords description], [groupActivityRecords description]);
 }
 
 + (FConfig *)instance {
@@ -64,7 +66,7 @@ static FConfig *instance;
 - (void)saveCreateData {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingString:@"createRecords.plist"];
+    NSString *path = [documentsDirectory stringByAppendingString:@"/createRecords.plist"];
     
     if ([groupCreationRecords writeToFile:path atomically:YES]) {
 #ifdef DEBUG
@@ -76,7 +78,7 @@ static FConfig *instance;
 - (void)saveAcitivtyData {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingString:@"groupActivityRecords.plist"];
+    NSString *path = [documentsDirectory stringByAppendingString:@"/groupActivityRecords.plist"];
     
     if ([groupActivityRecords writeToFile:path atomically:YES]) {
 #ifdef DEBUG
@@ -87,7 +89,7 @@ static FConfig *instance;
 
 - (void)incrementGroupCreationForDate:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-DD-YYY"];
+    [formatter setDateFormat:@"MM-dd-YYY"];
     NSString *key = [formatter stringFromDate:date];
     
     NSNumber *count;

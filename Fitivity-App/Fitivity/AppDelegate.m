@@ -116,13 +116,13 @@
 	NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
 	
 	if ([title isEqualToString:@"Join"]) {
-		[self attemptJoinGroupWithID:[tempPushInfo objectForKey:@"group_id"]];
+		[self attemptPostComment:@"I'm in!" withParentID:[tempPushInfo objectForKey:@"pa_id"]];
 	}
 }
 
 #pragma mark - Queries for Push Notification Handling
 
-- (void)attemptJoinGroupWithID:(NSString *)objectID {
+- (void)attemptPostComment:(NSString *)comment withParentID:(NSString *)objectID {
 	
 	if (![[FConfig instance] connected]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to join a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -132,21 +132,21 @@
 	
 	@synchronized([AppDelegate class]) {
 		//Get the refference to the group
-		PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:objectID];
-		[group fetchIfNeeded];
+		PFObject *pa = [PFObject objectWithoutDataWithClassName:@"ProposedActivity" objectId:objectID];
+		[pa fetchIfNeeded];
 		
-		if (group) {
-			PFObject *joinGroup = [PFObject objectWithClassName:@"GroupMembers"];
+		if (pa) {
+			PFObject *joinGroup = [PFObject objectWithClassName:@"Comments"];
 			[joinGroup setObject:[PFUser currentUser] forKey:@"user"];
-			[joinGroup setObject:[group objectForKey:@"activity"] forKey:@"activity"];
-			[joinGroup setObject:[group objectForKey:@"place"] forKey:@"place"];
-			[joinGroup setObject:[group objectForKey:@"location"] forKey:@"location"];
-			[joinGroup setObject:group forKey:@"group"];
+			[joinGroup setObject:pa forKey:@"parent"];
+			[joinGroup setObject:comment forKey:@"message"];
 			
 			[joinGroup saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 				
 				if (succeeded) {
-					//Post "I'm In" comment, post to feed
+#ifndef DEBUG
+					NSLog(@"Succeeded Posting Comment");
+#endif
 				}
 				else if (error) {
 					NSString *errorMessage = @"An unknown error occurred while joining the group.";

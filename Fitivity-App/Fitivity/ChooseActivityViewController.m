@@ -238,6 +238,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.activitiesTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
 - (void)viewDidUnload {

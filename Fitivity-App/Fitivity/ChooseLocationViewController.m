@@ -306,6 +306,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
 - (void)viewDidUnload {
