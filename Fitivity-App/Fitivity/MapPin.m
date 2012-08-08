@@ -1,9 +1,9 @@
 //
 //  MapPin.m
-//  NeverForgotten
+//  Nathan Doe
 //
 //  Created by Nathan Doe on 9/20/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Nathaniel Doe. All rights reserved.
 //
 
 #import "MapPin.h"
@@ -14,7 +14,7 @@
 @synthesize title;
 @synthesize subtitle;
 
--(id)initWithCoordinates:(CLLocationCoordinate2D)location placeName: placeName description:description {
+- (id)initWithCoordinates:(CLLocationCoordinate2D)location placeName: placeName description:description {
     
     self = [super init];
     if (self != nil) {

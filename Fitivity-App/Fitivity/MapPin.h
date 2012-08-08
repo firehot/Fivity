@@ -1,9 +1,9 @@
 //
 //  MapPin.h
-//  NeverForgotten
+//  Nathan Doe
 //
 //  Created by Nathan Doe on 9/20/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Nathaniel Doe. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -17,7 +17,7 @@
     NSString *title; 
 }
 
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, readonly) NSString *title;
 @property (nonatomic, readonly) NSString *subtitle;
 

@@ -11,6 +11,7 @@
 #import "GTMNSString+URLArguments.h"
 #import "GooglePlacesObject.h"
 #import "LocationMapViewController.h"
+#import "AddLocationViewController.h"
 
 #define kCellHeight     91.0f
 
@@ -30,6 +31,11 @@
 @synthesize delegate;
 
 #pragma mark - Helper Methods
+
+- (void)showAddLocationView {
+	AddLocationViewController *add = [[AddLocationViewController alloc] initWithNibName:@"AddLocationViewController" bundle:nil location:[[locationManager location] coordinate]];
+	[self.navigationController pushViewController:add animated:YES];
+}
 
 -(void)buildSearchArrayFrom:(NSString *)matchString {
 	NSString *upString = [matchString uppercaseString];
@@ -300,6 +306,9 @@
 		[searchBar setDelegate:self];
 		
 		googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
+		
+		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Add Location" style:UIBarButtonItemStyleBordered target:self action:@selector(showAddLocationView)];
+		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;
 }

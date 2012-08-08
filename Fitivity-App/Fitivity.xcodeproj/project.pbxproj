@@ -71,6 +71,17 @@
 		6C42C4F215B9F79C00ACB549 /* GroupMembersButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */; };
 		6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */; };
 		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
+		6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */; };
+		6C4C5BBA15D1D50D00E63CD3 /* AddLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */; };
+		6C4C5BC815D1DD3800E63CD3 /* Pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC215D1DD3800E63CD3 /* Pin.png */; };
+		6C4C5BC915D1DD3800E63CD3 /* PinDown1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC315D1DD3800E63CD3 /* PinDown1.png */; };
+		6C4C5BCA15D1DD3800E63CD3 /* PinDown2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC415D1DD3800E63CD3 /* PinDown2.png */; };
+		6C4C5BCB15D1DD3800E63CD3 /* PinDown3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC515D1DD3800E63CD3 /* PinDown3.png */; };
+		6C4C5BCC15D1DD3800E63CD3 /* PinFloating.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC615D1DD3800E63CD3 /* PinFloating.png */; };
+		6C4C5BCD15D1DD3800E63CD3 /* PinShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC715D1DD3800E63CD3 /* PinShadow.png */; };
+		6C4C5BCF15D1DD3E00E63CD3 /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BCE15D1DD3E00E63CD3 /* README.markdown */; };
+		6C4C5BD415D1DD4D00E63CD3 /* DDAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C5BD115D1DD4700E63CD3 /* DDAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		6C4C5BD515D1DD4F00E63CD3 /* DDAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C5BD315D1DD4700E63CD3 /* DDAnnotationView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
 		6C4E34F215BC499100A6986C /* CreateProposeActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */; };
 		6C50011B15B6311800029AFD /* ChooseActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C50011A15B6311800029AFD /* ChooseActivityCell.m */; };
 		6C50011E15B6315300029AFD /* ChooseActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C50011D15B6315300029AFD /* ChooseActivityCell.xib */; };
@@ -329,6 +340,20 @@
 		6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupChallengeButton.png; sourceTree = "<group>"; };
 		6C42C50615BA196900ACB549 /* NDArtworkPopout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDArtworkPopout.h; sourceTree = "<group>"; };
 		6C42C50715BA196900ACB549 /* NDArtworkPopout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDArtworkPopout.m; sourceTree = "<group>"; };
+		6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
+		6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
+		6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddLocationViewController.xib; path = Fitivity/AddLocationViewController.xib; sourceTree = "<group>"; };
+		6C4C5BC215D1DD3800E63CD3 /* Pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pin.png; sourceTree = "<group>"; };
+		6C4C5BC315D1DD3800E63CD3 /* PinDown1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinDown1.png; sourceTree = "<group>"; };
+		6C4C5BC415D1DD3800E63CD3 /* PinDown2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinDown2.png; sourceTree = "<group>"; };
+		6C4C5BC515D1DD3800E63CD3 /* PinDown3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinDown3.png; sourceTree = "<group>"; };
+		6C4C5BC615D1DD3800E63CD3 /* PinFloating.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinFloating.png; sourceTree = "<group>"; };
+		6C4C5BC715D1DD3800E63CD3 /* PinShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PinShadow.png; sourceTree = "<group>"; };
+		6C4C5BCE15D1DD3E00E63CD3 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
+		6C4C5BD015D1DD4700E63CD3 /* DDAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDAnnotation.h; sourceTree = "<group>"; };
+		6C4C5BD115D1DD4700E63CD3 /* DDAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDAnnotation.m; sourceTree = "<group>"; };
+		6C4C5BD215D1DD4700E63CD3 /* DDAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDAnnotationView.h; sourceTree = "<group>"; };
+		6C4C5BD315D1DD4700E63CD3 /* DDAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDAnnotationView.m; sourceTree = "<group>"; };
 		6C4E34EE15BC499100A6986C /* CreateProposeActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateProposeActivityViewController.h; sourceTree = "<group>"; };
 		6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateProposeActivityViewController.xib; path = Fitivity/CreateProposeActivityViewController.xib; sourceTree = "<group>"; };
 		6C50011915B6311800029AFD /* ChooseActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityCell.h; sourceTree = "<group>"; };
@@ -664,6 +689,32 @@
 			name = "Helper Classes";
 			sourceTree = "<group>";
 		};
+		6C4C5BC015D1DD1C00E63CD3 /* DDAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				6C4C5BCE15D1DD3E00E63CD3 /* README.markdown */,
+				6C4C5BD015D1DD4700E63CD3 /* DDAnnotation.h */,
+				6C4C5BD115D1DD4700E63CD3 /* DDAnnotation.m */,
+				6C4C5BD215D1DD4700E63CD3 /* DDAnnotationView.h */,
+				6C4C5BD315D1DD4700E63CD3 /* DDAnnotationView.m */,
+				6C4C5BC115D1DD2A00E63CD3 /* Images */,
+			);
+			name = DDAnnotation;
+			sourceTree = "<group>";
+		};
+		6C4C5BC115D1DD2A00E63CD3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6C4C5BC215D1DD3800E63CD3 /* Pin.png */,
+				6C4C5BC315D1DD3800E63CD3 /* PinDown1.png */,
+				6C4C5BC415D1DD3800E63CD3 /* PinDown2.png */,
+				6C4C5BC515D1DD3800E63CD3 /* PinDown3.png */,
+				6C4C5BC615D1DD3800E63CD3 /* PinFloating.png */,
+				6C4C5BC715D1DD3800E63CD3 /* PinShadow.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		6C50011F15B6368500029AFD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -820,6 +871,7 @@
 		6CB1A71615ACFC1D00C0FF75 = {
 			isa = PBXGroup;
 			children = (
+				6C4C5BC015D1DD1C00E63CD3 /* DDAnnotation */,
 				57E9C05015B5CA64007C7C58 /* OHAttributedString */,
 				6C08841B15B1C56000670936 /* Google Places */,
 				6CB1A72B15ACFC1D00C0FF75 /* Fitivity */,
@@ -1080,6 +1132,8 @@
 				6C08845915B1C90A00670936 /* ChooseLocationViewController.m */,
 				6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */,
 				6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */,
+				6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */,
+				6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */,
 			);
 			name = "Activity Creation";
 			sourceTree = "<group>";
@@ -1150,6 +1204,7 @@
 				6C7722CB15B209800040DB1D /* Cells */,
 				6CDCD5B515B1ADE300986AA2 /* ActivityHomeViewController.xib */,
 				6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */,
+				6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */,
 				6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */,
 				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
 				575AECA315B6051200324958 /* GroupPageViewController.xib */,
@@ -1384,6 +1439,14 @@
 				6C42416315C7611B005B781D /* SignOutButtonPressed@2x.png in Resources */,
 				6C510B2115D0976B00BDFBB9 /* NewActivityNotification.png in Resources */,
 				6C510B2715D09DC400BDFBB9 /* Today.png in Resources */,
+				6C4C5BBA15D1D50D00E63CD3 /* AddLocationViewController.xib in Resources */,
+				6C4C5BC815D1DD3800E63CD3 /* Pin.png in Resources */,
+				6C4C5BC915D1DD3800E63CD3 /* PinDown1.png in Resources */,
+				6C4C5BCA15D1DD3800E63CD3 /* PinDown2.png in Resources */,
+				6C4C5BCB15D1DD3800E63CD3 /* PinDown3.png in Resources */,
+				6C4C5BCC15D1DD3800E63CD3 /* PinFloating.png in Resources */,
+				6C4C5BCD15D1DD3800E63CD3 /* PinShadow.png in Resources */,
+				6C4C5BCF15D1DD3E00E63CD3 /* README.markdown in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1394,6 +1457,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C4C5BD415D1DD4D00E63CD3 /* DDAnnotation.m in Sources */,
+				6C4C5BD515D1DD4F00E63CD3 /* DDAnnotationView.m in Sources */,
 				57E9C05615B5CA74007C7C58 /* NSAttributedString+Attributes.m in Sources */,
 				57E9C05715B5CA77007C7C58 /* OHAttributedLabel.m in Sources */,
 				6C08843D15B1C5A100670936 /* NSObject+SBJson.m in Sources */,
@@ -1445,6 +1510,7 @@
 				6C57B6F015C20BCE000048DD /* ProposedActivityCell.m in Sources */,
 				6C57B71315C21ADC000048DD /* ProposedActivityViewController.m in Sources */,
 				6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */,
+				6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
