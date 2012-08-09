@@ -15,12 +15,13 @@
 
 @implementation AddLocationHomeViewController
 
-#pragma mark - AddLocationViewController Delegate 
 @synthesize nameField;
 @synthesize addressField;
 @synthesize cityField;
 @synthesize stateField;
 @synthesize zipField;
+
+#pragma mark - AddLocationViewController Delegate
 
 - (void)userDidSelectLocation:(NSDictionary *)addressInfo {
 	//Update GUI

@@ -192,7 +192,6 @@
 		6CB1A75615ACFF7800C0FF75 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB1A75415ACFF7800C0FF75 /* background@2x.png */; };
 		6CB1A75A15ACFFBC00C0FF75 /* OpeningLogoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1A75815ACFFBC00C0FF75 /* OpeningLogoViewController.m */; };
 		6CB1A75B15ACFFBC00C0FF75 /* OpeningLogoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB1A75915ACFFBC00C0FF75 /* OpeningLogoViewController.xib */; };
-		6CB1A78315AD067000C0FF75 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A78215AD067000C0FF75 /* Parse.framework */; };
 		6CB1B21915B1A17B004DDDCA /* FTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */; };
 		6CC7FB1315AFB62C00D21AA9 /* BackButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB0F15AFB62C00D21AA9 /* BackButtonIcon.png */; };
 		6CC7FB1415AFB62C00D21AA9 /* BackButtonIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB1015AFB62C00D21AA9 /* BackButtonIcon@2x.png */; };
@@ -242,6 +241,7 @@
 		6CDCD5D515B1B05400986AA2 /* ApplicationTabBarBackplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB4415AFB72500D21AA9 /* ApplicationTabBarBackplate.png */; };
 		6CDCD5D615B1B05400986AA2 /* ApplicationTabBarBackplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB4515AFB72500D21AA9 /* ApplicationTabBarBackplate@2x.png */; };
 		6CEFED8015B3641500211CB0 /* ChooseActivityHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */; };
+		6CF2458515D46297009B31AE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF2458415D46297009B31AE /* Parse.framework */; };
 		6CF2C70F15B4EAF9001E3353 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70C15B4EAF9001E3353 /* Icon.png */; };
 		6CF2C71015B4EAF9001E3353 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70D15B4EAF9001E3353 /* Icon@2x.png */; };
 		6CF2C71115B4EAF9001E3353 /* FitivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */; };
@@ -487,7 +487,6 @@
 		6CB1A75715ACFFBC00C0FF75 /* OpeningLogoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningLogoViewController.h; sourceTree = "<group>"; };
 		6CB1A75815ACFFBC00C0FF75 /* OpeningLogoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningLogoViewController.m; sourceTree = "<group>"; };
 		6CB1A75915ACFFBC00C0FF75 /* OpeningLogoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpeningLogoViewController.xib; path = Fitivity/OpeningLogoViewController.xib; sourceTree = "<group>"; };
-		6CB1A78215AD067000C0FF75 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6CB1B21615B1A10D004DDDCA /* FTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTabBarViewController.h; sourceTree = "<group>"; };
 		6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FTabBarViewController.m; sourceTree = "<group>"; };
 		6CB1B21815B1A10D004DDDCA /* FTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FTabBarViewController.xib; path = Fitivity/FTabBarViewController.xib; sourceTree = "<group>"; };
@@ -545,6 +544,7 @@
 		6CDCD5BA15B1AE9700986AA2 /* UserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserProfileViewController.xib; path = Fitivity/UserProfileViewController.xib; sourceTree = "<group>"; };
 		6CEFED7E15B3641500211CB0 /* ChooseActivityHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityHeaderView.h; sourceTree = "<group>"; };
 		6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityHeaderView.m; sourceTree = "<group>"; };
+		6CF2458415D46297009B31AE /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6CF2C70C15B4EAF9001E3353 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6CF2C70D15B4EAF9001E3353 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FitivityIcon.png; sourceTree = "<group>"; };
@@ -569,7 +569,7 @@
 				6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */,
 				6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */,
 				6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */,
-				6CB1A78315AD067000C0FF75 /* Parse.framework in Frameworks */,
+				6CF2458515D46297009B31AE /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -897,6 +897,7 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6CF2458415D46297009B31AE /* Parse.framework */,
 				57E9C05815B5CA9C007C7C58 /* CoreText.framework */,
 				6C08845615B1C72B00670936 /* MapKit.framework */,
 				6C08845415B1C67000670936 /* CoreLocation.framework */,
@@ -906,7 +907,6 @@
 				6CA2691615AE2D7A00CD205C /* CFNetwork.framework */,
 				6CA2691415AE2D2B00CD205C /* AudioToolbox.framework */,
 				6CA2690415AE2A5200CD205C /* SystemConfiguration.framework */,
-				6CB1A78215AD067000C0FF75 /* Parse.framework */,
 				6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */,
 				6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */,
 				6CB1A72915ACFC1D00C0FF75 /* CoreGraphics.framework */,

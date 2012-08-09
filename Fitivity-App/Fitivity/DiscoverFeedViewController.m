@@ -308,6 +308,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
 	
+	if ([[self objects] count] <= indexPath.row) {
+		return;
+	}
+	
 	PFObject *object = [self objectAtIndex:indexPath];
 	
 	//Get the data if it hasn't been pulled from the server yet
