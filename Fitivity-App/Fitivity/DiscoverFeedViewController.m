@@ -1,12 +1,12 @@
 //
-//  StreamViewController.m
+//  DiscoverFeedViewController.m
 //  Fitivity
 //
-//  Created by Nathaniel Doe on 7/11/12.
+//  Created by Nathan Doe on 8/8/12.
 //  Copyright (c) 2012 Fitivity. All rights reserved.
 //
 
-#import "StreamViewController.h"
+#import "DiscoverFeedViewController.h"
 #import "DiscoverCell.h"
 #import "OHAttributedLabel.h"
 #import "NSAttributedString+Attributes.h"
@@ -22,47 +22,26 @@
 #define kCellTypeComment	2
 
 #define kMetersToMiles		0.000621371192
-#define kMilesRadius		100.0
+#define kMilesRadius		20.0
 
-@interface StreamViewController ()
+@interface DiscoverFeedViewController ()
 
 @end
 
-@implementation StreamViewController
+@implementation DiscoverFeedViewController
 
-#pragma mark - Helper Methods
+@synthesize locationManager;
 
-- (void)attemptFeedQuery {
-	@synchronized(self) {
-		alreadyLoading = YES;
-		
-		//Need to find all groups/proposed activities that are close by
-		PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
-		[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
-				
-		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
-		[query whereKey:@"group" matchesQuery:innerGroupQuery];
-		[query addDescendingOrder: @"updatedAt"];
-		[query setLimit:kFeedLimit];
-		[query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-			if (error) {
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Load Error" message:@"Could not load your feed." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[alert show];
-			}
-			else {
-				fetchedQueryItems = [[NSMutableArray alloc] initWithArray:results];
-				[self.tableView reloadData];
-				alreadyLoading = NO;
-			}
-		}];
-	}
-}
+#pragma mark - Helper Methods 
 
-- (void)imageView:(UIImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
-	NSData *picData = [imageFile getData];
+- (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
+	//NSData *picData = [imageFile getData];
 	
-	if (picData) {
-		[imgView setImage:[UIImage imageWithData:picData]];
+	imgView.image = [UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]; //Placeholder
+	
+	if (imageFile) {
+		imgView.file = imageFile;
+		[imgView loadInBackground];
 	}
 	else {
 		[imgView setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
@@ -125,7 +104,7 @@
 		return;
 	}
 	
-	//Get the PA and the parent group 
+	//Get the PA and the parent group
 	PFObject *pa = [object objectForKey:@"proposedActivity"];
 	PFObject *group = [object objectForKey:@"group"];
 	
@@ -252,66 +231,66 @@
 	}
 }
 
-- (BOOL) isValidDistance:(CLLocation *)newLocation oldLocation:(CLLocation *)oldLocation {
-    double distance = [newLocation distanceFromLocation:oldLocation] * kMetersToMiles;
-    if (distance > .5) {
-        return NO;
+#pragma mark - PFQueryTableViewController 
+
+// Override to customize what kind of query to perform on the class. The default is to query for
+// all objects ordered by createdAt descending.
+- (PFQuery *)queryForTable {
+    PFQuery *query = [PFQuery queryWithClassName:self.className];
+	
+    // If no objects are loaded in memory, we look to the cache first to fill the table
+    // and then subsequently do a query against the network.
+    if ([self.objects count] == 0) {
+        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     }
-    return YES;
+	
+	//Need to find all groups/proposed activities that are close by
+	PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
+	[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
+	
+	[query whereKey:@"group" matchesQuery:innerGroupQuery];
+    [query orderByDescending:@"updatedAt"];
+	
+    return query;
 }
 
-#pragma mark - PullToRefresh
+// Override to customize the look of a cell representing an object. The default is to display
+// a UITableViewCellStyleDefault style cell with the label being the first key in the object.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+	static NSString *CellIdentifier = @"Cell";
 
-- (void)reloadTableViewDataSource {
-    
-    [self attemptFeedQuery];
-    
-	[super performSelector:@selector(dataSourceDidFinishLoadingNewData) withObject:nil afterDelay:3.0];
-}
-
-- (void)dataSourceDidFinishLoadingNewData {
-    [refreshHeaderView setCurrentDate];  //  should check if data reload was successful
-    [super dataSourceDidFinishLoadingNewData];
-}
-
-#pragma mark - UITableViewDelegate 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-    DiscoverCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	DiscoverCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DiscoverCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
     }
-    
-	PFObject *currentObject = [fetchedQueryItems objectAtIndex:indexPath.row];
-	[currentObject fetchIfNeeded];
+	
+	[object fetchIfNeeded];
 	
 	//Get the type of the activity
-	NSString *typeString = [currentObject objectForKey:@"type"];
-	NSString *statusString = [currentObject objectForKey:@"status"];
+	NSString *typeString = [object objectForKey:@"type"];
+	NSString *statusString = [object objectForKey:@"status"];
 	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : ([statusString isEqualToString:@"COMMENT"]) ? kCellTypeComment : kCellTypePA;
 	int numberOfMemebers = 0;
 	
 	if (type == kCellTypeGroup) {
-		numberOfMemebers = [[currentObject objectForKey:@"number"] integerValue];
+		numberOfMemebers = [[object objectForKey:@"number"] integerValue];
 	}
 	
 	switch (type) {
 		case kCellTypeGroup:
 			if (numberOfMemebers > 1) {
-				[self configureGroupCell:cell withObject:currentObject];	//Configure for multiple people doing this
+				[self configureGroupCell:cell withObject:object];	//Configure for multiple people doing this
 			}
 			else {
-				[self configureNewGroupCell:cell withObject:currentObject];	//New event with only one user
+				[self configureNewGroupCell:cell withObject:object];	//New event with only one user
 			}
 			break;
 		case kCellTypePA:
-			[self configurePACell:cell withObject:currentObject];
+			[self configurePACell:cell withObject:object];
 			break;
 		case kCellTypeComment:
-			[self configureCommentCell:cell withObject:currentObject];
+			[self configureCommentCell:cell withObject:object];
 			break;
 		default:
 			break;
@@ -324,18 +303,12 @@
 	return kCellHeight;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [fetchedQueryItems count];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1; 
-}
-
-#pragma mark - UITableViewDataSource 
+#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PFObject *object = [fetchedQueryItems objectAtIndex:indexPath.row];
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+	
+	PFObject *object = [self objectAtIndex:indexPath];
 	
 	//Get the data if it hasn't been pulled from the server yet
 	[object fetchIfNeeded];
@@ -376,7 +349,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
 #pragma mark - CLLocationManager Delegate
+
+- (BOOL) isValidDistance:(CLLocation *)newLocation oldLocation:(CLLocation *)oldLocation {
+    double distance = [newLocation distanceFromLocation:oldLocation] * kMetersToMiles;
+    if (distance > .5) {
+        return NO;
+    }
+    return YES;
+}
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     
@@ -388,9 +370,7 @@
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
-	if (!alreadyLoading) {
-		[self attemptFeedQuery];
-	}
+	[self.tableView reloadData];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error  {
@@ -401,36 +381,54 @@
 }
 
 
-#pragma mark - 
+#pragma mark - View Life Cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (id)initWithStyle:(UITableViewStyle)style {
+    self = [super initWithStyle:style];
     if (self) {
-		
-		alreadyLoading = NO;
-		
-		if ([[FConfig instance] connected]) {
+        // Custom the table
+        if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];
 			[locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
 			[locationManager setDelegate:self];
 			[locationManager setPurpose:@"To find activities close to you."];
 			[locationManager startUpdatingLocation];
 		}
-	}
+		
+        // The className to query on
+        self.className = @"ActivityEvent";
+        
+        // Whether the built-in pull-to-refresh is enabled
+        self.pullToRefreshEnabled = YES;
+        
+        // Whether the built-in pagination is enabled
+        self.paginationEnabled = YES;
+        
+        // The number of objects to show per page
+        self.objectsPerPage = 10;
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-		
+
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    
-	[locationManager stopUpdatingLocation];
+	
+    [locationManager stopUpdatingLocation];
 	[locationManager setDelegate:nil];
 	locationManager = nil;
 }

@@ -167,6 +167,7 @@
 		6C8665B515AFA5D3004D932F /* NavigationBarBackplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8665AB15AFA5D3004D932F /* NavigationBarBackplate.png */; };
 		6C8665B615AFA5D3004D932F /* NavigationBarBackplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8665AC15AFA5D3004D932F /* NavigationBarBackplate@2x.png */; };
 		6C8665BD15AFA820004D932F /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8665BC15AFA820004D932F /* LoginViewController.xib */; };
+		6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C90CA1515D31EE200408193 /* DiscoverFeedViewController.m */; };
 		6C91D3A215B8E9D90074E7D6 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */; };
 		6C91D3A415B8EA080074E7D6 /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C91D3A315B8EA080074E7D6 /* SettingsCell.xib */; };
 		6CA138CF15B21C8600C1E1EC /* LocationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA138CD15B21C8600C1E1EC /* LocationMapViewController.m */; };
@@ -178,8 +179,6 @@
 		6CA2691715AE2D7A00CD205C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA2691615AE2D7A00CD205C /* CFNetwork.framework */; };
 		6CA2691915AE2DEB00CD205C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA2691815AE2DEB00CD205C /* MobileCoreServices.framework */; };
 		6CA2691B15AE2E1200CD205C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA2691A15AE2E1200CD205C /* Security.framework */; };
-		6CA2691F15AE2FBA00CD205C /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA2691D15AE2FB900CD205C /* StreamViewController.m */; };
-		6CA2692015AE2FBA00CD205C /* StreamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA2691E15AE2FB900CD205C /* StreamViewController.xib */; };
 		6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */; };
 		6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */; };
 		6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72915ACFC1D00C0FF75 /* CoreGraphics.framework */; };
@@ -449,6 +448,8 @@
 		6C8665BC15AFA820004D932F /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		6C8665D915AFB12B004D932F /* NSError+FITParseUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+FITParseUtilities.h"; sourceTree = "<group>"; };
 		6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+FITParseUtilities.m"; sourceTree = "<group>"; };
+		6C90CA1415D31EE200408193 /* DiscoverFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverFeedViewController.h; sourceTree = "<group>"; };
+		6C90CA1515D31EE200408193 /* DiscoverFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverFeedViewController.m; sourceTree = "<group>"; };
 		6C91D3A015B8E9D90074E7D6 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
 		6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 		6C91D3A315B8EA080074E7D6 /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
@@ -462,9 +463,6 @@
 		6CA2691615AE2D7A00CD205C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6CA2691815AE2DEB00CD205C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		6CA2691A15AE2E1200CD205C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		6CA2691C15AE2FB900CD205C /* StreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamViewController.h; sourceTree = "<group>"; };
-		6CA2691D15AE2FB900CD205C /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamViewController.m; sourceTree = "<group>"; };
-		6CA2691E15AE2FB900CD205C /* StreamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StreamViewController.xib; path = Fitivity/StreamViewController.xib; sourceTree = "<group>"; };
 		6CB1A72115ACFC1D00C0FF75 /* Fitivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fitivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1158,8 +1156,8 @@
 			children = (
 				6C647DF215CEE69700366A74 /* Helper Class */,
 				5700D1B315B470A7003C96F3 /* Cells */,
-				6CA2691C15AE2FB900CD205C /* StreamViewController.h */,
-				6CA2691D15AE2FB900CD205C /* StreamViewController.m */,
+				6C90CA1415D31EE200408193 /* DiscoverFeedViewController.h */,
+				6C90CA1515D31EE200408193 /* DiscoverFeedViewController.m */,
 			);
 			name = "Discover Stream";
 			sourceTree = "<group>";
@@ -1219,7 +1217,6 @@
 			isa = PBXGroup;
 			children = (
 				5700D1B815B470F7003C96F3 /* Cells */,
-				6CA2691E15AE2FB900CD205C /* StreamViewController.xib */,
 			);
 			name = "Discover Stream";
 			sourceTree = "<group>";
@@ -1304,7 +1301,6 @@
 				6CB1A75515ACFF7800C0FF75 /* background.png in Resources */,
 				6CB1A75615ACFF7800C0FF75 /* background@2x.png in Resources */,
 				6CB1A75B15ACFFBC00C0FF75 /* OpeningLogoViewController.xib in Resources */,
-				6CA2692015AE2FBA00CD205C /* StreamViewController.xib in Resources */,
 				6CDCD5BD15B1B00200986AA2 /* FTabBarViewController.xib in Resources */,
 				57AAB0C015AF441E00AD51CB /* FitivityLogo.png in Resources */,
 				6C86658D15AFA1BB004D932F /* SignUpViewController.xib in Resources */,
@@ -1482,7 +1478,6 @@
 				6CB1A74E15ACFC6800C0FF75 /* FConfig.m in Sources */,
 				6CB1A75A15ACFFBC00C0FF75 /* OpeningLogoViewController.m in Sources */,
 				6CA2690015AE2A1400CD205C /* Reachability.m in Sources */,
-				6CA2691F15AE2FBA00CD205C /* StreamViewController.m in Sources */,
 				6C86658715AFA1A6004D932F /* LoginViewController.m in Sources */,
 				6C86658C15AFA1BB004D932F /* SignUpViewController.m in Sources */,
 				6C61768A15B0F24600E74B95 /* NSError+FITParseUtilities.m in Sources */,
@@ -1511,6 +1506,7 @@
 				6C57B71315C21ADC000048DD /* ProposedActivityViewController.m in Sources */,
 				6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */,
 				6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */,
+				6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

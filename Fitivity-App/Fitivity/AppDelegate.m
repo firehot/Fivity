@@ -10,9 +10,9 @@
 #import "NSError+FITParseUtilities.h"
 #import "FTabBarViewController.h"
 #import "OpeningLogoViewController.h"
-#import "StreamViewController.h"
 #import "ActivityHomeViewController.h"
 #import "UserProfileViewController.h"
+#import "DiscoverFeedViewController.h"
 
 @implementation AppDelegate
 
@@ -30,11 +30,11 @@
 	
 	//Initialize the main view controllers
 	self.openingView = [[OpeningLogoViewController alloc] initWithNibName:@"OpeningLogoViewController" bundle:nil];
-	StreamViewController *streamView = [[StreamViewController alloc] initWithNibName:@"StreamViewController" bundle:nil];
+	DiscoverFeedViewController *discoverView = [[DiscoverFeedViewController alloc] init];
 	ActivityHomeViewController *activity = [[ActivityHomeViewController alloc] initWithNibName:@"ActivityHomeViewController" bundle:nil];
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:[PFUser currentUser]];
 	[profile setMainUser:YES];
-	self.tabBarView = [[FTabBarViewController alloc] initWithLeftRootViewController:streamView centerRootViewController:activity rightRootViewController:profile];
+	self.tabBarView = [[FTabBarViewController alloc] initWithLeftRootViewController:discoverView centerRootViewController:activity rightRootViewController:profile];
 	
 	[self.openingView setDelegate:self.tabBarView];
 	

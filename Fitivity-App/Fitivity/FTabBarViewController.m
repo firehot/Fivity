@@ -159,7 +159,7 @@
 		self.leftNavigationController = [[UINavigationController  alloc] initWithRootViewController:self.leftRootViewController];
 		self.centerNavigationController = [[UINavigationController alloc] initWithRootViewController:self.centerRootViewController];
 		self.rightNavigationController = [[UINavigationController alloc] initWithRootViewController:self.rightRootViewController];
-		
+			
 		[[FConfig instance] showLogoNavBar:YES];
 	}
 	return self;
@@ -169,6 +169,7 @@
 	[super viewDidLoad];
 	if (!self.displayedViewController) {
 		[self updateDisplayedViewControllerTo:self.leftNavigationController];
+		[_leftTabButton setImage:[UIImage imageNamed:@"ApplicationFeedTabSelected.png"] forState:UIControlStateNormal];
 	} else {
 		[self insertDisplayedViewControllerIntoView];
 	}
