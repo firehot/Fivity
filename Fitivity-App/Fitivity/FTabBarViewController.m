@@ -160,6 +160,7 @@
 		self.centerNavigationController = [[UINavigationController alloc] initWithRootViewController:self.centerRootViewController];
 		self.rightNavigationController = [[UINavigationController alloc] initWithRootViewController:self.rightRootViewController];
 			
+		[[UIBarButtonItem appearance] setTintColor:[[FConfig instance] getFitivityBlue]];
 		[[FConfig instance] showLogoNavBar:YES];
 	}
 	return self;

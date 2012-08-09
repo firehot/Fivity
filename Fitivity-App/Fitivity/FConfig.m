@@ -125,6 +125,12 @@ static FConfig *instance;
 	[defaults setBool:status forKey:kPushStatus];
 }
 
+#pragma mark - UIColor methods
+
+- (UIColor *)getFitivityBlue {
+	return [UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1];
+}
+
 #pragma mark - BOOL methods
 
 - (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n {

@@ -168,6 +168,8 @@
 		6C8665B615AFA5D3004D932F /* NavigationBarBackplate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C8665AC15AFA5D3004D932F /* NavigationBarBackplate@2x.png */; };
 		6C8665BD15AFA820004D932F /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8665BC15AFA820004D932F /* LoginViewController.xib */; };
 		6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C90CA1515D31EE200408193 /* DiscoverFeedViewController.m */; };
+		6C90CA2115D34E0600408193 /* AddLocationHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C90CA1F15D34E0600408193 /* AddLocationHomeViewController.m */; };
+		6C90CA2215D34E0600408193 /* AddLocationHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C90CA2015D34E0600408193 /* AddLocationHomeViewController.xib */; };
 		6C91D3A215B8E9D90074E7D6 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */; };
 		6C91D3A415B8EA080074E7D6 /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C91D3A315B8EA080074E7D6 /* SettingsCell.xib */; };
 		6CA138CF15B21C8600C1E1EC /* LocationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA138CD15B21C8600C1E1EC /* LocationMapViewController.m */; };
@@ -450,6 +452,9 @@
 		6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+FITParseUtilities.m"; sourceTree = "<group>"; };
 		6C90CA1415D31EE200408193 /* DiscoverFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverFeedViewController.h; sourceTree = "<group>"; };
 		6C90CA1515D31EE200408193 /* DiscoverFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverFeedViewController.m; sourceTree = "<group>"; };
+		6C90CA1E15D34E0600408193 /* AddLocationHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationHomeViewController.h; sourceTree = "<group>"; };
+		6C90CA1F15D34E0600408193 /* AddLocationHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationHomeViewController.m; sourceTree = "<group>"; };
+		6C90CA2015D34E0600408193 /* AddLocationHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddLocationHomeViewController.xib; path = Fitivity/AddLocationHomeViewController.xib; sourceTree = "<group>"; };
 		6C91D3A015B8E9D90074E7D6 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
 		6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 		6C91D3A315B8EA080074E7D6 /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
@@ -1132,6 +1137,8 @@
 				6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */,
 				6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */,
 				6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */,
+				6C90CA1E15D34E0600408193 /* AddLocationHomeViewController.h */,
+				6C90CA1F15D34E0600408193 /* AddLocationHomeViewController.m */,
 			);
 			name = "Activity Creation";
 			sourceTree = "<group>";
@@ -1203,6 +1210,7 @@
 				6CDCD5B515B1ADE300986AA2 /* ActivityHomeViewController.xib */,
 				6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */,
 				6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */,
+				6C90CA2015D34E0600408193 /* AddLocationHomeViewController.xib */,
 				6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */,
 				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
 				575AECA315B6051200324958 /* GroupPageViewController.xib */,
@@ -1443,6 +1451,7 @@
 				6C4C5BCC15D1DD3800E63CD3 /* PinFloating.png in Resources */,
 				6C4C5BCD15D1DD3800E63CD3 /* PinShadow.png in Resources */,
 				6C4C5BCF15D1DD3E00E63CD3 /* README.markdown in Resources */,
+				6C90CA2215D34E0600408193 /* AddLocationHomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1507,6 +1516,7 @@
 				6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */,
 				6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */,
 				6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */,
+				6C90CA2115D34E0600408193 /* AddLocationHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

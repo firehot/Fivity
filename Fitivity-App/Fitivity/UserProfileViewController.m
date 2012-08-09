@@ -344,6 +344,7 @@
 	//Only display settings button if on the main users profile
 	if (mainUser) {
 		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
+		
 		self.navigationItem.rightBarButtonItem = settings;
 	}
     

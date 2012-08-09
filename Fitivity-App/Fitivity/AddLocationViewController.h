@@ -10,6 +10,8 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
+@protocol AddLocationViewControllerDelegate;
+
 @interface AddLocationViewController : UIViewController <MKMapViewDelegate> {
 	CLLocationCoordinate2D location;
 	CLGeocoder *geocoder;
@@ -17,7 +19,16 @@
 
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil location:(CLLocationCoordinate2D)userCoordinate;
+- (IBAction)submitNewLocation:(id)sender;
 
+@property (nonatomic, assign) id <AddLocationViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+@end
+
+@protocol AddLocationViewControllerDelegate <NSObject>
+
+@optional
+- (void)userDidSelectLocation:(NSDictionary *)addressInfo;
 
 @end

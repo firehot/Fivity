@@ -18,6 +18,7 @@
 @implementation AddLocationViewController
 
 @synthesize mapView;
+@synthesize delegate;
 
 #pragma mark - MKMapView Delegate 
 
@@ -96,6 +97,12 @@
         location = userCoordinate;
     }
     return self;
+}
+
+- (IBAction)submitNewLocation:(id)sender {
+	if ([delegate respondsToSelector:@selector(userDidSelectLocation:)]) {
+		[delegate userDidSelectLocation:nil];
+	}
 }
 
 - (void)viewDidLoad {

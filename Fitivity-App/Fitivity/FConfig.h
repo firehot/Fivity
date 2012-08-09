@@ -30,6 +30,8 @@
 - (NSString *)getGoogleAnalyticsID;
 - (NSString *)getGooglePlacesAPIKey;
 
+- (UIColor *)getFitivityBlue;
+
 - (void)showLogoNavBar:(BOOL)status;
 - (void)setDoesHaveNotifications:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;

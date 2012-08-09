@@ -11,7 +11,7 @@
 #import "GTMNSString+URLArguments.h"
 #import "GooglePlacesObject.h"
 #import "LocationMapViewController.h"
-#import "AddLocationViewController.h"
+#import "AddLocationHomeViewController.h"
 
 #define kCellHeight     91.0f
 
@@ -33,8 +33,8 @@
 #pragma mark - Helper Methods
 
 - (void)showAddLocationView {
-	AddLocationViewController *add = [[AddLocationViewController alloc] initWithNibName:@"AddLocationViewController" bundle:nil location:[[locationManager location] coordinate]];
-	[self.navigationController pushViewController:add animated:YES];
+	AddLocationHomeViewController *addHome = [[AddLocationHomeViewController alloc] initWithNibName:@"AddLocationHomeViewController" bundle:nil currentLocation:[[locationManager location] coordinate]];
+	[self.navigationController pushViewController:addHome animated:YES];
 }
 
 -(void)buildSearchArrayFrom:(NSString *)matchString {
@@ -316,6 +316,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	searchBar.tintColor = [[FConfig instance] getFitivityBlue];
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
