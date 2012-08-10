@@ -12,7 +12,7 @@
 
 @protocol AddLocationViewControllerDelegate;
 
-@interface AddLocationViewController : UIViewController <MKMapViewDelegate> {
+@interface AddLocationViewController : UIViewController <MKMapViewDelegate, UITextFieldDelegate> {
 	CLLocationCoordinate2D location;
 	CLGeocoder *geocoder;
 }
@@ -22,7 +22,11 @@
 - (IBAction)submitNewLocation:(id)sender;
 
 @property (nonatomic, assign) id <AddLocationViewControllerDelegate> delegate;
+@property (nonatomic, retain) NSString *currentAddress;
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UITextField *addressSearchField;
+@property (weak, nonatomic) IBOutlet UIToolbar *searchBar;
 
 @end
 

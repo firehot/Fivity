@@ -18,7 +18,10 @@
 @implementation AddLocationViewController
 
 @synthesize mapView;
+@synthesize addressSearchField;
+@synthesize searchBar;
 @synthesize delegate;
+@synthesize currentAddress;
 
 #pragma mark - MKMapView Delegate 
 
@@ -32,13 +35,26 @@
 		
 		//Revers-Geocode the location and get the address
 		[geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+			
+			if (!placemarks) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Results" message:@"Could not find address for location pin is in." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+				return;
+			}
+			
 			//Get nearby address
 			CLPlacemark *placemark = [placemarks objectAtIndex:0];
-						
+			
 			//String to hold address
 			NSArray *values = [placemark.addressDictionary valueForKey:@"FormattedAddressLines"];
-			NSString *locatedAt = [NSString stringWithFormat:@"%@ %@", [values objectAtIndex:0], [values objectAtIndex:1]];
-			annotation.subtitle = locatedAt;
+			if ([values count] > 1) {
+				currentAddress = [NSString stringWithFormat:@"%@ %@", [values objectAtIndex:0], [values objectAtIndex:1]]; 
+			}
+			else {
+				currentAddress = [NSString stringWithFormat:@"%@", [values objectAtIndex:0]];
+			}
+			
+			annotation.subtitle = currentAddress;
 			
 			[self.mapView selectAnnotation:annotation animated:NO];
 		}];
@@ -89,6 +105,60 @@
     [self.mapView addAnnotation:annot];
 }
 
+- (void)refreshCurrentAddressString {
+	
+	// Reverse Geocode the location
+	CLLocation *loc = [[CLLocation alloc] initWithLatitude:location.latitude longitude:location.longitude];
+	[geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+		//Get nearby address
+		CLPlacemark *placemark = [placemarks objectAtIndex:0];
+		
+		//String to hold address
+		currentAddress = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+	}];
+
+}
+
+- (void)dropPinFromSearchAddress {
+	
+	[geocoder geocodeAddressString:addressSearchField.text completionHandler:^(NSArray *placemarks, NSError *error){
+		
+		if (!placemarks) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Results" message:@"Unable to find address you typed" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];
+			return;
+		}
+		
+		CLPlacemark *placemark = [placemarks objectAtIndex:0];
+		
+		//[mapView setRegion:region animated:YES];
+		[mapView removeAnnotations:[mapView annotations]]; //remove previous annotations
+		
+		//Add the found address
+		DDAnnotation *annotation = [[DDAnnotation alloc] initWithCoordinate:placemark.region.center addressDictionary:nil];
+		annotation.title = @"Drag to Move Pin";
+		annotation.subtitle = addressSearchField.text;
+		
+		//Add the annotation and update the map
+		[self.mapView addAnnotation:annotation];
+		[self.mapView selectAnnotation:annotation animated:NO];
+		location = placemark.region.center;
+		MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 3000, 3000);
+		[mapView setRegion:region animated:YES];
+		
+		[self refreshCurrentAddressString];
+	}];
+	
+}
+
+#pragma mark - UITextField Delegate 
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	[self dropPinFromSearchAddress];
+	return YES;
+}
+
 #pragma mark - View Life Cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil location:(CLLocationCoordinate2D)userCoordinate {
@@ -101,7 +171,35 @@
 
 - (IBAction)submitNewLocation:(id)sender {
 	if ([delegate respondsToSelector:@selector(userDidSelectLocation:)]) {
-		[delegate userDidSelectLocation:nil];
+		NSMutableDictionary *returnData = [[NSMutableDictionary alloc] init];
+		
+		NSArray *components = [currentAddress componentsSeparatedByString:@", "];
+		
+		if (components) {
+			if ([components count] >= 2) {
+				NSString *preState = [components objectAtIndex:0];
+				NSArray *preStateComponents = [[preState stringByReplacingOccurrencesOfString:@", " withString:@""] componentsSeparatedByString:@" "];
+				
+				NSString *postState = [components objectAtIndex:1];
+				NSArray *postStateComponents = [[postState stringByReplacingOccurrencesOfString:@"  " withString:@" "] componentsSeparatedByString:@" "];
+				
+				NSString *address = @"";
+				for (int i = 0; i < [preStateComponents count] - 1; i++) {
+					address = [address stringByAppendingString:[NSString stringWithFormat:@"%@ ", [preStateComponents objectAtIndex:i]]];
+				}
+				
+				NSString *city = [preStateComponents objectAtIndex: [preStateComponents count] - 1];
+				NSString *state = [postStateComponents objectAtIndex:0];
+				NSString *zip = [postStateComponents objectAtIndex:[postStateComponents count] - 1]; //instead of index 1, use count - 1 incase it does not return a zip
+				
+				[returnData setObject:address forKey:@"address"];
+				[returnData setObject:city forKey:@"city"];
+				[returnData setObject:state forKey:@"state"];
+				[returnData setObject:zip forKey:@"zip_code"];
+			}
+		}		
+		
+		[delegate userDidSelectLocation:returnData];
 	}
 }
 
@@ -109,6 +207,10 @@
     [super viewDidLoad];
 	
 	geocoder = [[CLGeocoder alloc] init];
+	
+	[self.searchBar setTintColor:[[FConfig instance] getFitivityBlue]];
+	
+	currentAddress = @"";
 	
 	DDAnnotation *annotation = [[DDAnnotation alloc] initWithCoordinate:location addressDictionary:nil];
 	annotation.title = @"Drag to Move Pin";
@@ -118,8 +220,8 @@
 		CLPlacemark *placemark = [placemarks objectAtIndex:0];
 		
 		//String to hold address
-		NSString *locatedAt = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
-		annotation.subtitle = locatedAt;
+		currentAddress = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+		annotation.subtitle = currentAddress;
 	}];
 	
 	[self.mapView addAnnotation:annotation];
@@ -136,6 +238,8 @@
 - (void)viewDidUnload {
 	mapView.delegate = nil;
     [self setMapView:nil];
+	[self setAddressSearchField:nil];
+	[self setSearchBar:nil];
     [super viewDidUnload];
 }
 

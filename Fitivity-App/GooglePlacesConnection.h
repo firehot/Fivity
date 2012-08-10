@@ -27,7 +27,7 @@
 {
     NSMutableData       *responseData;
     NSURLConnection     *connection;
-    BOOL                connectionIsActive;
+    BOOL                connectionIsActive, newObject;
     int                 minAccuracyValue;
     //NEW
     CLLocationCoordinate2D userLocation;
@@ -52,7 +52,7 @@
                andTypes:(NSString *)types;
 
 -(void)getGoogleObjectDetails:(NSString*)reference;
-
+- (void)sendNewGooglePlace:(NSDictionary *)info;
 -(void)cancelGetGoogleObjects;
 
 @end
@@ -61,5 +61,8 @@
 
 - (void) googlePlacesConnection:(GooglePlacesConnection *)conn didFinishLoadingWithGooglePlacesObjects:(NSMutableArray *)objects;
 - (void) googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error;
+
+@optional
+- (void) googlePlacesConnectionDidFinishSendingNewPlace:(GooglePlacesConnection *)conn;
 
 @end

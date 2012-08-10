@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "GooglePlacesConnection.h"
 #import "AddLocationViewController.h"
 
-@interface AddLocationHomeViewController : UIViewController <AddLocationViewControllerDelegate, UITextFieldDelegate> {
+@interface AddLocationHomeViewController : UIViewController <AddLocationViewControllerDelegate, GooglePlacesConnectionDelegate, UITextFieldDelegate> {
 	CLLocationCoordinate2D coordinate;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil currentLocation:(CLLocationCoordinate2D)c;
 - (IBAction)addFromMap:(id)sender;
 - (IBAction)submitNewLocation:(id)sender;
+- (IBAction)hideKeyboard:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *addressField;
