@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-#import "GooglePlacesConnection.h"
+#import "GooglePlaceAdder.h"
 #import "AddLocationViewController.h"
 
-@interface AddLocationHomeViewController : UIViewController <AddLocationViewControllerDelegate, GooglePlacesConnectionDelegate, UITextFieldDelegate> {
+@interface AddLocationHomeViewController : UIViewController <AddLocationViewControllerDelegate, GooglePlaceAdderDelegate, UITextFieldDelegate> {
 	CLLocationCoordinate2D coordinate;
 }
 
@@ -21,6 +21,7 @@
 - (IBAction)submitNewLocation:(id)sender;
 - (IBAction)hideKeyboard:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *submitButton;
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *addressField;
 @property (weak, nonatomic) IBOutlet UITextField *cityField;

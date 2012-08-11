@@ -71,6 +71,7 @@
 		6C42C4F215B9F79C00ACB549 /* GroupMembersButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F015B9F79C00ACB549 /* GroupMembersButton.png */; };
 		6C42C4F815B9F86100ACB549 /* GroupChallengeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */; };
 		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
+		6C42C86615D5D5F20067EFA9 /* GooglePlaceAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C86515D5D5F20067EFA9 /* GooglePlaceAdder.m */; };
 		6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */; };
 		6C4C5BBA15D1D50D00E63CD3 /* AddLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */; };
 		6C4C5BC815D1DD3800E63CD3 /* Pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC215D1DD3800E63CD3 /* Pin.png */; };
@@ -341,6 +342,8 @@
 		6C42C4F615B9F86100ACB549 /* GroupChallengeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GroupChallengeButton.png; sourceTree = "<group>"; };
 		6C42C50615BA196900ACB549 /* NDArtworkPopout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NDArtworkPopout.h; sourceTree = "<group>"; };
 		6C42C50715BA196900ACB549 /* NDArtworkPopout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDArtworkPopout.m; sourceTree = "<group>"; };
+		6C42C86415D5D5F20067EFA9 /* GooglePlaceAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlaceAdder.h; sourceTree = "<group>"; };
+		6C42C86515D5D5F20067EFA9 /* GooglePlaceAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlaceAdder.m; sourceTree = "<group>"; };
 		6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
 		6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
 		6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddLocationViewController.xib; path = Fitivity/AddLocationViewController.xib; sourceTree = "<group>"; };
@@ -606,6 +609,8 @@
 				6CA138CD15B21C8600C1E1EC /* LocationMapViewController.m */,
 				6CA138D515B21E8B00C1E1EC /* MapPin.h */,
 				6CA138D615B21E8B00C1E1EC /* MapPin.m */,
+				6C42C86415D5D5F20067EFA9 /* GooglePlaceAdder.h */,
+				6C42C86515D5D5F20067EFA9 /* GooglePlaceAdder.m */,
 			);
 			name = "Helper Classes";
 			sourceTree = "<group>";
@@ -1529,6 +1534,7 @@
 				6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */,
 				6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */,
 				6C90CA2115D34E0600408193 /* AddLocationHomeViewController.m in Sources */,
+				6C42C86615D5D5F20067EFA9 /* GooglePlaceAdder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

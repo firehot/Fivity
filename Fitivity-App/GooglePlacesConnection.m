@@ -35,7 +35,6 @@
 	if (!self)
 		return nil;
 	[self setDelegate:del];
-	newObject = NO;
 	return self;
 }
 
@@ -127,30 +126,6 @@
     
 }
 
-- (void)sendNewGooglePlace:(NSDictionary *)info {
-	
-	newObject = YES;
-	NSString *url = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/add/json?sensor=true&key=%@", [[FConfig instance] getGooglePlacesAPIKey]];
-	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-	
-	
-	NSString *jsonBody = [info JSONRepresentation];
-	NSData *requestData = [NSData dataWithBytes:[jsonBody UTF8String] length:[jsonBody length]];
-	
-	[request setHTTPMethod:@"POST"];
-	[request setHTTPBody:requestData];
-	
-	//Make sure nothing is going on before sending data
-	[self cancelGetGoogleObjects];
-	connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
-	
-	if (connection) {
-		responseData = [NSMutableData data];
-		connectionIsActive = YES;
-	}
-}
-
 - (void)connection:(NSURLConnection *)conn didReceiveResponse:(NSURLResponse *)response  {
 	[responseData setLength:0];
 }
@@ -174,11 +149,7 @@
 	
 	NSDictionary *parsedJSON    = [json objectWithString:responseString error:&jsonError];
     
-	if (newObject) {
-		 NSString *responseStatus = [NSString stringWithFormat:@"%@",[parsedJSON objectForKey:@"status"]];
-		NSLog(@"%@",responseStatus);
-	}
-	else if ([jsonError code]==0) {
+	if ([jsonError code]==0) {
         NSString *responseStatus = [NSString stringWithFormat:@"%@",[parsedJSON objectForKey:@"status"]];
 		
         if ([responseStatus isEqualToString:@"OK"]) {

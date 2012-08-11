@@ -18,6 +18,7 @@
 
 @implementation AddLocationHomeViewController
 
+@synthesize submitButton;
 @synthesize nameField;
 @synthesize addressField;
 @synthesize cityField;
@@ -68,13 +69,48 @@
 	}
 }
 
-#pragma mark - GooglePlacesConnection Delegate 
+#pragma mark - GooglePlaceAdder Delegate 
 
-- (void) googlePlacesConnectionDidFinishSendingNewPlace:(GooglePlacesConnection *)conn {
-	[self.navigationController popViewControllerAnimated:YES];
+- (void) didFinishSendingNewPlace:(NSDictionary *)ref {
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"A new place has been created" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-	[alert show];	
+	//Allow to submit again
+	self.submitButton.enabled = YES;
+	
+	//Reset textfields
+	for (UITextField *o in [self.view subviews]) {
+		if ([o isKindOfClass:[UITextField class]]) {
+			o.text = @"";
+		}
+	}
+	
+	NSString *status = [ref objectForKey:@"status"];
+	NSString *title = @"";
+	NSString *message = @"";
+	
+	//Check the status of the request
+	if ([status isEqualToString:@"OK"]) {
+		title = @"Success!";
+		message = @"Your place has been created and can now be searched for.";
+	} else if ([status isEqualToString:@"OVER_QUERY_LIMIT"]) {
+		title = @"Out of Licenses";
+		message = @"We are currently running low on licenses =0 try again later to create this place";
+	} else if ([status isEqualToString:@"REQUEST_DENIED"]) {
+		title = @"Denied";
+		message = @"The request to create a place was denied. Sorry, try again later.";
+	} else if ([status isEqualToString:@"INVALID_REQUEST"]) {
+		title = @"Bad Request";
+		message = @"Something doesn't seem right. Try adding the place again later.";
+	}
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+	[alert show];
+	
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) didFinishWithError:(NSError *)error {
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Error" message:[error description] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+	[alert show];
 }
 
 #pragma mark - View Life Cycle
@@ -98,6 +134,7 @@
 	[self setCityField:nil];
 	[self setStateField:nil];
 	[self setZipField:nil];
+	[self setSubmitButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -123,10 +160,13 @@
 	
 	//Make sure that they didn't leave any fields empty
 	BOOL empty = NO;
-	for (UITextField *t in [self.view subviews]) {
-		if ([t.text isEqualToString:@""]) {
-			empty = YES;
+	for (UITextField *o in [self.view subviews]) {
+		if ([o isKindOfClass:[UITextField class]]) {
+			if ([o.text isEqualToString:@""]) {
+				empty = YES;
+			}
 		}
+		
 	}
 	
 	if (empty) {
@@ -135,13 +175,17 @@
 		return;
 	}
 	
-	__block GooglePlacesConnection *googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
+	//disable the submit button so multiple requests cant be submitted
+	self.submitButton.enabled = NO;
+	
+	//Configure the object
+	__block GooglePlaceAdder *adder = [[GooglePlaceAdder alloc]init];
+	[adder setDelegate:self];
 	
 	//Create the data for googles API call
 	//https://developers.google.com/places/documentation/#PlaceSearches
-	
 	CLGeocoder *geo = [[CLGeocoder alloc] init];
-	[geo geocodeAddressString:@"" completionHandler:^(NSArray *placemarks, NSError *error){
+	[geo geocodeAddressString:[NSString stringWithFormat:@"%@ %@, %@ %@",addressField.text, cityField.text, stateField.text, zipField.text] completionHandler:^(NSArray *placemarks, NSError *error){
 	
 		if (!placemarks) {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unable to create place for this address" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -156,11 +200,11 @@
 		NSDictionary *location = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithDouble:placemark.location.coordinate.latitude], @"lat",
 								  [NSNumber numberWithDouble:placemark.location.coordinate.longitude], @"lng", nil];
 		[data setObject:location forKey:@"location"];
-		[data setObject:@"" forKey:@"types"];
-		[data setObject:@"" forKey:@"accuracy"];
+		[data setObject:[NSArray arrayWithObject:@"park"] forKey:@"types"];
+		[data setObject:[NSNumber numberWithInt:100] forKey:@"accuracy"];
 		
 		//send the new place
-		[googlePlacesConnection sendNewGooglePlace:nil];
+		[adder sendPlace:data];
 	}];
 }
 
