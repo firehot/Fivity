@@ -280,9 +280,9 @@
 		F1126DAE15E1ADF100E86935 /* fitivity_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DAC15E1ADF100E86935 /* fitivity_logo.png */; };
 		F1126DAF15E1ADF100E86935 /* fitivity_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DAD15E1ADF100E86935 /* fitivity_logo@2x.png */; };
 		F1126DB415E1BDE300E86935 /* b_profile_cell_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB015E1BDCD00E86935 /* b_profile_cell_down.png */; };
-		F1126DB515E1BDE300E86935 /* b_profile_cell_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB115E1BDD100E86935 /* b_profile_cell_down@2x.png */; };
 		F1126DB615E1BDE300E86935 /* b_profile_cell.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB215E1BDD900E86935 /* b_profile_cell.png */; };
-		F1126DB715E1BDE300E86935 /* b_profile_cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB315E1BDDE00E86935 /* b_profile_cell@2x.png */; };
+		F1126DBA15E1CF3900E86935 /* b_profile_cell_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB815E1CF3100E86935 /* b_profile_cell_down@2x.png */; };
+		F1126DBB15E1CF3900E86935 /* b_profile_cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB915E1CF3600E86935 /* b_profile_cell@2x.png */; };
 		F1CF676D15C01E5F0029E100 /* NavigationBarBackplateBlank.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF676B15C01E5F0029E100 /* NavigationBarBackplateBlank.png */; };
 		F1CF676E15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF676C15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png */; };
 /* End PBXBuildFile section */
@@ -628,9 +628,9 @@
 		F1126DAC15E1ADF100E86935 /* fitivity_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fitivity_logo.png; path = ../images_profile/fitivity_logo.png; sourceTree = "<group>"; };
 		F1126DAD15E1ADF100E86935 /* fitivity_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fitivity_logo@2x.png"; path = "../images_profile/fitivity_logo@2x.png"; sourceTree = "<group>"; };
 		F1126DB015E1BDCD00E86935 /* b_profile_cell_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b_profile_cell_down.png; path = ../images_profile/b_profile_cell_down.png; sourceTree = "<group>"; };
-		F1126DB115E1BDD100E86935 /* b_profile_cell_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_profile_cell_down@2x.png"; path = "../images_profile/b_profile_cell_down@2x.png"; sourceTree = "<group>"; };
 		F1126DB215E1BDD900E86935 /* b_profile_cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b_profile_cell.png; path = ../images_profile/b_profile_cell.png; sourceTree = "<group>"; };
-		F1126DB315E1BDDE00E86935 /* b_profile_cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_profile_cell@2x.png"; path = "../images_profile/b_profile_cell@2x.png"; sourceTree = "<group>"; };
+		F1126DB815E1CF3100E86935 /* b_profile_cell_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_profile_cell_down@2x.png"; path = "../images_profile/b_profile_cell_down@2x.png"; sourceTree = "<group>"; };
+		F1126DB915E1CF3600E86935 /* b_profile_cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_profile_cell@2x.png"; path = "../images_profile/b_profile_cell@2x.png"; sourceTree = "<group>"; };
 		F1CF676B15C01E5F0029E100 /* NavigationBarBackplateBlank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavigationBarBackplateBlank.png; sourceTree = "<group>"; };
 		F1CF676C15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NavigationBarBackplateBlank@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -835,10 +835,10 @@
 		6C7722B215B1F1460040DB1D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F1126DB815E1CF3100E86935 /* b_profile_cell_down@2x.png */,
+				F1126DB915E1CF3600E86935 /* b_profile_cell@2x.png */,
 				F1126DB015E1BDCD00E86935 /* b_profile_cell_down.png */,
-				F1126DB115E1BDD100E86935 /* b_profile_cell_down@2x.png */,
 				F1126DB215E1BDD900E86935 /* b_profile_cell.png */,
-				F1126DB315E1BDDE00E86935 /* b_profile_cell@2x.png */,
 				F1126D8015DFACA900E86935 /* b_cell_activities_down.png */,
 				F1126D8115DFACAB00E86935 /* b_cell_activities_down@2x.png */,
 				F1126D8215DFACAD00E86935 /* b_cell_activities.png */,
@@ -1614,9 +1614,9 @@
 				F1126DAE15E1ADF100E86935 /* fitivity_logo.png in Resources */,
 				F1126DAF15E1ADF100E86935 /* fitivity_logo@2x.png in Resources */,
 				F1126DB415E1BDE300E86935 /* b_profile_cell_down.png in Resources */,
-				F1126DB515E1BDE300E86935 /* b_profile_cell_down@2x.png in Resources */,
 				F1126DB615E1BDE300E86935 /* b_profile_cell.png in Resources */,
-				F1126DB715E1BDE300E86935 /* b_profile_cell@2x.png in Resources */,
+				F1126DBA15E1CF3900E86935 /* b_profile_cell_down@2x.png in Resources */,
+				F1126DBB15E1CF3900E86935 /* b_profile_cell@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
