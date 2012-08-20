@@ -19,6 +19,7 @@
 	
 	NSMutableArray *groupResults;
 	NSMutableData *profilePictureData;
+	NSMutableDictionary *updatedGroups;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user;

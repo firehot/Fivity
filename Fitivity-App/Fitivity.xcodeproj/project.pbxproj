@@ -275,8 +275,6 @@
 		F1126DA515DFCE2000E86935 /* b_settings_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DA115DFCE0B00E86935 /* b_settings_down@2x.png */; };
 		F1126DA615DFCE2000E86935 /* b_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DA215DFCE1000E86935 /* b_settings.png */; };
 		F1126DA715DFCE2000E86935 /* b_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DA315DFCE1700E86935 /* b_settings@2x.png */; };
-		F1126DAA15E1AC3A00E86935 /* bg_profile_header.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DA815E1AC3800E86935 /* bg_profile_header.png */; };
-		F1126DAB15E1AC3A00E86935 /* bg_profile_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DA915E1AC3900E86935 /* bg_profile_header@2x.png */; };
 		F1126DAE15E1ADF100E86935 /* fitivity_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DAC15E1ADF100E86935 /* fitivity_logo.png */; };
 		F1126DAF15E1ADF100E86935 /* fitivity_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DAD15E1ADF100E86935 /* fitivity_logo@2x.png */; };
 		F1126DB415E1BDE300E86935 /* b_profile_cell_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F1126DB015E1BDCD00E86935 /* b_profile_cell_down.png */; };
@@ -1383,7 +1381,7 @@
 		6CB1A71815ACFC1D00C0FF75 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Nathaniel Doe";
 			};
 			buildConfigurationList = 6CB1A71B15ACFC1D00C0FF75 /* Build configuration list for PBXProject "Fitivity" */;
@@ -1609,8 +1607,6 @@
 				F1126DA515DFCE2000E86935 /* b_settings_down@2x.png in Resources */,
 				F1126DA615DFCE2000E86935 /* b_settings.png in Resources */,
 				F1126DA715DFCE2000E86935 /* b_settings@2x.png in Resources */,
-				F1126DAA15E1AC3A00E86935 /* bg_profile_header.png in Resources */,
-				F1126DAB15E1AC3A00E86935 /* bg_profile_header@2x.png in Resources */,
 				F1126DAE15E1ADF100E86935 /* fitivity_logo.png in Resources */,
 				F1126DAF15E1ADF100E86935 /* fitivity_logo@2x.png in Resources */,
 				F1126DB415E1BDE300E86935 /* b_profile_cell_down.png in Resources */,

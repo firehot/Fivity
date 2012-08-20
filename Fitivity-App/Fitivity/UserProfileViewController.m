@@ -185,15 +185,20 @@
 		cell = [nib objectAtIndex:0];
     }
 	
+	//To prevent many api calls to parse, cells will only be checked for new activity upon loading 
 	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
-	PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
-	[group fetchIfNeeded];
-	
-	// Check if there is any new activity only if you are looking at your profile
-	if (mainUser && [[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
-		[cell.activityIndicator setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
+	if (![updatedGroups objectForKey:[currentGroup objectId]]) {
+		PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
+		[group fetchIfNeeded];
+		
+		[updatedGroups setObject:[NSNumber numberWithBool:YES] forKey:[currentGroup objectId]];
+		
+		// Check if there is any new activity only if you are looking at your profile
+		if (mainUser && [[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
+			[cell.activityIndicator setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
+		}
 	}
-	
+		
 	cell.locationLabel.text = [currentGroup objectForKey:@"place"];
 	cell.activityLabel.text = [currentGroup objectForKey:@"activity"];
 	
@@ -355,9 +360,11 @@
         [button setImage:settingsImageDown forState:UIControlStateHighlighted];
         [button addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
         button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
-        
+		
         UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = settings;
+		
+		updatedGroups = [[NSMutableDictionary alloc] init];
 	}
     
 }
