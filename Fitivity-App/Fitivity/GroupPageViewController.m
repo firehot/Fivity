@@ -83,12 +83,12 @@
 - (void)updateJoiningGUI {
 	//When the user is part of the group display the unjoin button otherwise display the join button
 	if (alreadyJoined) {
-		[joinButton setImage:[UIImage imageNamed:@"GroupUnjoinGroupButton.png"] forState:UIControlStateNormal];
-		[joinButton setImage:[UIImage imageNamed:@"GroupUnjoinGroupButtonPressed.png"] forState:UIControlStateHighlighted];
+		[joinButton setImage:[UIImage imageNamed:@"b_leave.png"] forState:UIControlStateNormal];
+		[joinButton setImage:[UIImage imageNamed:@"b_leave_down.png"] forState:UIControlStateHighlighted];
 	}
 	else {
-		[joinButton setImage:[UIImage imageNamed:@"GroupJoinGroupButton.png"] forState:UIControlStateNormal];
-		[joinButton setImage:[UIImage imageNamed:@"GroupJoinGroupButtonPressed.png"] forState:UIControlStateHighlighted];
+		[joinButton setImage:[UIImage imageNamed:@"b_join.png"] forState:UIControlStateNormal];
+		[joinButton setImage:[UIImage imageNamed:@"b_join_down.png"] forState:UIControlStateHighlighted];
 	}
 }
 
@@ -361,13 +361,13 @@
 	//Style picture
 	[cell.userPicture.layer setCornerRadius:10.0f];
 	[cell.userPicture.layer setMasksToBounds:YES];
-	[cell.userPicture.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+	[cell.userPicture.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
 	[cell.userPicture.layer setBorderWidth:4];
 	
 	//Set cell text
 	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[currentPA objectForKey:@"activityMessage"]];
 	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-	[attStr setTextColor:[UIColor whiteColor]];
+	[attStr setTextColor:[UIColor blackColor]];
 	cell.activityMessage.attributedText = attStr;
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
@@ -451,20 +451,23 @@
 		frame.size.height -= 35.0;
 		self.proposedTable.frame = frame;
 	}
-	
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	self.proposedTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.activityLabel.text = activity;
 	
 	
-	UIImage *memberImage = [UIImage imageNamed:@"GroupMembersButton.png"];
+	UIImage *memberImage = [UIImage imageNamed:@"b_members.png"];
+    UIImage *memberImageDown = [UIImage imageNamed:@"b_members_down.png"];
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 	[button setImage:memberImage forState:UIControlStateNormal];
+    [button setImage:memberImageDown forState:UIControlStateHighlighted];
 	[button addTarget:self action:@selector(viewMemebers) forControlEvents:UIControlEventTouchUpInside];
 	button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
 	
 	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.navigationItem.rightBarButtonItem = members;
+
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetProposedActivities) name:@"addedPA" object:nil];
 }

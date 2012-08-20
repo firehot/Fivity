@@ -116,7 +116,7 @@ static FConfig *instance;
 		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplate.png"] forBarMetrics:UIBarMetricsDefault];
 	}
 	else {
-		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBarBackplateBlank.png"] forBarMetrics:UIBarMetricsDefault];
+		[[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
 	}
 }
 

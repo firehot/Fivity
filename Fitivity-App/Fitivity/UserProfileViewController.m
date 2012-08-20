@@ -220,7 +220,7 @@
 	
 	if (section == 0) {
 		UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kHeaderHeight)];
-		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_activity_header.png"]]];
 		
 		UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
 		[title setText:@"My Groups"];
@@ -319,11 +319,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[groupsTable reloadData];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+			
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+    
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	
 	//If there is no user yet (hasn't logged in yet), and it is the users profile set it up with the current user
@@ -343,8 +347,16 @@
 	
 	//Only display settings button if on the main users profile
 	if (mainUser) {
-		UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"UserProfileSettingsWrench.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSettings)];
-		
+        
+        UIImage *settingsImage = [UIImage imageNamed:@"b_settings.png"];
+        UIImage *settingsImageDown = [UIImage imageNamed:@"b_settings_down.png"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:settingsImage forState:UIControlStateNormal];
+        [button setImage:settingsImageDown forState:UIControlStateHighlighted];
+        [button addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
+        
+        UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = settings;
 	}
     

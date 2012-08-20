@@ -240,13 +240,13 @@
 	//Style picture
 	[cell.userPicture.layer setCornerRadius:10.0f];
 	[cell.userPicture.layer setMasksToBounds:YES];
-	[cell.userPicture.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+	[cell.userPicture.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
 	[cell.userPicture.layer setBorderWidth:4];
 	
 	//Set cell text
 	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[currentPA objectForKey:@"message"]];
 	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-	[attStr setTextColor:[UIColor whiteColor]];
+	[attStr setTextColor:[UIColor blackColor]];
 	
 	cell.activityMessage.attributedText = attStr;
 	cell.userName.text = [user objectForKey:@"username"];
@@ -300,7 +300,7 @@
 	creatorName.text = [creator objectForKey:@"username"];
 	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[parent objectForKey:@"activityMessage"]];
 	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-	[attStr setTextColor:[UIColor whiteColor]];
+	[attStr setTextColor:[UIColor blackColor]];
 	activityMessage.attributedText = attStr;
 	
 	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
@@ -380,8 +380,8 @@
     [super viewDidLoad];
 
 	posting = NO;
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-	self.commentsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
+	self.commentsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 }
 
 - (void)viewDidUnload {

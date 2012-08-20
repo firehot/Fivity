@@ -104,9 +104,9 @@
 }
 
 - (void)unselectAllTabs {
-	[_leftTabButton setImage:[UIImage imageNamed:@"ApplicationFeedTabNormal.png"] forState:UIControlStateNormal];
-	[_centerTabButton setImage:[UIImage imageNamed:@"ApplicationActivityTabNormal.png"] forState:UIControlStateNormal];
-	[_rightTabButton setImage:[UIImage imageNamed:@"ApplicationProfileTabNormal.png"] forState:UIControlStateNormal];
+	[_leftTabButton setImage:[UIImage imageNamed:@"b_feed_inactive.png"] forState:UIControlStateNormal];
+	[_centerTabButton setImage:[UIImage imageNamed:@"b_start_activity_inactive.png"] forState:UIControlStateNormal];
+	[_rightTabButton setImage:[UIImage imageNamed:@"b_profile_inactive.png"] forState:UIControlStateNormal];
 }
 
 #pragma mark - IBAction's
@@ -114,7 +114,7 @@
 -(IBAction)leftTabButtonPushed:(id)sender {
 	if (!self.isShowingLeftTab) {
 		[self unselectAllTabs];
-		[_leftTabButton setImage:[UIImage imageNamed:@"ApplicationFeedTabSelected.png"] forState:UIControlStateNormal];
+		[_leftTabButton setImage:[UIImage imageNamed:@"b_feed_active.png"] forState:UIControlStateNormal];
 		[self showLeftTab];
 	}
 	else {
@@ -126,7 +126,7 @@
 -(IBAction)centerTabButtonPushed:(id)sender {
 	if (!self.isShowingCenterTab) {
 		[self unselectAllTabs];
-		[_centerTabButton setImage:[UIImage imageNamed:@"ApplicationActivityTabSelected.png"] forState:UIControlStateNormal];
+		[_centerTabButton setImage:[UIImage imageNamed:@"b_start_activity_active.png"] forState:UIControlStateNormal];
 		[self showCenterTab];
 	}
 	else {
@@ -138,7 +138,7 @@
 -(IBAction)rightTabButtonPushed:(id)sender {
 	if (!self.isShowingRightTab) {
 		[self unselectAllTabs];
-		[_rightTabButton setImage:[UIImage imageNamed:@"ApplicationProfileTabSelected.png"] forState:UIControlStateNormal];
+		[_rightTabButton setImage:[UIImage imageNamed:@"b_profile_active.png"] forState:UIControlStateNormal];
 		[self showRightTab];
 	}
 	else {
@@ -170,7 +170,7 @@
 	[super viewDidLoad];
 	if (!self.displayedViewController) {
 		[self updateDisplayedViewControllerTo:self.leftNavigationController];
-		[_leftTabButton setImage:[UIImage imageNamed:@"ApplicationFeedTabSelected.png"] forState:UIControlStateNormal];
+		[_leftTabButton setImage:[UIImage imageNamed:@"b_feed_active.png"] forState:UIControlStateNormal];
 	} else {
 		[self insertDisplayedViewControllerIntoView];
 	}
