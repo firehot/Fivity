@@ -45,22 +45,6 @@
 		return;
 	}
 	
-	//Make sure that they didn't leave any fields empty
-	BOOL empty = NO;
-	for (UITextField *o in [self.view subviews]) {
-		if ([o isKindOfClass:[UITextField class]]) {
-			if ([o.text isEqualToString:@""]) {
-				empty = YES;
-			}
-		}
-	}
-	
-	if (empty) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Empty Field!" message:@"You must fill in ALL of the fields in order to create a place" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];
-		return;
-	}
-	
 	//disable the submit button so multiple requests cant be submitted
 	self.submitButton.enabled = NO;
 	
@@ -102,6 +86,23 @@
 }
 
 - (IBAction)showTypes:(id)sender {
+    
+    //Make sure that they didn't leave any fields empty
+	BOOL empty = NO;
+	for (UITextField *o in [self.view subviews]) {
+		if ([o isKindOfClass:[UITextField class]]) {
+			if ([o.text isEqualToString:@""]) {
+				empty = YES;
+			}
+		}
+	}
+	
+	if (empty) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Empty Field!" message:@"You must fill in ALL of the fields in order to create a place" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+    
 	[self fadeTypeView:YES];
 }
 

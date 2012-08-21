@@ -154,7 +154,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.navigationItem.title = @"Members";
 	self.membersTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 }
 
