@@ -17,6 +17,7 @@
 
 #define kDistanceMileFilter		0.15
 #define kCellHeight				96.0f
+#define kHeaderHeight			20.0f
 
 #define kMaxDisplayHours        23
 #define kSecondsInMin           60
@@ -392,6 +393,23 @@
 	return kCellHeight;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return kHeaderHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
+    [label setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_heading_header.png"]]];
+    [label setTextAlignment:UITextAlignmentCenter];
+    [label setTextColor:[UIColor whiteColor]];
+    [label setText:@"Activities"];
+	
+    [header addSubview:label];
+    return header;
+}
+
 #pragma mark - UITableViewDataSource 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -447,8 +465,8 @@
 	//If there is a challenge we need to make the table view smaller
 	if (hasChallenge) {
 		CGRect frame = self.proposedTable.frame;
-		frame.origin.y += 35.0;
-		frame.size.height -= 35.0;
+		frame.origin.y += 37.0;
+		frame.size.height -= 37.0;
 		self.proposedTable.frame = frame;
 	}
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
