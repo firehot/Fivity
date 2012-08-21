@@ -9,9 +9,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
 @interface FConfig : NSObject {
-    NSMutableDictionary *groupCreationRecords, *groupActivityRecords;
+    NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups;
 	NSDictionary *placeTypes;
 }
 
@@ -24,12 +25,14 @@
 - (BOOL)canCreateGroup;
 - (BOOL)doesHavePushNotifications;
 - (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n;
+- (BOOL)groupHasChallenges:(NSString *)groupType;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
 - (NSString *)getFacebookAppID;
 - (NSString *)getGoogleAnalyticsID;
 - (NSString *)getGooglePlacesAPIKey;
+- (NSString *)getChallengeIDForActivityType:(NSString *)type;
 
 - (UIColor *)getFitivityBlue;
 

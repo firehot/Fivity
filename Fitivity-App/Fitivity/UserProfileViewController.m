@@ -248,8 +248,10 @@
 	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
 	PFGeoPoint *point = [currentGroup objectForKey:@"location"];
 	
+	BOOL challenge = [[FConfig instance] groupHasChallenges:[currentGroup objectForKey:@"activity"]];
+	
 	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[currentGroup objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
-	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:YES autoJoin:NO];
+	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:challenge autoJoin:NO];
 	
 	
 	PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];

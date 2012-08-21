@@ -349,10 +349,11 @@
 	
 	switch (type) {
 		case kCellTypeGroup: {
+			BOOL challenge = [[FConfig instance] groupHasChallenges:[group objectForKey:@"activity"]];
 			PFGeoPoint *point = [group objectForKey:@"location"];
 			GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
 			GroupPageViewController *groupPage = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place
-																						 activity:[group objectForKey:@"activity"] challenge:NO autoJoin:NO];
+																						 activity:[group objectForKey:@"activity"] challenge:challenge autoJoin:NO];
 			[self.navigationController pushViewController:groupPage animated:YES];
 			break;
 		}
