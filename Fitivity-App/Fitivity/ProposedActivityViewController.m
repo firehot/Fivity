@@ -294,7 +294,7 @@
 	//Style picture
 	[creatorPicture.layer setCornerRadius:10.0f];
 	[creatorPicture.layer setMasksToBounds:YES];
-	[creatorPicture.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+	[creatorPicture.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
 	[creatorPicture.layer setBorderWidth:4];
 	
 	creatorName.text = [creator objectForKey:@"username"];
