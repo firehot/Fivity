@@ -12,6 +12,7 @@
 
 @interface FConfig : NSObject {
     NSMutableDictionary *groupCreationRecords, *groupActivityRecords;
+	NSDictionary *placeTypes;
 }
 
 // Get the singleton instance
@@ -36,5 +37,7 @@
 - (void)setDoesHaveNotifications:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;
 - (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i;
+
+- (NSDictionary *)getTypes;
 
 @end

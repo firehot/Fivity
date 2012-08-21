@@ -380,6 +380,8 @@
     [super viewDidLoad];
 
 	posting = NO;
+	
+	self.navigationItem.title = @"Activity";
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 	self.commentsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 }

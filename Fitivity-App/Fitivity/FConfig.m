@@ -8,6 +8,7 @@
 
 #import "FConfig.h"
 #import "Reachability.h"
+#import "googlePlacesObject.h"
 
 #define kParseAppID			@"MmUj6HxQcfLSOUs31lG7uNVx9sl5dZR6gv0FqGHq"
 #define kParseClientKey		@"krpZsVM2UrU71NCxDbdAmbEMq1EXdpygkl251Wjl"
@@ -47,6 +48,12 @@ static FConfig *instance;
 		groupActivityRecords = [[NSMutableDictionary alloc] init];
 		[groupActivityRecords writeToFile:path atomically:YES];
 	}
+
+	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys:kChurch, @"Church",
+															kCampground, @"Campgroup",
+															kGym, @"Gym",
+															kPark, @"Park",
+															kStadium, @"Stadium", nil];
 }
 
 + (FConfig *)instance {
@@ -179,6 +186,12 @@ static FConfig *instance;
 - (BOOL)doesHavePushNotifications {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	return [defaults boolForKey:kPushStatus];
+}
+
+#pragma mark - NSDictionary Methods
+
+- (NSDictionary *)getTypes {
+	return (placeTypes == nil) ? [[NSDictionary alloc] init] : placeTypes;
 }
 
 #pragma mark - NSString methods 

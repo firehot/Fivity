@@ -11,7 +11,6 @@
 #import "GTMNSString+URLArguments.h"
 #import "GooglePlacesObject.h"
 #import "LocationMapViewController.h"
-#import "AddLocationHomeViewController.h"
 
 #define kCellHeight     91.0f
 
@@ -34,6 +33,7 @@
 
 - (void)showAddLocationView {
 	AddLocationHomeViewController *addHome = [[AddLocationHomeViewController alloc] initWithNibName:@"AddLocationHomeViewController" bundle:nil currentLocation:[[locationManager location] coordinate]];
+	[addHome setDelegate:self];
 	[self.navigationController pushViewController:addHome animated:YES];
 }
 
@@ -117,6 +117,25 @@
 //Handle the filtering when user searches
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self buildSearchArrayFrom:searchText];
+}
+
+#pragma mark - AddLocationHomeViewController Delegate 
+
+- (void)determineNavigationPop {
+	if ([delegate respondsToSelector:@selector(shouldPopViewControllerFromNavController:)]) {
+		if ([delegate shouldPopViewControllerFromNavController:self]) {
+			[self.navigationController popViewControllerAnimated:YES];
+		}
+	}
+}
+
+- (void) userDidCreateNewLocation:(GooglePlacesObject *)place {
+	if ([delegate respondsToSelector:@selector(userPickedLocation:)]) {
+		[delegate userPickedLocation:place];
+	}
+	
+	//Perform after slight delay so that the reference to the place is valid
+	[self performSelector:@selector(determineNavigationPop) withObject:nil afterDelay:0.3];
 }
 
 #pragma mark - PullToRefresh
@@ -251,13 +270,14 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error  {
 	
+	if (!resultsLoaded) {
 #ifdef DEBUG
-    NSLog(@"%@", [error description]);
+		NSLog(@"%@", [error description]);
 #endif
-	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't Find You" 
-													message:@"We could not find your location to find places around you. Try again when you are in a better service area" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	[alert show];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't Find You"
+														message:@"We could not find your location to find places around you. Try again when you are in a better service area" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+	}
 }
 
 #pragma mark - NSURLConnections

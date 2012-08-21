@@ -46,12 +46,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.place = thePlace;
+		self.navigationItem.title = @"Map";
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
 	
 	//Create the visible region for the map
 	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([place coordinate], 1000, 1000);
