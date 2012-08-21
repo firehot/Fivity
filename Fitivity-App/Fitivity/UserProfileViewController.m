@@ -332,8 +332,6 @@
     [super viewDidLoad];
 			
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
-    
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	
 	//If there is no user yet (hasn't logged in yet), and it is the users profile set it up with the current user
 	if (mainUser && userProfile == nil) {
@@ -366,7 +364,7 @@
 		
 		updatedGroups = [[NSMutableDictionary alloc] init];
 	}
-    
+    self.groupsTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
 }
 
 - (void)viewDidUnload {

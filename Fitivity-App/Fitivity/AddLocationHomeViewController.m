@@ -302,7 +302,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+    
 	//Initialize the type view
 	[typeView setAlpha:0.0];
 	[typeView setFrame:CGRectMake(0, 0, 320, 367)];
@@ -329,6 +331,10 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
 @end
