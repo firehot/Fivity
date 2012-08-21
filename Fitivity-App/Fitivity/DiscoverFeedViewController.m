@@ -16,6 +16,7 @@
 
 #define kFeedLimit			40
 #define kCellHeight			92.0f
+#define kHeaderHeight        20
 
 #define kCellTypeGroup		0
 #define kCellTypePA			1
@@ -51,7 +52,7 @@
 		//Style user photo
 		[imgView.layer setCornerRadius:10.0f];
 		[imgView.layer setMasksToBounds:YES];
-		[imgView.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
+		[imgView.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
 		[imgView.layer setBorderWidth:2];
 	}
 }
@@ -301,6 +302,23 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	return kCellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return kHeaderHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
+    [label setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_heading_header.png"]]];
+    [label setTextAlignment:UITextAlignmentCenter];
+    [label setTextColor:[UIColor whiteColor]];
+    [label setText:@"Newsfeed"];
+   
+    [header addSubview:label];
+    return header;
 }
 
 #pragma mark - Table view delegate

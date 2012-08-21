@@ -73,7 +73,7 @@
         
 		[self.artworkView.layer setCornerRadius:20.0f];
 		[self.artworkView.layer setMasksToBounds:YES];
-		[self.artworkView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+		[self.artworkView.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
 		[self.artworkView.layer setBorderWidth:8];
 		
         self.dismissButton = [UIButton buttonWithType:UIButtonTypeCustom];

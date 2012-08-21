@@ -76,7 +76,7 @@
 	//Round the pictures edges and add border
 	[self.userPicture.layer setCornerRadius:10.0f];
 	[self.userPicture.layer setMasksToBounds:YES];
-	[self.userPicture.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+	[self.userPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
 	[self.userPicture.layer setBorderWidth:5.5];
 }
 

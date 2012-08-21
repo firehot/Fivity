@@ -240,7 +240,7 @@
 	//Style picture
 	[cell.userPicture.layer setCornerRadius:10.0f];
 	[cell.userPicture.layer setMasksToBounds:YES];
-	[cell.userPicture.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
+	[cell.userPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
 	[cell.userPicture.layer setBorderWidth:4];
 	
 	//Set cell text
@@ -294,7 +294,7 @@
 	//Style picture
 	[creatorPicture.layer setCornerRadius:10.0f];
 	[creatorPicture.layer setMasksToBounds:YES];
-	[creatorPicture.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
+	[creatorPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
 	[creatorPicture.layer setBorderWidth:4];
 	
 	creatorName.text = [creator objectForKey:@"username"];
