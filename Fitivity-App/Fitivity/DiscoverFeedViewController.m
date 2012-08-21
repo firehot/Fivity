@@ -51,8 +51,8 @@
 		//Style user photo
 		[imgView.layer setCornerRadius:10.0f];
 		[imgView.layer setMasksToBounds:YES];
-		[imgView.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-		[imgView.layer setBorderWidth:4];
+		[imgView.layer setBorderColor:[[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] CGColor]];
+		[imgView.layer setBorderWidth:2];
 	}
 }
 
@@ -60,12 +60,12 @@
 - (NSAttributedString *)colorLabelString:(NSString *)string {
 	NSArray *components = [string componentsSeparatedByString:@" at "];
 	NSMutableAttributedString *attrStr = [NSMutableAttributedString attributedStringWithString:string];
-	[attrStr setTextColor:[UIColor whiteColor]];
-	[attrStr setFont:[UIFont fontWithName:@"Helvetica" size:14]];
+	[attrStr setTextColor:[UIColor blackColor]];
+	[attrStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
 	
 	// now we change the color of the activity & location
-	[attrStr setTextColor:[UIColor blueColor] range:[string rangeOfString:[components objectAtIndex:0]]];
-	[attrStr setTextColor:[UIColor yellowColor] range:[string rangeOfString:[components objectAtIndex:1]]];
+	[attrStr setTextColor:[UIColor colorWithRed:42.0/255.0f green:89.0/255.0f blue:141.0/255.0f alpha:1] range:[string rangeOfString:[components objectAtIndex:0]]];
+	[attrStr setTextColor:[UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1] range:[string rangeOfString:[components objectAtIndex:1]]];
 	
 	return attrStr;
 }
@@ -142,7 +142,7 @@
 	int numberOfMembers = [[object objectForKey:@"number"] integerValue];
 	
 	[cell.titleLabel setText:[NSString stringWithFormat:@"%i people are doing", numberOfMembers]];
-	[cell.pictureView setImage:[UIImage imageNamed:@"FeedCellActiveGroupActivityIconImage.png"]];
+	[cell.pictureView setImage:[UIImage imageNamed:@"group_icon.png"]];
 	
 	//Get the group reference
 	PFObject *group = [object objectForKey:@"group"];
@@ -424,9 +424,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+    
+	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.pngg"]];
+	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
+    self.tableView.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidUnload {
