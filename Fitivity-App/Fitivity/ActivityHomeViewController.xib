@@ -3,18 +3,18 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
 		<string key="IBDocument.SystemVersion">11E53</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.47</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1498</string>
+			<string key="NS.object.0">1181</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
-			<string>IBUILabel</string>
 			<string>IBUIView</string>
+			<string>IBUILabel</string>
+			<string>IBProxyObject</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -60,15 +60,18 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="NSCustomResource" key="IBUIHighlightedImage" id="568809782">
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">ChooseActivityChooseActivityPushed.png</string>
+							<string key="NSResourceName">b_choose_activity_down.png</string>
 						</object>
-						<reference key="IBUIDisabledImage" ref="568809782"/>
-						<reference key="IBUISelectedImage" ref="568809782"/>
+						<object class="NSCustomResource" key="IBUIDisabledImage" id="308103744">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">b_choose_selected.png</string>
+						</object>
+						<reference key="IBUISelectedImage" ref="308103744"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">ChooseActivityChooseActivity.png</string>
+							<string key="NSResourceName">b_choose_activity.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="694928761">
 							<int key="type">2</int>
@@ -98,15 +101,15 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="261922528"/>
-						<object class="NSCustomResource" key="IBUIHighlightedImage" id="695692857">
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">ChooseActivityChooseLocationPushed.png</string>
+							<string key="NSResourceName">b_choose_location_down.png</string>
 						</object>
-						<reference key="IBUIDisabledImage" ref="695692857"/>
-						<reference key="IBUISelectedImage" ref="695692857"/>
+						<reference key="IBUIDisabledImage" ref="308103744"/>
+						<reference key="IBUISelectedImage" ref="308103744"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">ChooseActivityChooseLocation.png</string>
+							<string key="NSResourceName">b_choose_location.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="694928761"/>
 						<reference key="IBUIFont" ref="760913467"/>
@@ -114,7 +117,7 @@
 					<object class="IBUILabel" id="662604437">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{49, 67}, {222, 21}}</string>
+						<string key="NSFrame">{{49, 92}, {222, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="308642236"/>
@@ -143,7 +146,7 @@
 					<object class="IBUILabel" id="729523817">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{49, 211}, {222, 21}}</string>
+						<string key="NSFrame">{{49, 238}, {222, 38}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -167,11 +170,8 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="175597241"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MQA</bytes>
-					<object class="NSColorSpace" key="NSCustomColorSpace">
-						<int key="NSID">2</int>
-					</object>
+					<int key="NSColorSpace">2</int>
+					<bytes key="NSRGB">MC42OTgwMzkyMzM3IDAuODQ3MDU4ODkyMyAwLjk5NjA3ODQ5MTIAA</bytes>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
@@ -256,8 +256,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="175597241"/>
 							<reference ref="308642236"/>
-							<reference ref="662604437"/>
 							<reference ref="729523817"/>
+							<reference ref="662604437"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -303,15 +303,15 @@
 				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="3" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="3" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">13</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -372,11 +372,12 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="ChooseActivityChooseActivity.png">{292, 115}</string>
-			<string key="ChooseActivityChooseActivityPushed.png">{292, 115}</string>
-			<string key="ChooseActivityChooseLocation.png">{292, 115}</string>
-			<string key="ChooseActivityChooseLocationPushed.png">{292, 115}</string>
+			<string key="b_choose_activity.png">{290, 114}</string>
+			<string key="b_choose_activity_down.png">{290, 114}</string>
+			<string key="b_choose_location.png">{290, 114}</string>
+			<string key="b_choose_location_down.png">{290, 114}</string>
+			<string key="b_choose_selected.png">{290, 114}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1498</string>
+		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>

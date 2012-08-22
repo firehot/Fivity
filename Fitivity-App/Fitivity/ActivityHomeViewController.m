@@ -57,8 +57,8 @@
     //Reset GUI and vars
     [locationLabel setText:@""];
     [activityLabel setText:@""];
-    [chooseActivityButton setImage:[UIImage imageNamed:@"ChooseActivityChooseActivity.png"] forState:UIControlStateNormal];
-    [chooseLocationButton setImage:[UIImage imageNamed:@"ChooseActivityChooseLocation.png"] forState:UIControlStateNormal];
+    [chooseActivityButton setImage:[UIImage imageNamed:@"b_choose_activity.png"] forState:UIControlStateNormal];
+    [chooseLocationButton setImage:[UIImage imageNamed:@"b_choose_location.png"] forState:UIControlStateNormal];
     selectedPlace = nil;
     selectedActivity = nil;
     hasPickedActivity = NO;
@@ -194,9 +194,10 @@
 
 - (void)userPickedActivity:(NSString *)activityName {
 	hasPickedActivity = YES;
-    [chooseActivityButton setImage:[UIImage imageNamed:@"ChooseActivityChooseActivityPushed.png"] forState:UIControlStateNormal];
+    [chooseActivityButton setImage:[UIImage imageNamed:@"b_choose_selected.png"] forState:UIControlStateNormal];
     selectedActivity = activityName;
     [activityLabel setText:activityName];
+    [activityLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28]];
     [self attemptCreateGroup];
 }
 
@@ -208,9 +209,10 @@
 
 - (void)userPickedLocation:(GooglePlacesObject *)place {
 	hasPickedLocation = YES;
-    [chooseLocationButton setImage:[UIImage imageNamed:@"ChooseActivityChooseLocationPushed.png"] forState:UIControlStateNormal];
+    [chooseLocationButton setImage:[UIImage imageNamed:@"b_choose_selected.png"] forState:UIControlStateNormal];
     selectedPlace = place;
     [locationLabel setText:[place name]];
+    [locationLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28]];
     [self attemptCreateGroup];
 }
 
@@ -227,11 +229,15 @@
     }
     return self;
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+    
+	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_location.png"]];
 	hasPickedActivity = NO; //Nothing picked when loaded
 	hasPickedLocation = NO;
 }

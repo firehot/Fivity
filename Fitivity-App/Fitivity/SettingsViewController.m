@@ -368,6 +368,9 @@
     else {
         [pictureView setImage:[UIImage imageWithData:picData]];
     }
+    [pictureView.layer setMasksToBounds:YES];
+    [pictureView.layer setCornerRadius:6.0];
+
     
 	if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink.png"] forState:UIControlStateNormal];
