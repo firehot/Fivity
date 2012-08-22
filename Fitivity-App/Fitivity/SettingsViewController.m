@@ -26,7 +26,6 @@
 
 @synthesize facebookLinkButton;
 @synthesize accountInfoTable;
-@synthesize footerView;
 @synthesize onButton;
 @synthesize offButton;
 
@@ -232,12 +231,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 55;
+	return 46;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 115;
-}
+
 
 /**
  *	Since this header is so basic no need for a .xib file
@@ -249,9 +246,9 @@
 		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 		
 		UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
-		[title setText:@"Accout Settings"];
+		[title setText:@"Account Settings"];
 		[title setTextAlignment:UITextAlignmentCenter];
-		[title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
+		[title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
 		[title setBackgroundColor:[UIColor clearColor]];
 		[title setTextColor:[UIColor whiteColor]];
 		[header addSubview:title];
@@ -261,9 +258,6 @@
 	return nil;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    return footerView;
-}
 
 #pragma mark - UITableViewDataSource 
 
@@ -364,18 +358,12 @@
 
 #pragma mark - View Life Cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-        self.footerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
+    
+    self.accountInfoTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
+    [self.accountInfoTable setScrollEnabled:NO];
+    
 	if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 		[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButton.png"] forState:UIControlStateNormal];
 		[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButtonPressed.png"] forState:UIControlStateHighlighted];
@@ -391,7 +379,6 @@
 - (void)viewDidUnload {
 	[self setFacebookLinkButton:nil];
 	[self setAccountInfoTable:nil];
-    [self setFooterView:nil];
 	[self setOnButton:nil];
 	[self setOffButton:nil];
     [super viewDidUnload];

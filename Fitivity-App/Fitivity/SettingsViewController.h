@@ -21,7 +21,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookLinkButton;
 @property (weak, nonatomic) IBOutlet UITableView *accountInfoTable;
-@property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *onButton;
 @property (weak, nonatomic) IBOutlet UIButton *offButton;
 
