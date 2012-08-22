@@ -173,9 +173,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-	[signInButton setImage:[UIImage imageNamed:@"LoginButtonPushed.png"] forState:UIControlStateHighlighted];
-	[signUpButton setImage:[UIImage imageNamed:@"RegistreButton.png"] forState:UIControlStateHighlighted];
+	[signInButton setImage:[UIImage imageNamed:@"b_sign_in_login_down.png"] forState:UIControlStateHighlighted];
+	[signUpButton setImage:[UIImage imageNamed:@"b_sign_up_login_down.png"] forState:UIControlStateHighlighted];
 	 
 }
 
