@@ -13,6 +13,10 @@
 		575AECA515B6051200324958 /* GroupPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575AECA315B6051200324958 /* GroupPageViewController.xib */; };
 		57AAB0C015AF441E00AD51CB /* FitivityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */; };
 		57AAB0C215AF4B1300AD51CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AAB0C115AF4B1300AD51CB /* QuartzCore.framework */; };
+		57D3BD6D15E513D40071446F /* cell_settings_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A615E4632500418988 /* cell_settings_down@2x.png */; };
+		57D3BD6E15E513D40071446F /* cell_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A415E4630E00418988 /* cell_settings@2x.png */; };
+		57D3BD6F15E513D40071446F /* cell_settings_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A215E4630800418988 /* cell_settings_down.png */; };
+		57D3BD7015E513D40071446F /* cell_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A015E45FEC00418988 /* cell_settings.png */; };
 		57E7C54815E3EC48007E2D9D /* bg_profile_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7C54615E3EC48007E2D9D /* bg_profile_header.png */; };
 		57E7C54915E3EC48007E2D9D /* bg_profile_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7C54715E3EC48007E2D9D /* bg_profile_header@2x.png */; };
 		57E9C05615B5CA74007C7C58 /* NSAttributedString+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E9C05315B5CA6E007C7C58 /* NSAttributedString+Attributes.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
@@ -1501,6 +1505,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57D3BD6D15E513D40071446F /* cell_settings_down@2x.png in Resources */,
+				57D3BD6E15E513D40071446F /* cell_settings@2x.png in Resources */,
+				57D3BD6F15E513D40071446F /* cell_settings_down.png in Resources */,
+				57D3BD7015E513D40071446F /* cell_settings.png in Resources */,
 				6CB1A73015ACFC1D00C0FF75 /* InfoPlist.strings in Resources */,
 				6CB1A75515ACFF7800C0FF75 /* background.png in Resources */,
 				6CB1A75615ACFF7800C0FF75 /* background@2x.png in Resources */,
