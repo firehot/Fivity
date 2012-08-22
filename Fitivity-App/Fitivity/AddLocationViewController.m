@@ -208,8 +208,6 @@
 	
 	geocoder = [[CLGeocoder alloc] init];
 	
-	[self.searchBar setTintColor:[[FConfig instance] getFitivityBlue]];
-	
 	currentAddress = @"";
 	
 	DDAnnotation *annotation = [[DDAnnotation alloc] initWithCoordinate:location addressDictionary:nil];

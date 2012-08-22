@@ -406,6 +406,7 @@
     [label setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_heading_header.png"]]];
     [label setTextAlignment:UITextAlignmentCenter];
     [label setTextColor:[UIColor whiteColor]];
+    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
     [label setText:@"Activities"];
 	
     [header addSubview:label];
