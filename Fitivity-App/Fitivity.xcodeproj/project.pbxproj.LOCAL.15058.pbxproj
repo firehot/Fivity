@@ -89,10 +89,6 @@
 		6C57B71815C21C42000048DD /* CreateProposeActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */; };
 		6C61768A15B0F24600E74B95 /* NSError+FITParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */; };
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
-		6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA015E458A10025DE76 /* ChallengesViewController.m */; };
-		6C623AA315E45F650025DE76 /* ChallengesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C623AA215E45F650025DE76 /* ChallengesViewController.xib */; };
-		6C623AA615E460B80025DE76 /* ChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA515E460B80025DE76 /* ChallengeCell.m */; };
-		6C623AA815E461110025DE76 /* ChallengeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C623AA715E461110025DE76 /* ChallengeCell.xib */; };
 		6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C647DF515CEE6B800366A74 /* ActivityEvent.m */; };
 		6C7722AF15B1EB670040DB1D /* ChooseActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */; };
 		6C7722B015B1EB670040DB1D /* ChooseActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */; };
@@ -294,12 +290,14 @@
 		F196788F15E449C900418988 /* b_sign_out_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F196787F15E449C900418988 /* b_sign_out_down@2x.png */; };
 		F196789015E449C900418988 /* b_sign_out.png in Resources */ = {isa = PBXBuildFile; fileRef = F196788015E449C900418988 /* b_sign_out.png */; };
 		F196789115E449C900418988 /* b_sign_out@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F196788115E449C900418988 /* b_sign_out@2x.png */; };
-		F196789815E449E700418988 /* bg_main_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F196789215E449E700418988 /* bg_main_settings.png */; };
-		F196789915E449E700418988 /* bg_main_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F196789315E449E700418988 /* bg_main_settings@2x.png */; };
 		F196789A15E449E700418988 /* cell_picture_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F196789415E449E700418988 /* cell_picture_settings.png */; };
 		F196789B15E449E700418988 /* cell_picture_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F196789515E449E700418988 /* cell_picture_settings@2x.png */; };
 		F196789C15E449E700418988 /* push_notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = F196789615E449E700418988 /* push_notifications.png */; };
 		F196789D15E449E700418988 /* push_notifications@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F196789715E449E700418988 /* push_notifications@2x.png */; };
+		F19678A115E45FEC00418988 /* cell_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A015E45FEC00418988 /* cell_settings.png */; };
+		F19678A315E4630900418988 /* cell_settings_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A215E4630800418988 /* cell_settings_down.png */; };
+		F19678A515E4630E00418988 /* cell_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A415E4630E00418988 /* cell_settings@2x.png */; };
+		F19678A715E4632500418988 /* cell_settings_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F19678A615E4632500418988 /* cell_settings_down@2x.png */; };
 		F1CF676D15C01E5F0029E100 /* NavigationBarBackplateBlank.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF676B15C01E5F0029E100 /* NavigationBarBackplateBlank.png */; };
 		F1CF676E15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F1CF676C15C01E5F0029E100 /* NavigationBarBackplateBlank@2x.png */; };
 /* End PBXBuildFile section */
@@ -421,12 +419,6 @@
 		6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposedActivityViewController.m; sourceTree = "<group>"; };
 		6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProposedActivityViewController.xib; path = Fitivity/ProposedActivityViewController.xib; sourceTree = "<group>"; };
 		6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProposeActivityViewController.m; sourceTree = "<group>"; };
-		6C623A9F15E458A10025DE76 /* ChallengesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengesViewController.h; sourceTree = "<group>"; };
-		6C623AA015E458A10025DE76 /* ChallengesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengesViewController.m; sourceTree = "<group>"; };
-		6C623AA215E45F650025DE76 /* ChallengesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengesViewController.xib; sourceTree = "<group>"; };
-		6C623AA415E460B80025DE76 /* ChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeCell.h; sourceTree = "<group>"; };
-		6C623AA515E460B80025DE76 /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
-		6C623AA715E461110025DE76 /* ChallengeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengeCell.xib; sourceTree = "<group>"; };
 		6C647DF415CEE6B800366A74 /* ActivityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEvent.h; sourceTree = "<group>"; };
 		6C647DF515CEE6B800366A74 /* ActivityEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEvent.m; sourceTree = "<group>"; };
 		6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityViewController.h; sourceTree = "<group>"; };
@@ -661,8 +653,6 @@
 		F196787F15E449C900418988 /* b_sign_out_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_sign_out_down@2x.png"; path = "../images_settings/b_sign_out_down@2x.png"; sourceTree = "<group>"; };
 		F196788015E449C900418988 /* b_sign_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b_sign_out.png; path = ../images_settings/b_sign_out.png; sourceTree = "<group>"; };
 		F196788115E449C900418988 /* b_sign_out@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_sign_out@2x.png"; path = "../images_settings/b_sign_out@2x.png"; sourceTree = "<group>"; };
-		F196789215E449E700418988 /* bg_main_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_main_settings.png; path = ../images_settings/bg_main_settings.png; sourceTree = "<group>"; };
-		F196789315E449E700418988 /* bg_main_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bg_main_settings@2x.png"; path = "../images_settings/bg_main_settings@2x.png"; sourceTree = "<group>"; };
 		F196789415E449E700418988 /* cell_picture_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cell_picture_settings.png; path = ../images_settings/cell_picture_settings.png; sourceTree = "<group>"; };
 		F196789515E449E700418988 /* cell_picture_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_picture_settings@2x.png"; path = "../images_settings/cell_picture_settings@2x.png"; sourceTree = "<group>"; };
 		F196789615E449E700418988 /* push_notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = push_notifications.png; path = ../images_settings/push_notifications.png; sourceTree = "<group>"; };
@@ -719,7 +709,6 @@
 		575AEC9F15B604F200324958 /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6C7722C715B209500040DB1D /* Cells */,
 				6CA138CC15B21C8600C1E1EC /* LocationMapViewController.h */,
 				6CA138CD15B21C8600C1E1EC /* LocationMapViewController.m */,
 				6CA138D515B21E8B00C1E1EC /* MapPin.h */,
@@ -949,8 +938,6 @@
 				6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */,
 				6C57B6EE15C20BCE000048DD /* ProposedActivityCell.h */,
 				6C57B6EF15C20BCE000048DD /* ProposedActivityCell.m */,
-				6C623AA415E460B80025DE76 /* ChallengeCell.h */,
-				6C623AA515E460B80025DE76 /* ChallengeCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -962,7 +949,6 @@
 				6C50011D15B6315300029AFD /* ChooseActivityCell.xib */,
 				6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */,
 				6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */,
-				6C623AA715E461110025DE76 /* ChallengeCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1137,8 +1123,6 @@
 		6CB1A75215ACFF7000C0FF75 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				F196789215E449E700418988 /* bg_main_settings.png */,
-				F196789315E449E700418988 /* bg_main_settings@2x.png */,
 				F196789415E449E700418988 /* cell_picture_settings.png */,
 				F196789515E449E700418988 /* cell_picture_settings@2x.png */,
 				F196789615E449E700418988 /* push_notifications.png */,
@@ -1318,6 +1302,7 @@
 		6CD705E015BB006C002FFC53 /* Activity Creation */ = {
 			isa = PBXGroup;
 			children = (
+				6C7722C715B209500040DB1D /* Cells */,
 				6CDCD5B315B1ADE300986AA2 /* ActivityHomeViewController.h */,
 				6CDCD5B415B1ADE300986AA2 /* ActivityHomeViewController.m */,
 				6C08845815B1C90A00670936 /* ChooseLocationViewController.h */,
@@ -1343,8 +1328,6 @@
 				6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */,
 				6C57B71015C21ADC000048DD /* ProposedActivityViewController.h */,
 				6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */,
-				6C623A9F15E458A10025DE76 /* ChallengesViewController.h */,
-				6C623AA015E458A10025DE76 /* ChallengesViewController.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1407,7 +1390,6 @@
 				6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */,
 				6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */,
 				6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */,
-				6C623AA215E45F650025DE76 /* ChallengesViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1691,8 +1673,6 @@
 				F196789B15E449E700418988 /* cell_picture_settings@2x.png in Resources */,
 				F196789C15E449E700418988 /* push_notifications.png in Resources */,
 				F196789D15E449E700418988 /* push_notifications@2x.png in Resources */,
-				6C623AA315E45F650025DE76 /* ChallengesViewController.xib in Resources */,
-				6C623AA815E461110025DE76 /* ChallengeCell.xib in Resources */,
 				F19678A115E45FEC00418988 /* cell_settings.png in Resources */,
 				F19678A315E4630900418988 /* cell_settings_down.png in Resources */,
 				F19678A515E4630E00418988 /* cell_settings@2x.png in Resources */,
@@ -1763,8 +1743,6 @@
 				6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */,
 				6C90CA2115D34E0600408193 /* AddLocationHomeViewController.m in Sources */,
 				6C42C86615D5D5F20067EFA9 /* GooglePlaceAdder.m in Sources */,
-				6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */,
-				6C623AA615E460B80025DE76 /* ChallengeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,7 @@
 #import "CreateProposeActivityViewController.h"
 #import "ProposedActivityViewController.h"
 #import "ProposedActivityCell.h"
+#import "ChallengesViewController.h"
 
 #define kDistanceMileFilter		0.15
 #define kCellHeight				96.0f
@@ -63,7 +64,8 @@
 }
 
 - (IBAction)showChallenges:(id)sender {
-	//Implement showing challenges
+	ChallengesViewController *challenge = [[ChallengesViewController alloc] initWithNibName:@"ChallengesViewController" bundle:nil groupType:self.activity];
+	[self.navigationController pushViewController:challenge animated:YES];
 }
 
 #pragma mark - Helper Methods
@@ -469,6 +471,7 @@
 		frame.size.height -= 37.0;
 		self.proposedTable.frame = frame;
 	}
+	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	self.proposedTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];

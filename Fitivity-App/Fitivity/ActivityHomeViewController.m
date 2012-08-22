@@ -43,7 +43,8 @@
 	 *	Create the group with the selected information, pop the old view from the stack (unanimated) and present the new one so there is no odd transition.
 	 *	Once the views have finished presenting, reset the state of the picker view. 
 	 */
-	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:NO autoJoin:autojoin];
+	BOOL challenge = [[FConfig instance] groupHasChallenges:selectedActivity];
+	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:challenge autoJoin:autojoin];
 	[self.navigationController popViewControllerAnimated:NO];
 	[self.navigationController pushViewController:groupView animated:YES];
 	

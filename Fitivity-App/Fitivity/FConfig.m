@@ -8,7 +8,7 @@
 
 #import "FConfig.h"
 #import "Reachability.h"
-#import "googlePlacesObject.h"
+#import "GooglePlacesObject.h"
 
 #define kParseAppID			@"MmUj6HxQcfLSOUs31lG7uNVx9sl5dZR6gv0FqGHq"
 #define kParseClientKey		@"krpZsVM2UrU71NCxDbdAmbEMq1EXdpygkl251Wjl"
@@ -17,6 +17,9 @@
 #define kGoogleAnalyticsID	@""
 
 #define kPushStatus			@"status"
+
+#define kCreateDataPath		@"/createRecords.plist"
+#define kActivityDataPath	@"/groupActivityRecords.plist"
 
 #define kMaxCreatesPerDay   2
 
@@ -30,7 +33,7 @@ static FConfig *instance;
     //Load past group creation records 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingString:@"/createRecords.plist"];
+    NSString *path = [documentsDirectory stringByAppendingString:kCreateDataPath];
     
     groupCreationRecords = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     
@@ -41,7 +44,7 @@ static FConfig *instance;
     }
 	
 	//Load group activity records
-	path = [documentsDirectory stringByAppendingString:@"/groupActivityRecords.plist"];
+	path = [documentsDirectory stringByAppendingString:kActivityDataPath];
 	groupActivityRecords  = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
 	
 	if (groupActivityRecords == nil) {
@@ -49,11 +52,13 @@ static FConfig *instance;
 		[groupActivityRecords writeToFile:path atomically:YES];
 	}
 
+	//Set all of the types of places that should be allowed to create
 	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys:kChurch, @"Church",
 															kCampground, @"Campgroup",
 															kGym, @"Gym",
 															kPark, @"Park",
 															kStadium, @"Stadium", nil];
+	
 }
 
 + (FConfig *)instance {
@@ -71,7 +76,7 @@ static FConfig *instance;
 - (void)saveCreateData {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingString:@"/createRecords.plist"];
+    NSString *path = [documentsDirectory stringByAppendingString:kCreateDataPath];
     
     if ([groupCreationRecords writeToFile:path atomically:YES]) {
 #ifdef DEBUG
@@ -83,7 +88,7 @@ static FConfig *instance;
 - (void)saveAcitivtyData {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingString:@"/groupActivityRecords.plist"];
+    NSString *path = [documentsDirectory stringByAppendingString:kActivityDataPath];
     
     if ([groupActivityRecords writeToFile:path atomically:YES]) {
 #ifdef DEBUG
@@ -132,6 +137,28 @@ static FConfig *instance;
 	[defaults setBool:status forKey:kPushStatus];
 }
 
+- (void)initializeChallenges {
+	//Get all of the most recent challenges
+	challengeGroups = [[NSMutableDictionary alloc] init];
+	PFQuery *query = [PFQuery queryWithClassName:@"Challenge"];
+	[query whereKeyExists:@"activityType"];
+	[query setCachePolicy:kPFCachePolicyNetworkElseCache];
+	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+		if (error) {
+#ifdef DEBUG
+			NSLog(@"%@", [error description]);
+#endif
+		}
+		else if (objects) {
+			for (PFObject *o in objects) {
+				[o fetchIfNeeded];
+				[challengeGroups setObject:[o objectId] forKey:[o objectForKey:@"activityType"]];
+			}
+		}
+	}];
+
+}
+
 #pragma mark - UIColor methods
 
 - (UIColor *)getFitivityBlue {
@@ -139,6 +166,17 @@ static FConfig *instance;
 }
 
 #pragma mark - BOOL methods
+
+- (BOOL)groupHasChallenges:(NSString *)groupType {
+	BOOL ret = NO;
+	
+	//If the object exists we have a challenge
+	if ([challengeGroups objectForKey:groupType]) {
+		ret = YES;
+	}
+	
+	return ret;
+}
 
 - (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n {
 	BOOL ret = NO;
@@ -196,11 +234,16 @@ static FConfig *instance;
 
 #pragma mark - NSString methods 
 
+- (NSString *)getChallengeIDForActivityType:(NSString *)type {
+	return [challengeGroups objectForKey:type];
+}
+
 - (NSString *)getParseAppID {
 	return kParseAppID;
 }
 
 - (NSString *)getParseClientKey {
+	[self performSelector:@selector(initializeChallenges) withObject:nil afterDelay:0.4];
 	return kParseClientKey;
 }
 
