@@ -38,14 +38,14 @@
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
 	//NSData *picData = [imageFile getData];
 	
-	imgView.image = [UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]; //Placeholder
+	imgView.image = [UIImage imageNamed:@"b_avatar_settings.png"]; //Placeholder
 	
 	if (imageFile) {
 		imgView.file = imageFile;
 		[imgView loadInBackground];
 	}
 	else {
-		[imgView setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
+		[imgView setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	}
 	
 	if (styled) {

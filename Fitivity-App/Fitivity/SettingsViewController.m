@@ -16,7 +16,7 @@
 #define kPasswordIndex		2
 #define kProfilePicIndex	3
 
-#define kNumberOfRows		4
+#define kNumberOfRows		3
 
 @interface SettingsViewController ()
 
@@ -28,9 +28,19 @@
 @synthesize accountInfoTable;
 @synthesize onButton;
 @synthesize offButton;
+@synthesize pictureView;
+@synthesize pictureButton;
 
 #pragma mark - IBAction's 
 
+- (IBAction)selectImage:(id)sender{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.allowsEditing = YES;
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+    [self presentModalViewController:picker animated:YES];
+}
 - (IBAction)signUserOut:(id)sender {
 	//Log user out, and alert other classes that the user has logged out
 	[PFUser logOut];
@@ -45,8 +55,8 @@
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"facebookLogin" object:self];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is now linked with Facebook!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
-				[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButton.png"] forState:UIControlStateNormal];
-				[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButtonPressed.png"] forState:UIControlStateHighlighted];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink.png"] forState:UIControlStateNormal];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink_down.png"] forState:UIControlStateHighlighted];
 			}
 			
 			if (error) {
@@ -63,8 +73,8 @@
 			if (succeeded) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is no longer associated with Facebook." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
-				[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkButton.png"] forState:UIControlStateNormal];
-				[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkedButtonPressed.png"] forState:UIControlStateHighlighted];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link.png"] forState:UIControlStateNormal];
+				[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link_down.png"] forState:UIControlStateHighlighted];
 			}
 			
 			if (error) {
@@ -198,22 +208,7 @@
 			[cell.informationLabel setText:[user objectForKey:@"username"]];
             [cell.pictureView setHidden:YES];
 			break;
-		case kProfilePicIndex: {
-            [cell.pictureView setHidden:NO];
-            [cell.categoryLabel setHidden:YES];
-            PFFile *image = [[PFUser currentUser] objectForKey:@"image"];
-            NSData *picData = [image getData];
             
-            if (!picData) {
-                [cell.pictureView setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
-            }
-            else {
-                [cell.pictureView setImage:[UIImage imageWithData:picData]];
-            }
-            
-            [cell.informationLabel setText:@"Tap to change picture"];
-			break;
-        }
 		default:
 			break;
 	}
@@ -239,11 +234,12 @@
 /**
  *	Since this header is so basic no need for a .xib file
  */
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	
 	if (section == 0) {
 		UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kHeaderHeight)];
-		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_heading_header.png"]]];
 		
 		UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
 		[title setText:@"Account Settings"];
@@ -338,10 +334,6 @@
 	PFFile *sendPic = [PFFile fileWithData:UIImagePNGRepresentation(choosenPic)];
 	[sendPic save];
 	
-	//Get the profile picture cell
-	SettingsCell *tempCell = (SettingsCell *)[self.accountInfoTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:kProfilePicIndex inSection:0]];
-	[tempCell.pictureView setImage:choosenPic];
-	
 	PFUser *user = [PFUser currentUser];
 	[user setObject:sendPic forKey:@"image"];
 	[user save];
@@ -349,6 +341,8 @@
 	//Notify the user profile view that the picture changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedInformation" object:self];
 	
+    [pictureView setImage:choosenPic];
+    
 	[picker dismissModalViewControllerAnimated:YES];
 }
 
@@ -363,14 +357,25 @@
     
     self.accountInfoTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
     [self.accountInfoTable setScrollEnabled:NO];
+    self.accountInfoTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
+    
+    PFFile *image = [[PFUser currentUser] objectForKey:@"image"];
+    NSData *picData = [image getData];
+    
+    if (!picData) {
+        [pictureView setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
+    }
+    else {
+        [pictureView setImage:[UIImage imageWithData:picData]];
+    }
     
 	if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-		[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButton.png"] forState:UIControlStateNormal];
-		[facebookLinkButton setImage:[UIImage imageNamed:@"FBUnlinkButtonPressed.png"] forState:UIControlStateHighlighted];
+		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink.png"] forState:UIControlStateNormal];
+		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink_down.png"] forState:UIControlStateHighlighted];
 	}
 	else {
-		[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkButton.png"] forState:UIControlStateNormal];
-		[facebookLinkButton setImage:[UIImage imageNamed:@"FBlinkedButtonPressed.png"] forState:UIControlStateHighlighted];
+		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link.png"] forState:UIControlStateNormal];
+		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link_down.png"] forState:UIControlStateHighlighted];
 	}
 	
 	[self setUpNotificationGUI];

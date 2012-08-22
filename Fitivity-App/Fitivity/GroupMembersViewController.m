@@ -75,7 +75,7 @@
 		[cell.userPhoto setImage:[UIImage imageWithData:picData]];
 	}
 	else {
-		[cell.userPhoto setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
+		[cell.userPhoto setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	}
 	
 	[cell.userNameLabel setText:[user objectForKey:@"username"]];

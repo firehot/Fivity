@@ -234,7 +234,7 @@
 		[cell.userPicture setImage:[UIImage imageWithData:picData]];
 	}
 	else {
-		[cell.userPicture setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
+		[cell.userPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	}
 	
 	//Style picture
@@ -288,7 +288,7 @@
 		[creatorPicture setImage:[UIImage imageWithData:picData]];
 	}
 	else {
-		[creatorPicture setImage:[UIImage imageNamed:@"FeedCellProfilePlaceholderPicture.png"]];
+		[creatorPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	}
 	
 	//Style picture
