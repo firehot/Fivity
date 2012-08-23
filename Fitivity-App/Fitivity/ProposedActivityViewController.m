@@ -349,6 +349,7 @@
 	[textField resignFirstResponder];
 	
 	if ([textField isEqual:self.activityComment]) {
+		[self postComment];
 	}
 	
 	return NO;

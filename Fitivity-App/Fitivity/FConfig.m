@@ -54,7 +54,7 @@ static FConfig *instance;
 
 	//Set all of the types of places that should be allowed to create
 	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys:kChurch, @"Church",
-															kCampground, @"Campgroup",
+															kCampground, @"Campground",
 															kGym, @"Gym",
 															kPark, @"Park",
 															kStadium, @"Stadium", nil];

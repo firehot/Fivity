@@ -16,7 +16,7 @@
 
 #define kFeedLimit			40
 #define kCellHeight			92.0f
-#define kHeaderHeight        20
+#define kHeaderHeight       20
 
 #define kCellTypeGroup		0
 #define kCellTypePA			1
