@@ -84,30 +84,7 @@
 }
 }
 
-- (void)postComment {
-	
-	if (![[FConfig instance] connected]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to post a comment" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-		return;
-	}
-	
-	if ([[self.activityComment text] isEqualToString:@""]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Valid" message:@"You must put something in the comment message." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-		return;
-	}
-	
-	if (![self userIsPartOfParentGroup]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not a Member" message:@"You must be part of a group in order to comment on a proposed activity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-		return;
-	}
-	
-	if (posting) {
-		return;
-	}
-	
+- (void)post {
 	@synchronized(self) {
 		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
 		[comment setObject:[self.activityComment text] forKey:@"message"];
@@ -139,7 +116,40 @@
 			}
 		}];
 	}
+}
+
+- (void)postComment {
 	
+	if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to post a comment" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
+	if ([[self.activityComment text] isEqualToString:@""]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Valid" message:@"You must put something in the comment message." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
+	if (![self userIsPartOfParentGroup]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not a Member" message:@"You must be part of a group in order to comment on a proposed activity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	
+	if (posting) {
+		return;
+	}
+	
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.dimBackground = YES;
+	HUD.delegate = self;
+	HUD.labelText = @"Posting";
+	
+	[HUD showWhileExecuting:@selector(post) onTarget:self withObject:nil animated:YES];
 }
 
 - (void)getProposedActivityReference {
@@ -205,6 +215,14 @@
 	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 	[formatter setDateFormat:@"hh:mm a MM/dd"];
 	return [formatter stringFromDate:date];
+}
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
 }
 
 #pragma mark - UITableViewDelegate

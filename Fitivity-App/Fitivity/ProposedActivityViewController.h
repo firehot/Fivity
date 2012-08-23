@@ -13,8 +13,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "OHAttributedLabel.h"
+#import "MBProgressHUD.h"
 
-@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate> {
 	NSMutableArray *results;
 	
 	BOOL posting;

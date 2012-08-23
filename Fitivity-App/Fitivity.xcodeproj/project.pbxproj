@@ -140,6 +140,7 @@
 		6CB1A75A15ACFFBC00C0FF75 /* OpeningLogoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1A75815ACFFBC00C0FF75 /* OpeningLogoViewController.m */; };
 		6CB1A75B15ACFFBC00C0FF75 /* OpeningLogoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB1A75915ACFFBC00C0FF75 /* OpeningLogoViewController.xib */; };
 		6CB1B21915B1A17B004DDDCA /* FTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */; };
+		6CB3EBFB15E6E28100BDE38B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3EBFA15E6E26A00BDE38B /* MBProgressHUD.m */; };
 		6CC7FB1315AFB62C00D21AA9 /* BackButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB0F15AFB62C00D21AA9 /* BackButtonIcon.png */; };
 		6CC7FB1415AFB62C00D21AA9 /* BackButtonIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB1015AFB62C00D21AA9 /* BackButtonIcon@2x.png */; };
 		6CC7FB1515AFB62C00D21AA9 /* BluePillNavBarIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CC7FB1115AFB62C00D21AA9 /* BluePillNavBarIcon.png */; };
@@ -515,6 +516,8 @@
 		6CB1B21615B1A10D004DDDCA /* FTabBarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTabBarViewController.h; sourceTree = "<group>"; };
 		6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FTabBarViewController.m; sourceTree = "<group>"; };
 		6CB1B21815B1A10D004DDDCA /* FTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FTabBarViewController.xib; path = Fitivity/FTabBarViewController.xib; sourceTree = "<group>"; };
+		6CB3EBF915E6E26A00BDE38B /* MBProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		6CB3EBFA15E6E26A00BDE38B /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6CC7FB0F15AFB62C00D21AA9 /* BackButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackButtonIcon.png; sourceTree = "<group>"; };
 		6CC7FB1015AFB62C00D21AA9 /* BackButtonIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackButtonIcon@2x.png"; sourceTree = "<group>"; };
 		6CC7FB1115AFB62C00D21AA9 /* BluePillNavBarIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BluePillNavBarIcon.png; sourceTree = "<group>"; };
@@ -1056,6 +1059,7 @@
 		6CB1A71615ACFC1D00C0FF75 = {
 			isa = PBXGroup;
 			children = (
+				6CB3EBF715E6E25600BDE38B /* MBProgressHUD */,
 				6C4C5BC015D1DD1C00E63CD3 /* DDAnnotation */,
 				6C08841B15B1C56000670936 /* Google Places */,
 				6CB1A72B15ACFC1D00C0FF75 /* Fitivity */,
@@ -1227,6 +1231,15 @@
 				6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */,
 			);
 			name = "TabBar & NavigationBar";
+			sourceTree = "<group>";
+		};
+		6CB3EBF715E6E25600BDE38B /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				6CB3EBF915E6E26A00BDE38B /* MBProgressHUD.h */,
+				6CB3EBFA15E6E26A00BDE38B /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		6CC7FB1815AFB67600D21AA9 /* Buttons */ = {
@@ -1789,6 +1802,7 @@
 				6C4C5BD515D1DD4F00E63CD3 /* DDAnnotationView.m in Sources */,
 				57E9C05615B5CA74007C7C58 /* NSAttributedString+Attributes.m in Sources */,
 				57E9C05715B5CA77007C7C58 /* OHAttributedLabel.m in Sources */,
+				6CB3EBFB15E6E28100BDE38B /* MBProgressHUD.m in Sources */,
 				6C08843D15B1C5A100670936 /* NSObject+SBJson.m in Sources */,
 				6C08843E15B1C5A500670936 /* SBJsonParser.m in Sources */,
 				6C08843F15B1C5A700670936 /* SBJsonStreamParser.m in Sources */,
