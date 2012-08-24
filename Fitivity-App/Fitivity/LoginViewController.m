@@ -10,7 +10,7 @@
 #import "SignUpViewController.h"
 #import "NSError+FITParseUtilities.h"
 
-#define kTextFieldMoveDistance          60
+#define kTextFieldMoveDistance          50
 #define kTextFieldAnimationDuration    0.3f
 
 @interface LoginViewController ()

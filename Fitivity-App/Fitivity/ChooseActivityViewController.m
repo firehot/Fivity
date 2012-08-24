@@ -26,7 +26,7 @@
 
 - (void)correctOrderingOfData {
 	NSString *key = @"Sports";
-		
+	
 	for (int i = 0; i < [categories count]; i++) {
 		NSString *title;
 		if ([categories count] > 0) {
@@ -43,9 +43,9 @@
 	}
 }
 
-- (void)attemptQuery {	
+- (void)attemptQuery {
 	
-	@synchronized(self) { 
+	@synchronized(self) {
 		//Fetch all of the activities that are in the database
 		if (!query) {
 			query = [PFQuery queryWithClassName:@"Activity"];
@@ -61,7 +61,7 @@
 					NSString *lastCategory = @"";
 					BOOL firstTry = YES;
 					for (PFObject *o in objects) {
-
+						
 						if ([lastCategory isEqualToString:[o objectForKey:@"category"]]) {
 							//If the object is in the same category as the last object then add it to the array
 							[categoryArray addObject:o];
@@ -71,7 +71,7 @@
 							//Don't want to add an empty array on the first attempt though.
 							if (firstTry) {
 								firstTry = NO;
-							} 
+							}
 							else {
 								[categories addObject:categoryArray];
 							}
@@ -102,7 +102,7 @@
 	}
 }
 
-#pragma mark - ChooseActivityHeaderView Delegate 
+#pragma mark - ChooseActivityHeaderView Delegate
 
 -(void)sectionHeaderView:(ChooseActivityHeaderView *)sectionHeaderView sectionOpened:(NSInteger)section {
 	
@@ -130,7 +130,7 @@
         }
 		[resultsToShow replaceObjectAtIndex:previousOpenSectionIndex withObject:[[NSMutableArray alloc] init]];
     }
-
+	
 	//Add the category to the results that will show
 	[resultsToShow replaceObjectAtIndex:section withObject:[categories objectAtIndex:section]];
 	[sectionHeaderView setSectionOpen:YES];
@@ -146,13 +146,29 @@
         insertAnimation = UITableViewRowAnimationBottom;
         deleteAnimation = UITableViewRowAnimationTop;
     }
-
+	
 	//Make the changes to the tableview
 	[self.activitiesTable beginUpdates];
 	[self.activitiesTable insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:insertAnimation];
 	[self.activitiesTable deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:deleteAnimation];
 	[self.activitiesTable endUpdates];
 	self.openSectionIndex = section;
+	
+	switch (section) {
+		case 0:
+			break;
+		case 1:
+			[self.activitiesTable setContentOffset:CGPointMake(0, 70) animated:YES];
+			break;
+		case 2:
+			[self.activitiesTable setContentOffset:CGPointMake(0, 80) animated:YES];
+			break;
+		case 3:
+			[self.activitiesTable setContentOffset:CGPointMake(0, 225) animated:YES];
+			break;
+		default:
+			break;
+	}
 }
 
 -(void)sectionHeaderView:(ChooseActivityHeaderView *)sectionHeaderView sectionClosed:(NSInteger)section {
@@ -176,7 +192,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-
+	
 	// Dequeue or create a cell of the appropriate type.
 	ChooseActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -186,13 +202,13 @@
 	
 	PFObject *activity = [(NSMutableArray *)[categories objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 	cell.titleLabel.text = [activity objectForKey:@"name"];
-		
+	
     return cell;
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section { 
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	
-	//Create a header view for each category 
+	//Create a header view for each category
 	NSString *title = @"";
 	if ([categories count] > 0) {
 		PFObject *firstObject = [(NSMutableArray *)[categories objectAtIndex:section] objectAtIndex:0];
@@ -200,8 +216,8 @@
 		title = [firstObject objectForKey:@"category"];
 	}
 	
-	ChooseActivityHeaderView *header = [[ChooseActivityHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.activitiesTable.bounds.size.width, kHeaderHeight) 
-																		title:title section:section];
+	ChooseActivityHeaderView *header = [[ChooseActivityHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.activitiesTable.bounds.size.width, kHeaderHeight)
+																				 title:title section:section];
 	[header setDelegate:self];
 	[header setTag:kTagOffset + section];
 	return header;
@@ -215,15 +231,15 @@
 	return kHeaderHeight;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return [(NSMutableArray *)[resultsToShow objectAtIndex:section] count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return [categories count];  
+	return [categories count];
 }
 
-#pragma mark - UITableViewDelegate 
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     

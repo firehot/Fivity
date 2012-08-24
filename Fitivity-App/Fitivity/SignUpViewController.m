@@ -10,7 +10,7 @@
 #import "NSRegularExpression+FITUtilities.h"
 #import "NSError+FITParseUtilities.h"
 
-#define kTextFieldMoveDistance          100
+#define kTextFieldMoveDistance          105
 #define kTextFieldAnimationDuration    0.3f
 
 @interface SignUpViewController ()
