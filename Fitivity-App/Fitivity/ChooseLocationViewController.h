@@ -30,6 +30,8 @@
 	GooglePlacesConnection	*googlePlacesConnection;
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *addLocation;
+
 -(void)buildSearchArrayFrom:(NSString *)matchString;
 
 @property (nonatomic, getter = isResultsLoaded) BOOL resultsLoaded;

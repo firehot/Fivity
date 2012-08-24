@@ -12,7 +12,7 @@
 #import "GooglePlacesObject.h"
 #import "LocationMapViewController.h"
 
-#define kCellHeight     91.0f
+#define kCellHeight     75.0f
 
 @interface ChooseLocationViewController ()
 
@@ -28,14 +28,15 @@
 @synthesize locations;
 @synthesize locationsFilterResults;
 @synthesize delegate;
+@synthesize addLocation;
 
 #pragma mark - Helper Methods
 
-- (void)showAddLocationView {
+/*- (void)showAddLocationView {
 	AddLocationHomeViewController *addHome = [[AddLocationHomeViewController alloc] initWithNibName:@"AddLocationHomeViewController" bundle:nil currentLocation:[[locationManager location] coordinate]];
 	[addHome setDelegate:self];
 	[self.navigationController pushViewController:addHome animated:YES];
-}
+}*/
 
 -(void)buildSearchArrayFrom:(NSString *)matchString {
 	NSString *upString = [matchString uppercaseString];
@@ -313,6 +314,11 @@
                                           otherButtonTitles: nil];
     [alert show];
 }
+- (IBAction)addLocation:(id)sender {
+	AddLocationHomeViewController *addHome = [[AddLocationHomeViewController alloc] initWithNibName:@"AddLocationHomeViewController" bundle:nil currentLocation:[[locationManager location] coordinate]];
+	[addHome setDelegate:self];
+	[self.navigationController pushViewController:addHome animated:YES];
+}
 
 
 #pragma mark - View Lifecycle
@@ -331,8 +337,8 @@
 		
 		googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
 		
-		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Add Location" style:UIBarButtonItemStyleBordered target:self action:@selector(showAddLocationView)];
-		[self.navigationItem setRightBarButtonItem:button];
+	/*	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Add Location" style:UIBarButtonItemStyleBordered target:self action:@selector(showAddLocationView)];
+		[self.navigationItem setRightBarButtonItem:button];*/
     }
     return self;
 }
@@ -341,7 +347,7 @@
     [super viewDidLoad];
 	
 	searchBar.tintColor = [[FConfig instance] getFitivityBlue];
-	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_locations.png"]];
 }
 
 - (void)viewDidUnload {

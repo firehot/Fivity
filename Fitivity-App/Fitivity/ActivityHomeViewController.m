@@ -58,7 +58,9 @@
     [locationLabel setText:@""];
     [activityLabel setText:@""];
     [chooseActivityButton setImage:[UIImage imageNamed:@"b_choose_activity.png"] forState:UIControlStateNormal];
+    [chooseActivityButton setImage:[UIImage imageNamed:@"b_choose_activity_down.png"] forState:UIControlStateHighlighted];
     [chooseLocationButton setImage:[UIImage imageNamed:@"b_choose_location.png"] forState:UIControlStateNormal];
+    [chooseLocationButton setImage:[UIImage imageNamed:@"b_choose_location_down.png"] forState:UIControlStateHighlighted];
     selectedPlace = nil;
     selectedActivity = nil;
     hasPickedActivity = NO;
@@ -196,6 +198,7 @@
 - (void)userPickedActivity:(NSString *)activityName {
 	hasPickedActivity = YES;
     [chooseActivityButton setImage:[UIImage imageNamed:@"b_choose_selected.png"] forState:UIControlStateNormal];
+    [chooseActivityButton setImage:[UIImage imageNamed:@"b_choose_selected_down.png"] forState:UIControlStateHighlighted];
     selectedActivity = activityName;
     [activityLabel setText:activityName];
     [activityLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28]];
@@ -211,6 +214,7 @@
 - (void)userPickedLocation:(GooglePlacesObject *)place {
 	hasPickedLocation = YES;
     [chooseLocationButton setImage:[UIImage imageNamed:@"b_choose_selected.png"] forState:UIControlStateNormal];
+    [chooseLocationButton setImage:[UIImage imageNamed:@"b_choose_selected_down"] forState:UIControlStateHighlighted];
     selectedPlace = place;
     [locationLabel setText:[place name]];
     [locationLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28]];

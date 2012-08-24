@@ -21,7 +21,6 @@
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)section;
 
 @property (nonatomic, retain) UILabel *titleLable;
-@property (nonatomic, retain) UIImageView *openCloseIcon;
 @property (nonatomic, assign) NSInteger section;
 
 @property (nonatomic, assign) id <ChooseActivityHeaderViewDelegate> delegate;

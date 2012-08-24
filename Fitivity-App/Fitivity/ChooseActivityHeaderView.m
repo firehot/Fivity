@@ -14,13 +14,13 @@
 
 @implementation ChooseActivityHeaderView
 
-@synthesize openCloseIcon, titleLable, section;
+@synthesize titleLable, section;
 @synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)section {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"DarkerBlueBackplateTexture.png"]];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_collapsed.png"]];
 		self.userInteractionEnabled = YES;
 		self.section = section;
 		
@@ -39,11 +39,6 @@
 		titleLable.textColor = [UIColor whiteColor];
 		titleLable.backgroundColor = [UIColor clearColor];
 		[self addSubview:titleLable];
-		
-		//Set up the possition of the button
-		openCloseIcon = [[UIImageView alloc] initWithFrame:CGRectMake(titleFrame.size.width - kImageBackIndent, titleFrame.origin.y + kImageYIndent, 31, 31)];
-		[openCloseIcon setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
-		[self addSubview:openCloseIcon];
 		
 		sectionOpen = NO; 
     }
@@ -65,16 +60,21 @@
 			if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionOpened:)]) {
                 [self.delegate sectionHeaderView:self sectionOpened:self.section];
             }
-			[openCloseIcon setImage:[UIImage imageNamed:@"CategoryCellExpandedIcon.png"]];
+			 self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_expanded.png"]];
 		}
 		else {
 			if ([self.delegate respondsToSelector:@selector(sectionHeaderView:sectionClosed:)]) {
                 [self.delegate sectionHeaderView:self sectionClosed:self.section];
             }
-			[openCloseIcon setImage:[UIImage imageNamed:@"CategoryCellClosedIcon.png"]];
+			self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_collapsed.png"]];
 		}
 		
 	}
+}
+
+- (void)viewDidLoad {
+   self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_collapsed.png"]];
+
 }
 
 /*

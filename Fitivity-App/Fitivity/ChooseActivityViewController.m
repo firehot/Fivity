@@ -9,7 +9,7 @@
 #import "ChooseActivityViewController.h"
 #import "ChooseActivityCell.h"
 
-#define kHeaderHeight	92
+#define kHeaderHeight	75
 #define kRowHeight		45
 #define kTagOffset		20
 
@@ -259,7 +259,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.activitiesTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+	self.activitiesTable.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidUnload {
