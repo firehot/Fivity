@@ -74,11 +74,13 @@
     searchString = [[NSString alloc]initWithString:aSearchString];
     
     //What places to search for
-    NSString *searchLocations = [NSString stringWithFormat:@"%@|%@|%@|%@|%@", 
-                                 kCampground, 
-                                 kChurch,
+    NSString *searchLocations = [NSString stringWithFormat:@"%@|%@|%@|%@|%@|%@|%@",
+                                 kCampground,
                                  kGym,
                                  kPark,
+								 kBowlingAlley,
+								 kUniversity,
+								 kSchool,
                                  kStadium];
     
     
@@ -256,11 +258,13 @@
     currentLocation = newLocation;
     
     //What places to search for
-    NSString *searchLocations = [NSString stringWithFormat:@"%@|%@|%@|%@|%@", 
+    NSString *searchLocations = [NSString stringWithFormat:@"%@|%@|%@|%@|%@|%@|%@", 
                                  kCampground, 
-                                 kChurch,
                                  kGym,
                                  kPark,
+								 kBowlingAlley,
+								 kUniversity,
+								 kSchool,
                                  kStadium];
     
     [googlePlacesConnection getGoogleObjects:CLLocationCoordinate2DMake(newLocation.coordinate.latitude, newLocation.coordinate.longitude) 

@@ -120,13 +120,14 @@
 		
 		PFFile *pic = [user objectForKey:@"image"];
 		
+		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
+		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ proposed a group activity", [user username]]];
-		[cell.activityLabel setText:[NSString stringWithFormat:@"at %@", [group objectForKey:@"place"]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
 		
-		if ([self happendToday:[pa updatedAt]]) {
+		if ([self happendToday:[object updatedAt]]) {
 			[cell.todayIndicator setHidden:NO];
 		}
 		else {
@@ -156,7 +157,7 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		
-		if ([self happendToday:[group updatedAt]]) {
+		if ([self happendToday:[object updatedAt]]) {
 			[cell.todayIndicator setHidden:NO];
 		}
 		else {
@@ -187,7 +188,7 @@
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
 		
-		if ([self happendToday:[group updatedAt]]) {
+		if ([self happendToday:[object updatedAt]]) {
 			[cell.todayIndicator setHidden:NO];
 		}
 		else {
@@ -223,7 +224,7 @@
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
 		
-		if ([self happendToday:[group updatedAt]]) {
+		if ([self happendToday:[object updatedAt]]) {
 			[cell.todayIndicator setHidden:NO];
 		}
 		else {
@@ -390,6 +391,7 @@
 		return;
 	}
 	
+	[[FConfig instance] setMostRecentCoordinate:newLocation.coordinate];
 	[locationManager stopUpdatingLocation];
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];

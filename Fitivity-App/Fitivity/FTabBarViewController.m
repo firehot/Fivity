@@ -116,6 +116,8 @@
 		[self unselectAllTabs];
 		[_leftTabButton setImage:[UIImage imageNamed:@"b_feed_active.png"] forState:UIControlStateNormal];
 		[self showLeftTab];
+		[self.centerNavigationController popToRootViewControllerAnimated:NO];
+		[self.rightNavigationController popToRootViewControllerAnimated:NO];
 	}
 	else {
 		[[FConfig instance] showLogoNavBar:YES];
@@ -128,6 +130,8 @@
 		[self unselectAllTabs];
 		[_centerTabButton setImage:[UIImage imageNamed:@"b_start_activity_active.png"] forState:UIControlStateNormal];
 		[self showCenterTab];
+		[self.leftNavigationController popToRootViewControllerAnimated:NO];
+		[self.rightNavigationController popToRootViewControllerAnimated:NO];
 	}
 	else {
 		[[FConfig instance] showLogoNavBar:YES];
@@ -140,6 +144,8 @@
 		[self unselectAllTabs];
 		[_rightTabButton setImage:[UIImage imageNamed:@"b_profile_active.png"] forState:UIControlStateNormal];
 		[self showRightTab];
+		[self.leftNavigationController popToRootViewControllerAnimated:NO];
+		[self.centerNavigationController popToRootViewControllerAnimated:NO];
 	}
 	else {
 		[[FConfig instance] showLogoNavBar:YES];

@@ -36,8 +36,8 @@
 		}
 		
 		if ([title isEqualToString:key]) {
-			NSMutableArray *temp = [categories objectAtIndex:0];
-			[categories replaceObjectAtIndex:0 withObject:[categories objectAtIndex:i]];
+			NSMutableArray *temp = [categories objectAtIndex:1];
+			[categories replaceObjectAtIndex:1 withObject:[categories objectAtIndex:i]];
 			[categories replaceObjectAtIndex:i withObject:temp];
 		}
 	}

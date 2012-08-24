@@ -1393,10 +1393,10 @@
 				6C08845915B1C90A00670936 /* ChooseLocationViewController.m */,
 				6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */,
 				6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */,
-				6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */,
-				6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */,
 				6C90CA1E15D34E0600408193 /* AddLocationHomeViewController.h */,
 				6C90CA1F15D34E0600408193 /* AddLocationHomeViewController.m */,
+				6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */,
+				6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */,
 			);
 			name = "Activity Creation";
 			sourceTree = "<group>";

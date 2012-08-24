@@ -25,6 +25,8 @@
 
 @implementation FConfig
 
+@synthesize mostRecentCoordinate;
+
 static FConfig *instance;
 
 #pragma mark - Singleton Instance
@@ -53,11 +55,13 @@ static FConfig *instance;
 	}
 
 	//Set all of the types of places that should be allowed to create
-	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys:kChurch, @"Church",
+	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys: kBowlingAlley, @"Bownling Alley",
 															kCampground, @"Campground",
 															kGym, @"Gym",
 															kPark, @"Park",
-															kStadium, @"Stadium", nil];
+															kSchool, @"School",
+															kStadium, @"Stadium",
+															kUniversity, @"University", nil];
 	
 }
 

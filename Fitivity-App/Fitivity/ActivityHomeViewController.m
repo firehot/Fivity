@@ -165,6 +165,7 @@
 						
 						[self showGroupViewWithAutoJoin:YES];
 						[self attemptPostGroupToFeedWithID:[group objectId]];
+						[[FConfig instance] updateGroup:[group objectId] withActivityCount:[NSNumber numberWithInt:0]];
 					}
 					else {
 						if (error) {

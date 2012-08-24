@@ -10,11 +10,14 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface FConfig : NSObject {
     NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups;
 	NSDictionary *placeTypes;
 }
+
+@property (nonatomic, assign) CLLocationCoordinate2D mostRecentCoordinate;
 
 // Get the singleton instance
 + (FConfig *)instance;

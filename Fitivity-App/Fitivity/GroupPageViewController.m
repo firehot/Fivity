@@ -248,7 +248,7 @@
 		//Get all PA for this group
 		PFQuery *query = [PFQuery queryWithClassName:@"ProposedActivity"];
 		[query whereKey:@"group" equalTo:group];
-		[query addAscendingOrder: @"createdAt"];
+		[query orderByDescending: @"createdAt"];
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 			if (error) {
 				NSString *errorMessage = @"An unknown error occured while loading activities.";
@@ -437,7 +437,7 @@
 		[self findUserAlreadyJoined];
         [self getGroupReference];
 		[self attemptGetProposedActivities];
-        [self.navigationItem setTitle:[self.place name]];
+        [self.navigationItem setTitle:activity];
     }
     return self;
 }
@@ -476,7 +476,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	self.proposedTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-    self.activityLabel.text = activity;
+    self.activityLabel.text = [place name];
 	
 	
 	UIImage *memberImage = [UIImage imageNamed:@"b_members.png"];

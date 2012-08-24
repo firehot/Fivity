@@ -40,6 +40,45 @@
 	return pinView;
 }
 
+#pragma mark - Directions
+
+- (void)openDirectionsToAddress:(NSString *)address {
+	CLLocationCoordinate2D currentLocation = [[FConfig instance] mostRecentCoordinate];
+    NSString *url = [NSString stringWithFormat:@"http://maps.google.com/maps?saddr=%f,%f&daddr=%@",currentLocation.latitude, currentLocation.longitude,[address stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+- (void)getDirectionsToPlace {
+	
+	__block NSString *address = @"";
+	NSArray *addr = [place addressComponents];
+	if (addr) {
+		for (int i = 0; i < [addr count]; i++) {
+			address = [address stringByAppendingString:[addr objectAtIndex:i]];
+		}
+		[self openDirectionsToAddress:address];
+	} else {
+		CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+		CLLocationCoordinate2D currentLocation = [place coordinate];
+		CLLocation *loc = [[CLLocation alloc] initWithLatitude:currentLocation.latitude longitude:currentLocation.longitude];
+		[geocoder reverseGeocodeLocation:loc completionHandler:^(NSArray *placemarks, NSError *error) {
+			
+			if (error) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"There was an error getting directions to this place" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+				return;
+			}
+			
+			//Get nearby address
+			CLPlacemark *placemark = [placemarks objectAtIndex:0];
+			
+			//String to hold address
+			address = [[placemark.addressDictionary valueForKey:@"FormattedAddressLines"] componentsJoinedByString:@", "];
+			[self openDirectionsToAddress:address];
+		}];
+	}
+}
+
 #pragma mark - 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)thePlace {
@@ -47,6 +86,10 @@
     if (self) {
         self.place = thePlace;
 		self.navigationItem.title = @"Map";
+		
+		UIBarButtonItem *directions = [[UIBarButtonItem alloc] initWithTitle:@"Directions" style:UIBarButtonItemStyleBordered target:self action:@selector(getDirectionsToPlace)];
+        [directions setTitle:@"Directions"];
+        self.navigationItem.rightBarButtonItem = directions;
     }
     return self;
 }
