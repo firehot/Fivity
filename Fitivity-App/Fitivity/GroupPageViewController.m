@@ -39,6 +39,7 @@
 #pragma mark - IBAction's
 
 - (IBAction)showGroupMap:(id)sender {
+	autoJoin = NO;
 	//Show the location of the group on a bigger map
 	LocationMapViewController *mapView = [[LocationMapViewController alloc] initWithNibName:@"LocationMapViewController" bundle:nil place:self.place];
 	[self.navigationController pushViewController:mapView animated:YES];
@@ -50,7 +51,7 @@
 }
 
 - (IBAction)proposeGroupActivity:(id)sender {
-	
+	autoJoin = NO;
 	if (alreadyJoined) {
 		//Show the create proposed activity view controller
 		CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"CreateProposeActivityViewController" bundle:nil];
@@ -64,8 +65,15 @@
 }
 
 - (IBAction)showChallenges:(id)sender {
+	autoJoin = NO;
 	ChallengesViewController *challenge = [[ChallengesViewController alloc] initWithNibName:@"ChallengesViewController" bundle:nil groupType:self.activity];
 	[self.navigationController pushViewController:challenge animated:YES];
+}
+
+- (void)viewMemebers {
+	autoJoin = NO;
+	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
+	[self.navigationController pushViewController:members animated:YES];
 }
 
 #pragma mark - Helper Methods
@@ -284,11 +292,6 @@
 	return ret;
 }
 
-- (void)viewMemebers {
-	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
-	[self.navigationController pushViewController:members animated:YES];
-}
-
 //Get the string for the time interval difference
 - (NSString *)getTimeIntervalDifference: (double)diff {
 	NSString *time = @"";
@@ -462,6 +465,10 @@
 	}
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -473,7 +480,6 @@
 		self.proposedTable.frame = frame;
 	}
 	
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 	self.proposedTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.activityLabel.text = [place name];

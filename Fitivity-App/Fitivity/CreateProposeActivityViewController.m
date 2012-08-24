@@ -203,10 +203,15 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+		[self.navigationItem setTitle:@"New Activity"];
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", kMaxCharCount] style:UIBarButtonItemStyleBordered target:self action:@selector(post)];
 		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLoad {
