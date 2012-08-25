@@ -220,7 +220,7 @@
 		
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
-		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ commented on proposed activity", [user username]]];
+		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ commented on", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
