@@ -374,7 +374,7 @@
 	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[currentPA objectForKey:@"activityMessage"]];
 	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
 	[attStr setTextColor:[UIColor blackColor]];
-	cell.activityMessage.attributedText = attStr;
+	cell.activityMessage.text = [currentPA objectForKey:@"activityMessage"];
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
 	

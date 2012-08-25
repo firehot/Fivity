@@ -14,7 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *userPicture;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
-@property (weak, nonatomic) IBOutlet OHAttributedLabel *activityMessage;
+@property (weak, nonatomic) IBOutlet UILabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *timeAgoLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *notificationImage;
 

@@ -10,6 +10,7 @@
 #import "NSError+FITParseUtilities.h"
 #import "NSAttributedString+Attributes.h"
 #import "ProposedActivityCell.h"
+#import "UserProfileViewController.h"
 
 #define kCellHeight				96.0f
 #define kHeaderHeight			110.0f
@@ -57,6 +58,20 @@
 	}
 	
 	self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d",charsLeft];
+}
+
+- (IBAction)showHeaderMessage:(id)sender {
+	
+	NSString *message = [parent objectForKey:@"activityMessage"];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Activity" message:message delegate:self cancelButtonTitle:@"Done" otherButtonTitles: nil];
+	[alert show];
+}
+
+- (IBAction)showPostCreator:(id)sender {
+	PFUser *creator = [parent objectForKey:@"creator"];
+	UserProfileViewController *user = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:creator];
+	
+	[self.navigationController pushViewController:user animated:YES];
 }
 
 - (void)postToFeedWithID:(NSString *)id {
@@ -261,12 +276,8 @@
 	[cell.userPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
 	[cell.userPicture.layer setBorderWidth:4];
 	
-	//Set cell text
-	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[currentPA objectForKey:@"message"]];
-	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-	[attStr setTextColor:[UIColor blackColor]];
-	
-	cell.activityMessage.attributedText = attStr;
+	cell.activityMessage.text = [currentPA objectForKey:@"message"];
+	cell.activityMessage.adjustsFontSizeToFitWidth = YES;
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getFormattedStringForDate:[currentPA createdAt]];
 	
@@ -316,10 +327,7 @@
 	[creatorPicture.layer setBorderWidth:4];
 	
 	creatorName.text = [creator objectForKey:@"username"];
-	NSMutableAttributedString *attStr = [NSMutableAttributedString attributedStringWithString:[parent objectForKey:@"activityMessage"]];
-	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-	[attStr setTextColor:[UIColor blackColor]];
-	activityMessage.attributedText = attStr;
+	activityMessage.text = [parent objectForKey:@"activityMessage"];
 	
 	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
 	
@@ -334,6 +342,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+	PFObject *currentPA = [results objectAtIndex:indexPath.row];
+	[currentPA fetchIfNeeded];
+	
+	NSString *message = [currentPA objectForKey:@"message"];
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Comment" message:message delegate:self cancelButtonTitle:@"Done" otherButtonTitles: nil];
+	[alert show];
+	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

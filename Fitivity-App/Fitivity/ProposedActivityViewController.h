@@ -23,11 +23,13 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil proposedActivity:(PFObject *)pa;
 - (IBAction) textFieldDidUpdate:(id)sender;
+- (IBAction)showHeaderMessage:(id)sender;
+- (IBAction)showPostCreator:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *activityHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *creatorPicture;
 @property (weak, nonatomic) IBOutlet UILabel *creatorName;
-@property (weak, nonatomic) IBOutlet OHAttributedLabel *activityMessage;
+@property (weak, nonatomic) IBOutlet UILabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *activityCreateTime;
 
 @property (strong, nonatomic) IBOutlet UIView *activityFooter;
