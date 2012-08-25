@@ -20,6 +20,7 @@
 
 #define kCreateDataPath		@"/createRecords.plist"
 #define kActivityDataPath	@"/groupActivityRecords.plist"
+#define kPADataPath			@"/proposedActivityRecords.plist"
 
 #define kMaxCreatesPerDay   2
 
@@ -54,6 +55,16 @@ static FConfig *instance;
 		[groupActivityRecords writeToFile:path atomically:YES];
 	}
 
+	//Load past acitivty creation records 
+	path = [documentsDirectory stringByAppendingString:kPADataPath];
+	activityCreationRecords  = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+	
+	if (activityCreationRecords == nil) {
+		activityCreationRecords = [[NSMutableDictionary alloc] init];
+		[activityCreationRecords writeToFile:path atomically:YES];
+	}
+
+	
 	//Set all of the types of places that should be allowed to create
 	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys: kBowlingAlley, @"Bowling Alley",
 															kCampground, @"Campground",
@@ -77,7 +88,7 @@ static FConfig *instance;
 
 #pragma mark - void methods 
 
-- (void)saveCreateData {
+- (void)saveGroupCreateData {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *path = [documentsDirectory stringByAppendingString:kCreateDataPath];
@@ -101,6 +112,38 @@ static FConfig *instance;
     }
 }
 
+- (void)savePACreateData {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingString:kPADataPath];
+    
+    if ([activityCreationRecords writeToFile:path atomically:YES]) {
+#ifdef DEBUG
+        NSLog(@"Saved to plist");
+#endif
+    }
+}
+
+- (void)incrementPACreationForDate:(NSDate *)date {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd-YYY"];
+    NSString *key = [formatter stringFromDate:date];
+    
+    NSNumber *count;
+    
+    //check if the date is already in the records
+    if ([activityCreationRecords objectForKey:key] != nil) {
+        count = (NSNumber *)[activityCreationRecords objectForKey:key];
+        count = [NSNumber numberWithInt:[count intValue] + 1];
+        [activityCreationRecords setObject:count forKey:key];
+    }
+    else {
+        count = [NSNumber numberWithInt:1];
+        [activityCreationRecords setObject:count forKey:key];
+    }
+    [self savePACreateData];
+}
+
 - (void)incrementGroupCreationForDate:(NSDate *)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MM-dd-YYY"];
@@ -118,7 +161,7 @@ static FConfig *instance;
         count = [NSNumber numberWithInt:1];
         [groupCreationRecords setObject:count forKey:key];
     }
-    [self saveCreateData];
+    [self saveGroupCreateData];
 }
 
 - (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i {
@@ -194,12 +237,28 @@ static FConfig *instance;
 	return ret;
 }
 
-- (BOOL)userHasReachedCreationLimitForDay:(NSDate *)today {
+- (BOOL)userHasReachedGroupCreationLimitForDay:(NSDate *)today {
     if (groupCreationRecords) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MM-DD-YYY"];
+        [formatter setDateFormat:@"MM-dd-YYY"];
         
         NSNumber *count = [groupCreationRecords objectForKey:[formatter stringFromDate:today]];
+        NSLog(@"%i", [count intValue]);
+        if ([count intValue] >= kMaxCreatesPerDay) {
+            return YES;
+        }
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)userHasReachedPACreationLimitForDay:(NSDate *)today {
+    if (activityCreationRecords) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MM-dd-YYY"];
+        
+		NSString *key = [formatter stringFromDate:today];
+        NSNumber *count = [activityCreationRecords objectForKey:key];
         NSLog(@"%i", [count intValue]);
         if ([count intValue] >= kMaxCreatesPerDay) {
             return YES;
@@ -222,7 +281,12 @@ static FConfig *instance;
 
 - (BOOL)canCreateGroup {
     //If the user hasn't reached their limit let them create one
-    return ![self userHasReachedCreationLimitForDay:[NSDate date]];
+    return ![self userHasReachedGroupCreationLimitForDay:[NSDate date]];
+}
+
+- (BOOL)canCreatePA {
+	//If the user hasn't reached their limit let them create one
+    return ![self userHasReachedPACreationLimitForDay:[NSDate date]];
 }
 
 - (BOOL)doesHavePushNotifications {

@@ -112,6 +112,8 @@
 		[activity saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
 				
+				[[FConfig instance] incrementPACreationForDate:[NSDate date]];
+				
 				//push notification to everyone in the group
 				if (group && [[FConfig instance] doesHavePushNotifications]) {
 					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
