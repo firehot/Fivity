@@ -2,19 +2,19 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
-		<string key="IBDocument.AppKitVersion">1187</string>
-		<string key="IBDocument.HIToolboxVersion">624.00</string>
+		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1498</string>
+			<string key="NS.object.0">1181</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>IBProxyObject</string>
+			<string>IBUITableViewCell</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
-			<string>IBUITableViewCell</string>
+			<string>IBProxyObject</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -43,7 +43,7 @@
 							<object class="IBUIImageView" id="118111445">
 								<reference key="NSNextResponder" ref="269341807"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{330, 95}</string>
+								<string key="NSFrame">{{0, -17}, {330, 95}}</string>
 								<reference key="NSSuperview" ref="269341807"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="643234122"/>
@@ -51,17 +51,17 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">DarkerBlueBackplateTexture.png</string>
+									<string key="NSResourceName">b_cell_activities.png</string>
 								</object>
 								<object class="NSCustomResource" key="IBUIHighlightedImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">DarkerBlueBackplateTexturePushed.png</string>
+									<string key="NSResourceName">b_cell_activities_down.png</string>
 								</object>
 							</object>
 							<object class="IBUIImageView" id="643234122">
 								<reference key="NSNextResponder" ref="269341807"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{28, 15}, {65, 65}}</string>
+								<string key="NSFrame">{{25, 9}, {57, 57}}</string>
 								<reference key="NSSuperview" ref="269341807"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="192499461"/>
@@ -72,7 +72,7 @@
 							<object class="IBUILabel" id="192499461">
 								<reference key="NSNextResponder" ref="269341807"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{108, 37}, {192, 26}}</string>
+								<string key="NSFrame">{{108, 25}, {192, 26}}</string>
 								<reference key="NSSuperview" ref="269341807"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -101,7 +101,7 @@
 								</object>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 95}</string>
+						<string key="NSFrameSize">{320, 75}</string>
 						<reference key="NSSuperview" ref="1062622903"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="118111445"/>
@@ -117,14 +117,14 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 96}</string>
+				<string key="NSFrameSize">{320, 76}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="269341807"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="269341807"/>
-				<real value="96" key="IBUIRowHeight"/>
+				<real value="79" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -244,9 +244,9 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="DarkerBlueBackplateTexture.png">{320, 91}</string>
-			<string key="DarkerBlueBackplateTexturePushed.png">{320, 91}</string>
+			<string key="b_cell_activities.png">{320, 76}</string>
+			<string key="b_cell_activities_down.png">{320, 76}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1498</string>
+		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>

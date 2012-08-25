@@ -79,12 +79,13 @@
 	}
 	
 	[cell.userNameLabel setText:[user objectForKey:@"username"]];
+    [cell.userNameLabel setTextColor:[UIColor blackColor]];
 		
 	//Style user photo
 	[cell.userPhoto.layer setCornerRadius:10.0f];
 	[cell.userPhoto.layer setMasksToBounds:YES];
-	[cell.userPhoto.layer setBorderColor:[[UIColor whiteColor] CGColor]];
-	[cell.userPhoto.layer setBorderWidth:4];
+	[cell.userPhoto.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
+	[cell.userPhoto.layer setBorderWidth:2];
 	
     return cell;
 }
@@ -99,7 +100,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 96;
+	return 76;
 }
 
 /**
@@ -109,7 +110,7 @@
 	
 	if (section == 0) {
 		UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kHeaderHeight)];
-		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+		[header setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_activity_header.png"]]];
 		
 		UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 20)];
 		[title setText:activity];
@@ -160,7 +161,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Members";
-	self.membersTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+	self.membersTable.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidUnload {
