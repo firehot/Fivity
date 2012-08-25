@@ -14,7 +14,6 @@
 #define kEmailIndex			0
 #define kUserNameIndex		1
 #define kPasswordIndex		2
-#define kProfilePicIndex	3
 
 #define kNumberOfRows		3
 
@@ -27,11 +26,13 @@
 @synthesize facebookLinkButton;
 @synthesize accountInfoTable;
 @synthesize pushNotificationsButton;
-@synthesize offButton;
-@synthesize pictureView;
 @synthesize pictureButton;
+@synthesize shareGroupButton;
+@synthesize shareActivityButton;
 
-bool pushNotifications = YES;
+bool pushNotifications;
+bool shareGroup;
+bool shareActivity;
 
 #pragma mark - IBAction's 
 
@@ -115,6 +116,14 @@ bool pushNotifications = YES;
 			}];
 		}
 	}
+}
+- (IBAction)shareGroup:(id)sender {
+    //insert code to share group
+    
+}
+- (IBAction)shareActivity:(id)sender {
+    //insert code to share activity
+    
 }
 
 - (void)registerPushNotificationsForCurrentUser {
@@ -312,15 +321,6 @@ bool pushNotifications = YES;
 			}
 			break;
 		}
-		case kProfilePicIndex: {
-			UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-			picker.allowsEditing = YES;
-			picker.delegate = self;
-			picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-			picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
-			[self presentModalViewController:picker animated:YES];
-			break;
-		}
 		default:
 			break;
 	}
@@ -365,7 +365,7 @@ bool pushNotifications = YES;
 	//Notify the user profile view that the picture changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedInformation" object:self];
 	
-    [pictureView setImage:choosenPic];
+    [pictureButton setImage:choosenPic forState:UIControlStateNormal];
     
 	[picker dismissModalViewControllerAnimated:YES];
 }
@@ -387,13 +387,13 @@ bool pushNotifications = YES;
     NSData *picData = [image getData];
     
     if (!picData) {
-        [pictureView setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
+        [pictureButton setImage:[UIImage imageNamed:@"b_avatar_settings.png"] forState:UIControlStateNormal];
     }
     else {
-        [pictureView setImage:[UIImage imageWithData:picData]];
+        [pictureButton setImage:[UIImage imageWithData:picData] forState:UIControlStateNormal];
     }
-    [pictureView.layer setMasksToBounds:YES];
-    [pictureView.layer setCornerRadius:6.0];
+    [pictureButton.layer setMasksToBounds:YES];
+    [pictureButton.layer setCornerRadius:6.0];
 
     
 	if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
@@ -412,7 +412,9 @@ bool pushNotifications = YES;
 	[self setFacebookLinkButton:nil];
 	[self setAccountInfoTable:nil];
 	[self setPushNotificationsButton:nil];
-	[self setOffButton:nil];
+    [self setPictureButton:nil];
+    [self setShareActivityButton:nil];
+    [self setShareGroupButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
