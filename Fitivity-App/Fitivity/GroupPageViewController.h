@@ -12,9 +12,10 @@
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "ProposedActivityCell.h"
 #import "GooglePlacesObject.h"
 
-@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate> {
+@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, ProposedActivityCellDelegate> {
     BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel;
 	
 	NSMutableArray *results;

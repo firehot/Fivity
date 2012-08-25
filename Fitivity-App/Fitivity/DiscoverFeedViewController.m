@@ -13,6 +13,7 @@
 #import "GooglePlacesObject.h"
 #import "GroupPageViewController.h"
 #import "ProposedActivityViewController.h"
+#import "UserProfileViewController.h"
 
 #define kFeedLimit			40
 #define kCellHeight			92.0f
@@ -233,6 +234,13 @@
 	}
 }
 
+#pragma mark - DiscoverCell Delegate
+
+- (void)showUserProfile:(PFUser *)user {
+	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
+	[self.navigationController pushViewController:profile animated:YES];
+}
+
 #pragma mark - PFQueryTableViewController 
 
 // Override to customize what kind of query to perform on the class. The default is to query for
@@ -296,6 +304,11 @@
 			break;
 		default:
 			break;
+	}
+	
+	if (numberOfMemebers < 2) {
+		[cell setDelegate:self];
+		[cell setUser:[object objectForKey:@"creator"]];
 	}
 	
     return cell;

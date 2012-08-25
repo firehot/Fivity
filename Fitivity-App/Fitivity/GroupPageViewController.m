@@ -13,8 +13,8 @@
 #import "GroupMembersViewController.h"
 #import "CreateProposeActivityViewController.h"
 #import "ProposedActivityViewController.h"
-#import "ProposedActivityCell.h"
 #import "ChallengesViewController.h"
+#import "UserProfileViewController.h"
 
 #define kDistanceMileFilter		0.15
 #define kCellHeight				96.0f
@@ -334,6 +334,17 @@
 	}
 }
 
+#pragma mark - ProposedActivityCell Delegate 
+
+- (void)userWantsProfileAtRow:(NSInteger)row {
+	PFObject *comment = [results objectAtIndex:row];
+	PFUser *user = [comment objectForKey:@"creator"];
+	
+	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
+	[self.navigationController pushViewController:profile animated:YES];
+}
+
+
 #pragma mark - UITableViewDelegate 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -381,6 +392,9 @@
 	if ([self proposedActivityHasComments:currentPA]) {
 		[cell.notificationImage setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
 	}
+	
+	[cell setTag:indexPath.row];
+	[cell setDelegate:self];
 	
     return cell;
 }

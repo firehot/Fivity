@@ -9,12 +9,15 @@
 #import "DiscoverCell.h"
 
 @implementation DiscoverCell
+
 @synthesize titleLabel;
 @synthesize activityLabel;
 @synthesize timeLabel;
 @synthesize milesAwayLabel;
 @synthesize pictureView;
 @synthesize todayIndicator;
+@synthesize user;
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -28,6 +31,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (IBAction)showUserProfile:(id)sender {
+	if ([delegate respondsToSelector:@selector(showUserProfile:)]) {
+		[delegate showUserProfile:self.user];
+	}
 }
 
 @end

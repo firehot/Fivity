@@ -3,7 +3,7 @@
 //  Fitivity
 //
 //  Created by Nathan Doe on 8/21/12.
-//  Copyright (c) 2012 Nathaniel Doe. All rights reserved.
+//  Copyright (c) 2012 Fitivity. All rights reserved.
 //
 
 #import "ChallengesViewController.h"

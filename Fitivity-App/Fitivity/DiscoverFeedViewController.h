@@ -11,7 +11,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate> {
+#import "DiscoverCell.h"
+
+@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, DiscoverCellDelegate> {
 	PFGeoPoint *userGeoPoint;
 }
 
