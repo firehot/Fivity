@@ -10,6 +10,7 @@
 
 @implementation ProposedActivityCell
 
+@synthesize delegate;
 @synthesize userPicture;
 @synthesize userName;
 @synthesize activityMessage;
@@ -28,6 +29,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (IBAction)showCreator:(id)sender {
+	if ([delegate respondsToSelector:@selector(userWantsProfileAtRow:)]) {
+		[delegate userWantsProfileAtRow:self.tag];
+	}
 }
 
 @end

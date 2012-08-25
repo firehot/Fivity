@@ -12,10 +12,11 @@
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "ProposedActivityCell.h"
 #import "OHAttributedLabel.h"
 #import "MBProgressHUD.h"
 
-@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate> {
+@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, ProposedActivityCellDelegate> {
 	NSMutableArray *results;
 	
 	BOOL posting;

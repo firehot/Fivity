@@ -9,7 +9,6 @@
 #import "ProposedActivityViewController.h"
 #import "NSError+FITParseUtilities.h"
 #import "NSAttributedString+Attributes.h"
-#import "ProposedActivityCell.h"
 #import "UserProfileViewController.h"
 
 #define kCellHeight				96.0f
@@ -232,12 +231,21 @@
 	return [formatter stringFromDate:date];
 }
 
-#pragma mark -
-#pragma mark MBProgressHUDDelegate methods
+#pragma mark - MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded
 	[hud removeFromSuperview];
+}
+
+#pragma mark - ProposedActivityCell Delegate 
+
+- (void)userWantsProfileAtRow:(NSInteger)row {
+	PFObject *comment = [results objectAtIndex:row];
+	PFUser *user = [comment objectForKey:@"user"];
+	
+	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
+	[self.navigationController pushViewController:profile animated:YES];
 }
 
 #pragma mark - UITableViewDelegate
@@ -280,6 +288,9 @@
 	cell.activityMessage.adjustsFontSizeToFitWidth = YES;
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getFormattedStringForDate:[currentPA createdAt]];
+	
+	[cell setTag:indexPath.row];
+	[cell setDelegate:self];
 	
     return cell;
 }

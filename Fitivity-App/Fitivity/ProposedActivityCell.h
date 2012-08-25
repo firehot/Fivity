@@ -10,12 +10,24 @@
 
 #import "OHAttributedLabel.h"
 
+@protocol ProposedActivityCellDelegate;
+
 @interface ProposedActivityCell : UITableViewCell
+
+- (IBAction)showCreator:(id)sender;
+
+@property (nonatomic, assign) id <ProposedActivityCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIImageView *userPicture;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *timeAgoLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *notificationImage;
+
+@end
+
+@protocol ProposedActivityCellDelegate <NSObject>
+
+- (void)userWantsProfileAtRow:(NSInteger)row;
 
 @end

@@ -187,7 +187,7 @@
 	
 	//To prevent many api calls to parse, cells will only be checked for new activity upon loading 
 	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
-	if (![updatedGroups objectForKey:[currentGroup objectId]]) {
+	if (mainUser && ![updatedGroups objectForKey:[currentGroup objectId]]) {
 		PFObject *group = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
 		[group fetchIfNeeded];
 		
