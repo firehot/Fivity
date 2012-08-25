@@ -16,13 +16,13 @@
 
 - (IBAction)signUserOut:(id)sender;
 - (IBAction)linkUserWithFacebook:(id)sender;
-- (IBAction)turnOnPushNotifications:(id)sender;
+- (IBAction)togglePushNotifications:(id)sender;
 - (IBAction)turnOffPushNotifications:(id)sender;
 - (IBAction)selectImage:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookLinkButton;
 @property (weak, nonatomic) IBOutlet UITableView *accountInfoTable;
-@property (weak, nonatomic) IBOutlet UIButton *onButton;
+@property (weak, nonatomic) IBOutlet UIButton *pushNotificationsButton;
 @property (weak, nonatomic) IBOutlet UIButton *offButton;
 @property (weak, nonatomic) IBOutlet UIImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UIButton *pictureButton;

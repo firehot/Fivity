@@ -26,10 +26,12 @@
 
 @synthesize facebookLinkButton;
 @synthesize accountInfoTable;
-@synthesize onButton;
+@synthesize pushNotificationsButton;
 @synthesize offButton;
 @synthesize pictureView;
 @synthesize pictureButton;
+
+bool pushNotifications = YES;
 
 #pragma mark - IBAction's 
 
@@ -141,40 +143,47 @@
 	}
 }
 
-- (IBAction)turnOnPushNotifications:(id)sender {
+- (IBAction)togglePushNotifications:(id)sender {
 	
 	//Run in background on another thread to avoid GUI lag
-	[self performSelectorInBackground:@selector(registerPushNotificationsForCurrentUser) withObject:nil];
+	if(pushNotifications){
+    [self performSelectorInBackground:@selector(registerPushNotificationsForCurrentUser) withObject:nil];
 	
 	[[FConfig instance] setDoesHaveNotifications:YES];
 	
-	[self.offButton setEnabled:YES];
-	[self.onButton setEnabled:NO];
-}
-
-- (IBAction)turnOffPushNotifications:(id)sender {
-	
-	//Run in background on another thread to avoid GUI lag
-	[self performSelectorInBackground:@selector(unregisterPushNotificationsForCurrentUser) withObject:nil];
-	
-	[[FConfig instance] setDoesHaveNotifications:NO];
-	
-	[self.offButton setEnabled:NO];
-	[self.onButton setEnabled:YES];
+    [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on.png"] forState:UIControlStateNormal];
+    [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on_down.png"] forState:UIControlStateHighlighted];
+        
+    pushNotifications = NO;
+        
+        NSLog(@"Push notifications have been turned on");
+    }
+    else {
+        [self performSelectorInBackground:@selector(unregisterPushNotificationsForCurrentUser) withObject:nil];
+        
+        [[FConfig instance] setDoesHaveNotifications:NO];
+        
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off.png"] forState:UIControlStateNormal];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off_down.png"] forState:UIControlStateHighlighted];
+        NSLog(@"Push notifications have been turned off");
+    pushNotifications = YES;
+    }
 }
 
 #pragma mark - Helper methods 
 
 - (void)setUpNotificationGUI {
 	BOOL status = [[FConfig instance] doesHavePushNotifications];
-	
+    
 	if (status) {
-		[self.offButton setEnabled:YES];
-		[self.onButton setEnabled:NO];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on.png"] forState:UIControlStateNormal];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on_down.png"] forState:UIControlStateHighlighted];
+        pushNotifications = YES;
 	}
 	else {
-		[self.offButton setEnabled:NO];
-		[self.onButton setEnabled:YES];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off.png"] forState:UIControlStateNormal];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off_down.png"] forState:UIControlStateHighlighted];
+        pushNotifications = NO;
 	}
 }
 
@@ -226,7 +235,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 46;
+	return 39;
 }
 
 
@@ -387,7 +396,7 @@
 - (void)viewDidUnload {
 	[self setFacebookLinkButton:nil];
 	[self setAccountInfoTable:nil];
-	[self setOnButton:nil];
+	[self setPushNotificationsButton:nil];
 	[self setOffButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
