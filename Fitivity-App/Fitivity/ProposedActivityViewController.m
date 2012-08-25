@@ -55,9 +55,7 @@
 		[textField setText:[[textField text] substringToIndex:kMaxCharCount]];
 		return;
 	}
-	
-	self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d",charsLeft];
-}
+ }
 
 - (IBAction)showHeaderMessage:(id)sender {
 	

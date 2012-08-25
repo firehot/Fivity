@@ -194,7 +194,7 @@
 		[updatedGroups setObject:[NSNumber numberWithBool:YES] forKey:[currentGroup objectId]];
 		
 		// Check if there is any new activity only if you are looking at your profile
-		if (mainUser && [[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
+		if ([[FConfig instance] shouldShowNewActivityForGroup:[group objectId] newActivityCount:[group objectForKey:@"activityCount"]]) {
 			[cell.activityIndicator setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
 		}
 	}
