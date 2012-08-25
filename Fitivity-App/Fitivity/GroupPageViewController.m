@@ -53,10 +53,17 @@
 - (IBAction)proposeGroupActivity:(id)sender {
 	autoJoin = NO;
 	if (alreadyJoined) {
-		//Show the create proposed activity view controller
-		CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"CreateProposeActivityViewController" bundle:nil];
-		[prop setGroup:group];
-		[self.navigationController pushViewController:prop animated:YES];
+		
+		if ([[FConfig instance] canCreatePA]) {
+			//Show the create proposed activity view controller
+			CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"CreateProposeActivityViewController" bundle:nil];
+			[prop setGroup:group];
+			[self.navigationController pushViewController:prop animated:YES];
+		}
+		else {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Reached" message:@"You can only propose an activity twice a day." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+		}
 	}
 	else {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Joined" message:@"You must be part of the group in order to propose an activity" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];

@@ -13,7 +13,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface FConfig : NSObject {
-    NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups;
+    NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups, *activityCreationRecords;
 	NSDictionary *placeTypes;
 }
 
@@ -26,6 +26,7 @@
 - (BOOL)connected;
 - (BOOL)shouldLogIn;
 - (BOOL)canCreateGroup;
+- (BOOL)canCreatePA;
 - (BOOL)doesHavePushNotifications;
 - (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n;
 - (BOOL)groupHasChallenges:(NSString *)groupType;
@@ -42,6 +43,7 @@
 - (void)showLogoNavBar:(BOOL)status;
 - (void)setDoesHaveNotifications:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;
+- (void)incrementPACreationForDate:(NSDate *)date;
 - (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i;
 
 - (NSDictionary *)getTypes;
