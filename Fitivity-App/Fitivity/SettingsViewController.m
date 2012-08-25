@@ -42,6 +42,7 @@ bool shareActivity;
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     picker.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
+    [picker.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
     [self presentModalViewController:picker animated:YES];
 }
 - (IBAction)signUserOut:(id)sender {
@@ -352,7 +353,6 @@ bool shareActivity;
 #pragma mark - UIImagePickerController Delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-	
 	//Get the picture, update the GUI and send to server
 	UIImage *choosenPic = [info objectForKey:@"UIImagePickerControllerEditedImage"];
 	PFFile *sendPic = [PFFile fileWithData:UIImagePNGRepresentation(choosenPic)];
