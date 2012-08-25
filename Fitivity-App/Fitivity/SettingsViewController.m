@@ -118,6 +118,15 @@ bool pushNotifications = YES;
 }
 
 - (void)registerPushNotificationsForCurrentUser {
+	
+	UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+	if (types == UIRemoteNotificationTypeNone) {
+		NSString *message = @"You declined access for this app to send push notifications. Unfortunately Apple doesn't allow apps to re-enable push notifications unless the app has been deleted from your device for one day.";
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Enabled" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
 	@synchronized(self) {
 		//Get all of the groups the user is part of
 		PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
