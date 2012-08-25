@@ -146,7 +146,7 @@ bool pushNotifications = YES;
 - (IBAction)togglePushNotifications:(id)sender {
 	
 	//Run in background on another thread to avoid GUI lag
-	if(pushNotifications){
+	if(!pushNotifications){
     [self performSelectorInBackground:@selector(registerPushNotificationsForCurrentUser) withObject:nil];
 	
 	[[FConfig instance] setDoesHaveNotifications:YES];
@@ -154,7 +154,7 @@ bool pushNotifications = YES;
     [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on.png"] forState:UIControlStateNormal];
     [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on_down.png"] forState:UIControlStateHighlighted];
         
-    pushNotifications = NO;
+    pushNotifications = YES;
         
         NSLog(@"Push notifications have been turned on");
     }
@@ -166,7 +166,7 @@ bool pushNotifications = YES;
         [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off.png"] forState:UIControlStateNormal];
         [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off_down.png"] forState:UIControlStateHighlighted];
         NSLog(@"Push notifications have been turned off");
-    pushNotifications = YES;
+    pushNotifications = NO;
     }
 }
 
