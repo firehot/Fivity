@@ -17,12 +17,20 @@
 @synthesize titleLable, section;
 @synthesize delegate;
 
-- (id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)section {
+- (id)initWithFrame:(CGRect)frame title:(NSString *)title section:(NSInteger)section open:(BOOL)open {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_collapsed.png"]];
+        
 		self.userInteractionEnabled = YES;
 		self.section = section;
+		
+		sectionOpen = open;
+		
+		if (!sectionOpen) {
+			self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_collapsed.png"]];
+		} else {
+			self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_expanded.png"]];
+		}
 		
 		//Add the tap gesture to the header
 		UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleOpen:)];
@@ -40,7 +48,7 @@
 		titleLable.backgroundColor = [UIColor clearColor];
 		[self addSubview:titleLable];
 		
-		sectionOpen = NO; 
+		
     }
     return self;
 }
@@ -70,11 +78,6 @@
 		}
 		
 	}
-}
-
-- (void)viewDidLoad {
-   self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_choose_collapsed.png"]];
-
 }
 
 /*

@@ -260,7 +260,6 @@
 	[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
 	
 	[query whereKey:@"group" matchesQuery:innerGroupQuery];
-	//[query whereKey]
     [query orderByDescending:@"updatedAt"];
 	
     return query;

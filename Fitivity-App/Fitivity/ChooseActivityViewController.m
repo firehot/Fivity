@@ -216,8 +216,13 @@
 		title = [firstObject objectForKey:@"category"];
 	}
 	
+	BOOL open = NO;
+	if (self.openSectionIndex == section) {
+		open = YES;	
+	}
+	
 	ChooseActivityHeaderView *header = [[ChooseActivityHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.activitiesTable.bounds.size.width, kHeaderHeight)
-																				 title:title section:section];
+																				 title:title section:section open:open];
 	[header setDelegate:self];
 	[header setTag:kTagOffset + section];
 	return header;
