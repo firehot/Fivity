@@ -8,37 +8,32 @@
 
 #import "CommentCell.h"
 
-@interface CommentCell ()
-
-@end
-
 @implementation CommentCell
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+@synthesize delegate;
+@synthesize userPicture;
+@synthesize userName;
+@synthesize time;
+@synthesize commentMessage;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+if (self) {
+    // Initialization code
+}
+return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+[super setSelected:selected animated:animated];
+
+// Configure the view for the selected state
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+- (IBAction)showCreator:(id)sender {
+if ([delegate respondsToSelector:@selector(userWantsProfileAtRow:)]) {
+    [delegate userWantsProfileAtRow:self.tag];
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

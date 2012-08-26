@@ -7,7 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OHAttributedLabel.h"
 
-@interface CommentCell : UIViewController
+@protocol CommentCellDelegate;
+
+@interface CommentCell : UITableViewCell
+
+- (IBAction)showCreator:(id)sender;
+
+@property (nonatomic, assign) id <CommentCellDelegate> delegate;
+
+@property (weak, nonatomic) IBOutlet UIImageView *userPicture;
+@property (weak, nonatomic) IBOutlet UILabel *userName;
+@property (weak, nonatomic) IBOutlet UILabel *commentMessage;
+@property (weak, nonatomic) IBOutlet UILabel *time;
+
+@end
+
+
+@protocol CommentCellDelegate <NSObject>
+
+- (void)userWantsProfileAtRow:(NSInteger)row;
 
 @end

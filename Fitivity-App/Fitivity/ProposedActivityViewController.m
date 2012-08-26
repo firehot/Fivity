@@ -11,7 +11,7 @@
 #import "NSAttributedString+Attributes.h"
 #import "UserProfileViewController.h"
 
-#define kCellHeight				96.0f
+#define kCellHeight				68.0f
 #define kHeaderHeight			20.0f
 #define kFooterHeight			45.0f
 
@@ -252,9 +252,9 @@
     static NSString *CellIdentifier = @"Cell";
     
     // Dequeue or create a cell of the appropriate type.
-    ProposedActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ProposedActivityCell" owner:self options:nil];
+		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
     }
 	
@@ -280,12 +280,12 @@
 	[cell.userPicture.layer setCornerRadius:10.0f];
 	[cell.userPicture.layer setMasksToBounds:YES];
 	[cell.userPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
-	[cell.userPicture.layer setBorderWidth:4];
-	
-	cell.activityMessage.text = [currentPA objectForKey:@"message"];
-	cell.activityMessage.adjustsFontSizeToFitWidth = YES;
+	[cell.userPicture.layer setBorderWidth:2];
+    
+	cell.commentMessage.text = [currentPA objectForKey:@"message"];
+	cell.commentMessage.adjustsFontSizeToFitWidth = YES;
 	cell.userName.text = [user objectForKey:@"username"];
-	cell.timeAgoLabel.text = [self getFormattedStringForDate:[currentPA createdAt]];
+	cell.time.text = [self getFormattedStringForDate:[currentPA createdAt]];
 	
 	[cell setTag:indexPath.row];
 	[cell setDelegate:self];
@@ -431,6 +431,7 @@
 	self.navigationItem.title = @"Activity";
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 	self.commentsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
+    self.commentsTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
 }
 
 - (void)viewDidUnload {

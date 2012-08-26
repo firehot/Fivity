@@ -15,8 +15,9 @@
 #import "ProposedActivityCell.h"
 #import "OHAttributedLabel.h"
 #import "MBProgressHUD.h"
+#import "CommentCell.h"
 
-@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, ProposedActivityCellDelegate> {
+@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, ProposedActivityCellDelegate, CommentCellDelegate> {
 	NSMutableArray *results;
 	
 	BOOL posting;
