@@ -11,7 +11,7 @@
 #import "NSAttributedString+Attributes.h"
 #import "UserProfileViewController.h"
 
-#define kCellHeight				68.0f
+#define kCellHeight				70.0f
 #define kHeaderHeight			20.0f
 #define kFooterHeight			45.0f
 
