@@ -237,6 +237,7 @@
 #pragma mark - DiscoverCell Delegate
 
 - (void)showUserProfile:(PFUser *)user {
+	[user fetchIfNeeded];
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
 	[self.navigationController pushViewController:profile animated:YES];
 }
