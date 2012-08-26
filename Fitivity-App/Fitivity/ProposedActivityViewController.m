@@ -11,11 +11,13 @@
 #import "NSAttributedString+Attributes.h"
 #import "UserProfileViewController.h"
 
-#define kCellHeight				70.0f
-#define kHeaderHeight			20.0f
-#define kFooterHeight			45.0f
+#define kCellHeight						70.0f
+#define kHeaderHeight					20.0f
+#define kFooterHeight					45.0f
 
-#define kTextFieldMoveDistance          165
+#define kFirstCellMove					20
+#define kSecondCellMove					90
+#define kThirdCellMove					160
 #define kTextFieldAnimationDuration    0.3f
 #define kMaxCharCount	350
 
@@ -30,6 +32,7 @@
 @synthesize creatorName;
 @synthesize activityMessage;
 @synthesize activityCreateTime;
+@synthesize placeLabel;
 @synthesize activityFooter;
 @synthesize activityComment;
 @synthesize commentsTable;
@@ -93,42 +96,9 @@
 		if (![feed save]) {
 			[feed saveEventually];
 		}
-}
-}
-
-- (void)post {
-	@synchronized(self) {
-		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
-		[comment setObject:[self.activityComment text] forKey:@"message"];
-		[comment setObject:[PFUser currentUser] forKey:@"user"];
-		//Make sure that we have a good reference to the ProposedActivity
-		if (parent) {
-			[comment setObject:parent forKey:@"parent"];
-		}
-		else {
-			[comment setObject:[NSNull null] forKey:@"parent"];
-		}
-		
-		//Try to save the comment, if can't show error message
-		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
-			if (succeeded) {
-				[self postToFeedWithID:[comment objectId]];
-				[self.activityComment setText:@""];
-				[self getProposedActivityHistory];
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[alert show];
-				posting = NO;
-			}
-			else if (error) {
-				NSString *errorMessage = @"An unknown error occurred while posting event.";
-				errorMessage = [error userFriendlyParseErrorDescription:YES];
-				
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[alert show];
-			}
-		}];
 	}
 }
+
 
 - (void)postComment {
 	
@@ -154,14 +124,53 @@
 		return;
 	}
 	
-	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-	[self.navigationController.view addSubview:HUD];
+	[activityComment resignFirstResponder];
 	
-	HUD.dimBackground = YES;
-	HUD.delegate = self;
-	HUD.labelText = @"Posting";
-	
-	[HUD showWhileExecuting:@selector(post) onTarget:self withObject:nil animated:YES];
+	@synchronized(self) {
+		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
+		[comment setObject:[self.activityComment text] forKey:@"message"];
+		[comment setObject:[PFUser currentUser] forKey:@"user"];
+		//Make sure that we have a good reference to the ProposedActivity
+		if (parent) {
+			[comment setObject:parent forKey:@"parent"];
+		}
+		else {
+			[comment setObject:[NSNull null] forKey:@"parent"];
+		}
+		
+		usleep(1000);
+		
+		//Try to save the comment, if can't show error message
+		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				[self postToFeedWithID:[comment objectId]];
+				[self.activityComment setText:@""];
+				[self getProposedActivityHistory];
+				//				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				//				[alert show];
+				
+				MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+				[self.navigationController.view addSubview:HUD];
+				
+				HUD.delegate = self;
+				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+				HUD.mode = MBProgressHUDModeCustomView;
+				HUD.labelText = @"Posted";
+				
+				[HUD show:YES];
+				[HUD hide:YES afterDelay:2.2];
+				
+				posting = NO;
+			}
+			else if (error) {
+				NSString *errorMessage = @"An unknown error occurred while posting event.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+		}];
+	}
 }
 
 - (void)getProposedActivityReference {
@@ -342,16 +351,21 @@
 //Move the text fields up so that the keyboard does not cover them
 - (void) animateTextField:(UITextField*)textField Up:(BOOL)up {
     
-	if ([results count] != 0) {
-		int movement = (up ? -kTextFieldMoveDistance : kTextFieldMoveDistance);
-		
-		[UIView beginAnimations: @"anim" context: nil];
-		[UIView setAnimationBeginsFromCurrentState: YES];
-		[UIView setAnimationDuration: kTextFieldAnimationDuration];
-		self.view.frame = CGRectOffset(self.view.frame, 0, movement);
-		[UIView commitAnimations];
-
+	int movement = 0;
+	
+	if ([results count] == 0) {
+		movement = (up ? -kFirstCellMove : kFirstCellMove);
+	} else if ([results count] == 1) {
+		movement = (up ? -kSecondCellMove : kSecondCellMove);
+	} else {
+		movement = (up ? -kThirdCellMove : kThirdCellMove);
 	}
+	
+	[UIView beginAnimations: @"anim" context: nil];
+	[UIView setAnimationBeginsFromCurrentState: YES];
+	[UIView setAnimationDuration: kTextFieldAnimationDuration];
+	self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+	[UIView commitAnimations];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -428,7 +442,11 @@
 
 	posting = NO;
 	
-	self.navigationItem.title = @"Activity";
+	PFObject *group = [parent objectForKey:@"group"];
+	[group fetchIfNeeded];
+	
+	self.navigationItem.title = [group objectForKey:@"activity"];
+	self.placeLabel.text = [group objectForKey:@"place"];
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 	self.commentsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
     self.commentsTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
@@ -443,6 +461,7 @@
 	[self setActivityCreateTime:nil];
 	[self setActivityFooter:nil];
 	[self setActivityComment:nil];
+	[self setPlaceLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

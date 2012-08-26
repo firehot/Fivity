@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *creatorName;
 @property (weak, nonatomic) IBOutlet UILabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *activityCreateTime;
+@property (weak, nonatomic) IBOutlet UILabel *placeLabel;
 
 @property (strong, nonatomic) IBOutlet UIView *activityFooter;
 @property (weak, nonatomic) IBOutlet UITextField *activityComment;
