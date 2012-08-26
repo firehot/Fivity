@@ -2,20 +2,20 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.SystemVersion">12B19</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
+		<string key="IBDocument.AppKitVersion">1187</string>
+		<string key="IBDocument.HIToolboxVersion">624.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">1498</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
-			<string>IBUITableViewCell</string>
-			<string>IBUIButton</string>
-			<string>IBUILabel</string>
-			<string>IBUIImageView</string>
 			<string>IBProxyObject</string>
+			<string>IBUIButton</string>
+			<string>IBUIImageView</string>
+			<string>IBUILabel</string>
+			<string>IBUITableViewCell</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -44,7 +44,7 @@
 							<object class="IBUIImageView" id="263917035">
 								<reference key="NSNextResponder" ref="873866900"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, -16}, {320, 90}}</string>
+								<string key="NSFrameSize">{320, 74}</string>
 								<reference key="NSSuperview" ref="873866900"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="949379700"/>
@@ -256,8 +256,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="949379700"/>
 							<reference ref="269473575"/>
-							<reference ref="263917035"/>
 							<reference ref="912063808"/>
+							<reference ref="263917035"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -358,6 +358,6 @@
 			<string key="cell_locations.png">{320, 75}</string>
 			<string key="cell_locations_down.png">{320, 75}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>

@@ -24,7 +24,7 @@
 #define kCellTypeComment	2
 
 #define kMetersToMiles		0.000621371192
-#define kMilesRadius		20.0
+#define kMilesRadius		40.0
 
 @interface DiscoverFeedViewController ()
 

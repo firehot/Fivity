@@ -347,6 +347,7 @@
     [super viewDidLoad];
 	
 	searchBar.tintColor = [[FConfig instance] getFitivityBlue];
+	self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_locations.png"]];
 }
 
