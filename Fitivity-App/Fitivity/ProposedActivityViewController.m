@@ -12,7 +12,7 @@
 #import "UserProfileViewController.h"
 
 #define kCellHeight				96.0f
-#define kHeaderHeight			110.0f
+#define kHeaderHeight			20.0f
 #define kFooterHeight			45.0f
 
 #define kTextFieldMoveDistance          165
@@ -315,31 +315,6 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	
-	PFObject *creator = [parent objectForKey:@"creator"];
-	[creator fetchIfNeeded];
-	
-	//Get the image
-	PFFile *pic = [creator objectForKey:@"image"];
-	NSData *picData = [pic getData];
-	if (picData) {
-		[creatorPicture setImage:[UIImage imageWithData:picData]];
-	}
-	else {
-		[creatorPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
-	}
-	
-	//Style picture
-	[creatorPicture.layer setCornerRadius:10.0f];
-	[creatorPicture.layer setMasksToBounds:YES];
-	[creatorPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
-	[creatorPicture.layer setBorderWidth:4];
-	
-	creatorName.text = [creator objectForKey:@"username"];
-	activityMessage.text = [parent objectForKey:@"activityMessage"];
-	
-	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
-	
 	return activityHeader;
 }
 
@@ -426,6 +401,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    PFObject *creator = [parent objectForKey:@"creator"];
+	[creator fetchIfNeeded];
+	
+	//Get the image
+	PFFile *pic = [creator objectForKey:@"image"];
+	NSData *picData = [pic getData];
+	if (picData) {
+		[creatorPicture setImage:[UIImage imageWithData:picData]];
+	}
+	else {
+		[creatorPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
+	}
+	
+	//Style picture
+	[creatorPicture.layer setCornerRadius:10.0f];
+	[creatorPicture.layer setMasksToBounds:YES];
+	[creatorPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
+	[creatorPicture.layer setBorderWidth:2];
+	
+	creatorName.text = [creator objectForKey:@"username"];
+	activityMessage.text = [parent objectForKey:@"activityMessage"];
+	
+	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
 
 	posting = NO;
 	
