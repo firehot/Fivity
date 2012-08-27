@@ -10,6 +10,8 @@
 #import "UserProfileViewController.h"
 #import "NSError+FITParseUtilities.h"
 #import "SettingsCell.h"
+#import "SocialSharer.h"
+#import "AppDelegate.h"
 
 #define kEmailIndex			0
 #define kUserNameIndex		1
@@ -212,6 +214,27 @@ bool shareActivity;
 	}
 }
 
+- (void)shareApp {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+    [sheet showInView:self.view];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:@"Facebook"]) {
+        
+    } else if ([title isEqualToString:@"Twitter"]) {
+        
+    } else if ([title isEqualToString:@"SMS"]) {
+        
+    } else if ([title isEqualToString:@"Email"]) {
+        
+    }
+}
+
 #pragma mark - UITableViewDelegate 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -406,6 +429,9 @@ bool shareActivity;
 	}
 	
 	[self setUpNotificationGUI];
+    
+    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
+    self.navigationItem.rightBarButtonItem = share;
 }
 
 - (void)viewDidUnload {

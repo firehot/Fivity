@@ -13,6 +13,8 @@
 		575AECA515B6051200324958 /* GroupPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575AECA315B6051200324958 /* GroupPageViewController.xib */; };
 		57AAB0C015AF441E00AD51CB /* FitivityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */; };
 		57AAB0C215AF4B1300AD51CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AAB0C115AF4B1300AD51CB /* QuartzCore.framework */; };
+		57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C317EB15EBB687006253D4 /* SocialSharer.m */; };
+		57C317EE15EBB6A6006253D4 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C317ED15EBB6A6006253D4 /* Twitter.framework */; };
 		57E7C54815E3EC48007E2D9D /* bg_profile_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7C54615E3EC48007E2D9D /* bg_profile_header.png */; };
 		57E7C54915E3EC48007E2D9D /* bg_profile_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57E7C54715E3EC48007E2D9D /* bg_profile_header@2x.png */; };
 		57E9C05615B5CA74007C7C58 /* NSAttributedString+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 57E9C05315B5CA6E007C7C58 /* NSAttributedString+Attributes.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
@@ -368,6 +370,9 @@
 		575AECA315B6051200324958 /* GroupPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupPageViewController.xib; path = Fitivity/GroupPageViewController.xib; sourceTree = "<group>"; };
 		57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FitivityLogo.png; sourceTree = "<group>"; };
 		57AAB0C115AF4B1300AD51CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		57C317EA15EBB687006253D4 /* SocialSharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialSharer.h; sourceTree = "<group>"; };
+		57C317EB15EBB687006253D4 /* SocialSharer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialSharer.m; sourceTree = "<group>"; };
+		57C317ED15EBB6A6006253D4 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		57E7C54615E3EC48007E2D9D /* bg_profile_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_profile_header.png; sourceTree = "<group>"; };
 		57E7C54715E3EC48007E2D9D /* bg_profile_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_profile_header@2x.png"; sourceTree = "<group>"; };
 		57E9C05215B5CA6E007C7C58 /* NSAttributedString+Attributes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Attributes.h"; sourceTree = "<group>"; };
@@ -789,6 +794,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57C317EE15EBB6A6006253D4 /* Twitter.framework in Frameworks */,
 				57E9C05915B5CA9C007C7C58 /* CoreText.framework in Frameworks */,
 				6C08845715B1C72B00670936 /* MapKit.framework in Frameworks */,
 				6C08845515B1C67000670936 /* CoreLocation.framework in Frameworks */,
@@ -837,6 +843,15 @@
 				6C42C86515D5D5F20067EFA9 /* GooglePlaceAdder.m */,
 			);
 			name = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		57C317E815EBB608006253D4 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				57C317EA15EBB687006253D4 /* SocialSharer.h */,
+				57C317EB15EBB687006253D4 /* SocialSharer.m */,
+			);
+			name = Social;
 			sourceTree = "<group>";
 		};
 		57E9C05015B5CA64007C7C58 /* OHAttributedString */ = {
@@ -1161,6 +1176,7 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				57C317ED15EBB6A6006253D4 /* Twitter.framework */,
 				6CF2458415D46297009B31AE /* Parse.framework */,
 				57E9C05815B5CA9C007C7C58 /* CoreText.framework */,
 				6C08845615B1C72B00670936 /* MapKit.framework */,
@@ -1185,6 +1201,7 @@
 				6CB1A73515ACFC1D00C0FF75 /* AppDelegate.m */,
 				6CA2695A15AE63E900CD205C /* Config */,
 				6CD2F58A15B0E77D0032FA34 /* Categories */,
+				57C317E815EBB608006253D4 /* Social */,
 				6CB1B21515B1A0DC004DDDCA /* TabBar & NavigationBar */,
 				6CA2695B15AE640400CD205C /* Opening */,
 				6CDCD5AC15B1AD9300986AA2 /* Discover Stream */,
@@ -1997,6 +2014,7 @@
 				6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */,
 				6C623AA615E460B80025DE76 /* ChallengeCell.m in Sources */,
 				F19C900315EA551100298980 /* CommentCell.m in Sources */,
+				57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
