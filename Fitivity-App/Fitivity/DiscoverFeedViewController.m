@@ -137,6 +137,45 @@
 	}
 }
 
+- (void)configurePACommentCell:(DiscoverCell *)cell withObject:(PFObject *)object {
+	if (!object) {
+		return;
+	}
+	
+	//Get the PA and the parent group
+	PFObject *pa = [object objectForKey:@"proposedActivity"];
+	PFObject *group = [object objectForKey:@"group"];
+	
+	if (pa && group) {
+		
+		[cell setHasComment:YES];
+		[cell.commentIndicator setImage:[UIImage imageNamed:@"NewActivityNotification.png"]];
+		
+		//Incase the data isn't loaded yet
+		[pa fetchIfNeeded];
+		[group fetchIfNeeded];
+		
+		PFUser *user = [pa objectForKey:@"creator"];
+		[user fetchIfNeeded];
+		
+		PFFile *pic = [user objectForKey:@"image"];
+		
+		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
+		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
+		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ proposed a group activity", [user username]]];
+		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
+		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
+		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		if ([self happendToday:[object updatedAt]]) {
+			[cell.todayIndicator setHidden:NO];
+		}
+		else {
+			[cell.todayIndicator setHidden:YES];
+		}
+	}
+}
+
 - (void)configureGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object {
 	if (!object) {
 		return;
@@ -185,42 +224,6 @@
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ is doing", [user username]]];
-		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
-		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
-		[self imageView:cell.pictureView setImage:pic styled:YES];
-		
-		if ([self happendToday:[object updatedAt]]) {
-			[cell.todayIndicator setHidden:NO];
-		}
-		else {
-			[cell.todayIndicator setHidden:YES];
-		}
-	}
-}
-
-- (void)configureCommentCell:(DiscoverCell *)cell withObject:(PFObject *)object {
-	if (!object) {
-		return;
-	}
-	
-	PFObject *comment = [object objectForKey:@"comment"];
-	PFObject *pa = [object objectForKey:@"proposedActivity"];
-	[pa fetchIfNeeded];
-	
-	PFObject *group = [pa objectForKey:@"group"];
-	PFUser *user = [object objectForKey:@"creator"];
-	
-	[comment fetchIfNeeded];
-	[group fetchIfNeeded];
-	[user fetchIfNeeded];
-	
-	if (comment && pa && group && user) {
-		
-		PFFile *pic = [user objectForKey:@"image"];
-		
-		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
-		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
-		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ commented on", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
@@ -301,7 +304,7 @@
 			[self configurePACell:cell withObject:object];
 			break;
 		case kCellTypeComment:
-			[self configureCommentCell:cell withObject:object];
+			[self configurePACommentCell:cell withObject:object];
 			break;
 		default:
 			break;
@@ -400,8 +403,12 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    
+	
 	if (![self isValidDistance:newLocation oldLocation:oldLocation]) {
+		return;
+	}
+	
+	if ([self loadedInitialData]) {
 		return;
 	}
 	
@@ -410,6 +417,7 @@
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
+	[self setLoadedInitialData:YES];
 	[self.tableView reloadData];
 }
 
@@ -426,6 +434,9 @@
 - (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
+		
+		[self setLoadedInitialData:NO];
+		
         // Custom the table
         if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];

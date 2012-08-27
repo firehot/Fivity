@@ -16,8 +16,16 @@
 @synthesize milesAwayLabel;
 @synthesize pictureView;
 @synthesize todayIndicator;
+@synthesize commentIndicator;
 @synthesize user;
 @synthesize delegate;
+
+- (void)setHasComment:(BOOL)comment {
+	CGRect frame = milesAwayLabel.frame;
+	frame.origin.x -= 10;
+	milesAwayLabel.frame = frame;
+	hasComment = comment;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

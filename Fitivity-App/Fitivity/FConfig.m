@@ -218,10 +218,10 @@ static FConfig *instance;
 	BOOL ret = NO;
 	
 	//If the object exists we have a challenge
-	if ([challengeGroups objectForKey:groupType]) {
-		ret = YES;
-	}
-	
+//	if ([challengeGroups objectForKey:groupType]) {
+//		ret = YES;
+//	}
+//	
 	return ret;
 }
 

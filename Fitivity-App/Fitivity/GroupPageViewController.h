@@ -14,8 +14,9 @@
 
 #import "ProposedActivityCell.h"
 #import "GooglePlacesObject.h"
+#import "MBProgressHUD.h"
 
-@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, ProposedActivityCellDelegate> {
+@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, ProposedActivityCellDelegate, MBProgressHUDDelegate> {
     BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel;
 	
 	NSMutableArray *results;

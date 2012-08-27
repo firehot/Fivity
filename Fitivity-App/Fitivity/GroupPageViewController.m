@@ -251,8 +251,17 @@
 				
 				//Notify other classes & user that they joined the group
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"You are now part of this group." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				[alert show];
+				
+				MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+				[self.navigationController.view addSubview:HUD];
+				
+				HUD.delegate = self;
+				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+				HUD.mode = MBProgressHUDModeCustomView;
+				HUD.labelText = @"Joined";
+				
+				[HUD show:YES];
+				[HUD hide:YES afterDelay:1.75];
 			}
 		}];
 	}
@@ -328,6 +337,13 @@
 	
     NSTimeInterval diff = [temp timeIntervalSinceDate:input];
     return [self getTimeIntervalDifference:diff];
+}
+
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
 }
 
 #pragma mark - UIAlertView Delegate

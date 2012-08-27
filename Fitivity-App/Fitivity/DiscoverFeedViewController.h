@@ -18,5 +18,6 @@
 }
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, assign) BOOL loadedInitialData;
 
 @end

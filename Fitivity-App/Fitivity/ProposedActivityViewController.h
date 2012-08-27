@@ -20,13 +20,14 @@
 @interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, ProposedActivityCellDelegate, CommentCellDelegate> {
 	NSMutableArray *results;
 	
-	BOOL posting;
+	BOOL posting, autoJoined;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil proposedActivity:(PFObject *)pa;
 - (IBAction) textFieldDidUpdate:(id)sender;
 - (IBAction)showHeaderMessage:(id)sender;
 - (IBAction)showPostCreator:(id)sender;
+- (IBAction)postImIn:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *activityHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *creatorPicture;

@@ -13,9 +13,12 @@
 
 @protocol DiscoverCellDelegate;
 
-@interface DiscoverCell : PFTableViewCell
+@interface DiscoverCell : PFTableViewCell {
+	BOOL hasComment;
+}
 
 - (IBAction)showUserProfile:(id)sender;
+- (void)setHasComment:(BOOL)comment;
 
 @property (nonatomic, assign) id <DiscoverCellDelegate> delegate;
 
@@ -25,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *milesAwayLabel;
 @property (weak, nonatomic) IBOutlet PFImageView *pictureView;
 @property (weak, nonatomic) IBOutlet UIImageView *todayIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *commentIndicator;
 @property (nonatomic, retain) PFUser *user;
 
 @end

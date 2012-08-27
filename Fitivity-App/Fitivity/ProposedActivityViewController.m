@@ -74,27 +74,103 @@
 	[self.navigationController pushViewController:user animated:YES];
 }
 
-- (void)postToFeedWithID:(NSString *)id {
+- (IBAction)postImIn:(id)sender {
+	
+	if (![[FConfig instance] connected]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to post a comment" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
+	else if (posting) {
+		return;
+	}
+	
+	if (![self userIsPartOfParentGroup]) {
+		[self autoJoinUser:[PFUser currentUser]];
+	}
+	
 	@synchronized(self) {
-		PFObject *feed = [PFObject objectWithClassName:@"ActivityEvent"];
-		[feed setObject:parent forKey:@"proposedActivity"];
-		[feed setObject:[parent objectForKey:@"group"] forKey:@"group"];
-		[feed setObject:[NSNumber numberWithInt:1] forKey:@"number"];
-		[feed setObject:@"COMMENT" forKey:@"status"];
-		[feed setObject:@"GROUP" forKey:@"type"];
-		[feed setObject:[PFUser currentUser] forKey:@"creator"];
-		
-		PFObject *comment = [PFObject objectWithoutDataWithClassName:@"Comments" objectId:id];
-		[comment fetch];
-		
-		if (comment) {
-			[feed setObject:comment forKey:@"comment"];
-		} else {
-			[feed setObject:[NSNull null] forKey:@"comment"];
+		PFObject *comment = [PFObject objectWithClassName:@"Comments"];
+		[comment setObject:@"I'm In!" forKey:@"message"];
+		[comment setObject:[PFUser currentUser] forKey:@"user"];
+		//Make sure that we have a good reference to the ProposedActivity
+		if (parent) {
+			[comment setObject:parent forKey:@"parent"];
+		}
+		else {
+			[comment setObject:[NSNull null] forKey:@"parent"];
 		}
 		
-		if (![feed save]) {
-			[feed saveEventually];
+		//Try to save the comment, if can't show error message
+		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				[self postToFeedWithID:[comment objectId]];
+				[self.activityComment setText:@""];
+				[self getProposedActivityHistory];
+				
+				MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+				[self.navigationController.view addSubview:HUD];
+				
+				HUD.delegate = self;
+				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+				HUD.mode = MBProgressHUDModeCustomView;
+				HUD.labelText = @"Posted";
+				
+				[HUD show:YES];
+				[HUD hide:YES afterDelay:1.75];
+				
+				posting = NO;
+			}
+			else if (error) {
+				NSString *errorMessage = @"An unknown error occurred while posting event.";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+		}];
+	}
+
+}
+
+- (void)autoJoinUser:(PFUser *)user {
+	
+	autoJoined = YES;
+	
+	PFObject *group = [parent objectForKey:@"group"];
+	[group fetchIfNeeded];
+	
+	PFObject *member = [PFObject objectWithClassName:@"GroupMembers"];
+	[member setObject:[group objectId] forKey: @"group"];
+	[member setObject:[group objectForKey:@"activity"] forKey:@"activity"];
+	[member setObject:[group objectForKey:@"place"] forKey:@"place"];
+	[member setObject:[group objectForKey:@"location"] forKey:@"location"];
+	[member setObject:user forKey:@"user"];
+	
+	if (![member save]) {
+		[member saveEventually];
+	}
+	else {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+	}
+}
+
+- (void)postToFeedWithID:(NSString *)id {
+	@synchronized(self) {
+		
+		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
+		[query whereKey:@"proposedActivity" equalTo:parent];
+		
+		PFObject *feed = [query getFirstObject];
+		[feed fetchIfNeeded];
+		
+		if (feed) {
+			[feed setObject:@"COMMENT" forKey:@"status"];
+			[feed setObject:[PFUser currentUser] forKey:@"creator"];
+			
+			if (![feed save]) {
+				[feed saveEventually];
+			}
 		}
 	}
 }
@@ -114,14 +190,12 @@
 		return;
 	}
 	
-	if (![self userIsPartOfParentGroup]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not a Member" message:@"You must be part of a group in order to comment on a proposed activity." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
+	if (posting) {
 		return;
 	}
 	
-	if (posting) {
-		return;
+	if (![self userIsPartOfParentGroup]) {
+		[self autoJoinUser:[PFUser currentUser]];
 	}
 	
 	[activityComment resignFirstResponder];
@@ -138,17 +212,13 @@
 			[comment setObject:[NSNull null] forKey:@"parent"];
 		}
 		
-		usleep(1000);
-		
 		//Try to save the comment, if can't show error message
 		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
 				[self postToFeedWithID:[comment objectId]];
 				[self.activityComment setText:@""];
 				[self getProposedActivityHistory];
-				//				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your comment has been posted" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-				//				[alert show];
-				
+			
 				MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 				[self.navigationController.view addSubview:HUD];
 				
@@ -158,7 +228,7 @@
 				HUD.labelText = @"Posted";
 				
 				[HUD show:YES];
-				[HUD hide:YES afterDelay:2.2];
+				[HUD hide:YES afterDelay:1.75];
 				
 				posting = NO;
 			}
@@ -243,6 +313,11 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded
 	[hud removeFromSuperview];
+	
+	if (autoJoined) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Auto-Joined" message:@"Since you were not part of this group, we automatically joined you to it." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+	}
 }
 
 #pragma mark - ProposedActivityCell Delegate 
@@ -399,8 +474,12 @@
 			[alert show];
 		}
 		else {
-			[self getProposedActivityReference];
-			[self getProposedActivityHistory];
+			
+			if (!parent) {
+				[self getProposedActivityReference];
+			}
+			
+//			[self getProposedActivityHistory];
 		}
 		
 		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(postComment)];
@@ -416,6 +495,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.delegate = self;
+	HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+	HUD.mode = MBProgressHUDModeDeterminate;
+	
+	[HUD showWhileExecuting:@selector(getProposedActivityHistory) onTarget:self withObject:nil animated:YES];
+	
     PFObject *creator = [parent objectForKey:@"creator"];
 	[creator fetchIfNeeded];
 	
@@ -441,6 +529,7 @@
 	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
 
 	posting = NO;
+	autoJoined = NO;
 	
 	PFObject *group = [parent objectForKey:@"group"];
 	[group fetchIfNeeded];
