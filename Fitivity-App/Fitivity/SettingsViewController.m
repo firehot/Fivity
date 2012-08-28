@@ -120,6 +120,7 @@ bool shareActivity;
 		}
 	}
 }
+
 - (IBAction)shareGroup:(id)sender {
     //insert code to share group
     
@@ -225,13 +226,13 @@ bool shareActivity;
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if ([title isEqualToString:@"Facebook"]) {
-        
+        [[SocialSharer sharer] shareWithFacebook:nil];
     } else if ([title isEqualToString:@"Twitter"]) {
-        
+        [[SocialSharer sharer] shareMessageWithTwitter:nil image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        
+        [[SocialSharer sharer] shareTextMessage:nil];
     } else if ([title isEqualToString:@"Email"]) {
-        
+        [[SocialSharer sharer] shareEmailMessage:nil];
     }
 }
 
@@ -430,8 +431,8 @@ bool shareActivity;
 	
 	[self setUpNotificationGUI];
     
-    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
-    self.navigationItem.rightBarButtonItem = share;
+//    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
+//    self.navigationItem.rightBarButtonItem = share;
 }
 
 - (void)viewDidUnload {
