@@ -65,12 +65,12 @@
 - (void)setCorrectPicture {
 	PFFile *pic = [userProfile objectForKey:@"image"];
 	
-	if (pic != [NSNull null]) {
+	if ([PFFacebookUtils isLinkedWithUser:userProfile]) {
+		[self requestFacebookData];
+	}
+	else if (pic && pic != [NSNull null]) {
 		NSData *picData = [pic getData];
 		[self.userPicture setImage:[UIImage imageWithData:picData]];
-	}
-	else if ([PFFacebookUtils isLinkedWithUser:userProfile]) {
-		[self requestFacebookData];
 	}
 	
 	//Round the pictures edges and add border
@@ -315,12 +315,12 @@
 		
 		//Make sure that the user exists first (for first launch)
 		if ([PFUser currentUser]) {
-			[self attemptGetUserGroups];
+			[self performSelectorInBackground:@selector(attemptGetUserGroups) withObject:nil];
 		}
 		
 		if (userProfile && [PFFacebookUtils isLinkedWithUser:userProfile]) {
 			//Load FB name and Pic
-			[self requestFacebookData];
+			[self performSelectorInBackground:@selector(requestFacebookData) withObject:nil];
 		}
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
@@ -341,13 +341,7 @@
 			
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 	
-	//If there is no user yet (hasn't logged in yet), and it is the users profile set it up with the current user
-	if (mainUser && userProfile == nil) {
-		[self setCorrectPicture];
-	}
-	else {
-		[self setCorrectPicture];
-	}
+	[self setCorrectPicture];
 	
 	[self.userNameLabel setText:[userProfile username]];
 	

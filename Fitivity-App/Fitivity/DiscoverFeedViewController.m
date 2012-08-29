@@ -37,8 +37,7 @@
 #pragma mark - Helper Methods 
 
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
-	//NSData *picData = [imageFile getData];
-	
+//	NSData *picData = [imageFile getData];
 	imgView.image = [UIImage imageNamed:@"b_avatar_settings.png"]; //Placeholder
 	
 	if (imageFile != [NSNull null]) {
@@ -435,16 +434,17 @@
     self = [super initWithStyle:style];
     if (self) {
 		
-		[self setLoadedInitialData:NO];
-		
-        // Custom the table
-        if ([[FConfig instance] connected]) {
+		if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];
 			[locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
 			[locationManager setDelegate:self];
 			[locationManager setPurpose:@"To find activities close to you."];
 			[locationManager startUpdatingLocation];
 		}
+		
+		userGeoPoint = [PFGeoPoint geoPoint];
+		
+		[self setLoadedInitialData:NO];
 		
         // The className to query on
         self.className = @"ActivityEvent";
@@ -471,7 +471,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
     
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.pngg"]];

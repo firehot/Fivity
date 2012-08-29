@@ -32,6 +32,54 @@
 	[self.passwordField setText:@""];
 }
 
+- (void)requestFacebookData {
+	
+	// Create request for user's facebook data
+    NSString *requestPath = @"me/?fields=name,email,picture&type=large";
+    
+    // Send request to facebook
+    [[PFFacebookUtils facebook] requestWithGraphPath:requestPath andDelegate:self];
+}
+
+#pragma mark - Facebook Delegate
+
+-(void)request:(PF_FBRequest *)request didLoad:(id)result {
+    NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
+	
+	if (userData) {
+		PFUser *current = [PFUser currentUser];
+		[current setUsername:[userData objectForKey:@"name"]];
+		[current setEmail:[userData objectForKey:@"email"]];
+		[current save];
+		
+		profilePictureData = [[NSMutableData alloc] init];
+		NSString *picURL = [(NSDictionary *)[(NSDictionary *)[userData objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+		NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:picURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
+		
+		[NSURLConnection connectionWithRequest:urlRequest delegate:self];
+	}
+}
+
+#pragma mark - NSURLConnectioin Delegate
+
+// Called every time a chunk of the data is received
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [profilePictureData appendData:data]; // Build the image
+}
+
+// Called when the entire image is finished downloading
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection {
+	
+	//Upload to parse for future use
+	PFFile *imageFile = [PFFile fileWithData:profilePictureData];
+	[imageFile save];
+	
+	PFUser *user = [PFUser currentUser];
+	[user setObject:imageFile forKey:@"image"];
+	[user save];
+	
+}
+
 #pragma mark - IBActions
 
 - (IBAction)signUp:(id)sender {
@@ -89,7 +137,7 @@
 			return;
 		}
 		
-		NSArray *permissionsArray = [NSArray arrayWithObjects:@"user_about_me", @"user_location", @"offline_access", nil];
+		NSArray *permissionsArray = [NSArray arrayWithObjects:@"user_about_me", @"user_location", @"email", @"offline_access", nil];
 		
 		[PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error){
 			if (error || !user) {
@@ -102,7 +150,9 @@
 			}
 			else {
 				if (user.isNew) {
-					
+					NSLog(@"New User");
+					[self requestFacebookData];
+					//[self performSelectorInBackground:@selector(requestFacebookData) withObject:nil];
 				}
 				
 			 //Logged in successfully 

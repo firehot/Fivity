@@ -11,7 +11,9 @@
 
 #import "SignUpViewController.h"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate, SignUpViewControllerDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, PF_FBRequestDelegate, SignUpViewControllerDelegate> {
+	NSMutableData *profilePictureData;
+}
 
 - (IBAction)signUp:(id)sender;
 - (IBAction)signIn:(id)sender;
