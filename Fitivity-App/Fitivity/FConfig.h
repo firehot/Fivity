@@ -37,6 +37,7 @@
 - (NSString *)getGoogleAnalyticsID;
 - (NSString *)getGooglePlacesAPIKey;
 - (NSString *)getChallengeIDForActivityType:(NSString *)type;
+- (NSString *)getItunesAppLink;
 
 - (UIColor *)getFitivityBlue;
 

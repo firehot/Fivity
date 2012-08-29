@@ -22,6 +22,8 @@
 #define kActivityDataPath	@"/groupActivityRecords.plist"
 #define kPADataPath			@"/proposedActivityRecords.plist"
 
+#define kItunesAppLink		@"http://itunes.apple.com/us/app/id284417350?mt=8"
+
 #define kMaxCreatesPerDay   2
 
 @implementation FConfig
@@ -304,6 +306,10 @@ static FConfig *instance;
 
 - (NSString *)getChallengeIDForActivityType:(NSString *)type {
 	return [challengeGroups objectForKey:type];
+}
+
+- (NSString *)getItunesAppLink {
+	return kItunesAppLink;
 }
 
 - (NSString *)getParseAppID {

@@ -174,6 +174,9 @@
 
 -(void)viewDidLoad {
 	[super viewDidLoad];
+	
+	[SocialSharer sharerWithDelegate:self];
+	
 	if (!self.displayedViewController) {
 		[self updateDisplayedViewControllerTo:self.leftNavigationController];
 		[_leftTabButton setImage:[UIImage imageNamed:@"b_feed_active.png"] forState:UIControlStateNormal];

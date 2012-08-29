@@ -226,13 +226,30 @@ bool shareActivity;
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if ([title isEqualToString:@"Facebook"]) {
-        [[SocialSharer sharer] shareWithFacebook:nil];
+		
+		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   [[FConfig instance] getFacebookAppID], @"app_id",
+									   [[FConfig instance] getItunesAppLink], @"link",
+									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+									   @"Fitivity", @"name",
+	                                   @"I just downloaded this great app called Fitivity!", @"caption",
+									   @"Click on the picture to view it in the App Store!", @"description",
+									   @"Go download this app!",  @"message",
+									   nil];
+
+        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-        [[SocialSharer sharer] shareMessageWithTwitter:nil image:nil link:nil];
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Go download the #Fitivity app in the App Store and in Google Play!" image:[UIImage imageNamed:@"Icon@2x.png"] link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:nil];
+        [[SocialSharer sharer] shareTextMessage:@"Go download the #Fitivity app in the App Store and in Google Play!"];
     } else if ([title isEqualToString:@"Email"]) {
-        [[SocialSharer sharer] shareEmailMessage:nil];
+		NSString *bodyHTML = @"Go download the Fitivity app in the Apple App Store or in Google Play! Just search for Fitivity.";
+		
+		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
+		NSData *picture = [NSData dataWithContentsOfFile:path];
+		NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys: picture, @"data", @"image/png", @"mimeType", @"FitivityIcon", @"fileName", nil];
+		
+        [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:NO];
     }
 }
 
@@ -419,7 +436,7 @@ bool shareActivity;
     [pictureButton.layer setMasksToBounds:YES];
     [pictureButton.layer setCornerRadius:6.0];
 
-    
+    [PFFacebookUtils initializeWithApplicationId:[[FConfig instance] getFacebookAppID]];
 	if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink.png"] forState:UIControlStateNormal];
 		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink_down.png"] forState:UIControlStateHighlighted];
@@ -431,8 +448,8 @@ bool shareActivity;
 	
 	[self setUpNotificationGUI];
     
-//    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
-//    self.navigationItem.rightBarButtonItem = share;
+    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
+    self.navigationItem.rightBarButtonItem = share;
 }
 
 - (void)viewDidUnload {

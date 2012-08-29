@@ -11,6 +11,7 @@
 
 #import "OpeningLogoViewController.h"
 #import "LoginViewController.h"
+#import "SocialSharer.h"
 
 @class FTabBarViewController;
 
@@ -21,7 +22,7 @@
 
 @end
 
-@interface FTabBarViewController : UIViewController <OpeningLogoViewControllerDelegate>
+@interface FTabBarViewController : UIViewController <OpeningLogoViewControllerDelegate, SocialSharerDelegate>
 
 
 -(IBAction)leftTabButtonPushed:(id)sender;

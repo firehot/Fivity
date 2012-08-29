@@ -41,6 +41,7 @@
 		6C08845A15B1C90A00670936 /* ChooseLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C08845915B1C90A00670936 /* ChooseLocationViewController.m */; };
 		6C08845B15B1CF0900670936 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C08845115B1C62F00670936 /* GTMNSString+URLArguments.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
 		6C08845D15B1D3D300670936 /* ChooseLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */; };
+		6C2030E315EC50030058E03D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2030E215EC50030058E03D /* MessageUI.framework */; };
 		6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3E596915B7A447009E2A00 /* SettingsViewController.m */; };
 		6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */; };
 		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
@@ -422,6 +423,7 @@
 		6C08845815B1C90A00670936 /* ChooseLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseLocationViewController.h; sourceTree = "<group>"; };
 		6C08845915B1C90A00670936 /* ChooseLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseLocationViewController.m; sourceTree = "<group>"; };
 		6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseLocationViewController.xib; sourceTree = "<group>"; };
+		6C2030E215EC50030058E03D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6C3E596815B7A447009E2A00 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6C3E596915B7A447009E2A00 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Fitivity/SettingsViewController.xib; sourceTree = "<group>"; };
@@ -794,6 +796,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C2030E315EC50030058E03D /* MessageUI.framework in Frameworks */,
 				57C317EE15EBB6A6006253D4 /* Twitter.framework in Frameworks */,
 				57E9C05915B5CA9C007C7C58 /* CoreText.framework in Frameworks */,
 				6C08845715B1C72B00670936 /* MapKit.framework in Frameworks */,
@@ -1176,6 +1179,7 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C2030E215EC50030058E03D /* MessageUI.framework */,
 				57C317ED15EBB6A6006253D4 /* Twitter.framework */,
 				6CF2458415D46297009B31AE /* Parse.framework */,
 				57E9C05815B5CA9C007C7C58 /* CoreText.framework */,
@@ -1202,7 +1206,7 @@
 				6CA2695A15AE63E900CD205C /* Config */,
 				6CD2F58A15B0E77D0032FA34 /* Categories */,
 				57C317E815EBB608006253D4 /* Social */,
-				6CB1B21515B1A0DC004DDDCA /* TabBar & NavigationBar */,
+				6CB1B21515B1A0DC004DDDCA /* TabBar */,
 				6CA2695B15AE640400CD205C /* Opening */,
 				6CDCD5AC15B1AD9300986AA2 /* Discover Stream */,
 				6CDCD5AE15B1AD9E00986AA2 /* Activity */,
@@ -1322,13 +1326,13 @@
 			name = Opening;
 			sourceTree = "<group>";
 		};
-		6CB1B21515B1A0DC004DDDCA /* TabBar & NavigationBar */ = {
+		6CB1B21515B1A0DC004DDDCA /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
 				6CB1B21615B1A10D004DDDCA /* FTabBarViewController.h */,
 				6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */,
 			);
-			name = "TabBar & NavigationBar";
+			name = TabBar;
 			sourceTree = "<group>";
 		};
 		6CB3EBF715E6E25600BDE38B /* MBProgressHUD */ = {

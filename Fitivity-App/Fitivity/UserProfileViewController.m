@@ -265,6 +265,8 @@
 	[[FConfig instance] updateGroup:[g objectId] withActivityCount:[g objectForKey:@"activityCount"]]; 
 	
 	[self.navigationController pushViewController:group animated:YES];
+	
+	[updatedGroups setObject:[NSNumber numberWithBool:NO] forKey:[currentGroup objectId]];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
