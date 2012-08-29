@@ -320,7 +320,7 @@
 		
 		if (userProfile && [PFFacebookUtils isLinkedWithUser:userProfile]) {
 			//Load FB name and Pic
-			[self performSelectorInBackground:@selector(requestFacebookData) withObject:nil];
+			[self requestFacebookData];
 		}
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
@@ -367,6 +367,7 @@
 		updatedGroups = [[NSMutableDictionary alloc] init];
 	}
     self.groupsTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
+	self.groupsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 }
 
 - (void)viewDidUnload {
