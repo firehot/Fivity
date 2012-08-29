@@ -184,8 +184,6 @@
 		[textField setText:[[textField text] substringToIndex:kMaxCharCount]];
 		return;
 	}
-		
-	self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%d",charsLeft];
 }
 
 #pragma mark - UITextField Delegate 
@@ -205,7 +203,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d", kMaxCharCount] style:UIBarButtonItemStyleBordered target:self action:@selector(post)];
+        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(post)];
 		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;
