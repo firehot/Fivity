@@ -41,7 +41,7 @@
 	
 	imgView.image = [UIImage imageNamed:@"b_avatar_settings.png"]; //Placeholder
 	
-	if (imageFile) {
+	if (imageFile != [NSNull null]) {
 		imgView.file = imageFile;
 		[imgView loadInBackground];
 	}

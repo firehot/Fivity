@@ -14,9 +14,6 @@
 
 @interface OpeningLogoViewController : UIViewController 
 
-- (void)annimateLogo;
-
-@property (weak, nonatomic) IBOutlet UIImageView *logo;
 @property (nonatomic, assign) id <OpeningLogoViewControllerDelegate> delegate;
 
 @end

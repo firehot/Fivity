@@ -64,9 +64,9 @@
 
 - (void)setCorrectPicture {
 	PFFile *pic = [userProfile objectForKey:@"image"];
-	NSData *picData = [pic getData];
 	
-	if (picData) {
+	if (pic != [NSNull null]) {
+		NSData *picData = [pic getData];
 		[self.userPicture setImage:[UIImage imageWithData:picData]];
 	}
 	else if ([PFFacebookUtils isLinkedWithUser:userProfile]) {
