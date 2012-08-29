@@ -53,6 +53,41 @@ bool shareActivity;
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"userLoggedOut" object:self];
 }
 
+- (IBAction)linkUserWithTwitter:(id)sender {
+	if (![PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
+		[PFTwitterUtils linkUser:[PFUser currentUser] block:^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is now linked with Twitter!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			
+			if (error) {
+				NSString *errorMessage = @"An unknown error occurred while linking with Twitter";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Link Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+		}];
+	}
+	else {
+		[PFTwitterUtils unlinkUserInBackground:[PFUser currentUser] block:^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is no longer associated with Twitter." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			
+			if (error) {
+				NSString *errorMessage = @"An unknown error occurred while unlinking with Twitter";
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unlink Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+		}];
+	}
+}
+
 - (IBAction)linkUserWithFacebook:(id)sender {
 	//If they aren't linked with facebook, go to facebook and authenticate the app. Otherwise unlink the account
 	if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {

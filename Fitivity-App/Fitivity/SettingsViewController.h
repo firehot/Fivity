@@ -16,6 +16,7 @@
 
 - (IBAction)signUserOut:(id)sender;
 - (IBAction)linkUserWithFacebook:(id)sender;
+- (IBAction)linkUserWithTwitter:(id)sender;
 - (IBAction)togglePushNotifications:(id)sender;
 - (IBAction)selectImage:(id)sender;
 - (IBAction)shareGroup:(id)sender;
