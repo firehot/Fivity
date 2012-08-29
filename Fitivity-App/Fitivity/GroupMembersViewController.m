@@ -148,7 +148,7 @@
     if (self) {
         self.place = p;
 		self.activity = a;
-		[self attemptGetMembers];
+		[self performSelectorInBackground:@selector(attemptGetMembers) withObject:nil];
     }
     return self;
 }

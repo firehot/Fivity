@@ -474,12 +474,9 @@
 			[alert show];
 		}
 		else {
-			
 			if (!parent) {
-				[self getProposedActivityReference];
-			}
-			
-//			[self getProposedActivityHistory];
+				[self performSelectorInBackground:@selector(getProposedActivityReference) withObject:nil];
+			}			
 		}
 		
 		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(postComment)];

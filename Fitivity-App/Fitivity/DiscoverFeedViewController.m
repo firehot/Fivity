@@ -14,6 +14,7 @@
 #import "GroupPageViewController.h"
 #import "ProposedActivityViewController.h"
 #import "UserProfileViewController.h"
+#import "SocialSharer.h"
 
 #define kFeedLimit			40
 #define kCellHeight			92.0f
@@ -35,6 +36,11 @@
 @synthesize locationManager;
 
 #pragma mark - Helper Methods 
+
+- (void)shareApp {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+    [sheet showInView:self.view];
+}
 
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
 //	NSData *picData = [imageFile getData];
@@ -235,6 +241,38 @@
 		}
 	}
 }
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:@"Facebook"]) {
+		
+		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   [[FConfig instance] getFacebookAppID], @"app_id",
+									   [[FConfig instance] getItunesAppLink], @"link",
+									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+									   @"Fitivity", @"name",
+	                                   @"I just downloaded this great app called Fitivity!", @"caption",
+									   @"Click on the picture to view it in the App Store!", @"description",
+									   @"Go download this app!",  @"message",
+									   nil];
+		
+        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+    } else if ([title isEqualToString:@"Twitter"]) {
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Go download the #Fitivity app in the App Store and in Google Play!" image:[UIImage imageNamed:@"Icon@2x.png"] link:nil];
+    } else if ([title isEqualToString:@"SMS"]) {
+        [[SocialSharer sharer] shareTextMessage:@"Go download the #Fitivity app in the App Store and in Google Play!"];
+    } else if ([title isEqualToString:@"Email"]) {
+		NSString *bodyHTML = @"Go download the Fitivity app in the Apple App Store or in Google Play! Just search for Fitivity.";
+		
+		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
+		NSData *picture = [NSData dataWithContentsOfFile:path];
+		NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys: picture, @"data", @"image/png", @"mimeType", @"FitivityIcon", @"fileName", nil];
+		
+        [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:NO];
+    }
+}
 
 #pragma mark - DiscoverCell Delegate
 
@@ -434,6 +472,10 @@
     self = [super initWithStyle:style];
     if (self) {
 		
+		if (userGeoPoint == nil) {
+			userGeoPoint = [PFGeoPoint geoPoint];
+		}
+		
 		if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];
 			[locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
@@ -441,8 +483,6 @@
 			[locationManager setPurpose:@"To find activities close to you."];
 			[locationManager startUpdatingLocation];
 		}
-		
-		userGeoPoint = [PFGeoPoint geoPoint];
 		
 		[self setLoadedInitialData:NO];
 		
@@ -457,6 +497,9 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 10;
+		
+		UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
+		self.navigationItem.rightBarButtonItem = share;
     }
     return self;
 }

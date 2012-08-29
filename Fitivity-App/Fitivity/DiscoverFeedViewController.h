@@ -13,7 +13,7 @@
 
 #import "DiscoverCell.h"
 
-@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, DiscoverCellDelegate> {
+@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate> {
 	PFGeoPoint *userGeoPoint;
 }
 

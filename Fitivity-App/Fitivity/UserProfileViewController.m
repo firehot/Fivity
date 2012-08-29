@@ -347,7 +347,7 @@
 	
 	//If the results didn't load at init, try to reload them.
 	if (!groupResults) {
-		[self attemptGetUserGroups];
+		[self performSelectorInBackground:@selector(attemptGetUserGroups) withObject:nil];
 	}
 	
 	//Only display settings button if on the main users profile

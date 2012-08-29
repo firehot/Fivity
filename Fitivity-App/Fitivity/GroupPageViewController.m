@@ -476,7 +476,7 @@
 		
 		[self findUserAlreadyJoined];
         [self getGroupReference];
-		[self attemptGetProposedActivities];
+		[self performSelectorInBackground:@selector(attemptGetProposedActivities) withObject:nil];
         [self.navigationItem setTitle:activity];
     }
     return self;
@@ -488,10 +488,10 @@
     if (autoJoin && !shouldCancel) {
         //Join the user to the group
 		joinFlag = NO;
-        [self attemptJoinGroup];
+        [self performSelectorInBackground:@selector(attemptJoinGroup) withObject:nil];
     }
 	
-	[self updateJoiningGUI];
+	[self performSelectorInBackground:@selector(updateJoiningGUI) withObject:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
