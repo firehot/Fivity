@@ -72,6 +72,8 @@
 		6C57B71315C21ADC000048DD /* ProposedActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */; };
 		6C57B71415C21ADC000048DD /* ProposedActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */; };
 		6C57B71815C21C42000048DD /* CreateProposeActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */; };
+		6C595D2E15ED9DDC0018FD49 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C595D2D15ED9DDC0018FD49 /* Parse.framework */; };
+		6C595D3015ED9F5B0018FD49 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */; };
 		6C61768A15B0F24600E74B95 /* NSError+FITParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */; };
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
 		6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA015E458A10025DE76 /* ChallengesViewController.m */; };
@@ -150,7 +152,6 @@
 		6CDCD5BC15B1AE9700986AA2 /* UserProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CDCD5BA15B1AE9700986AA2 /* UserProfileViewController.xib */; };
 		6CDCD5BD15B1B00200986AA2 /* FTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB1B21815B1A10D004DDDCA /* FTabBarViewController.xib */; };
 		6CEFED8015B3641500211CB0 /* ChooseActivityHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */; };
-		6CF2458515D46297009B31AE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF2458415D46297009B31AE /* Parse.framework */; };
 		6CF2459615D47F5F009B31AE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2459315D47ED4009B31AE /* Icon.png */; };
 		6CF2459715D47F63009B31AE /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2459415D47ED4009B31AE /* Icon@2x.png */; };
 		6CF2C71115B4EAF9001E3353 /* FitivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */; };
@@ -465,6 +466,8 @@
 		6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposedActivityViewController.m; sourceTree = "<group>"; };
 		6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProposedActivityViewController.xib; path = Fitivity/ProposedActivityViewController.xib; sourceTree = "<group>"; };
 		6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProposeActivityViewController.m; sourceTree = "<group>"; };
+		6C595D2D15ED9DDC0018FD49 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../ParseStarterProject/Parse.framework; sourceTree = "<group>"; };
+		6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		6C623A9F15E458A10025DE76 /* ChallengesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengesViewController.h; sourceTree = "<group>"; };
 		6C623AA015E458A10025DE76 /* ChallengesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengesViewController.m; sourceTree = "<group>"; };
 		6C623AA215E45F650025DE76 /* ChallengesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengesViewController.xib; sourceTree = "<group>"; };
@@ -571,7 +574,6 @@
 		6CDCD5BA15B1AE9700986AA2 /* UserProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserProfileViewController.xib; path = Fitivity/UserProfileViewController.xib; sourceTree = "<group>"; };
 		6CEFED7E15B3641500211CB0 /* ChooseActivityHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityHeaderView.h; sourceTree = "<group>"; };
 		6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityHeaderView.m; sourceTree = "<group>"; };
-		6CF2458415D46297009B31AE /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		6CF2458E15D47ED4009B31AE /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		6CF2458F15D47ED4009B31AE /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		6CF2459015D47ED4009B31AE /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
@@ -796,6 +798,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C595D3015ED9F5B0018FD49 /* libsqlite3.0.dylib in Frameworks */,
+				6C595D2E15ED9DDC0018FD49 /* Parse.framework in Frameworks */,
 				6C2030E315EC50030058E03D /* MessageUI.framework in Frameworks */,
 				57C317EE15EBB6A6006253D4 /* Twitter.framework in Frameworks */,
 				57E9C05915B5CA9C007C7C58 /* CoreText.framework in Frameworks */,
@@ -810,7 +814,6 @@
 				6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */,
 				6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */,
 				6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */,
-				6CF2458515D46297009B31AE /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,9 +1182,10 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */,
+				6C595D2D15ED9DDC0018FD49 /* Parse.framework */,
 				6C2030E215EC50030058E03D /* MessageUI.framework */,
 				57C317ED15EBB6A6006253D4 /* Twitter.framework */,
-				6CF2458415D46297009B31AE /* Parse.framework */,
 				57E9C05815B5CA9C007C7C58 /* CoreText.framework */,
 				6C08845615B1C72B00670936 /* MapKit.framework */,
 				6C08845415B1C67000670936 /* CoreLocation.framework */,
@@ -2088,6 +2092,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../ParseStarterProject\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fitivity/Fitivity-Prefix.pch";
@@ -2106,6 +2111,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../../../ParseStarterProject\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fitivity/Fitivity-Prefix.pch";

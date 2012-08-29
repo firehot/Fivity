@@ -100,7 +100,11 @@
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 			}
-		 else {
+			else {
+				if (user.isNew) {
+					
+				}
+				
 			 //Logged in successfully 
 			 [self dismissModalViewControllerAnimated:YES];
 		 }

@@ -349,7 +349,7 @@
 		return;
 	}
 	
-	PFObject *object = [self objectAtIndex:indexPath];
+	PFObject *object = [self objectAtIndexPath:indexPath];
 	
 	//Get the data if it hasn't been pulled from the server yet
 	[object fetchIfNeeded];
