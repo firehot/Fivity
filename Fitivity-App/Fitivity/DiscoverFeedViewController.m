@@ -253,18 +253,18 @@
 									   [[FConfig instance] getItunesAppLink], @"link",
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
-	                                   @"I just downloaded this great app called Fitivity!", @"caption",
-									   @"Click on the picture to view it in the App Store!", @"description",
+	                                   @"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation.", @"caption",
+									   @"You can download it in in the Apple App Store or in Google Play", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-        [[SocialSharer sharer] shareMessageWithTwitter:@"Go download the #Fitivity app in the App Store and in Google Play!" image:[UIImage imageNamed:@"Icon@2x.png"] link:nil];
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Join our #fitivity community to get active with other people interested in sports, fitness, or recreation. Download it in in the App Store!" image:[UIImage imageNamed:@"Icon@2x.png"] link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:@"Go download the #Fitivity app in the App Store and in Google Play!"];
+        [[SocialSharer sharer] shareTextMessage:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play."];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = @"Go download the Fitivity app in the Apple App Store or in Google Play! Just search for Fitivity.";
+		NSString *bodyHTML = @"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play!";
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];
