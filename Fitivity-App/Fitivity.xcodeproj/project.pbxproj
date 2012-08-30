@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5700D1B715B470D4003C96F3 /* DiscoverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5700D1B615B470D4003C96F3 /* DiscoverCell.m */; };
 		5700D1BA15B47107003C96F3 /* DiscoverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5700D1B915B47107003C96F3 /* DiscoverCell.xib */; };
+		572DCB2315EF950E00A8854F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 572DCB2215EF950E00A8854F /* Parse.framework */; };
 		575AECA415B6051200324958 /* GroupPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 575AECA215B6051200324958 /* GroupPageViewController.m */; };
 		575AECA515B6051200324958 /* GroupPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575AECA315B6051200324958 /* GroupPageViewController.xib */; };
 		57AAB0C015AF441E00AD51CB /* FitivityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */; };
@@ -72,7 +73,6 @@
 		6C57B71315C21ADC000048DD /* ProposedActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */; };
 		6C57B71415C21ADC000048DD /* ProposedActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */; };
 		6C57B71815C21C42000048DD /* CreateProposeActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */; };
-		6C595D2E15ED9DDC0018FD49 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C595D2D15ED9DDC0018FD49 /* Parse.framework */; };
 		6C595D3015ED9F5B0018FD49 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */; };
 		6C61768A15B0F24600E74B95 /* NSError+FITParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C8665DA15AFB12B004D932F /* NSError+FITParseUtilities.m */; };
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
@@ -367,6 +367,7 @@
 		5700D1B515B470D4003C96F3 /* DiscoverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverCell.h; sourceTree = "<group>"; };
 		5700D1B615B470D4003C96F3 /* DiscoverCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverCell.m; sourceTree = "<group>"; };
 		5700D1B915B47107003C96F3 /* DiscoverCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverCell.xib; sourceTree = "<group>"; };
+		572DCB2215EF950E00A8854F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		575AECA115B6051200324958 /* GroupPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupPageViewController.h; sourceTree = "<group>"; };
 		575AECA215B6051200324958 /* GroupPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupPageViewController.m; sourceTree = "<group>"; };
 		575AECA315B6051200324958 /* GroupPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupPageViewController.xib; path = Fitivity/GroupPageViewController.xib; sourceTree = "<group>"; };
@@ -466,7 +467,6 @@
 		6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProposedActivityViewController.m; sourceTree = "<group>"; };
 		6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProposedActivityViewController.xib; path = Fitivity/ProposedActivityViewController.xib; sourceTree = "<group>"; };
 		6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateProposeActivityViewController.m; sourceTree = "<group>"; };
-		6C595D2D15ED9DDC0018FD49 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../ParseStarterProject/Parse.framework; sourceTree = "<group>"; };
 		6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		6C623A9F15E458A10025DE76 /* ChallengesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengesViewController.h; sourceTree = "<group>"; };
 		6C623AA015E458A10025DE76 /* ChallengesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengesViewController.m; sourceTree = "<group>"; };
@@ -799,7 +799,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C595D3015ED9F5B0018FD49 /* libsqlite3.0.dylib in Frameworks */,
-				6C595D2E15ED9DDC0018FD49 /* Parse.framework in Frameworks */,
 				6C2030E315EC50030058E03D /* MessageUI.framework in Frameworks */,
 				57C317EE15EBB6A6006253D4 /* Twitter.framework in Frameworks */,
 				57E9C05915B5CA9C007C7C58 /* CoreText.framework in Frameworks */,
@@ -814,6 +813,7 @@
 				6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */,
 				6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */,
 				6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */,
+				572DCB2315EF950E00A8854F /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1183,7 +1183,7 @@
 			isa = PBXGroup;
 			children = (
 				6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */,
-				6C595D2D15ED9DDC0018FD49 /* Parse.framework */,
+				572DCB2215EF950E00A8854F /* Parse.framework */,
 				6C2030E215EC50030058E03D /* MessageUI.framework */,
 				57C317ED15EBB6A6006253D4 /* Twitter.framework */,
 				57E9C05815B5CA9C007C7C58 /* CoreText.framework */,
