@@ -445,16 +445,16 @@
 		return;
 	}
 	
-	/*if ([self loadedInitialData]) {
+	if ([self loadedInitialData]) {
 		return;
-	}*/
+	}
 	
 	[[FConfig instance] setMostRecentCoordinate:newLocation.coordinate];
 	[locationManager stopUpdatingLocation];
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
-	//[self setLoadedInitialData:YES];
+	[self setLoadedInitialData:YES];
 	[self.tableView reloadData];
 }
 
@@ -484,7 +484,7 @@
 			[locationManager startUpdatingLocation];
 		}
 		
-	//	[self setLoadedInitialData:NO];
+		[self setLoadedInitialData:NO];
 		
         // The className to query on
         self.className = @"ActivityEvent";

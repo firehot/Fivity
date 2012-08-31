@@ -13,8 +13,8 @@
 #define kParseAppID			@"MmUj6HxQcfLSOUs31lG7uNVx9sl5dZR6gv0FqGHq"
 #define kParseClientKey		@"krpZsVM2UrU71NCxDbdAmbEMq1EXdpygkl251Wjl"
 #define kFacebookAppID		@"119218824889348"	
-#define kTwitterKey         @""
-#define kTwitterSecret      @""
+#define kTwitterKey         @"DM6PEQ49Vak0zP4KWxpAbw"
+#define kTwitterSecret      @"TIzaIKoq2n0Oi4QY5naE1UOXRyTmdlNfi6SlS005c"
 #define kGooglePlacesAPIKey	@"AIzaSyAsh5BYpzSxUXX4a1xYqm6FZTQle52l3L4" 
 #define kGoogleAnalyticsID	@""
 
@@ -24,7 +24,7 @@
 #define kActivityDataPath	@"/groupActivityRecords.plist"
 #define kPADataPath			@"/proposedActivityRecords.plist"
 
-#define kItunesAppLink		@"http://itunes.apple.com/us/app/id284417350?mt=8"
+#define kItunesAppLink		@"http://itunes.apple.com/us/app/id558072406?mt=8"
 
 #define kMaxCreatesPerDay   2
 
