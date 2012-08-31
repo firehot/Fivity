@@ -47,11 +47,12 @@ bool shareActivity;
     [picker.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
     [self presentModalViewController:picker animated:YES];
 }
-- (IBAction)signUserOut:(id)sender {
-	//Log user out, and alert other classes that the user has logged out
+
+- (void)signUserOut{
+    //Log user out, and alert other classes that the user has logged out
 	[PFUser logOut];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"userLoggedOut" object:self];
-}
+	}
 
 - (IBAction)linkUserWithTwitter:(id)sender {
 	if (![PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
@@ -59,6 +60,8 @@ bool shareActivity;
 			if (succeeded) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is now linked with Twitter!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
+                [twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_unlink.png"] forState:UIControlStateNormal];
+				[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_unlink_down.png"] forState:UIControlStateHighlighted];
 			}
 			
 			if (error) {
@@ -75,6 +78,8 @@ bool shareActivity;
 			if (succeeded) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is no longer associated with Twitter." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
+                [twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_link.png"] forState:UIControlStateNormal];
+				[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_link_down.png"] forState:UIControlStateHighlighted];
 			}
 			
 			if (error) {
