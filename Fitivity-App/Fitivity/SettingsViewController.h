@@ -28,5 +28,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *pictureButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareGroupButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareActivityButton;
+@property (weak, nonatomic) IBOutlet UIButton *twitterLinkButton;
 
 @end

@@ -445,16 +445,16 @@
 		return;
 	}
 	
-	if ([self loadedInitialData]) {
+	/*if ([self loadedInitialData]) {
 		return;
-	}
+	}*/
 	
 	[[FConfig instance] setMostRecentCoordinate:newLocation.coordinate];
 	[locationManager stopUpdatingLocation];
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
-	[self setLoadedInitialData:YES];
+	//[self setLoadedInitialData:YES];
 	[self.tableView reloadData];
 }
 
@@ -484,7 +484,7 @@
 			[locationManager startUpdatingLocation];
 		}
 		
-		[self setLoadedInitialData:NO];
+	//	[self setLoadedInitialData:NO];
 		
         // The className to query on
         self.className = @"ActivityEvent";
@@ -497,9 +497,17 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 10;
-		
-		UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"Share" style:UIBarButtonItemStyleBordered target:self action:@selector(shareApp)];
-		self.navigationItem.rightBarButtonItem = share;
+        UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
+        UIImage *shareAppDown = [UIImage imageNamed:@"b_share_down.png"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setImage:shareApp forState:UIControlStateNormal];
+        [button setImage:shareAppDown forState:UIControlStateHighlighted];
+        [button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+        
+        UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.rightBarButtonItem = share;
+        
     }
     return self;
 }

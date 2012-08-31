@@ -30,6 +30,7 @@
 @synthesize pictureButton;
 @synthesize shareGroupButton;
 @synthesize shareActivityButton;
+@synthesize twitterLinkButton;
 
 bool pushNotifications;
 bool shareGroup;
@@ -157,10 +158,24 @@ bool shareActivity;
 
 - (IBAction)shareGroup:(id)sender {
     //insert code to share group
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Sharing Disabled"
+                          message: @"Group sharing is currently disabled in beta testing."
+                          delegate: nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
     
 }
 - (IBAction)shareActivity:(id)sender {
     //insert code to share activity
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Sharing Disabled"
+                          message: @"Activity sharing is currently disabled in beta testing."
+                          delegate: nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
     
 }
 
@@ -173,8 +188,8 @@ bool shareActivity;
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Enabled" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
         
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off.png"] forState:UIControlStateNormal];
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off_down.png"] forState:UIControlStateHighlighted];
+    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
+    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
         pushNotifications = NO;
         
 		return;
@@ -213,8 +228,8 @@ bool shareActivity;
 	
 	[[FConfig instance] setDoesHaveNotifications:YES];
 	
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on.png"] forState:UIControlStateNormal];
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on_down.png"] forState:UIControlStateHighlighted];
+    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on.png"] forState:UIControlStateNormal];
+    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_contorl_on_down.png"] forState:UIControlStateHighlighted];
         
     pushNotifications = YES;
         
@@ -225,8 +240,8 @@ bool shareActivity;
         
         [[FConfig instance] setDoesHaveNotifications:NO];
         
-        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off.png"] forState:UIControlStateNormal];
-        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off_down.png"] forState:UIControlStateHighlighted];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
         NSLog(@"Push notifications have been turned off");
     pushNotifications = NO;
     }
@@ -238,13 +253,13 @@ bool shareActivity;
 	BOOL status = [[FConfig instance] doesHavePushNotifications];
     
 	if (status) {
-        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on.png"] forState:UIControlStateNormal];
-        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_on_down.png"] forState:UIControlStateHighlighted];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on.png"] forState:UIControlStateNormal];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on_down.png"] forState:UIControlStateHighlighted];
         pushNotifications = YES;
 	}
 	else {
-        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off.png"] forState:UIControlStateNormal];
-        [pushNotificationsButton setImage:[UIImage imageNamed:@"b_push_notifications_off_down.png"] forState:UIControlStateHighlighted];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
+        [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
         pushNotifications = NO;
 	}
 }
@@ -415,6 +430,18 @@ bool shareActivity;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    UIImage *signOut = [UIImage imageNamed:@"b_sign_out.png"];
+    UIImage *signOutDown = [UIImage imageNamed:@"b_sign_out_down.png"];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:signOut forState:UIControlStateNormal];
+    [button setImage:signOutDown forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(signUserOut) forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
+    
+    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = share;
     
     self.accountInfoTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
     [self.accountInfoTable setScrollEnabled:NO];
