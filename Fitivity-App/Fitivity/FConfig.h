@@ -34,6 +34,8 @@
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
 - (NSString *)getFacebookAppID;
+- (NSString *)getTwitterKey;
+- (NSString *)getTwitterSecret;
 - (NSString *)getGoogleAnalyticsID;
 - (NSString *)getGooglePlacesAPIKey;
 - (NSString *)getChallengeIDForActivityType:(NSString *)type;

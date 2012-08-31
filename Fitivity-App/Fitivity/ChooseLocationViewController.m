@@ -115,6 +115,7 @@
     tableView.scrollEnabled     = YES;
     
     [self updateSearchString:theSearchBar.text];
+    [theSearchBar resignFirstResponder];
 }
 
 //Handle the filtering when user searches

@@ -13,6 +13,8 @@
 #define kParseAppID			@"MmUj6HxQcfLSOUs31lG7uNVx9sl5dZR6gv0FqGHq"
 #define kParseClientKey		@"krpZsVM2UrU71NCxDbdAmbEMq1EXdpygkl251Wjl"
 #define kFacebookAppID		@"119218824889348"	
+#define kTwitterKey         @""
+#define kTwitterSecret      @""
 #define kGooglePlacesAPIKey	@"AIzaSyAsh5BYpzSxUXX4a1xYqm6FZTQle52l3L4" 
 #define kGoogleAnalyticsID	@""
 
@@ -319,6 +321,14 @@ static FConfig *instance;
 - (NSString *)getParseClientKey {
 	[self performSelector:@selector(initializeChallenges) withObject:nil afterDelay:0.4];
 	return kParseClientKey;
+}
+
+- (NSString *)getTwitterKey {
+    return kTwitterKey;
+}
+
+- (NSString *)getTwitterSecret {
+    return kTwitterSecret;
 }
 
 - (NSString *)getFacebookAppID {

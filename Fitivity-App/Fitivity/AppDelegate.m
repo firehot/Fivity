@@ -27,7 +27,8 @@
 	//Set up parse credentials 
 	[Parse setApplicationId:[[FConfig instance] getParseAppID] clientKey:[[FConfig instance] getParseClientKey]];
 	[PFFacebookUtils initializeWithApplicationId:[[FConfig instance] getFacebookAppID]];
-	
+	[PFTwitterUtils initializeWithConsumerKey:[[FConfig instance] getTwitterKey] consumerSecret: [[FConfig instance] getTwitterSecret]];
+    
 	//Initialize the main view controllers
 	self.openingView = [[OpeningLogoViewController alloc] initWithNibName:@"OpeningLogoViewController" bundle:nil];
 	DiscoverFeedViewController *discoverView = [[DiscoverFeedViewController alloc] init];
