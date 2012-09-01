@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Fitivity. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "DiscoverFeedViewController.h"
 #import "DiscoverCell.h"
 #import "OHAttributedLabel.h"
@@ -14,6 +15,7 @@
 #import "GroupPageViewController.h"
 #import "ProposedActivityViewController.h"
 #import "UserProfileViewController.h"
+#import "FTabBarViewController.h"
 #import "SocialSharer.h"
 
 #define kFeedLimit			40
@@ -39,7 +41,9 @@
 
 - (void)shareApp {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
-    [sheet showInView:self.view];
+	
+	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
 }
 
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
@@ -260,11 +264,11 @@
 		
         [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-        [[SocialSharer sharer] shareMessageWithTwitter:@"Join our #fitivity community to get active with other people interested in sports, fitness, or recreation. Download it in in the App Store!" image:[UIImage imageNamed:@"Icon@2x.png"] link:nil];
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Join our #fitivity community to get active with other people interested in sports, fitness, or recreation. Download it in in the App Store!" image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play."];
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play. %@", [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = @"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play!";
+		NSString *bodyHTML = [NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];
@@ -272,6 +276,14 @@
 		
         [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:NO];
     }
+}
+
+#pragma mark - LoginViewController Delegate
+
+- (void)userLoggedIn {
+	if ([self.objects count] == 0) {
+		[self loadObjects];
+	}
 }
 
 #pragma mark - DiscoverCell Delegate
@@ -529,8 +541,8 @@
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
     self.tableView.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
-    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 

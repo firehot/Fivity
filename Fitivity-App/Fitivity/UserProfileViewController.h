@@ -12,9 +12,11 @@
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
 
+#import "MBProgressHUD.h"
+
 #define kHeaderHeight		40
 
-@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, PF_FBRequestDelegate> {
+@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, PF_FBRequestDelegate> {
 	PFUser *userProfile;
 	
 	NSMutableArray *groupResults;

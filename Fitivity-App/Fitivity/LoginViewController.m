@@ -18,6 +18,8 @@
 @end
 
 @implementation LoginViewController
+
+@synthesize delegate;
 @synthesize userNameField;
 @synthesize passwordField;
 @synthesize signUpButton;
@@ -119,7 +121,8 @@
 						[alert show];
 					}
 					else {
-						//Logged in successfully 
+						//Logged in successfully
+						[delegate userLoggedIn];
 						[self dismissModalViewControllerAnimated:YES];
 					}
 				}];
@@ -179,6 +182,7 @@
 //User successfully signed up, log them in and then load discover screen
 -(void)userSignedUpSuccessfully:(SignUpViewController *)view {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"signedIn" object:self];
+	[delegate userLoggedIn];
     [self dismissModalViewControllerAnimated:YES];
 }
 

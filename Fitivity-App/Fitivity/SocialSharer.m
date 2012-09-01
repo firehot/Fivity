@@ -9,6 +9,7 @@
 #import "SocialSharer.h"
 
 #define kHUDShowDuration		1.75
+#define kURLLength				23
 
 @implementation SocialSharer
 
@@ -68,15 +69,33 @@ static SocialSharer *instance;
 		//Make sure they have twitter set up and can send it
 		if ([TWTweetComposeViewController canSendTweet]) {
 			__block TWTweetComposeViewController *tweetController = [[TWTweetComposeViewController alloc] init];
+			BOOL hasImg = NO;
+			BOOL hasURL = NO;
 			
 			if (img) {
-				[tweetController addImage:img];
+				if ([tweetController addImage:img]){
+					hasImg = YES;
+				}
 			}
 			if (url) {
-				[tweetController addURL:url];
+				if ([tweetController addURL:url]) {
+					hasURL = YES;
+				}
 			}
 			if (tweet) {
-				[tweetController setInitialText:tweet];
+				if (![tweetController setInitialText:tweet]) {
+					NSInteger index = 137;
+					if (hasImg)	{
+						index -= kURLLength;
+					}
+					if (hasURL) {
+						index -= kURLLength;
+					}
+					
+					NSString *s = [tweet substringToIndex:index];
+					s = [s stringByAppendingString:@"..."];
+					[tweetController setInitialText:s];
+				}
 			}
 			
 			[tweetController setCompletionHandler:^(TWTweetComposeViewControllerResult result) {

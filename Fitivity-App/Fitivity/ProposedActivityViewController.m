@@ -260,7 +260,7 @@
 	@synchronized(self) {
 		PFQuery *query = [PFQuery queryWithClassName:@"Comments"];
 		[query whereKey:@"parent" equalTo:parent];
-		[query addAscendingOrder:@"createdAt"];
+		[query addDescendingOrder:@"createdAt"];
 		
 		[query findObjectsInBackgroundWithBlock: ^(NSArray *objects, NSError *error) {
 			if (error) {

@@ -455,11 +455,21 @@
 
 #pragma mark - UITableViewDataSource 
 
+- (void)loadPAViewWithParent:(PFObject *)parent {
+	ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:parent];
+	[self.navigationController pushViewController:pa animated:YES];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-	ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:[results objectAtIndex:indexPath.row]];
-	[self.navigationController pushViewController:pa animated:YES];
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
 	
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	
+	[HUD showWhileExecuting:@selector(loadPAViewWithParent:) onTarget:self withObject:[results objectAtIndex:indexPath.row] animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

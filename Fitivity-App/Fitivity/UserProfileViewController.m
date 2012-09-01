@@ -173,6 +173,13 @@
 	
 }
 
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
+}
+
 #pragma mark - UITableViewDelegate 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -246,27 +253,40 @@
 
 #pragma mark - UITableViewDataSource 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-	//Get the group and present it
-	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
-	PFGeoPoint *point = [currentGroup objectForKey:@"location"];
+- (void)loadGroupView:(PFObject *)group {
+	PFGeoPoint *point = [group objectForKey:@"location"];
 	
-	BOOL challenge = [[FConfig instance] groupHasChallenges:[currentGroup objectForKey:@"activity"]];
+	BOOL challenge = [[FConfig instance] groupHasChallenges:[group objectForKey:@"activity"]];
 	
-	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[currentGroup objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
-	GroupPageViewController *group = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[currentGroup objectForKey:@"activity"] challenge:challenge autoJoin:NO];
+	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
+	GroupPageViewController *groupPage = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place activity:[group objectForKey:@"activity"] challenge:challenge autoJoin:NO];
 	
 	
-	PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[currentGroup objectForKey:@"group"]];
+	PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[group objectForKey:@"group"]];
 	[g fetchIfNeeded];
 	
 	//Update the local count
-	[[FConfig instance] updateGroup:[g objectId] withActivityCount:[g objectForKey:@"activityCount"]]; 
+	[[FConfig instance] updateGroup:[g objectId] withActivityCount:[g objectForKey:@"activityCount"]];
 	
-	[self.navigationController pushViewController:group animated:YES];
+	[self.navigationController pushViewController:groupPage animated:YES];
+	[updatedGroups setObject:[NSNumber numberWithBool:NO] forKey:[group objectId]];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
 	
-	[updatedGroups setObject:[NSNumber numberWithBool:NO] forKey:[currentGroup objectId]];
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	
+	//Get the group and present it
+	PFObject *currentGroup = [groupResults objectAtIndex:indexPath.row];
+	[currentGroup fetchIfNeeded];
+	
+	[HUD showWhileExecuting:@selector(loadGroupView:) onTarget:self withObject:currentGroup animated:YES];
+	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -340,6 +360,10 @@
     [super viewDidLoad];
 			
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+	
+	if (!userProfile) {
+		userProfile = [PFUser currentUser];
+	}
 	
 	[self setCorrectPicture];
 	

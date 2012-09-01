@@ -7,6 +7,7 @@
 //
 
 #import "FTabBarViewController.h"
+#import "DiscoverFeedViewController.h"
 
 @interface FTabBarViewController ()
 
@@ -48,6 +49,7 @@
 @synthesize rightRootViewController = _rightRootViewController;
 
 @synthesize displayedViewController = _displayedViewController;
+@synthesize backTabBar = _backTabBar;
 @synthesize loginView;
 
 #pragma mark - OpeningLogoViewController Delegate
@@ -88,6 +90,10 @@
 	if ([[FConfig instance] shouldLogIn]) {
 		if (!loginView) {
 			loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+			
+			if ([self.leftRootViewController respondsToSelector:@selector(shareApp)]) {
+				[loginView setDelegate:(DiscoverFeedViewController *)self.leftRootViewController];
+			}
 		}
 		[self presentModalViewController:loginView animated:YES];
 	}

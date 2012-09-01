@@ -53,6 +53,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *centerTabButton;
 @property (nonatomic, strong) IBOutlet UIButton *rightTabButton;
 @property (nonatomic, retain) LoginViewController *loginView;
+@property (nonatomic, retain) IBOutlet UITabBar *backTabBar;
 
 @property (nonatomic, weak) IBOutlet id<FTabBarViewControllerDelegate> delegate;
 
