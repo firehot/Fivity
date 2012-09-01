@@ -264,7 +264,7 @@
 		
         [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-        [[SocialSharer sharer] shareMessageWithTwitter:@"Join our #fitivity community to get active with other people interested in sports, fitness, or recreation. Download it in in the App Store!" image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Join #fitivity, the community for people interested in sports & fitness. Download it now in the Apple App Store." image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"SMS"]) {
         [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play. %@", [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
