@@ -13,6 +13,14 @@
 
 #import "MBProgressHUD.h"
 
+enum {
+	FACEBOOK = 0,
+	TWITTER = 1,
+	SMS = 2,
+	EMAIL = 3
+};
+typedef NSInteger ShareType;
+
 @protocol SocialSharerDelegate;
 
 @interface SocialSharer : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, PF_FBDialogDelegate, MBProgressHUDDelegate> {
@@ -34,7 +42,7 @@
 
 @protocol SocialSharerDelegate <NSObject>
 
-- (void)didFinishPosting;
+- (void)didFinishPostingType:(ShareType)type;
 
 @end
 

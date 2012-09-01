@@ -15,6 +15,7 @@
 #import "ProposedActivityViewController.h"
 #import "ChallengesViewController.h"
 #import "UserProfileViewController.h"
+#import "SocialSharer.h"
 
 #define kDistanceMileFilter		0.15
 #define kCellHeight				96.0f
@@ -242,6 +243,7 @@
 				alreadyJoined = YES;
 				[self attemptUpdateGroupInfo:YES];
 				[self updateJoiningGUI];
+				[self shareNewGroup];
 				
 				//Subscribe to notifications
 				if ([[FConfig instance] doesHavePushNotifications]) {
@@ -337,6 +339,58 @@
 	
     NSTimeInterval diff = [temp timeIntervalSinceDate:input];
     return [self getTimeIntervalDifference:diff];
+}
+
+- (void)shareNewGroup {
+	if ([[FConfig instance] shouldShareGroupStart]) {
+		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+			
+			NSString *message = [NSString stringWithFormat:@"I just joined the %@ group at %@ using fitivity!", activity, [place name]];
+			
+			NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+										   [[FConfig instance] getFacebookAppID], @"app_id",
+										   [[FConfig instance] getItunesAppLink], @"link",
+										   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+										   @"Fitivity", @"name",
+										   message, @"caption",
+										   @"You can download it in in the Apple App Store or in Google Play", @"description",
+										   @"Go download this app!",  @"message",
+										   nil];
+			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+		}
+		if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
+			[[SocialSharer sharer] shareMessageWithTwitter:[NSString stringWithFormat:@"I just joined the %@ group at %@ using fitivity!", activity, [place name]] image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+		}
+	}
+
+}
+
+- (void)shareNewActivity {
+	if ([[FConfig instance] shouldSharePAStart]) {
+		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+			
+			NSString *message = [NSString stringWithFormat:@"I just proposed an activity at %@ using fitivity!", [place name]];
+			
+			NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+										   [[FConfig instance] getFacebookAppID], @"app_id",
+										   [[FConfig instance] getItunesAppLink], @"link",
+										   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+										   @"Fitivity", @"name",
+										   message, @"caption",
+										   @"You can download it in in the Apple App Store or in Google Play", @"description",
+										   @"Go download this app!",  @"message",
+										   nil];
+			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+		}
+		if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
+			[[SocialSharer sharer] shareMessageWithTwitter:[NSString stringWithFormat:@"I just proposed an activity at %@ using fitivity!", [place name]] image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+		}
+	}
+}
+
+- (void)handleNewProposedActivity {
+	[self performSelectorInBackground:@selector(attemptGetProposedActivities) withObject:nil];
+	[self shareNewActivity];
 }
 
 #pragma mark - MBProgressHUDDelegate methods
@@ -544,7 +598,7 @@
 	self.navigationItem.rightBarButtonItem = members;
 
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetProposedActivities) name:@"addedPA" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewProposedActivity) name:@"addedPA" object:nil];
 }
 
 - (void)viewDidUnload {

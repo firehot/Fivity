@@ -159,6 +159,12 @@
 	}
 }
 
+#pragma mark - SocialSharer Delegate 
+
+- (void)didFinishPostingType:(ShareType)type {
+	
+}
+
 #pragma mark - View Lifecycle
 
 -(id)initWithLeftRootViewController:(UIViewController *)leftRootVC centerRootViewController:(UIViewController *)centerRootViewController rightRootViewController:(UIViewController *)rightViewController {

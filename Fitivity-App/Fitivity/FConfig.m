@@ -234,10 +234,10 @@ static FConfig *instance;
 	BOOL ret = NO;
 	
 	//If the object exists we have a challenge
-//	if ([challengeGroups objectForKey:groupType]) {
-//		ret = YES;
-//	}
-//	
+	if ([challengeGroups objectForKey:groupType]) {
+		ret = YES;
+	}
+	
 	return ret;
 }
 
@@ -302,7 +302,7 @@ static FConfig *instance;
 
 - (BOOL)canCreatePA {
 	//If the user hasn't reached their limit let them create one
-    return ![self userHasReachedPACreationLimitForDay:[NSDate date]];
+    return YES;//![self userHasReachedPACreationLimitForDay:[NSDate date]];
 }
 
 - (BOOL)doesHavePushNotifications {

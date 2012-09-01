@@ -109,6 +109,11 @@ static SocialSharer *instance;
 					[HUD show:YES];
 					[HUD hide:YES afterDelay:kHUDShowDuration];
 				}
+				
+				if ([delegate respondsToSelector:@selector(didFinishPostingType:)]) {
+					[delegate didFinishPostingType:TWITTER];
+				}
+				
 				[tweetController dismissModalViewControllerAnimated:YES];
 				tweetController = nil;
 			}];
@@ -210,6 +215,10 @@ static SocialSharer *instance;
 	
 	[HUD show:YES];
 	[HUD hide:YES afterDelay:kHUDShowDuration];
+	
+	if ([delegate respondsToSelector:@selector(didFinishPostingType:)]) {
+		[delegate didFinishPostingType:FACEBOOK];
+	}
 }
 
 /*
@@ -250,6 +259,10 @@ static SocialSharer *instance;
 		
 		[HUD show:YES];
 		[HUD hide:YES afterDelay:kHUDShowDuration];
+		
+		if ([delegate respondsToSelector:@selector(didFinishPostingType:)]) {
+			[delegate didFinishPostingType:SMS];
+		}
 	}
 	
 	[controller dismissModalViewControllerAnimated:YES];
@@ -278,6 +291,10 @@ static SocialSharer *instance;
 		
 		[HUD show:YES];
 		[HUD hide:YES afterDelay:kHUDShowDuration];
+		
+		if ([delegate respondsToSelector:@selector(didFinishPostingType:)]) {
+			[delegate didFinishPostingType:EMAIL];
+		}
 	}
 }
 
