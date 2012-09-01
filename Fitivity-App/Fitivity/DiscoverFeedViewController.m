@@ -518,7 +518,7 @@
         button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
         
         UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
-        self.navigationItem.rightBarButtonItem = share;
+        self.navigationItem.leftBarButtonItem = share;
         
     }
     return self;

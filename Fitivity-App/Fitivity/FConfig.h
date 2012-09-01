@@ -30,6 +30,8 @@
 - (BOOL)doesHavePushNotifications;
 - (BOOL)shouldShowNewActivityForGroup:(NSString *)objectID newActivityCount:(NSNumber *)n;
 - (BOOL)groupHasChallenges:(NSString *)groupType;
+- (BOOL)shouldSharePAStart;
+- (BOOL)shouldShareGroupStart;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
@@ -48,6 +50,8 @@
 - (void)incrementGroupCreationForDate:(NSDate *)date;
 - (void)incrementPACreationForDate:(NSDate *)date;
 - (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i;
+- (void)setSharePAPost:(BOOL)status;
+- (void)setShareGroupPost:(BOOL)status;
 
 - (NSDictionary *)getTypes;
 

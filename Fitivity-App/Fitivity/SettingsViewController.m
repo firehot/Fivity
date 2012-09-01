@@ -162,26 +162,12 @@ bool shareActivity;
 }
 
 - (IBAction)shareGroup:(id)sender {
-    //insert code to share group
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle: @"Sharing Disabled"
-                          message: @"Group sharing is currently disabled in beta testing."
-                          delegate: nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    [alert show];
-    
+	[[FConfig instance] setShareGroupPost:![[FConfig instance] shouldShareGroupStart]];
+	[self setUpSharing];
 }
 - (IBAction)shareActivity:(id)sender {
-    //insert code to share activity
-    UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle: @"Sharing Disabled"
-                          message: @"Activity sharing is currently disabled in beta testing."
-                          delegate: nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    [alert show];
-    
+	[[FConfig instance] setSharePAPost:![[FConfig instance] shouldSharePAStart]];
+	[self setUpSharing];
 }
 
 - (void)registerPushNotificationsForCurrentUser {
@@ -193,9 +179,9 @@ bool shareActivity;
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Enabled" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
         
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
-        pushNotifications = NO;
+		[pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
+		[pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
+		pushNotifications = NO;
         
 		return;
 	}
@@ -266,6 +252,30 @@ bool shareActivity;
         [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
         [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
         pushNotifications = NO;
+	}
+}
+
+- (void)setUpSharing {
+	
+	BOOL groupStatus = [[FConfig instance] shouldShareGroupStart];
+	BOOL paStatus = [[FConfig instance] shouldSharePAStart];
+	
+	if (groupStatus) {
+		[shareGroupButton setImage:[UIImage imageNamed:@"media_control_on.png"] forState:UIControlStateNormal];
+		[shareGroupButton setImage:[UIImage imageNamed:@"media_control_on_down.png"] forState:UIControlStateHighlighted];
+	}
+	else {
+		[shareGroupButton setImage:[UIImage imageNamed:@"media_control_off.png"] forState:UIControlStateNormal];
+		[shareGroupButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
+	}
+	
+	if (paStatus) {
+		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_on.png"] forState:UIControlStateNormal];
+		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_on_down.png"] forState:UIControlStateHighlighted];
+	}
+	else {
+		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off.png"] forState:UIControlStateNormal];
+		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
 	}
 }
 
@@ -474,6 +484,7 @@ bool shareActivity;
 		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link_down.png"] forState:UIControlStateHighlighted];
 	}
 	
+	[self setUpSharing];
 	[self setUpNotificationGUI];
 }
 

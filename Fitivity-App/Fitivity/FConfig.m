@@ -19,6 +19,8 @@
 #define kGoogleAnalyticsID	@""
 
 #define kPushStatus			@"status"
+#define kPostGroupStart		@"groupshare"
+#define kPostPAStart		@"pashare"
 
 #define kCreateDataPath		@"/createRecords.plist"
 #define kActivityDataPath	@"/groupActivityRecords.plist"
@@ -188,6 +190,16 @@ static FConfig *instance;
 	[defaults setBool:status forKey:kPushStatus];
 }
 
+- (void)setSharePAPost:(BOOL)status {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:status forKey:kPostPAStart];
+}
+
+- (void)setShareGroupPost:(BOOL)status {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:status forKey:kPostGroupStart];
+}
+
 - (void)initializeChallenges {
 	//Get all of the most recent challenges
 	challengeGroups = [[NSMutableDictionary alloc] init];
@@ -296,6 +308,16 @@ static FConfig *instance;
 - (BOOL)doesHavePushNotifications {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	return [defaults boolForKey:kPushStatus];
+}
+
+- (BOOL)shouldShareGroupStart {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	return [defaults boolForKey:kPostGroupStart];
+}
+
+- (BOOL)shouldSharePAStart {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	return [defaults boolForKey:kPostPAStart];
 }
 
 #pragma mark - NSDictionary Methods
