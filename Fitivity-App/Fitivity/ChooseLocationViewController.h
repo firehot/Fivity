@@ -14,10 +14,11 @@
 #import "GooglePlacesConnection.h"
 #import "ChooseLocationCell.h"
 #import "AddLocationHomeViewController.h"
+#import "MBProgressHUD.h"
 
 @protocol ChooseLocationViewControllerDelegate;
 
-@interface ChooseLocationViewController : PullToRefreshTableViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,  CLLocationManagerDelegate, GooglePlacesConnectionDelegate, ChooseLocationCellDelegate, AddLocationHomeViewController> {
+@interface ChooseLocationViewController : PullToRefreshTableViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,  CLLocationManagerDelegate, GooglePlacesConnectionDelegate, ChooseLocationCellDelegate, AddLocationHomeViewController, MBProgressHUDDelegate> {
 	
 	CLLocationManager		*locationManager;
 	CLLocation				*currentLocation;

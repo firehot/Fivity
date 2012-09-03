@@ -32,12 +32,6 @@
 
 #pragma mark - Helper Methods
 
-/*- (void)showAddLocationView {
-	AddLocationHomeViewController *addHome = [[AddLocationHomeViewController alloc] initWithNibName:@"AddLocationHomeViewController" bundle:nil currentLocation:[[locationManager location] coordinate]];
-	[addHome setDelegate:self];
-	[self.navigationController pushViewController:addHome animated:YES];
-}*/
-
 -(void)buildSearchArrayFrom:(NSString *)matchString {
 	NSString *upString = [matchString uppercaseString];
 	
@@ -142,6 +136,13 @@
 	[self performSelector:@selector(determineNavigationPop) withObject:nil afterDelay:0.3];
 }
 
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
+}
+
 #pragma mark - PullToRefresh
 - (void)reloadTableViewDataSource {
     [self setResultsLoaded:NO];
@@ -175,7 +176,32 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+	
+	//If they are on the last cell, load more data
+	int u = [locations count]-1;
+	if (indexPath.row == u) {
+		//What places to search for
+		NSString *searchLocations = [NSString stringWithFormat:@"%@|%@|%@|%@|%@|%@|%@",
+									 kCampground,
+									 kGym,
+									 kPark,
+									 kBowlingAlley,
+									 kUniversity,
+									 kSchool,
+									 kStadium];
+		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		[HUD setDelegate:self];
+		[HUD setAnimationType:MBProgressHUDModeText];
+		[HUD setLabelText:@"Loading More..."];
+		[HUD show:YES];
+		[HUD hide:YES afterDelay:2.5];
+		
+		[googlePlacesConnection getGoogleObjects:CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude)
+											andTypes:searchLocations];
+	}
+	
 	static NSString *CellIdentifier = @"LocationCell";
 	
 	// Dequeue or create a cell of the appropriate type.
@@ -269,7 +295,16 @@
 								 kSchool,
                                  kStadium];
     
-    [googlePlacesConnection getGoogleObjects:CLLocationCoordinate2DMake(newLocation.coordinate.latitude, newLocation.coordinate.longitude) 
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	[HUD setDelegate:self];
+	[HUD setAnimationType:MBProgressHUDModeText];
+	[HUD setLabelText:@"Loading..."];
+	[HUD show:YES];
+	[HUD hide:YES afterDelay:2.75];
+	
+    [googlePlacesConnection getGoogleObjects:CLLocationCoordinate2DMake(newLocation.coordinate.latitude, newLocation.coordinate.longitude)
                                     andTypes:searchLocations];
     
 }
@@ -291,25 +326,30 @@
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFinishLoadingWithGooglePlacesObjects:(NSMutableArray *)objects  {
     
     if ([objects count] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches found near this location" 
-                                                        message:@"Try another place name or address" 
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No More Matches" 
+                                                        message:@"There are no more matches for your location." 
                                                        delegate:nil 
                                               cancelButtonTitle:@"OK" 
                                               otherButtonTitles: nil];
         [alert show];
     } 
 	else {
-        locations = objects;
-        locationsFilterResults = objects;
+        [locations addObjectsFromArray:objects];
+        [locationsFilterResults addObjectsFromArray:objects];
         [tableView reloadData];
     }
 }
 
 - (void) googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {
     
+	NSString *message = [error localizedDescription];
+	
+	if ([error code] == 500) {
+		 message = @"There are no more results to load.";
+	}
 	//Alert the user if the connection fails
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error finding place - Try again" 
-                                                    message:[error localizedDescription] 
+                                                    message:message
                                                    delegate:nil 
                                           cancelButtonTitle:@"OK" 
                                           otherButtonTitles: nil];
@@ -329,6 +369,8 @@
     if (self) {
 		[self.refreshHeaderView setLastRefreshDate:nil];    
 		responseData = [[NSMutableData data] init];
+		locations = [[NSMutableArray alloc] init];
+		locationsFilterResults = [[NSMutableArray alloc] init];
 		[[self locationManager] startUpdatingLocation];
 		
 		[tableView reloadData];
@@ -337,11 +379,12 @@
 		[searchBar setDelegate:self];
 		
 		googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
-		
-	/*	UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Add Location" style:UIBarButtonItemStyleBordered target:self action:@selector(showAddLocationView)];
-		[self.navigationItem setRightBarButtonItem:button];*/
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)viewDidLoad {

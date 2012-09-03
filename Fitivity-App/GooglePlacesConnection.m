@@ -45,7 +45,7 @@
 
 
 //Method is called to load initial search
--(void)getGoogleObjects:(CLLocationCoordinate2D)coords andTypes:(NSString *)types {	
+-(void)getGoogleObjects:(CLLocationCoordinate2D)coords andTypes:(NSString *)types {
     //NEW setting userlocation to the coords passed in for later use
     userLocation = coords;
     
@@ -57,6 +57,10 @@
     NSString* gurl  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&rankby=distance&types=%@&sensor=true&key=%@",
                                     centerLat, centerLng, types, [[FConfig instance] getGooglePlacesAPIKey]];
     
+	if (hasPageToken) {
+		gurl = [gurl stringByAppendingFormat:@"&pagetoken=%@",nextPageToken];
+	}
+	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl] 
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy 
                                                        timeoutInterval:10];
@@ -75,7 +79,7 @@
     
 }
 //Method is called during UISearchBar search
--(void)getGoogleObjectsWithQuery:(NSString *)query  andCoordinates:(CLLocationCoordinate2D)coords andTypes:(NSString *)types {
+-(void)getGoogleObjectsWithQuery:(NSString *)query andCoordinates:(CLLocationCoordinate2D)coords andTypes:(NSString *)types {
     
     //NEW setting userlocation to the coords passed in for later use
     userLocation = coords;
@@ -88,6 +92,10 @@
     
     NSString *gurl = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&rankby=distance&types=%@&name=%@&sensor=true&key=%@",centerLat, centerLng, types, query, [[FConfig instance] getGooglePlacesAPIKey]];
     
+	if (hasPageToken) {
+		gurl = [gurl stringByAppendingFormat:@"&pagetoken=%@",nextPageToken];
+	}
+	
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
     
 	[self cancelGetGoogleObjects];
@@ -166,6 +174,10 @@
             } 
 			else {
                 //Perform Place Search results
+				nextPageToken = [parsedJSON objectForKey:@"next_page_token"];
+				if (nextPageToken) {
+					hasPageToken = YES;
+				}
                 NSDictionary *gResponseData  = [parsedJSON objectForKey: @"results"];
                 NSMutableArray *googlePlacesObjects = [NSMutableArray arrayWithCapacity:[[parsedJSON objectForKey:@"results"] count]]; 
 

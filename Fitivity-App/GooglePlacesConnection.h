@@ -27,7 +27,9 @@
 {
     NSMutableData       *responseData;
     NSURLConnection     *connection;
+	NSString			*nextPageToken;
     BOOL                connectionIsActive;
+	BOOL				hasPageToken;
     int                 minAccuracyValue;
     //NEW
     CLLocationCoordinate2D userLocation;
