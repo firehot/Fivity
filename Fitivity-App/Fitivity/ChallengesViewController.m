@@ -7,10 +7,11 @@
 //
 
 #import "ChallengesViewController.h"
+#import "ChallengeOverviewViewController.h"
 #import "NSError+FITParseUtilities.h"
-#import "ChallengeCell.h"
 
 #define kCellHeight			95.0f
+#define kHeaderHeight		35.0f
 
 @interface ChallengesViewController ()
 
@@ -23,11 +24,45 @@
 
 #pragma mark - Helper Methods
 
+- (NSMutableArray *)orderDays:(NSArray *)days {
+	NSMutableArray *array = [[NSMutableArray alloc] init];
+	
+	if (days != nil && [days count] > 0) {
+		NSMutableArray *temp = [[NSMutableArray alloc] init];
+		int level = 0;
+		
+		for (PFObject *o in days) {
+			[o fetchIfNeeded];
+			int x = [[o objectForKey:@"level"] intValue];
+			if (x != level) {
+				level = x;
+				
+				//Add the array of previous items and reinitialize it
+				if ([temp count] != 0) {
+					[array addObject:temp];
+				}
+				temp = [[NSMutableArray alloc] init];
+				[temp addObject:o];
+			}
+			else {
+				[temp addObject:o];
+			}
+		}
+		
+		//Add the last array
+		[array addObject:temp];
+	}
+	
+	return array;
+}
+
 - (void)attemptQuery {
 	@synchronized(self) {
-		PFQuery *query = [PFQuery queryWithClassName:@"ChallengeStep"];
+		PFQuery *query = [PFQuery queryWithClassName:@"ChallengeDay"];
 		PFObject *parent = [PFObject objectWithoutDataWithClassName:@"Challenge" objectId:[[FConfig instance] getChallengeIDForActivityType:groupType]];
-		[query whereKey:@"Parent" equalTo:parent];
+		[query whereKey:@"parent" equalTo:parent];
+		[query addAscendingOrder:@"level"];
+		[query addAscendingOrder:@"dayNum"];
 		[query setCachePolicy:kPFCachePolicyNetworkElseCache];
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
 			if (error) {
@@ -38,7 +73,7 @@
 				return;
 			}
 			else if (objects) {
-				self.challenges = objects;
+				self.challenges = [self orderDays:objects];
 				[self.tableView reloadData];
 			}
 		}];
@@ -61,7 +96,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		
-		self.navigationItem.title = @"Challenges";
+		self.navigationItem.title = type;
 		
         self.groupType = type;
 		if (groupType) {
@@ -76,19 +111,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload {
 	[self setTableView:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -99,90 +126,64 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return [challenges count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [challenges count];
+    return [[challenges objectAtIndex:section] count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	return kCellHeight;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return kHeaderHeight;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 	
-	ChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ChallengeCell" owner:self options:nil];
-		cell = [nib objectAtIndex:0];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-	// Configure the cell...
-	PFObject *challenge = [challenges objectAtIndex:indexPath.row];
-	[challenge fetchIfNeeded];
+
+	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	
-	PFFile *pic = [challenge objectForKey:@"Image"];
-	NSData *picData = [pic getData];
-	if (picData) {
-		[cell.challengePicture setImage:[UIImage imageWithData:picData]];
-	}
+	NSMutableArray *a = [challenges objectAtIndex:indexPath.section];
+	PFObject *current = [a objectAtIndex:indexPath.row];
+	[current fetchIfNeeded];
 	
-    [cell.description setText:[challenge objectForKey:@"Description"]];
+	cell.textLabel.text = [NSString stringWithFormat:@"Day %d", [[current objectForKey:@"dayNum"] intValue]];
 	
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
+	UILabel *title = [[UILabel alloc] initWithFrame:view.frame];
+	
+	[view setBackgroundColor:[UIColor blueColor]];
+	[title setBackgroundColor:[UIColor clearColor]];
+	[title setTextColor:[UIColor whiteColor]];
+	
+	[title setTextAlignment:UITextAlignmentCenter];
+	[title setText:[NSString stringWithFormat:@"Level %d", section+1]];
+	
+	[view addSubview:title];
+	return view;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+	
+	PFObject *o = [[challenges objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	ChallengeOverviewViewController *overview = [[ChallengeOverviewViewController alloc] initWithNibName:@"ChallengeOverviewViewController" bundle:nil day:o];
+	
+	[self.navigationController pushViewController:overview animated:YES];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

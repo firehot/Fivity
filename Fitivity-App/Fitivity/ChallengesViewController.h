@@ -12,7 +12,7 @@
 @interface ChallengesViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) NSString *groupType;
-@property (nonatomic, retain) NSArray *challenges;
+@property (nonatomic, retain) NSMutableArray *challenges;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil groupType:(NSString *)type;

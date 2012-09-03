@@ -78,8 +78,6 @@
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
 		6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA015E458A10025DE76 /* ChallengesViewController.m */; };
 		6C623AA315E45F650025DE76 /* ChallengesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C623AA215E45F650025DE76 /* ChallengesViewController.xib */; };
-		6C623AA615E460B80025DE76 /* ChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA515E460B80025DE76 /* ChallengeCell.m */; };
-		6C623AA815E461110025DE76 /* ChallengeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C623AA715E461110025DE76 /* ChallengeCell.xib */; };
 		6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C647DF515CEE6B800366A74 /* ActivityEvent.m */; };
 		6C7722AF15B1EB670040DB1D /* ChooseActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */; };
 		6C7722B015B1EB670040DB1D /* ChooseActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */; };
@@ -105,6 +103,8 @@
 		6C77230415B20F340040DB1D /* LocationCellIconImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C77230215B20F100040DB1D /* LocationCellIconImage@2x.png */; };
 		6C78369E15EA9CCC00ACB712 /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C78369C15EA9CCC00ACB712 /* 37x-Checkmark.png */; };
 		6C78369F15EA9CCC00ACB712 /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C78369D15EA9CCC00ACB712 /* 37x-Checkmark@2x.png */; };
+		6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */; };
+		6C86225E15F55FB7002FF9AD /* ChallengeOverviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */; };
 		6C86658715AFA1A6004D932F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C86658515AFA1A6004D932F /* LoginViewController.m */; };
 		6C86658C15AFA1BB004D932F /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C86658A15AFA1BB004D932F /* SignUpViewController.m */; };
 		6C86658D15AFA1BB004D932F /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C86658B15AFA1BB004D932F /* SignUpViewController.xib */; };
@@ -487,7 +487,6 @@
 		6C623AA215E45F650025DE76 /* ChallengesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengesViewController.xib; sourceTree = "<group>"; };
 		6C623AA415E460B80025DE76 /* ChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeCell.h; sourceTree = "<group>"; };
 		6C623AA515E460B80025DE76 /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
-		6C623AA715E461110025DE76 /* ChallengeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengeCell.xib; sourceTree = "<group>"; };
 		6C647DF415CEE6B800366A74 /* ActivityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEvent.h; sourceTree = "<group>"; };
 		6C647DF515CEE6B800366A74 /* ActivityEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEvent.m; sourceTree = "<group>"; };
 		6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityViewController.h; sourceTree = "<group>"; };
@@ -516,6 +515,9 @@
 		6C77230215B20F100040DB1D /* LocationCellIconImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LocationCellIconImage@2x.png"; sourceTree = "<group>"; };
 		6C78369C15EA9CCC00ACB712 /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		6C78369D15EA9CCC00ACB712 /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
+		6C86225A15F55FB7002FF9AD /* ChallengeOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeOverviewViewController.h; sourceTree = "<group>"; };
+		6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeOverviewViewController.m; sourceTree = "<group>"; };
+		6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChallengeOverviewViewController.xib; path = Fitivity/ChallengeOverviewViewController.xib; sourceTree = "<group>"; };
 		6C86658415AFA1A6004D932F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		6C86658515AFA1A6004D932F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		6C86658915AFA1BB004D932F /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -1134,7 +1136,6 @@
 				6C50011D15B6315300029AFD /* ChooseActivityCell.xib */,
 				6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */,
 				6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */,
-				6C623AA715E461110025DE76 /* ChallengeCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1526,7 +1527,7 @@
 		6CD705E215BB007A002FFC53 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
-				F19C8FFE15EA54F500298980 /* Cells */,
+				6CDCECFF15F55475009D8E23 /* Challenges */,
 				575AECA115B6051200324958 /* GroupPageViewController.h */,
 				575AECA215B6051200324958 /* GroupPageViewController.m */,
 				6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */,
@@ -1535,8 +1536,6 @@
 				6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */,
 				6C57B71015C21ADC000048DD /* ProposedActivityViewController.h */,
 				6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */,
-				6C623A9F15E458A10025DE76 /* ChallengesViewController.h */,
-				6C623AA015E458A10025DE76 /* ChallengesViewController.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1600,6 +1599,7 @@
 				6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */,
 				6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */,
 				6C623AA215E45F650025DE76 /* ChallengesViewController.xib */,
+				6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1610,6 +1610,17 @@
 				5700D1B815B470F7003C96F3 /* Cells */,
 			);
 			name = "Discover Stream";
+			sourceTree = "<group>";
+		};
+		6CDCECFF15F55475009D8E23 /* Challenges */ = {
+			isa = PBXGroup;
+			children = (
+				6C623A9F15E458A10025DE76 /* ChallengesViewController.h */,
+				6C623AA015E458A10025DE76 /* ChallengesViewController.m */,
+				6C86225A15F55FB7002FF9AD /* ChallengeOverviewViewController.h */,
+				6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */,
+			);
+			name = Challenges;
 			sourceTree = "<group>";
 		};
 		F128F91615E8EEE300AAC2A5 /* Settings */ = {
@@ -1655,13 +1666,6 @@
 				F128F93B15E8EEFD00AAC2A5 /* bg_profile_pic_settings@2x.png */,
 			);
 			name = Settings;
-			sourceTree = "<group>";
-		};
-		F19C8FFE15EA54F500298980 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1874,7 +1878,6 @@
 				57E7C54815E3EC48007E2D9D /* bg_profile_header.png in Resources */,
 				57E7C54915E3EC48007E2D9D /* bg_profile_header@2x.png in Resources */,
 				6C623AA315E45F650025DE76 /* ChallengesViewController.xib in Resources */,
-				6C623AA815E461110025DE76 /* ChallengeCell.xib in Resources */,
 				F1B3CB6415E46E25005C02FA /* b_avatar_settings.png in Resources */,
 				F1B3CB6515E46E25005C02FA /* b_avatar_settings@2x.png in Resources */,
 				F1B3CB8015E4E8F5005C02FA /* b_choose_activity_down.png in Resources */,
@@ -2006,6 +2009,7 @@
 				F10C6EA315F05E6500D64276 /* bg_social_settings1@2x.png in Resources */,
 				6CE3611415F2555F00F8F783 /* Icon.png in Resources */,
 				6CE3611515F2556100F8F783 /* Icon@2x.png in Resources */,
+				6C86225E15F55FB7002FF9AD /* ChallengeOverviewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2074,9 +2078,9 @@
 				6C90CA2115D34E0600408193 /* AddLocationHomeViewController.m in Sources */,
 				6C42C86615D5D5F20067EFA9 /* GooglePlaceAdder.m in Sources */,
 				6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */,
-				6C623AA615E460B80025DE76 /* ChallengeCell.m in Sources */,
 				F19C900315EA551100298980 /* CommentCell.m in Sources */,
 				57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */,
+				6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
