@@ -7,6 +7,7 @@
 //
 
 #import "ChallengeOverviewViewController.h"
+#import "ExerciseViewController.h"
 
 @interface ChallengeOverviewViewController ()
 
@@ -17,6 +18,18 @@
 @synthesize exerciseTable;
 @synthesize overview;
 
+#pragma mark - Helper Methods
+
+- (void)getExercises {
+	@synchronized(self) {
+		PFQuery *query = [PFQuery queryWithClassName:@"Exercise"];
+		[query whereKey:@"parent" equalTo:day];
+		
+		objects = [query findObjects];
+		[self.exerciseTable reloadData];
+	}
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -26,7 +39,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 4;
+    return [objects count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -39,9 +52,14 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
 
+	PFObject *current = [objects objectAtIndex:indexPath.row];
+	[current fetchIfNeeded];
+	
+	[cell.textLabel setText:[current objectForKey:@"description"]];
+	[cell.detailTextLabel setText:[current objectForKey:@"amount"]];
 	
     return cell;
 }
@@ -49,16 +67,30 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	ExerciseViewController *ex = [[ExerciseViewController alloc] initWithNibName:@"ExerciseViewController" bundle:nil event:[objects objectAtIndex:indexPath.row]];
+	[self.navigationController pushViewController:ex animated:YES];
+	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - View Lifecycle 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil day:(PFObject *)d {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil day:(PFObject *)d title:(NSString *)title {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         day = d;
 		[day fetchIfNeeded];
+		
+		self.navigationItem.title = title;
+		
+		if (![[FConfig instance] connected]) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You need to be connected to load this content" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+		}
+		else {
+			[self getExercises];
+		}
     }
     return self;
 }

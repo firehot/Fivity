@@ -79,6 +79,8 @@
 		6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA015E458A10025DE76 /* ChallengesViewController.m */; };
 		6C623AA315E45F650025DE76 /* ChallengesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C623AA215E45F650025DE76 /* ChallengesViewController.xib */; };
 		6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C647DF515CEE6B800366A74 /* ActivityEvent.m */; };
+		6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67187215F57B88002A3CC1 /* ExerciseViewController.m */; };
+		6C67187515F57B88002A3CC1 /* ExerciseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */; };
 		6C7722AF15B1EB670040DB1D /* ChooseActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */; };
 		6C7722B015B1EB670040DB1D /* ChooseActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */; };
 		6C7722BF15B1F14D0040DB1D /* FeedCellIconImageBackplate.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C7722B515B1F14D0040DB1D /* FeedCellIconImageBackplate.png */; };
@@ -489,6 +491,9 @@
 		6C623AA515E460B80025DE76 /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
 		6C647DF415CEE6B800366A74 /* ActivityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEvent.h; sourceTree = "<group>"; };
 		6C647DF515CEE6B800366A74 /* ActivityEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEvent.m; sourceTree = "<group>"; };
+		6C67187115F57B88002A3CC1 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseViewController.h; sourceTree = "<group>"; };
+		6C67187215F57B88002A3CC1 /* ExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseViewController.m; sourceTree = "<group>"; };
+		6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExerciseViewController.xib; path = Fitivity/ExerciseViewController.xib; sourceTree = "<group>"; };
 		6C7722AC15B1EB670040DB1D /* ChooseActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityViewController.h; sourceTree = "<group>"; };
 		6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityViewController.m; sourceTree = "<group>"; };
 		6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseActivityViewController.xib; path = Fitivity/ChooseActivityViewController.xib; sourceTree = "<group>"; };
@@ -1600,6 +1605,7 @@
 				6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */,
 				6C623AA215E45F650025DE76 /* ChallengesViewController.xib */,
 				6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */,
+				6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -1619,6 +1625,8 @@
 				6C623AA015E458A10025DE76 /* ChallengesViewController.m */,
 				6C86225A15F55FB7002FF9AD /* ChallengeOverviewViewController.h */,
 				6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */,
+				6C67187115F57B88002A3CC1 /* ExerciseViewController.h */,
+				6C67187215F57B88002A3CC1 /* ExerciseViewController.m */,
 			);
 			name = Challenges;
 			sourceTree = "<group>";
@@ -2010,6 +2018,7 @@
 				6CE3611415F2555F00F8F783 /* Icon.png in Resources */,
 				6CE3611515F2556100F8F783 /* Icon@2x.png in Resources */,
 				6C86225E15F55FB7002FF9AD /* ChallengeOverviewViewController.xib in Resources */,
+				6C67187515F57B88002A3CC1 /* ExerciseViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2081,6 +2090,7 @@
 				F19C900315EA551100298980 /* CommentCell.m in Sources */,
 				57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */,
 				6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */,
+				6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

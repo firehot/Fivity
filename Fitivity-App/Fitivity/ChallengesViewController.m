@@ -100,7 +100,14 @@
 		
         self.groupType = type;
 		if (groupType) {
-			[self attemptQuery];
+			
+			if ([[FConfig instance] connected]) {
+				[self attemptQuery];
+			}
+			else {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to view this content." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
 		} else {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"There was an issue loading these challenges." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
@@ -181,7 +188,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	PFObject *o = [[challenges objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-	ChallengeOverviewViewController *overview = [[ChallengeOverviewViewController alloc] initWithNibName:@"ChallengeOverviewViewController" bundle:nil day:o];
+	ChallengeOverviewViewController *overview = [[ChallengeOverviewViewController alloc] initWithNibName:@"ChallengeOverviewViewController" bundle:nil day:o title:groupType];
 	
 	[self.navigationController pushViewController:overview animated:YES];
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];

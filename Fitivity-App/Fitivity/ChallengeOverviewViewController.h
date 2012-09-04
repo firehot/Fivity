@@ -11,9 +11,10 @@
 
 @interface ChallengeOverviewViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
 	PFObject *day;
+	NSArray *objects;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil day:(PFObject *)d;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil day:(PFObject *)d title:(NSString *)title;
 
 @property (weak, nonatomic) IBOutlet UITableView *exerciseTable;
 @property (weak, nonatomic) IBOutlet UITextView *overview;
