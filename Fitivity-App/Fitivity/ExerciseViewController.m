@@ -19,6 +19,7 @@
 
 #pragma mark - Helper Methods
 
+//Load the html to show the youtube player
 - (void)loadURL:(NSString *)url inFrame:(CGRect)frame {
     NSString *youTubeVideoHTML = @"<html><head>\
     <body style=\"margin:0\">\
@@ -37,6 +38,8 @@
     if (self) {
         exercise = event;
 		[exercise fetchIfNeeded];
+		
+		self.navigationItem.title = [exercise objectForKey:@"description"];
     }
     return self;
 }
@@ -44,8 +47,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-	BOOL video = (BOOL)[exercise objectForKey:@"isLink"];
-	if (video) {
+	//Parse gives boolean types back as integers 
+	int video = [[exercise objectForKey:@"isLink"] intValue];
+	if (video == 1) {
+		[youtubeView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
 		[youtubeView setHidden:NO];
 		[image setHidden:YES];
 		

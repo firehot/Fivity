@@ -24,6 +24,7 @@
 
 #pragma mark - Helper Methods
 
+//Create an array of arrays for each day of exercises
 - (NSMutableArray *)orderDays:(NSArray *)days {
 	NSMutableArray *array = [[NSMutableArray alloc] init];
 	
@@ -169,6 +170,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	//Create the view for the header
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
 	UILabel *title = [[UILabel alloc] initWithFrame:view.frame];
 	
