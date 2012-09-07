@@ -302,7 +302,7 @@ static FConfig *instance;
 
 - (BOOL)canCreatePA {
 	//If the user hasn't reached their limit let them create one
-    return [self userHasReachedPACreationLimitForDay:[NSDate date]];
+    return ![self userHasReachedPACreationLimitForDay:[NSDate date]];
 }
 
 - (BOOL)doesHavePushNotifications {
