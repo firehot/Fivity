@@ -158,6 +158,11 @@
 		6CCEE45E15F97E4D00DAF41F /* cell_chall_activity_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE45615F97E4D00DAF41F /* cell_chall_activity_down@2x.png */; };
 		6CCEE45F15F97E4D00DAF41F /* cell_chall_activity.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE45715F97E4D00DAF41F /* cell_chall_activity.png */; };
 		6CCEE46015F97E4D00DAF41F /* cell_chall_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE45815F97E4D00DAF41F /* cell_chall_activity@2x.png */; };
+		6CCEE46215F9829500DAF41F /* ChallengeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46115F9829500DAF41F /* ChallengeCell.xib */; };
+		6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEE46415F9836400DAF41F /* ChallengeCell.m */; };
+		6CCEE46715F9853700DAF41F /* ChallengeDayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46615F9853700DAF41F /* ChallengeDayCell.xib */; };
+		6CCEE46A15F9862C00DAF41F /* bg_chall_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46815F9862C00DAF41F /* bg_chall_img.png */; };
+		6CCEE46B15F9862C00DAF41F /* bg_chall_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46915F9862C00DAF41F /* bg_chall_img@2x.png */; };
 		6CD705E615BB00AE002FFC53 /* GroupMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */; };
 		6CD705E715BB00AE002FFC53 /* GroupMembersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */; };
 		6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */; };
@@ -607,6 +612,12 @@
 		6CCEE45615F97E4D00DAF41F /* cell_chall_activity_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_chall_activity_down@2x.png"; sourceTree = "<group>"; };
 		6CCEE45715F97E4D00DAF41F /* cell_chall_activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_chall_activity.png; sourceTree = "<group>"; };
 		6CCEE45815F97E4D00DAF41F /* cell_chall_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_chall_activity@2x.png"; sourceTree = "<group>"; };
+		6CCEE46115F9829500DAF41F /* ChallengeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengeCell.xib; sourceTree = "<group>"; };
+		6CCEE46315F9836400DAF41F /* ChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeCell.h; sourceTree = "<group>"; };
+		6CCEE46415F9836400DAF41F /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
+		6CCEE46615F9853700DAF41F /* ChallengeDayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengeDayCell.xib; sourceTree = "<group>"; };
+		6CCEE46815F9862C00DAF41F /* bg_chall_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_chall_img.png; sourceTree = "<group>"; };
+		6CCEE46915F9862C00DAF41F /* bg_chall_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_chall_img@2x.png"; sourceTree = "<group>"; };
 		6CD2F58715B0E77A0032FA34 /* NSRegularExpression+FITUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSRegularExpression+FITUtilities.h"; sourceTree = "<group>"; };
 		6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSRegularExpression+FITUtilities.m"; sourceTree = "<group>"; };
 		6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMembersViewController.h; sourceTree = "<group>"; };
@@ -1183,6 +1194,8 @@
 				6C50011D15B6315300029AFD /* ChooseActivityCell.xib */,
 				6CD705EB15BB17F6002FFC53 /* GroupMembersCell.xib */,
 				6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */,
+				6CCEE46115F9829500DAF41F /* ChallengeCell.xib */,
+				6CCEE46615F9853700DAF41F /* ChallengeDayCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1349,6 +1362,8 @@
 		6CB1A75215ACFF7000C0FF75 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				6CCEE46815F9862C00DAF41F /* bg_chall_img.png */,
+				6CCEE46915F9862C00DAF41F /* bg_chall_img@2x.png */,
 				F10C6EA015F05E6500D64276 /* bg_social_settings1.png */,
 				F10C6EA115F05E6500D64276 /* bg_social_settings1@2x.png */,
 				F19C901915EA56DE00298980 /* bg_main_group.png */,
@@ -1669,6 +1684,8 @@
 				6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */,
 				6C67187115F57B88002A3CC1 /* ExerciseViewController.h */,
 				6C67187215F57B88002A3CC1 /* ExerciseViewController.m */,
+				6CCEE46315F9836400DAF41F /* ChallengeCell.h */,
+				6CCEE46415F9836400DAF41F /* ChallengeCell.m */,
 			);
 			name = Challenges;
 			sourceTree = "<group>";
@@ -2075,6 +2092,10 @@
 				6CCEE45E15F97E4D00DAF41F /* cell_chall_activity_down@2x.png in Resources */,
 				6CCEE45F15F97E4D00DAF41F /* cell_chall_activity.png in Resources */,
 				6CCEE46015F97E4D00DAF41F /* cell_chall_activity@2x.png in Resources */,
+				6CCEE46215F9829500DAF41F /* ChallengeCell.xib in Resources */,
+				6CCEE46715F9853700DAF41F /* ChallengeDayCell.xib in Resources */,
+				6CCEE46A15F9862C00DAF41F /* bg_chall_img.png in Resources */,
+				6CCEE46B15F9862C00DAF41F /* bg_chall_img@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2147,6 +2168,7 @@
 				57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */,
 				6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */,
 				6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */,
+				6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

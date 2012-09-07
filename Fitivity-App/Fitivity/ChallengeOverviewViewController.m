@@ -8,6 +8,9 @@
 
 #import "ChallengeOverviewViewController.h"
 #import "ExerciseViewController.h"
+#import "ChallengeCell.h"
+
+#define kCellHeight		72.0f
 
 @interface ChallengeOverviewViewController ()
 
@@ -43,23 +46,24 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 60;
+	return kCellHeight;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+	ChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ChallengeCell" owner:self options:nil];
+		cell = [nib objectAtIndex:0];
     }
 
 	PFObject *current = [objects objectAtIndex:indexPath.row];
 	[current fetchIfNeeded];
 	
-	[cell.textLabel setText:[current objectForKey:@"description"]];
-	[cell.detailTextLabel setText:[current objectForKey:@"amount"]];
+	[cell.exerciseLabel setText:[current objectForKey:@"description"]];
+	[cell.amountLabel setText:[current objectForKey:@"amount"]];
 	
     return cell;
 }
@@ -98,6 +102,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	[overview setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall_info.png"]]];
 	[overview setText:[day objectForKey:@"overview"]];
 }
 

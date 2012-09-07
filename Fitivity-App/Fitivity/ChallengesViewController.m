@@ -10,7 +10,7 @@
 #import "ChallengeOverviewViewController.h"
 #import "NSError+FITParseUtilities.h"
 
-#define kCellHeight			95.0f
+#define kCellHeight			36.0f
 #define kHeaderHeight		62.0f
 
 @interface ChallengesViewController ()
@@ -155,7 +155,8 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ChallengeDayCell" owner:self options:nil];
+		cell = [nib objectAtIndex:0];
     }
 
 	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
@@ -164,6 +165,7 @@
 	PFObject *current = [a objectAtIndex:indexPath.row];
 	[current fetchIfNeeded];
 	
+	[cell.textLabel setBackgroundColor:[UIColor clearColor]];
 	cell.textLabel.text = [NSString stringWithFormat:@"Day %d", [[current objectForKey:@"dayNum"] intValue]];
 	
     return cell;
@@ -181,6 +183,9 @@
 	[length setBackgroundColor:[UIColor clearColor]];
 	[length setTextColor:[UIColor blackColor]];
 	
+	
+	[title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:21]];
+	[length setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
 	[title setTextAlignment:UITextAlignmentCenter];
 	[title setText:[NSString stringWithFormat:@"Level %d", section+1]];
 	[length setTextAlignment:UITextAlignmentCenter];
