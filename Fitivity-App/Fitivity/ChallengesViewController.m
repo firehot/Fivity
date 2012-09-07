@@ -11,7 +11,7 @@
 #import "NSError+FITParseUtilities.h"
 
 #define kCellHeight			95.0f
-#define kHeaderHeight		70.0f
+#define kHeaderHeight		62.0f
 
 @interface ChallengesViewController ()
 
@@ -172,14 +172,14 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	//Create the view for the header
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
-	UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight/2)];
-	UILabel *length = [[UILabel alloc] initWithFrame:CGRectMake(0, kHeaderHeight/2, 320, kHeaderHeight/2)];
+	UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(20, 9, 280, 28)];
+	UILabel *length = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 280, 21)];
 	
-	[view setBackgroundColor:[UIColor blueColor]];
+	[view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_agenda_level.png"]]];
 	[title setBackgroundColor:[UIColor clearColor]];
-	[title setTextColor:[UIColor whiteColor]];
+	[title setTextColor:[UIColor blackColor]];
 	[length setBackgroundColor:[UIColor clearColor]];
-	[length setTextColor:[UIColor whiteColor]];
+	[length setTextColor:[UIColor blackColor]];
 	
 	[title setTextAlignment:UITextAlignmentCenter];
 	[title setText:[NSString stringWithFormat:@"Level %d", section+1]];
