@@ -141,7 +141,7 @@
 			
 			// MAKE SURE THIS IS UNCOMMENTED OUT FOR FINAL TESTING!!!
 			if (![[FConfig instance] canCreateGroup]) {
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max number (2) of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max number (5) of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];
 				[self resetState];
 				return;

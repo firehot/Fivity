@@ -28,7 +28,8 @@
 
 #define kItunesAppLink		@"http://itunes.apple.com/us/app/id558072406?mt=8"
 
-#define kMaxCreatesPerDay   2
+#define kMaxGroupCreates	5
+#define kMaxPACreates		2
 
 @implementation FConfig
 
@@ -260,7 +261,7 @@ static FConfig *instance;
         
         NSNumber *count = [groupCreationRecords objectForKey:[formatter stringFromDate:today]];
         NSLog(@"%i", [count intValue]);
-        if ([count intValue] >= kMaxCreatesPerDay) {
+        if ([count intValue] >= kMaxGroupCreates) {
             return YES;
         }
         return NO;
@@ -276,7 +277,7 @@ static FConfig *instance;
 		NSString *key = [formatter stringFromDate:today];
         NSNumber *count = [activityCreationRecords objectForKey:key];
         NSLog(@"%i", [count intValue]);
-        if ([count intValue] >= kMaxCreatesPerDay) {
+        if ([count intValue] >= kMaxPACreates) {
             return YES;
         }
         return NO;
