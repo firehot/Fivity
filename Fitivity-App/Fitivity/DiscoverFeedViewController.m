@@ -47,15 +47,11 @@
 }
 
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
-//	NSData *picData = [imageFile getData];
 	imgView.image = [UIImage imageNamed:@"b_avatar_settings.png"]; //Placeholder
 	
 	if (imageFile != [NSNull null]) {
 		imgView.file = imageFile;
 		[imgView loadInBackground];
-	}
-	else {
-		[imgView setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	}
 	
 	if (styled) {
@@ -87,17 +83,11 @@
 	return [formatter stringFromDate:date];
 }
 
-- (BOOL)happendToday:(NSDate *)date {
+- (BOOL)happendToday:(int)cellIndex {
+	BOOL ret = YES;
 	
-	BOOL ret = NO;
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-	[formatter setDateFormat:@"MM/dd/yyyy"];
-	
-	NSDate *today = [NSDate date];
-	NSString *todayString = [formatter stringFromDate:today];
-	
-	if ([todayString isEqualToString:[formatter stringFromDate:date]]) {
-		ret = YES;
+	if (todayCells != [self.objects count] && cellIndex >= todayCells-1){
+		ret = NO;
 	}
 	
 	return ret;
@@ -136,13 +126,6 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
-		
-		if ([self happendToday:[object updatedAt]]) {
-			[cell.todayIndicator setHidden:NO];
-		}
-		else {
-			[cell.todayIndicator setHidden:YES];
-		}
 	}
 }
 
@@ -175,13 +158,6 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
-		
-		if ([self happendToday:[object updatedAt]]) {
-			[cell.todayIndicator setHidden:NO];
-		}
-		else {
-			[cell.todayIndicator setHidden:YES];
-		}
 	}
 }
 
@@ -205,13 +181,6 @@
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
-		
-		if ([self happendToday:[object updatedAt]]) {
-			[cell.todayIndicator setHidden:NO];
-		}
-		else {
-			[cell.todayIndicator setHidden:YES];
-		}
 	}
 }
 
@@ -236,13 +205,6 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
-		
-		if ([self happendToday:[object updatedAt]]) {
-			[cell.todayIndicator setHidden:NO];
-		}
-		else {
-			[cell.todayIndicator setHidden:YES];
-		}
 	}
 }
 #pragma mark - UIActionSheetDelegate
@@ -274,7 +236,7 @@
 		NSData *picture = [NSData dataWithContentsOfFile:path];
 		NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys: picture, @"data", @"image/png", @"mimeType", @"FitivityIcon", @"fileName", nil];
 		
-        [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:NO];
+        [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:YES];
     }
 }
 
@@ -295,6 +257,48 @@
 }
 
 #pragma mark - PFQueryTableViewController 
+
+- (void)objectsDidLoad:(NSError *)error {
+	[super objectsDidLoad:error];
+	
+	// Use the user's current calendar and time zone
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
+    [calendar setTimeZone:timeZone];
+	
+    // Selectively convert the date components (year, month, day) of the input date
+    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[NSDate date]];
+	
+    // Set the time components manually
+    [dateComps setHour:0];
+    [dateComps setMinute:0];
+    [dateComps setSecond:0];
+	
+    // Convert back
+    NSDate *beginningOfDay = [calendar dateFromComponents:dateComps];
+	beginningOfDay = [beginningOfDay dateByAddingTimeInterval:-14400];
+	
+	PFUser *c = nil;
+	todayCells = 0;
+	NSDate *temp = nil;
+	
+	for (PFObject *o in [self objects]) {
+		[o fetchInBackgroundWithBlock:nil];
+		temp = [o updatedAt];
+		
+		NSLog(@"%@ --- %@", [beginningOfDay description],[temp description]);
+		
+		if ([beginningOfDay compare:temp] == (NSOrderedSame | NSOrderedAscending)) {
+			todayCells++;
+		}
+		
+		c = [o objectForKey:@"creator"];
+		[c fetch];
+		[c objectForKey:@"image"];
+	}
+	
+	NSLog(@"Total Cells: %d", todayCells);
+}
 
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
@@ -362,6 +366,13 @@
 	if (numberOfMemebers < 2) {
 		[cell setDelegate:self];
 		[cell setUser:[object objectForKey:@"creator"]];
+	}
+	
+	if ([self happendToday:indexPath.row]) {
+		[cell.todayIndicator setHidden:NO];
+	}
+	else {
+		[cell.todayIndicator setHidden:YES];
 	}
 	
     return cell;
@@ -457,7 +468,7 @@
 		return;
 	}
 	
-	if ([self loadedInitialData]) {
+	if (self.loadedInitialData) {
 		return;
 	}
 	
