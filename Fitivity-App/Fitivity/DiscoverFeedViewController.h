@@ -13,14 +13,16 @@
 
 #import "LoginViewController.h"
 #import "DiscoverCell.h"
+#import "MBProgressHUD.h"
 
-@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate> {
+@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate> {
 	PFGeoPoint *userGeoPoint;
 	
 	int todayCells;
 }
 
 - (void)shareApp;
+- (void)handlePushNotification:(PFObject *)pa;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, assign) BOOL loadedInitialData;

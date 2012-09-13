@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *activityCreateTime;
 @property (weak, nonatomic) IBOutlet UILabel *placeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *inButton;
 
 @property (strong, nonatomic) IBOutlet UIView *activityFooter;
 @property (weak, nonatomic) IBOutlet UITextField *activityComment;

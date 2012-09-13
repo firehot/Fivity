@@ -11,9 +11,11 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
+#import "MBProgressHUD.h"
+
 #define kMaxCharCount	350
 
-@interface CreateProposeActivityViewController : UIViewController <UITextFieldDelegate> {
+@interface CreateProposeActivityViewController : UIViewController <UITextFieldDelegate, MBProgressHUDDelegate> {
 	
 	PFObject *propActivity;
 }

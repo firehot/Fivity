@@ -20,6 +20,7 @@
 - (IBAction)selectImage:(id)sender;
 - (IBAction)shareGroup:(id)sender;
 - (IBAction)shareActivity:(id)sender;
+- (IBAction)shareChallenge:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookLinkButton;
 @property (weak, nonatomic) IBOutlet UITableView *accountInfoTable;

@@ -33,6 +33,7 @@
 @synthesize activityMessage;
 @synthesize activityCreateTime;
 @synthesize placeLabel;
+@synthesize inButton;
 @synthesize activityFooter;
 @synthesize activityComment;
 @synthesize commentsTable;
@@ -85,7 +86,7 @@
 		return;
 	}
 	
-	if (![self userIsPartOfParentGroup]) {
+	if (!autoJoined && ![self userIsPartOfParentGroup]) {
 		[self autoJoinUser:[PFUser currentUser]];
 	}
 	
@@ -101,6 +102,17 @@
 			[comment setObject:[NSNull null] forKey:@"parent"];
 		}
 		
+		MBProgressHUD *HUD1 = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD1];
+		
+		HUD1.delegate = self;
+		HUD1.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+		HUD1.mode = MBProgressHUDModeText;
+		HUD1.labelText = @"Posting...";
+		
+		[HUD1 show:YES];
+		[HUD1 hide:YES afterDelay:.75];
+		
 		//Try to save the comment, if can't show error message
 		[comment saveInBackgroundWithBlock: ^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
@@ -115,6 +127,7 @@
 				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 				HUD.mode = MBProgressHUDModeCustomView;
 				HUD.labelText = @"Posted";
+				HUD.tag = 2;
 				
 				[HUD show:YES];
 				[HUD hide:YES afterDelay:1.75];
@@ -314,9 +327,14 @@
 	// Remove HUD from screen when the HUD was hidded
 	[hud removeFromSuperview];
 	
-	if (autoJoined) {
+	if (hud.tag == 2 && autoJoined) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Auto-Joined" message:@"Since you were not part of this group, we automatically joined you to it." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
+	}
+	
+	// Only let users post I'm in once at a time... 
+	if (hud.tag == 2) {
+		[inButton setEnabled:false];
 	}
 }
 
@@ -491,15 +509,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-	[self.navigationController.view addSubview:HUD];
 	
-	HUD.delegate = self;
-	HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-	HUD.mode = MBProgressHUDModeDeterminate;
-	
-	[HUD showWhileExecuting:@selector(getProposedActivityHistory) onTarget:self withObject:nil animated:YES];
+	[self getProposedActivityHistory];
 	
     PFObject *creator = [parent objectForKey:@"creator"];
 	[creator fetchIfNeeded];
@@ -548,6 +559,7 @@
 	[self setActivityFooter:nil];
 	[self setActivityComment:nil];
 	[self setPlaceLabel:nil];
+	[self setInButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

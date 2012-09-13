@@ -563,6 +563,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">inButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="115469844"/>
+					</object>
+					<int key="connectionID">42</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="356311586"/>
 						<reference key="destination" ref="372490531"/>
@@ -797,7 +805,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">41</int>
+			<int key="maxID">42</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -837,6 +845,7 @@
 						<string key="commentsTable">UITableView</string>
 						<string key="creatorName">UILabel</string>
 						<string key="creatorPicture">UIImageView</string>
+						<string key="inButton">UIButton</string>
 						<string key="placeLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -871,6 +880,10 @@
 						<object class="IBToOneOutletInfo" key="creatorPicture">
 							<string key="name">creatorPicture</string>
 							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="inButton">
+							<string key="name">inButton</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="placeLabel">
 							<string key="name">placeLabel</string>

@@ -63,6 +63,12 @@
 	}
 }
 
+- (void)handlePushNotification:(PFObject *)pa {
+	[pa fetchIfNeeded];
+	
+	ProposedActivityViewController *activity = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:pa];
+	[self.navigationController pushViewController:activity animated:YES];
+}
 
 - (NSAttributedString *)colorLabelString:(NSString *)string {
 	NSArray *components = [string componentsSeparatedByString:@" at "];
@@ -220,7 +226,7 @@
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
 	                                   @"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation.", @"caption",
-									   @"You can download it in in the Apple App Store or in Google Play", @"description",
+									   @"You can download it in the Apple App Store or in Google Play", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
 		
@@ -238,6 +244,13 @@
 		
         [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:YES];
     }
+}
+
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
 }
 
 #pragma mark - LoginViewController Delegate
@@ -286,7 +299,7 @@
 		[o fetchInBackgroundWithBlock:nil];
 		temp = [o updatedAt];
 		
-		NSLog(@"%@ --- %@", [beginningOfDay description],[temp description]);
+		//NSLog(@"%@ --- %@", [beginningOfDay description],[temp description]);
 		
 		if ([beginningOfDay compare:temp] == (NSOrderedSame | NSOrderedAscending)) {
 			todayCells++;
@@ -297,7 +310,7 @@
 		[c objectForKey:@"image"];
 	}
 	
-	NSLog(@"Total Cells: %d", todayCells);
+	//NSLog(@"Total Cells: %d", todayCells);
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
@@ -409,6 +422,14 @@
 		return;
 	}
 	
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	[HUD show:YES];
+	
 	PFObject *object = [self objectAtIndexPath:indexPath];
 	
 	//Get the data if it hasn't been pulled from the server yet
@@ -434,6 +455,7 @@
 			GroupPageViewController *groupPage = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place
 																						 activity:[group objectForKey:@"activity"] challenge:challenge autoJoin:NO];
 			[self.navigationController pushViewController:groupPage animated:YES];
+			[HUD hide:YES];
 			break;
 		}
 		case kCellTypePA: {
@@ -442,6 +464,7 @@
 			ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:selectedPA];
 			
 			[self.navigationController pushViewController:pa animated:YES];
+			[HUD hide:YES];
 			break;
 		}
 		default:
@@ -520,7 +543,8 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 10;
-        UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
+        
+		UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
         UIImage *shareAppDown = [UIImage imageNamed:@"b_share_down.png"];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:shareApp forState:UIControlStateNormal];
@@ -530,7 +554,6 @@
         
         UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = share;
-        
     }
     return self;
 }

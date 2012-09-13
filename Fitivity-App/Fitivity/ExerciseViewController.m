@@ -7,6 +7,9 @@
 //
 
 #import "ExerciseViewController.h"
+#import "FTabBarViewController.h"
+#import "AppDelegate.h"
+#import "SocialSharer.h"
 
 @interface ExerciseViewController ()
 
@@ -16,6 +19,7 @@
 
 @synthesize youtubeView;
 @synthesize image;
+
 
 #pragma mark - Helper Methods
 
@@ -29,6 +33,7 @@
     
     NSString *html = [NSString stringWithFormat:youTubeVideoHTML, url, frame.size.width, frame.size.height];
 	[youtubeView loadHTMLString:html baseURL:nil];
+	videoURL = [NSURL URLWithString:url];
 }
 
 #pragma mark - 
@@ -52,6 +57,9 @@
 	//Parse gives boolean types back as integers 
 	int video = [[exercise objectForKey:@"isLink"] intValue];
 	if (video == 1) {
+		
+		isVideo = YES;
+		
 		[youtubeView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall_img.png"]]];
 		[youtubeView setHidden:NO];
 		[image setHidden:YES];
@@ -59,6 +67,9 @@
 		[self loadURL:[exercise objectForKey:@"url"] inFrame:youtubeView.frame];
 	}
 	else {
+		
+		isVideo = NO;
+		
 		[youtubeView setHidden:YES];
 		[image setHidden:NO];
 		

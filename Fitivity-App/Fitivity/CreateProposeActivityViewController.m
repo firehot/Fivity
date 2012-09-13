@@ -161,7 +161,18 @@
 		return;
 	}
 	else {
+		
 		[self postProposedActivity];
+		
+		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeText;
+		HUD.labelText = @"Posting...";
+		
+		[HUD show:YES];
+		[HUD hide:YES afterDelay:1.0];
 	}
 }
 
@@ -184,6 +195,13 @@
 		[textField setText:[[textField text] substringToIndex:kMaxCharCount]];
 		return;
 	}
+}
+
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
 }
 
 #pragma mark - UITextField Delegate 

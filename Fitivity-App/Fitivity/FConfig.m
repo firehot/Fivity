@@ -21,6 +21,7 @@
 #define kPushStatus			@"status"
 #define kPostGroupStart		@"groupshare"
 #define kPostPAStart		@"pashare"
+#define kPostChallenge		@"challengeshare"
 
 #define kCreateDataPath		@"/createRecords.plist"
 #define kActivityDataPath	@"/groupActivityRecords.plist"
@@ -201,6 +202,11 @@ static FConfig *instance;
 	[defaults setBool:status forKey:kPostGroupStart];
 }
 
+- (void)setShareChallenge:(BOOL)status {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:status forKey:kPostChallenge];
+}
+
 - (void)initializeChallenges {
 	//Get all of the most recent challenges
 	challengeGroups = [[NSMutableDictionary alloc] init];
@@ -319,6 +325,11 @@ static FConfig *instance;
 - (BOOL)shouldSharePAStart {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	return [defaults boolForKey:kPostPAStart];
+}
+
+- (BOOL)shouldShareChallenge {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	return [defaults boolForKey:kPostChallenge];
 }
 
 #pragma mark - NSDictionary Methods

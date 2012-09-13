@@ -11,6 +11,9 @@
 
 @interface ExerciseViewController : UIViewController {
 	PFObject *exercise;
+	
+	BOOL isVideo;
+	NSURL *videoURL;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil event:(PFObject *)event;

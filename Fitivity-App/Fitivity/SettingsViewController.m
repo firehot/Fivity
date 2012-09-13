@@ -62,6 +62,12 @@ bool shareActivity;
 				[alert show];
                 [twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_unlink.png"] forState:UIControlStateNormal];
 				[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_unlink_down.png"] forState:UIControlStateHighlighted];
+				
+				// Automatically set sharing to on
+				[[FConfig instance] setShareGroupPost:YES];
+				[[FConfig instance] setSharePAPost:YES];
+				[[FConfig instance] setShareChallenge:YES];
+				[self setUpSharing];
 			}
 			
 			if (error) {
@@ -103,6 +109,12 @@ bool shareActivity;
 				[alert show];
 				[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink.png"] forState:UIControlStateNormal];
 				[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_unlink_down.png"] forState:UIControlStateHighlighted];
+				
+				// Automatically set sharing to on
+				[[FConfig instance] setShareGroupPost:YES];
+				[[FConfig instance] setSharePAPost:YES];
+				[[FConfig instance] setShareChallenge:YES];
+				[self setUpSharing];
 			}
 			
 			if (error) {
@@ -162,11 +174,42 @@ bool shareActivity;
 }
 
 - (IBAction)shareGroup:(id)sender {
+	
+	BOOL linked = [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]] || [PFTwitterUtils isLinkedWithUser:[PFUser currentUser]];
+	
+	if (!linked) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Linked" message:@"You must link your account with either Twitter or Facebook before turning these settings on." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
 	[[FConfig instance] setShareGroupPost:![[FConfig instance] shouldShareGroupStart]];
 	[self setUpSharing];
 }
+
 - (IBAction)shareActivity:(id)sender {
+	BOOL linked = [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]] || [PFTwitterUtils isLinkedWithUser:[PFUser currentUser]];
+	
+	if (!linked) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Linked" message:@"You must link your account with either Twitter or Facebook before turning these settings on." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
 	[[FConfig instance] setSharePAPost:![[FConfig instance] shouldSharePAStart]];
+	[self setUpSharing];
+}
+
+- (IBAction)shareChallenge:(id)sender {
+	BOOL linked = [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]] || [PFTwitterUtils isLinkedWithUser:[PFUser currentUser]];
+	
+	if (!linked) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Linked" message:@"You must link your account with either Twitter or Facebook before turning these settings on." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
+	[[FConfig instance] setShareChallenge:![[FConfig instance] shouldShareChallenge]];
 	[self setUpSharing];
 }
 
@@ -259,6 +302,7 @@ bool shareActivity;
 	
 	BOOL groupStatus = [[FConfig instance] shouldShareGroupStart];
 	BOOL paStatus = [[FConfig instance] shouldSharePAStart];
+	BOOL challengeStatus = [[FConfig instance] shouldShareChallenge];
 	
 	if (groupStatus) {
 		[shareGroupButton setImage:[UIImage imageNamed:@"media_control_on.png"] forState:UIControlStateNormal];
@@ -277,6 +321,16 @@ bool shareActivity;
 		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off.png"] forState:UIControlStateNormal];
 		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
 	}
+
+	// ONCE YOU ADD THE CHALLENGE BUTOON CHANGE THIS AND IT WILL WORK
+//	if (challengeStatus) {
+//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_on.png"] forState:UIControlStateNormal];
+//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_on_down.png"] forState:UIControlStateHighlighted];
+//	}
+//	else {
+//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off.png"] forState:UIControlStateNormal];
+//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
+//	}
 }
 
 #pragma mark - UITableViewDelegate 
@@ -482,6 +536,14 @@ bool shareActivity;
 	else {
 		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link.png"] forState:UIControlStateNormal];
 		[facebookLinkButton setImage:[UIImage imageNamed:@"b_facebook_link_down.png"] forState:UIControlStateHighlighted];
+	}
+	
+	if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
+		[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_unlink.png"] forState:UIControlStateNormal];
+		[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_unlink_down.png"] forState:UIControlStateHighlighted];
+	} else {
+		[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_link.png"] forState:UIControlStateNormal];
+		[twitterLinkButton setImage:[UIImage imageNamed:@"b_twitter_link_down.png"] forState:UIControlStateHighlighted];
 	}
 	
 	[self setUpSharing];

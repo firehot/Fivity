@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface ChallengesViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ChallengesViewController : UIViewController <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, retain) NSString *groupType;
 @property (nonatomic, retain) NSMutableArray *challenges;

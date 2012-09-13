@@ -32,6 +32,7 @@
 - (BOOL)groupHasChallenges:(NSString *)groupType;
 - (BOOL)shouldSharePAStart;
 - (BOOL)shouldShareGroupStart;
+- (BOOL)shouldShareChallenge;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
@@ -52,6 +53,7 @@
 - (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i;
 - (void)setSharePAPost:(BOOL)status;
 - (void)setShareGroupPost:(BOOL)status;
+- (void)setShareChallenge:(BOOL)status;
 
 - (NSDictionary *)getTypes;
 

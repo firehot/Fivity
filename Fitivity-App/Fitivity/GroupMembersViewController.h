@@ -11,7 +11,7 @@
 
 #import "GooglePlacesObject.h"
 
-@interface GroupMembersViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface GroupMembersViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate> {
 	NSArray *members;
 }
 

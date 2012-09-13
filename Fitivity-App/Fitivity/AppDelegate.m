@@ -148,6 +148,10 @@
 #ifndef DEBUG
 					NSLog(@"Succeeded Posting Comment");
 #endif
+					[self.tabBarView showLeftTab];
+					NSArray *vc = [[self.tabBarView leftNavigationController] viewControllers];
+					DiscoverFeedViewController *d = (DiscoverFeedViewController *)[vc objectAtIndex:0];
+					[d handlePushNotification:pa];
 				}
 				else if (error) {
 					NSString *errorMessage = @"An unknown error occurred while joining the group.";
