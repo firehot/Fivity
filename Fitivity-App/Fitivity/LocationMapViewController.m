@@ -17,14 +17,14 @@
 
 @synthesize place;
 @synthesize mapView;
+@synthesize userLocationButton;
 
 #pragma mark - MKMapViewDelegate
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation {
 	
 	static NSString* showAnnotationIdentifier = @"showAnnotationIdentifier";
-	MKPinAnnotationView* pinView = (MKPinAnnotationView *)
-	[mapView dequeueReusableAnnotationViewWithIdentifier:showAnnotationIdentifier];
+	MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:showAnnotationIdentifier];
 	if (!pinView){
 		// if an existing pin view was not available, create one
 		MKPinAnnotationView* customPinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:showAnnotationIdentifier];
@@ -94,6 +94,18 @@
     return self;
 }
 
+- (IBAction)zoomToUser:(id)sender {
+	
+	userLoc = mapView.userLocation.location;
+	[mapView setShowsUserLocation:NO];
+	
+	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([userLoc coordinate], 1000, 1000);
+	[mapView setRegion:region animated:YES];
+	
+	MapPin *pin = [[MapPin alloc] initWithCoordinates:[userLoc coordinate] placeName:@"My Location" description:@""];
+	[mapView addAnnotation:pin];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
@@ -105,10 +117,13 @@
 	
 	MapPin *pin = [[MapPin alloc] initWithCoordinates:[place coordinate] placeName:[place name] description:[place vicinity]];
 	[mapView addAnnotation:pin];
+	
+	[mapView setShowsUserLocation:YES];
 }
 
 - (void)viewDidUnload {
 	[self setMapView:nil];
+    [self setUserLocationButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

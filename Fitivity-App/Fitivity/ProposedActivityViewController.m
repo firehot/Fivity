@@ -10,6 +10,8 @@
 #import "NSError+FITParseUtilities.h"
 #import "NSAttributedString+Attributes.h"
 #import "UserProfileViewController.h"
+#import "GroupPageViewController.h"
+#import "GooglePlacesObject.h"
 
 #define kCellHeight						70.0f
 #define kHeaderHeight					20.0f
@@ -313,10 +315,54 @@
 	return ret;
 }
 
+- (void)viewGroup {
+	
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	HUD.tag = 2;
+	
+	[HUD show:YES];
+	[HUD hide:YES afterDelay:1.25];
+	
+	PFObject *group = [parent objectForKey:@"group"];
+	[group fetchIfNeeded];
+	
+	BOOL challenge = [[FConfig instance] groupHasChallenges:[group objectForKey:@"activity"]];
+	PFGeoPoint *point = [group objectForKey:@"location"];
+	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"]
+															latitude:point.latitude
+															longitude:point.longitude
+															placeIcon:nil
+															rating:nil
+															vicinity:nil
+															type:nil
+															reference:nil
+															url:nil
+															addressComponents:nil
+															formattedAddress:nil
+															formattedPhoneNumber:nil
+															website:nil
+															internationalPhone:nil
+															searchTerms:nil
+															distanceInFeet:nil
+															distanceInMiles:nil];
+	
+	GroupPageViewController *g = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController"
+																	bundle:nil place:place
+																	activity:[group objectForKey:@"activity"]
+																	challenge:challenge
+																	autoJoin:NO];
+	[self.navigationController pushViewController:g animated:YES];
+}
+
 #pragma mark - Helper Methods 
 
 - (NSString *)getFormattedStringForDate:(NSDate *)date {
-	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	NSDateFormatter *formatter = [[NSDateFormatter  alloc] init];
 	[formatter setDateFormat:@"hh:mm a MM/dd"];
 	return [formatter stringFromDate:date];
 }
@@ -497,7 +543,7 @@
 			}			
 		}
 		
-		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Post" style:UIBarButtonItemStyleBordered target:self action:@selector(postComment)];
+		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Group" style:UIBarButtonItemStyleBordered target:self action:@selector(viewGroup)];
 		[self.navigationItem setRightBarButtonItem:button];
     }
     return self;

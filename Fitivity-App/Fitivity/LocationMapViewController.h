@@ -11,11 +11,16 @@
 
 #import "GooglePlacesObject.h"
 
-@interface LocationMapViewController : UIViewController <MKMapViewDelegate>
+@interface LocationMapViewController : UIViewController <MKMapViewDelegate> {
+	CLLocation *userLoc;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)thePlace;
 
+- (IBAction)zoomToUser:(id)sender;
+
 @property (nonatomic, retain) GooglePlacesObject *place;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIButton *userLocationButton;
 
 @end
