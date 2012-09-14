@@ -84,6 +84,32 @@
 	}
 }
 
+- (void)shareViewChallenge {
+	if ([[FConfig instance] shouldShareGroupStart]) {
+		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+			
+			NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals.", groupType, groupType];
+			
+			NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+										   [[FConfig instance] getFacebookAppID], @"app_id",
+										   [[FConfig instance] getItunesAppLink], @"link",
+										   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+										   @"Fitivity", @"name",
+										   message, @"caption",
+										   @"Download the free fitivity in the Apple App Store or in Google Play", @"description",
+										   @"Go download this app!",  @"message",
+										   nil];
+			
+			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+		}
+		if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
+			NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app using this link.", groupType, groupType];
+			[[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
+		}
+	}
+	
+}
+
 - (void)shareApp {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
 	
@@ -98,24 +124,26 @@
     
     if ([title isEqualToString:@"Facebook"]) {
 		
+		NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals.", groupType, groupType];
+		
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
 									   [[FConfig instance] getItunesAppLink], @"link",
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
-	                                   @"", @"caption",
-									   @"Download fitivity in the Apple App Store or in Google Play", @"description",
+	                                   message, @"caption",
+									   @"Download the free fitivity in the Apple App Store or in Google Play", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-		NSString *message = @"";
-		[[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+		NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app using this link.", groupType, groupType];
+		[[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Download fitivity in in the Apple App Store or in Google Play. %@", [[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app in the Apple App Store or in Google Play. %@", groupType, groupType, [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = [NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play! Download it now in the Apple App Store: <a href=\"%@\">%@</a>", [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		NSString *bodyHTML = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. You can download it for free in the Apple App Store or in Google Play! Download it now in the Apple App Store: <a href=\"%@\">%@</a>", groupType, groupType, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];

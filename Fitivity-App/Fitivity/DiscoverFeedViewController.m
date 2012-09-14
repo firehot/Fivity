@@ -226,17 +226,17 @@
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
 	                                   @"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation.", @"caption",
-									   @"You can download it in the Apple App Store or in Google Play", @"description",
+									   @"You can download it for free in the Apple App Store or in Google Play", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-        [[SocialSharer sharer] shareMessageWithTwitter:@"Join #fitivity, the community for people interested in sports & fitness. Download it now in the Apple App Store." image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Join #fitivity, the community for people interested in sports & fitness. Download the free app in the Apple App Store." image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play. %@", [[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it for free in the Apple App Store or in Google Play. %@", [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = [NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it in in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		NSString *bodyHTML = [NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it for free in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];
