@@ -23,13 +23,17 @@ typedef NSInteger ShareType;
 
 @protocol SocialSharerDelegate;
 
-@interface SocialSharer : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, PF_FBDialogDelegate, MBProgressHUDDelegate> {
+@interface SocialSharer : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, PF_FBDialogDelegate, PF_FBFriendPickerDelegate, MBProgressHUDDelegate> {
 	UIWindow *mainWindow;
+	
+	PF_FBFriendPickerViewController *friendPicker;
+	NSMutableDictionary *fbInfo;
 }
 
 + (SocialSharer *)sharer;
 + (SocialSharer *)sharerWithDelegate:(id<SocialSharerDelegate>)d;
 
+- (void)shareWithFacebookUsers:(NSMutableDictionary *)info facebook:(PF_Facebook *)facebook;
 - (void)shareWithFacebook:(NSMutableDictionary *)info facebook:(PF_Facebook *)facebook;
 - (void)shareMessageWithTwitter:(NSString *)tweet image:(UIImage *)img link:(NSURL *)url;
 - (void)shareTextMessage:(NSString *)text;
@@ -37,6 +41,7 @@ typedef NSInteger ShareType;
 
 @property (nonatomic, assign) id <SocialSharerDelegate> delegate;
 @property (nonatomic, retain) MBProgressHUD *HUD;
+@property (nonatomic, retain) PF_Facebook *facebookInstance;
 
 @end
 

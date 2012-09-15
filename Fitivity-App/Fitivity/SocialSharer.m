@@ -14,6 +14,7 @@
 @implementation SocialSharer
 
 @synthesize delegate;
+@synthesize facebookInstance;
 @synthesize HUD;
 
 static SocialSharer *instance;
@@ -48,6 +49,27 @@ static SocialSharer *instance;
 	if ([windows respondsToSelector:@selector(objectAtIndex:)]) {
 		mainWindow = [windows objectAtIndex:0];
 		HUD = [[MBProgressHUD alloc] initWithWindow:mainWindow];
+	}
+}
+
+- (void)shareWithFacebookUsers:(NSMutableDictionary *)info facebook:(PF_Facebook *)facebook {
+		
+	NSLog(@"%@", [[[facebook session] permissions] description]);
+	
+	fbInfo = info;
+	self.facebookInstance = facebook;
+	
+	if (friendPicker == nil) {
+		friendPicker = [[PF_FBFriendPickerViewController alloc] init];
+		friendPicker.title = @"Pick Friends";
+		friendPicker.delegate = self;
+	}
+	
+	[friendPicker loadData];
+	[friendPicker clearSelection];
+	
+	if ([delegate respondsToSelector:@selector(presentModalViewController:animated:)]) {
+		[((UIViewController *)delegate) presentModalViewController:friendPicker animated:YES];
 	}
 }
 
@@ -200,6 +222,43 @@ static SocialSharer *instance;
 	}
 }
 
+#pragma mark - PF_FBFriendPickerDelegate
+
+- (void)facebookViewControllerDoneWasPressed:(id)sender {
+    NSMutableString *text = [[NSMutableString alloc] init];
+    
+    // we pick up the users from the selection, and create a string that we use to update the text view
+    // at the bottom of the display; note that self.selection is a property inherited from our base class
+    for (id<PF_FBGraphUser> user in friendPicker.selection) {
+        if ([text length]) {
+            [text appendString:@","];
+        }
+        [text appendString:user.id];
+    }
+	
+	NSLog(@"%@",text);
+	
+	if (![self.facebookInstance isSessionValid]) {
+		NSArray *permissions = [NSArray arrayWithObjects:@"offline_access", nil];
+		[self.facebookInstance authorize:permissions];
+	} else {
+		[fbInfo setObject:text forKey:@"to"];
+		[self.facebookInstance dialog:@"publish_stream" andParams:fbInfo andDelegate:self];
+	}
+
+    
+	if ([delegate respondsToSelector:@selector(dismissModalViewControllerAnimated:)]) {
+		[((UIViewController *)delegate) dismissModalViewControllerAnimated:YES];
+	}
+}
+
+- (void)facebookViewControllerCancelWasPressed:(id)sender {
+	if ([delegate respondsToSelector:@selector(dismissModalViewControllerAnimated:)]) {
+		[((UIViewController *)delegate) dismissModalViewControllerAnimated:YES];
+	}
+}
+
+
 #pragma mark - PF_FBDialogBox Delegate 
 
 /*
@@ -298,7 +357,7 @@ static SocialSharer *instance;
 	}
 }
 
-#pragma mark MBProgressHUD Delegate 
+#pragma mark - MBProgressHUD Delegate
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded

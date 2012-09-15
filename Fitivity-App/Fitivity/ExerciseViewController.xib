@@ -39,7 +39,7 @@
 					<object class="IBUIImageView" id="206775290">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{320, 367}</string>
+						<string key="NSFrame">{{13, 12}, {294, 343}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1056029780"/>
@@ -50,7 +50,7 @@
 					<object class="IBUIWebView" id="1056029780">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 367}</string>
+						<string key="NSFrame">{{13, 12}, {294, 343}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -170,13 +170,13 @@
 					<string key="className">ExerciseViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="image">PFImageView</string>
+						<string key="image">UIImageView</string>
 						<string key="youtubeView">UIWebView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="image">
 							<string key="name">image</string>
-							<string key="candidateClassName">PFImageView</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="youtubeView">
 							<string key="name">youtubeView</string>

@@ -230,7 +230,7 @@
 									   @"Go download this app!",  @"message",
 									   nil];
 		
-        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+		[[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
         [[SocialSharer sharer] shareMessageWithTwitter:@"Join #fitivity, the community for people interested in sports & fitness. Download the free app in the Apple App Store." image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"SMS"]) {

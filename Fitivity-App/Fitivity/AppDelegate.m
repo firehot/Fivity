@@ -52,6 +52,9 @@
 	//Register for push notifications
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
 	
+	//Resolve complie time errors
+	[PF_FBProfilePictureView class];
+	
     return YES;
 }
 
@@ -189,6 +192,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+	[PF_FBSession.activeSession close];
 }
 
 @end

@@ -12,6 +12,8 @@
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "Reachability.h"
+
 @interface FConfig : NSObject {
     NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups, *activityCreationRecords;
 	NSDictionary *placeTypes;
@@ -56,5 +58,7 @@
 - (void)setShareChallenge:(BOOL)status;
 
 - (NSDictionary *)getTypes;
+
+- (NetworkStatus)currentNetworkStatus;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "FConfig.h"
-#import "Reachability.h"
 #import "GooglePlacesObject.h"
 
 #define kParseAppID			@"MmUj6HxQcfLSOUs31lG7uNVx9sl5dZR6gv0FqGHq"
@@ -336,6 +335,13 @@ static FConfig *instance;
 
 - (NSDictionary *)getTypes {
 	return (placeTypes == nil) ? [[NSDictionary alloc] init] : placeTypes;
+}
+
+#pragma mark NetworkStatus Methods 
+
+- (NetworkStatus)currentNetworkStatus {
+	Reachability *hostReach = [Reachability reachabilityForInternetConnection];
+	return [hostReach currentReachabilityStatus];
 }
 
 #pragma mark - NSString methods 

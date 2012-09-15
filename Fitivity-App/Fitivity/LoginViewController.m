@@ -140,7 +140,7 @@
 			return;
 		}
 		
-		NSArray *permissionsArray = [NSArray arrayWithObjects:@"user_about_me", @"user_location", @"email", @"offline_access", nil];
+		NSArray *permissionsArray = [NSArray arrayWithObjects:@"user_about_me", @"user_location", @"email", @"publish_stream", @"offline_access", nil];
 		
 		[PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error){
 			if (error || !user) {

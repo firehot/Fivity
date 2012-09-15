@@ -16,11 +16,10 @@
 
 #define kHeaderHeight		40
 
-@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, PF_FBRequestDelegate> {
+@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate> {
 	PFUser *userProfile;
 	
 	NSMutableArray *groupResults;
-	NSMutableData *profilePictureData;
 	NSMutableDictionary *updatedGroups;
 }
 
@@ -33,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *groupsTable;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userPicture;
+@property (strong, nonatomic) IBOutlet PF_FBProfilePictureView *facebookProfilePicture;
 
 @end
 

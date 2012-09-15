@@ -202,6 +202,8 @@
 	
 	UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.navigationItem.rightBarButtonItem = share;
+	
+	[self shareViewChallenge];
 }
 
 - (void)viewDidUnload {

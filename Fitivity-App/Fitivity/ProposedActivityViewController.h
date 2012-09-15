@@ -17,7 +17,7 @@
 #import "MBProgressHUD.h"
 #import "CommentCell.h"
 
-@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate, ProposedActivityCellDelegate, CommentCellDelegate> {
+@interface ProposedActivityViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, MBProgressHUDDelegate, ProposedActivityCellDelegate, CommentCellDelegate> {
 	NSMutableArray *results;
 	
 	BOOL posting, autoJoined;

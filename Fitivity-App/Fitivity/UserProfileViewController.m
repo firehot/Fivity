@@ -25,6 +25,7 @@
 @synthesize groupsTable;
 @synthesize userNameLabel;
 @synthesize userPicture;
+@synthesize facebookProfilePicture;
 
 #pragma mark - Helper Methods 
 
@@ -63,14 +64,15 @@
 }
 
 - (void)setCorrectPicture {
-	PFFile *pic = [userProfile objectForKey:@"image"];
-	
-	if ([PFFacebookUtils isLinkedWithUser:userProfile]) {
+	if (mainUser && [PFFacebookUtils isLinkedWithUser:userProfile]) {
 		[self requestFacebookData];
 	}
-	else if (pic && pic != [NSNull null]) {
-		NSData *picData = [pic getData];
-		[self.userPicture setImage:[UIImage imageWithData:picData]];
+	else {
+		PFFile *pic = [userProfile objectForKey:@"image"];
+		if (pic && pic != [NSNull null]) {
+			NSData *picData = [pic getData];
+			[self.userPicture setImage:[UIImage imageWithData:picData]];
+		}
 	}
 	
 	//Round the pictures edges and add border
@@ -128,49 +130,52 @@
 	return ret;
 }
 
-- (void)requestFacebookData { 
+- (void)getImageRepresentationOfFBProfilePicture {
 	
-	// Create request for user's facebook data
-    NSString *requestPath = @"me/?fields=name,picture&type=large";
-    
-    // Send request to facebook
-    [[PFFacebookUtils facebook] requestWithGraphPath:requestPath andDelegate:self];
-}
-
-#pragma mark - Facebook Delegate 
-
--(void)request:(PF_FBRequest *)request didLoad:(id)result {
-    NSDictionary *userData = (NSDictionary *)result; // The result is a dictionary
+	//Get image representation of the PF_FBProfilePictureView
+	CGFloat scale = 1.0;
+	if([[UIScreen mainScreen]respondsToSelector:@selector(scale)]) {
+		CGFloat tmp = [[UIScreen mainScreen]scale];
+		if (tmp > 1.5) {
+			scale = 2.0;
+		}
+	}
 	
-	self.userNameLabel.text = [userData objectForKey:@"name"];
-	
-	profilePictureData = [[NSMutableData alloc] init];
-	NSString *picURL = [(NSDictionary *)[(NSDictionary *)[userData objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
-	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:picURL] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:2];
-	
-	[NSURLConnection connectionWithRequest:urlRequest delegate:self];
-}
-
-#pragma mark - NSURLConnectioin Delegate 
-
-// Called every time a chunk of the data is received
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [profilePictureData appendData:data]; // Build the image
-}
-
-// Called when the entire image is finished downloading
--(void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    // Set the image in the header imageView
-    [self.userPicture setImage:[UIImage imageWithData:profilePictureData]];
+	UIGraphicsBeginImageContextWithOptions(facebookProfilePicture.bounds.size, YES, scale);
+	[facebookProfilePicture.layer renderInContext:UIGraphicsGetCurrentContext()];
+	UIImage *profilePicImg = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+		
+	[self.userPicture setImage:profilePicImg];
 	
 	//Upload to parse for future use
-	PFFile *imageFile = [PFFile fileWithData:profilePictureData];
+	PFFile *imageFile = [PFFile fileWithData:UIImagePNGRepresentation(profilePicImg)];
 	[imageFile save];
 	
 	PFUser *user = [PFUser currentUser];
 	[user setObject:imageFile forKey:@"image"];
 	[user save];
+
+}
+
+- (void)requestFacebookData {
 	
+	if (PF_FBSession.activeSession.isOpen) {
+		[[PF_FBRequest requestForMe] startWithCompletionHandler:^(PF_FBRequestConnection *connection, NSDictionary<PF_FBGraphUser> *user, NSError *error) {
+			if (!error) {
+				self.userNameLabel.text = user.name;
+				self.facebookProfilePicture.profileID = user.id;
+				
+				NSTimeInterval delay = 2.0;
+				if ([[FConfig instance] connected]) {
+					if ([[FConfig instance] currentNetworkStatus] == ReachableViaWiFi) {
+						delay = 1.0;
+					} 
+					[self performSelector:@selector(getImageRepresentationOfFBProfilePicture) withObject:nil afterDelay:delay];
+				}				
+			}
+		}];
+	}
 }
 
 #pragma mark - MBProgressHUDDelegate methods
@@ -321,8 +326,7 @@
 #pragma mark - IBAction's 
 
 - (IBAction)enlargePicture:(id)sender {
-	PFFile *pic = [userProfile objectForKey:@"image"];
-	NDArtworkPopout *pop = [[NDArtworkPopout alloc] initWithImage:[UIImage imageWithData:[pic getData]]];
+	NDArtworkPopout *pop = [[NDArtworkPopout alloc] initWithImage:userPicture.image];
 	[pop show];
 }
 
@@ -400,6 +404,7 @@
 	[self setGroupsTable:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
+	[self setFacebookProfilePicture:nil];
     [super viewDidUnload];
 }
 

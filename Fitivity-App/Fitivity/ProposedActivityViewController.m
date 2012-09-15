@@ -13,6 +13,10 @@
 #import "GroupPageViewController.h"
 #import "GooglePlacesObject.h"
 
+#import "SocialSharer.h"
+#import "AppDelegate.h"
+#import "FTabBarViewController.h"
+
 #define kCellHeight						70.0f
 #define kHeaderHeight					20.0f
 #define kFooterHeight					45.0f
@@ -315,6 +319,9 @@
 	return ret;
 }
 
+/*
+ *	Method is no longer in use... presents the group that the PA is part of.
+ */
 - (void)viewGroup {
 	
 	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -357,6 +364,49 @@
 																	challenge:challenge
 																	autoJoin:NO];
 	[self.navigationController pushViewController:g animated:YES];
+}
+
+- (void)shareApp {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+	
+	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:@"Facebook"]) {
+		
+		NSString *message = @"";
+		
+		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   [[FConfig instance] getFacebookAppID], @"app_id",
+									   [[FConfig instance] getItunesAppLink], @"link",
+									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+									   @"Fitivity", @"name",
+									   message, @"caption",
+									   @"You can download it in the Apple App Store or in Google Play", @"description",
+									   @"Go download this app!",  @"message",
+									   nil];
+		
+        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+    } else if ([title isEqualToString:@"Twitter"]) {
+		NSString *message = @"";
+        [[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
+    } else if ([title isEqualToString:@"SMS"]) {
+        [[SocialSharer sharer] shareTextMessage:@""];
+    } else if ([title isEqualToString:@"Email"]) {
+		NSString *bodyHTML = [NSString stringWithFormat:@"Join the  group to do  with me and other members of the Fitivity community. You can download the free fitivity app in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		
+		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
+		NSData *picture = [NSData dataWithContentsOfFile:path];
+		NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys: picture, @"data", @"image/png", @"mimeType", @"FitivityIcon", @"fileName", nil];
+		
+        [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:YES];
+    }
 }
 
 #pragma mark - Helper Methods 
@@ -543,8 +593,16 @@
 			}			
 		}
 		
-		UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:@"Group" style:UIBarButtonItemStyleBordered target:self action:@selector(viewGroup)];
-		[self.navigationItem setRightBarButtonItem:button];
+		UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
+		UIImage *shareAppDown = [UIImage imageNamed:@"b_share_down.png"];
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button setImage:shareApp forState:UIControlStateNormal];
+		[button setImage:shareAppDown forState:UIControlStateHighlighted];
+		[button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
+		button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+		
+		UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
+		self.navigationItem.rightBarButtonItem = share;
     }
     return self;
 }
