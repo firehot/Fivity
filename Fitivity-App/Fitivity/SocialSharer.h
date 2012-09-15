@@ -23,7 +23,7 @@ typedef NSInteger ShareType;
 
 @protocol SocialSharerDelegate;
 
-@interface SocialSharer : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, PF_FBDialogDelegate, PF_FBFriendPickerDelegate, MBProgressHUDDelegate> {
+@interface SocialSharer : NSObject <UIAlertViewDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate, PF_FBDialogDelegate, PF_FBRequestDelegate, PF_FBFriendPickerDelegate, MBProgressHUDDelegate> {
 	UIWindow *mainWindow;
 	
 	PF_FBFriendPickerViewController *friendPicker;

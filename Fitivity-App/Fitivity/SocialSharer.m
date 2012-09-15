@@ -53,8 +53,6 @@ static SocialSharer *instance;
 }
 
 - (void)shareWithFacebookUsers:(NSMutableDictionary *)info facebook:(PF_Facebook *)facebook {
-		
-	NSLog(@"%@", [[[facebook session] permissions] description]);
 	
 	fbInfo = info;
 	self.facebookInstance = facebook;
@@ -225,25 +223,33 @@ static SocialSharer *instance;
 #pragma mark - PF_FBFriendPickerDelegate
 
 - (void)facebookViewControllerDoneWasPressed:(id)sender {
-    NSMutableString *text = [[NSMutableString alloc] init];
-    
+
+    NSMutableArray *ids = [[NSMutableArray alloc] init];
+	
     // we pick up the users from the selection, and create a string that we use to update the text view
     // at the bottom of the display; note that self.selection is a property inherited from our base class
     for (id<PF_FBGraphUser> user in friendPicker.selection) {
-        if ([text length]) {
-            [text appendString:@","];
-        }
-        [text appendString:user.id];
+		[ids addObject:user.id];
     }
-	
-	NSLog(@"%@",text);
-	
+		
 	if (![self.facebookInstance isSessionValid]) {
 		NSArray *permissions = [NSArray arrayWithObjects:@"offline_access", nil];
 		[self.facebookInstance authorize:permissions];
 	} else {
-		[fbInfo setObject:text forKey:@"to"];
-		[self.facebookInstance dialog:@"publish_stream" andParams:fbInfo andDelegate:self];
+		//For each person chosen, post it to their wall.
+		int index = 0;
+		for (NSString *s in ids) {
+			index ++;
+			[[PF_FBRequest requestWithGraphPath:[NSString stringWithFormat:@"%@/feed",s] parameters:fbInfo HTTPMethod:@"POST"] startWithCompletionHandler:^(PF_FBRequestConnection *connection, id result, NSError *error) {
+				
+				if (!error) {
+					if (index == [ids count]) {
+						[self dialogDidComplete:nil];
+					}
+				}
+				
+			}];
+		}
 	}
 
     
