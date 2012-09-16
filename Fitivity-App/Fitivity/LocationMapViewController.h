@@ -11,9 +11,7 @@
 
 #import "GooglePlacesObject.h"
 
-@interface LocationMapViewController : UIViewController <MKMapViewDelegate> {
-	CLLocation *userLoc;
-}
+@interface LocationMapViewController : UIViewController <MKMapViewDelegate> 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)thePlace;
 

@@ -96,13 +96,10 @@
 
 - (IBAction)zoomToUser:(id)sender {
 	
-	userLoc = mapView.userLocation.location;
-	[mapView setShowsUserLocation:NO];
-	
-	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([userLoc coordinate], 1000, 1000);
+	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([[FConfig instance] mostRecentCoordinate], 1000, 1000);
 	[mapView setRegion:region animated:YES];
 	
-	MapPin *pin = [[MapPin alloc] initWithCoordinates:[userLoc coordinate] placeName:@"My Location" description:@""];
+	MapPin *pin = [[MapPin alloc] initWithCoordinates:[[FConfig instance] mostRecentCoordinate] placeName:@"My Location" description:@""];
 	[mapView addAnnotation:pin];
 }
 
@@ -117,8 +114,6 @@
 	
 	MapPin *pin = [[MapPin alloc] initWithCoordinates:[place coordinate] placeName:[place name] description:[place vicinity]];
 	[mapView addAnnotation:pin];
-	
-	[mapView setShowsUserLocation:YES];
 }
 
 - (void)viewDidUnload {
