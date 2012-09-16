@@ -43,6 +43,7 @@
 		6C08845B15B1CF0900670936 /* GTMNSString+URLArguments.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C08845115B1C62F00670936 /* GTMNSString+URLArguments.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
 		6C08845D15B1D3D300670936 /* ChooseLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */; };
 		6C2030E315EC50030058E03D /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2030E215EC50030058E03D /* MessageUI.framework */; };
+		6C2813FD160677C9006B2DC6 /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2813FB1606773E006B2DC6 /* AnimatedGif.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
 		6C3E596B15B7A447009E2A00 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C3E596915B7A447009E2A00 /* SettingsViewController.m */; };
 		6C3E596C15B7A447009E2A00 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */; };
 		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
@@ -461,6 +462,8 @@
 		6C08845915B1C90A00670936 /* ChooseLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseLocationViewController.m; sourceTree = "<group>"; };
 		6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseLocationViewController.xib; sourceTree = "<group>"; };
 		6C2030E215EC50030058E03D /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		6C2813FA1606773E006B2DC6 /* AnimatedGif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimatedGif.h; sourceTree = "<group>"; };
+		6C2813FB1606773E006B2DC6 /* AnimatedGif.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnimatedGif.m; sourceTree = "<group>"; };
 		6C3E596815B7A447009E2A00 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		6C3E596915B7A447009E2A00 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SettingsViewController.xib; path = Fitivity/SettingsViewController.xib; sourceTree = "<group>"; };
@@ -1678,6 +1681,8 @@
 		6CDCECFF15F55475009D8E23 /* Challenges */ = {
 			isa = PBXGroup;
 			children = (
+				6C2813FA1606773E006B2DC6 /* AnimatedGif.h */,
+				6C2813FB1606773E006B2DC6 /* AnimatedGif.m */,
 				6C623A9F15E458A10025DE76 /* ChallengesViewController.h */,
 				6C623AA015E458A10025DE76 /* ChallengesViewController.m */,
 				6C86225A15F55FB7002FF9AD /* ChallengeOverviewViewController.h */,
@@ -2106,6 +2111,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C2813FD160677C9006B2DC6 /* AnimatedGif.m in Sources */,
+				6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */,
 				6C4C5BD415D1DD4D00E63CD3 /* DDAnnotation.m in Sources */,
 				6C4C5BD515D1DD4F00E63CD3 /* DDAnnotationView.m in Sources */,
 				57E9C05615B5CA74007C7C58 /* NSAttributedString+Attributes.m in Sources */,
@@ -2168,7 +2175,6 @@
 				57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */,
 				6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */,
 				6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */,
-				6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

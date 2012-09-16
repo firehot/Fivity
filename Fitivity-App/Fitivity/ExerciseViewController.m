@@ -76,9 +76,17 @@
 		[image setImage:[UIImage imageNamed:@"bg_chall_img.png"]];
 		
 		PFFile *pic = [exercise objectForKey:@"picture"];
+
 		if (pic) {
-			NSData *picData = [pic getData];
-			[image setImage:[UIImage imageWithData:picData]];
+//			NSData *picData = [pic getData];
+//			[image setImage:[UIImage imageWithData:picData]];
+			NSLog(@"%@",[pic url]);
+			
+			AnimatedGif *ag = [[AnimatedGif alloc] init];
+			[ag decodeGIF:[pic getData]];
+			UIImageView *imageView = [ag getAnimation];
+			[imageView setFrame:image.frame];
+			[image addSubview:imageView];
 		}
 	}
 }
