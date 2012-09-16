@@ -96,7 +96,7 @@
 										   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 										   @"Fitivity", @"name",
 										   message, @"caption",
-										   @"Download the free fitivity in the Apple App Store or in Google Play", @"description",
+										   @"Download the free fitivity app in the Apple App Store or in Google Play", @"description",
 										   @"Go download this app!",  @"message",
 										   nil];
 			
@@ -132,11 +132,11 @@
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
 	                                   message, @"caption",
-									   @"Download the free fitivity in the Apple App Store or in Google Play", @"description",
+									   @"Download the free fitivity app in the Apple App Store or in Google Play", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
 		
-        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+        [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
 		NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app using this link.", groupType, groupType];
 		[[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];

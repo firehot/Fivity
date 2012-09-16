@@ -377,10 +377,18 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
-    
+	
+    [parent fetchIfNeeded];
+	PFUser *creator = [parent objectForKey:@"creator"];
+	PFObject *group = [parent objectForKey:@"group"];
+	[creator fetchIfNeeded];
+	
+	NSString *message = [NSString stringWithFormat:@"%@ proposes %@ at %@. Here are the details: %@.",	[creator username],
+						 [group objectForKey:@"activity"],
+						 [group objectForKey:@"place"],
+						 [parent objectForKey:@"activityMessage"]];
+	
     if ([title isEqualToString:@"Facebook"]) {
-		
-		NSString *message = @"";
 		
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
@@ -388,18 +396,17 @@
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
 									   message, @"caption",
-									   @"You can download it in the Apple App Store or in Google Play", @"description",
+									   @"To join, download the free Fitivity app in the Apple App Store or in Google Play, and participate in physical activities with us.", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-		NSString *message = @"";
         [[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:@""];
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"%@. Download it in the App Store %@", message, [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = [NSString stringWithFormat:@"Join the  group to do  with me and other members of the Fitivity community. You can download the free fitivity app in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		NSString *bodyHTML = [NSString stringWithFormat:@"%@ To join, download the free Fitivity app in the Apple App Store or in Google Play, and participate in physical activities with us.<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", message, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];

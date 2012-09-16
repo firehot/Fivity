@@ -81,7 +81,7 @@
 									   @"Go download this app!",  @"message",
 									   nil];
 		
-        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+        [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
 		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. Download it for free in the Apple App Store.", [place name], activity];
         [[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];

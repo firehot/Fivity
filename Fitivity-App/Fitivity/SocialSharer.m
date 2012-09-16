@@ -233,7 +233,7 @@ static SocialSharer *instance;
     }
 		
 	if (![self.facebookInstance isSessionValid]) {
-		NSArray *permissions = [NSArray arrayWithObjects:@"offline_access", nil];
+		NSArray *permissions = [NSArray arrayWithObjects:@"offline_access, publish_stream", nil];
 		[self.facebookInstance authorize:permissions];
 	} else {
 		//For each person chosen, post it to their wall.
