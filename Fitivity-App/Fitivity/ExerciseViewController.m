@@ -52,7 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall_img.png"]]];
+	//[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall_img.png"]]];
 	
 	//Parse gives boolean types back as integers 
 	int video = [[exercise objectForKey:@"isLink"] intValue];
@@ -73,7 +73,7 @@
 		[youtubeView setHidden:YES];
 		[image setHidden:NO];
 		
-		[image setImage:[UIImage imageNamed:@"bg_chall_img.png"]];
+		//[image setImage:[UIImage imageNamed:@"bg_chall_img.png"]];
 		
 		PFFile *pic = [exercise objectForKey:@"picture"];
 
