@@ -102,7 +102,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[overview setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall_info.png"]]];
+//	[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall_info.png"]
+	UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_chall_info.png"]];
+	[imgView setFrame:overview.frame];
+	[self.view addSubview:imgView];
+	[self.view sendSubviewToBack:imgView];
+	[overview setBackgroundColor:[UIColor clearColor]];
 	[overview setText:[day objectForKey:@"overview"]];
 }
 
