@@ -31,6 +31,8 @@
 @synthesize shareGroupButton;
 @synthesize shareActivityButton;
 @synthesize twitterLinkButton;
+@synthesize scrollView;
+@synthesize shareChallengeButton;
 
 bool pushNotifications;
 bool shareGroup;
@@ -323,15 +325,14 @@ bool shareActivity;
 		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
 	}
 
-	// ONCE YOU ADD THE CHALLENGE BUTOON CHANGE THIS AND IT WILL WORK
-//	if (challengeStatus) {
-//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_on.png"] forState:UIControlStateNormal];
-//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_on_down.png"] forState:UIControlStateHighlighted];
-//	}
-//	else {
-//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off.png"] forState:UIControlStateNormal];
-//		[shareActivityButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
-//	}
+	if (challengeStatus) {
+		[shareChallengeButton setImage:[UIImage imageNamed:@"media_control_on.png"] forState:UIControlStateNormal];
+		[shareChallengeButton setImage:[UIImage imageNamed:@"media_control_on_down.png"] forState:UIControlStateHighlighted];
+	}
+	else {
+		[shareChallengeButton setImage:[UIImage imageNamed:@"media_control_off.png"] forState:UIControlStateNormal];
+		[shareChallengeButton setImage:[UIImage imageNamed:@"media_control_off_down.png"] forState:UIControlStateHighlighted];
+	}
 }
 
 #pragma mark - UITableViewDelegate 
@@ -501,6 +502,9 @@ bool shareActivity;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [scrollView setScrollEnabled:YES];
+    [scrollView setContentSize:CGSizeMake(320, 440)];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_location.png"]];
     
     UIImage *signOut = [UIImage imageNamed:@"b_sign_out.png"];
     UIImage *signOutDown = [UIImage imageNamed:@"b_sign_out_down.png"];

@@ -29,5 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *shareGroupButton;
 @property (weak, nonatomic) IBOutlet UIButton *shareActivityButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterLinkButton;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIButton *shareChallengeButton;
 
 @end
