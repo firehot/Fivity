@@ -600,8 +600,8 @@
 			}			
 		}
 		
-		UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
-		UIImage *shareAppDown = [UIImage imageNamed:@"b_share_down.png"];
+		UIImage *shareApp = [UIImage imageNamed:@"b_invite.png"];
+		UIImage *shareAppDown = [UIImage imageNamed:@"b_invite_down.png"];
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 		[button setImage:shareApp forState:UIControlStateNormal];
 		[button setImage:shareAppDown forState:UIControlStateHighlighted];

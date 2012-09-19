@@ -2265,6 +2265,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fitivity/Fitivity-Prefix.pch";
 				INFOPLIST_FILE = "Fitivity/Fitivity-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2284,6 +2285,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fitivity/Fitivity-Prefix.pch";
 				INFOPLIST_FILE = "Fitivity/Fitivity-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1502AED-1EE3-4771-AE74-62388573BDE9";
