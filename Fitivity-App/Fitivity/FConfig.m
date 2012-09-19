@@ -25,6 +25,7 @@
 #define kCreateDataPath		@"/createRecords.plist"
 #define kActivityDataPath	@"/groupActivityRecords.plist"
 #define kPADataPath			@"/proposedActivityRecords.plist"
+#define kChallengePath		@"/challengeRecords.plist"
 
 #define kItunesAppLink		@"http://itunes.apple.com/us/app/id558072406?mt=8"
 
@@ -71,6 +72,13 @@ static FConfig *instance;
 		[activityCreationRecords writeToFile:path atomically:YES];
 	}
 
+	path = [documentsDirectory stringByAppendingString:kChallengePath];
+	challengesViewed = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+	
+	if (challengesViewed == nil) {
+		challengesViewed = [[NSMutableDictionary alloc] init];
+		[challengesViewed writeToFile:path atomically:YES];
+	}
 	
 	//Set all of the types of places that should be allowed to create
 	placeTypes = [[NSDictionary alloc] initWithObjectsAndKeys: kBowlingAlley, @"Bowling Alley",
@@ -125,6 +133,18 @@ static FConfig *instance;
     NSString *path = [documentsDirectory stringByAppendingString:kPADataPath];
     
     if ([activityCreationRecords writeToFile:path atomically:YES]) {
+#ifdef DEBUG
+        NSLog(@"Saved to plist");
+#endif
+    }
+}
+
+- (void)saveChallengeData {
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingString:kChallengePath];
+    
+    if ([challengesViewed writeToFile:path atomically:YES]) {
 #ifdef DEBUG
         NSLog(@"Saved to plist");
 #endif
@@ -204,6 +224,13 @@ static FConfig *instance;
 - (void)setShareChallenge:(BOOL)status {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:status forKey:kPostChallenge];
+}
+
+- (void)setSharedForChallenge:(NSString *)challengeID {
+    if ([challengesViewed objectForKey:challengeID] == nil) {
+        [challengesViewed setObject:@"Shared" forKey:challengeID];
+    }
+	[self saveChallengeData];
 }
 
 - (void)initializeChallenges {
@@ -329,6 +356,13 @@ static FConfig *instance;
 - (BOOL)shouldShareChallenge {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	return [defaults boolForKey:kPostChallenge];
+}
+
+- (BOOL)shouldShareChallenge:(NSString *)cid {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	NSString *n = (NSString *)[challengesViewed objectForKey:cid];
+	return [defaults boolForKey:kPostChallenge] && n == nil;
 }
 
 #pragma mark - NSDictionary Methods

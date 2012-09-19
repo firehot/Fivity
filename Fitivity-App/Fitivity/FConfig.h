@@ -15,7 +15,7 @@
 #import "Reachability.h"
 
 @interface FConfig : NSObject {
-    NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups, *activityCreationRecords;
+    NSMutableDictionary *groupCreationRecords, *groupActivityRecords, *challengeGroups, *activityCreationRecords, *challengesViewed;
 	NSDictionary *placeTypes;
 }
 
@@ -35,6 +35,7 @@
 - (BOOL)shouldSharePAStart;
 - (BOOL)shouldShareGroupStart;
 - (BOOL)shouldShareChallenge;
+- (BOOL)shouldShareChallenge:(NSString *)cid;
 
 - (NSString *)getParseAppID;
 - (NSString *)getParseClientKey;
@@ -52,6 +53,7 @@
 - (void)setDoesHaveNotifications:(BOOL)status;
 - (void)incrementGroupCreationForDate:(NSDate *)date;
 - (void)incrementPACreationForDate:(NSDate *)date;
+- (void)setSharedForChallenge:(NSString *)challengeID;
 - (void)updateGroup:(NSString *)objectID withActivityCount:(NSNumber *)i;
 - (void)setSharePAPost:(BOOL)status;
 - (void)setShareGroupPost:(BOOL)status;

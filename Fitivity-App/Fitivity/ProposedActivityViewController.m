@@ -400,7 +400,7 @@
 									   @"Go download this app!",  @"message",
 									   nil];
 		
-        [[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+        [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
         [[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {

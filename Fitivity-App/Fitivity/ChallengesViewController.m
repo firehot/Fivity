@@ -85,7 +85,10 @@
 }
 
 - (void)shareViewChallenge {
-	if ([[FConfig instance] shouldShareGroupStart]) {
+	if ([[FConfig instance] shouldShareChallenge:groupType]) {
+		
+		[[FConfig instance] setSharedForChallenge:groupType];
+		
 		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 			
 			NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals.", groupType, groupType];
@@ -202,7 +205,7 @@
 	
 	UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.navigationItem.rightBarButtonItem = share;
-	
+
 	[self shareViewChallenge];
 }
 
