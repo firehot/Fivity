@@ -72,7 +72,6 @@
 		6C56BEEB160A91B9006D5EEC /* bv2_current_location_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEE7160A91B9006D5EEC /* bv2_current_location_down@2x.png */; };
 		6C56BEEC160A91B9006D5EEC /* bv2_current_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEE8160A91B9006D5EEC /* bv2_current_location.png */; };
 		6C56BEED160A91B9006D5EEC /* bv2_current_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEE9160A91B9006D5EEC /* bv2_current_location@2x.png */; };
-		6C56BEF0160A93AD006D5EEC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEEF160A93AD006D5EEC /* Default-568h@2x.png */; };
 		6C56BEF2160A945E006D5EEC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C56BEF1160A945E006D5EEC /* Parse.framework */; };
 		6C56BEF7160A95CC006D5EEC /* b_current_location_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEF3160A95CC006D5EEC /* b_current_location_down.png */; };
 		6C56BEF8160A95CC006D5EEC /* b_current_location_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEF4160A95CC006D5EEC /* b_current_location_down@2x.png */; };
@@ -514,7 +513,6 @@
 		6C56BEE7160A91B9006D5EEC /* bv2_current_location_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bv2_current_location_down@2x.png"; sourceTree = "<group>"; };
 		6C56BEE8160A91B9006D5EEC /* bv2_current_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bv2_current_location.png; sourceTree = "<group>"; };
 		6C56BEE9160A91B9006D5EEC /* bv2_current_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bv2_current_location@2x.png"; sourceTree = "<group>"; };
-		6C56BEEF160A93AD006D5EEC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6C56BEF1160A945E006D5EEC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../ParseStarterProject/Parse.framework; sourceTree = "<group>"; };
 		6C56BEF3160A95CC006D5EEC /* b_current_location_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b_current_location_down.png; sourceTree = "<group>"; };
 		6C56BEF4160A95CC006D5EEC /* b_current_location_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b_current_location_down@2x.png"; sourceTree = "<group>"; };
@@ -1280,7 +1278,6 @@
 		6CB1A71615ACFC1D00C0FF75 = {
 			isa = PBXGroup;
 			children = (
-				6C56BEEF160A93AD006D5EEC /* Default-568h@2x.png */,
 				6CB3EBF715E6E25600BDE38B /* MBProgressHUD */,
 				6C4C5BC015D1DD1C00E63CD3 /* DDAnnotation */,
 				6C08841B15B1C56000670936 /* Google Places */,
@@ -2148,7 +2145,6 @@
 				6C56BEEB160A91B9006D5EEC /* bv2_current_location_down@2x.png in Resources */,
 				6C56BEEC160A91B9006D5EEC /* bv2_current_location.png in Resources */,
 				6C56BEED160A91B9006D5EEC /* bv2_current_location@2x.png in Resources */,
-				6C56BEF0160A93AD006D5EEC /* Default-568h@2x.png in Resources */,
 				6C56BEF7160A95CC006D5EEC /* b_current_location_down.png in Resources */,
 				6C56BEF8160A95CC006D5EEC /* b_current_location_down@2x.png in Resources */,
 				6C56BEF9160A95CC006D5EEC /* b_current_location.png in Resources */,
@@ -2324,7 +2320,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1502AED-1EE3-4771-AE74-62388573BDE9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "041D93CF-D8C0-4681-8B74-D5EA93065762";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
