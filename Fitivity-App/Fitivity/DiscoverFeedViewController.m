@@ -500,6 +500,10 @@
 	
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
+	if ([self.objects count] == 0) {
+		[self loadObjects];
+	}
+	
 	[self setLoadedInitialData:YES];
 	[self.tableView reloadData];
 }

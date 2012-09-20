@@ -367,7 +367,7 @@
 }
 
 - (void)shareApp {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Activity" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
 	
 	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [sheet showFromTabBar:[[d tabBarView] backTabBar]];
@@ -515,17 +515,17 @@
 	return kHeaderHeight;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-	return kFooterHeight;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//	return kFooterHeight;
+//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	return activityHeader;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-	return activityFooter;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//	return activityFooter;
+//}
 
 #pragma mark - UITableViewDataSource
 
@@ -547,15 +547,15 @@
 //Move the text fields up so that the keyboard does not cover them
 - (void) animateTextField:(UITextField*)textField Up:(BOOL)up {
     
-	int movement = 0;
-	
-	if ([results count] == 0) {
-		movement = (up ? -kFirstCellMove : kFirstCellMove);
-	} else if ([results count] == 1) {
-		movement = (up ? -kSecondCellMove : kSecondCellMove);
-	} else {
-		movement = (up ? -kThirdCellMove : kThirdCellMove);
-	}
+	int movement = (up ? -kThirdCellMove : kThirdCellMove);
+//	
+//	if ([results count] == 0) {
+//		movement = (up ? -kFirstCellMove : kFirstCellMove);
+//	} else if ([results count] == 1) {
+//		movement = (up ? -kSecondCellMove : kSecondCellMove);
+//	} else {
+//		movement = (up ? -kThirdCellMove : kThirdCellMove);
+//	}
 	
 	[UIView beginAnimations: @"anim" context: nil];
 	[UIView setAnimationBeginsFromCurrentState: YES];
