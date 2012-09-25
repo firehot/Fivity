@@ -92,6 +92,15 @@
 
 #pragma mark - Helper Methods
 
+- (IBAction)zoomToUser:(id)sender {
+	
+	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([[FConfig instance] mostRecentCoordinate], 1000, 1000);
+	[mapView setRegion:region animated:YES];
+	
+	MapPin *pin = [[MapPin alloc] initWithCoordinates:[[FConfig instance] mostRecentCoordinate] placeName:@"My Location" description:@""];
+	[mapView addAnnotation:pin];
+}
+
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer {
 	if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
         return;

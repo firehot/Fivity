@@ -20,6 +20,7 @@
 - (void)handleLongPress:(UIGestureRecognizer *)gestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil location:(CLLocationCoordinate2D)userCoordinate;
 - (IBAction)submitNewLocation:(id)sender;
+- (IBAction)zoomToUser:(id)sender;
 
 @property (nonatomic, assign) id <AddLocationViewControllerDelegate> delegate;
 @property (nonatomic, retain) NSString *currentAddress;

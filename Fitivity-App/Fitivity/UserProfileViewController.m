@@ -166,10 +166,10 @@
 				self.userNameLabel.text = user.name;
 				self.facebookProfilePicture.profileID = user.id;
 				
-				NSTimeInterval delay = 2.0;
+				NSTimeInterval delay = 4.0;
 				if ([[FConfig instance] connected]) {
 					if ([[FConfig instance] currentNetworkStatus] == ReachableViaWiFi) {
-						delay = 1.0;
+						delay = 2.0;
 					} 
 					[self performSelector:@selector(getImageRepresentationOfFBProfilePicture) withObject:nil afterDelay:delay];
 				}				

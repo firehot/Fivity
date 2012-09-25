@@ -24,14 +24,48 @@
 #pragma mark - Helper Methods
 
 //Load the html to show the youtube player
-- (void)loadURL:(NSString *)url inFrame:(CGRect)frame {
-    NSString *youTubeVideoHTML = @"<html><head>\
-    <body style=\"margin:0\">\
-    <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
-    width=\"%0.0f\" height=\"%0.0f\"></embed>\
-    </body></html>";
-    
-    NSString *html = [NSString stringWithFormat:youTubeVideoHTML, url, frame.size.width, frame.size.height];
+- (void)loadURL:(NSString *)url inFrame:(CGRect)frame ios6:(BOOL)version {
+    NSString *youTubeVideoHTML, *html;
+	
+	if (version) {
+		
+		//For iOS6 need to use iFrame html 
+		NSRange range;
+		NSString *urlID = @"";
+		url = [url stringByReplacingOccurrencesOfString:@"http://" withString:@""];
+		
+		if ([url length] == 35) {
+			NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"v="];
+			range = [url rangeOfCharacterFromSet:charSet];
+		} else if ([url length] == 20) {
+			NSCharacterSet *charSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
+			range = [url rangeOfCharacterFromSet:charSet];
+		}
+		
+		if (range.location != NSNotFound) {
+			if (range.location < [url length]) {
+				urlID = [[url substringFromIndex:range.location] stringByReplacingOccurrencesOfString:@"/" withString:@""];
+				urlID = [urlID stringByReplacingOccurrencesOfString:@"v=" withString:@""];
+				
+			}
+		}
+		
+		youTubeVideoHTML = @"<html><head>\
+		<body style=\"margin:0\">\
+		<iframe class=\"youtube-player\" type=\"text/html\" width=\"%0.0f\" height=\"%0.0f\" src=\"http://www.youtube.com/embed/%@\" frameborder=\"0\"></iframe> \
+		</body></html>";
+		
+		html = [NSString stringWithFormat:youTubeVideoHTML, frame.size.width, frame.size.height, urlID];
+	} else {
+		youTubeVideoHTML = @"<html><head>\
+		<body style=\"margin:0\">\
+		<embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
+		width=\"%0.0f\" height=\"%0.0f\"></embed>\
+		</body></html>";
+		
+		html = [NSString stringWithFormat:youTubeVideoHTML, url, frame.size.width, frame.size.height];
+	}
+
 	[youtubeView loadHTMLString:html baseURL:nil];
 	videoURL = [NSURL URLWithString:url];
 }
@@ -63,7 +97,13 @@
 		[youtubeView setHidden:NO];
 		[image setHidden:YES];
 		
-		[self loadURL:[exercise objectForKey:@"url"] inFrame:youtubeView.frame];
+		if ([[[UIDevice currentDevice] systemVersion] integerValue] < 6) {
+			[self loadURL:[exercise objectForKey:@"url"] inFrame:youtubeView.frame ios6:NO];
+		} else {
+			[self loadURL:[exercise objectForKey:@"url"] inFrame:youtubeView.frame ios6:YES];
+		}
+		
+		
 	}
 	else {
 		

@@ -73,14 +73,14 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
-						<object class="NSCustomResource" key="IBUIHighlightedImage" id="844190691">
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="730510518">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">b_current_location_down.png</string>
+							<string key="NSResourceName">bv3_current_location_down.png</string>
 						</object>
-						<reference key="IBUISelectedImage" ref="844190691"/>
+						<reference key="IBUISelectedImage" ref="730510518"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">b_current_location.png</string>
+							<string key="NSResourceName">bv3_current_location.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
@@ -254,8 +254,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="b_current_location.png">{32, 32}</string>
-			<string key="b_current_location_down.png">{32, 32}</string>
+			<string key="bv3_current_location.png">{32, 32}</string>
+			<string key="bv3_current_location_down.png">{32, 32}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

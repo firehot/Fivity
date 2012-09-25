@@ -511,17 +511,17 @@
 	return kCellHeight;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return kHeaderHeight;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//	return kHeaderHeight;
+//}
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
 //	return kFooterHeight;
 //}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-	return activityHeader;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//	return activityHeader;
+//}
 
 //- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 //	return activityFooter;
