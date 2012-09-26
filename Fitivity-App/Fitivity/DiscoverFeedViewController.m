@@ -36,6 +36,7 @@
 @implementation DiscoverFeedViewController
 
 @synthesize locationManager;
+@synthesize sortCriteria;
 
 #pragma mark - Helper Methods 
 
@@ -132,6 +133,9 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		[cell setDelegate:self];
+		[cell setUser:user];
 	}
 }
 
@@ -164,6 +168,9 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		[cell setDelegate:self];
+		[cell setUser:user];
 	}
 }
 
@@ -211,8 +218,30 @@
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
+		
+		[cell setDelegate:self];
+		[cell setUser:user];
 	}
 }
+
+#pragma mark - UIPickerView Delegate
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+	return @"Activity";
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+	
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+	return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+	return 15;
+}
+
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -318,7 +347,7 @@
 - (PFQuery *)queryForTable {
     PFQuery *query = [PFQuery queryWithClassName:self.className];
 	
-    // If no objects are loaded in memory, we look to the cache first to fill the table
+	// If no objects are loaded in memory, we look to the cache first to fill the table
     // and then subsequently do a query against the network.
     if ([self.objects count] == 0) {
         query.cachePolicy = kPFCachePolicyCacheThenNetwork;
@@ -328,9 +357,13 @@
 	PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
 	[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
 	
+	if (![sortCriteria isEqualToString:@"All Groups"]) {
+		[innerGroupQuery whereKey:@"activity" equalTo:sortCriteria];
+	}
+	
 	[query whereKey:@"group" matchesQuery:innerGroupQuery];
     [query orderByDescending:@"updatedAt"];
-	
+
     return query;
 }
 
@@ -374,11 +407,6 @@
 			break;
 		default:
 			break;
-	}
-	
-	if (numberOfMemebers < 2) {
-		[cell setDelegate:self];
-		[cell setUser:[object objectForKey:@"creator"]];
 	}
 	
 	if ([self happendToday:indexPath.row]) {
@@ -558,6 +586,8 @@
         
         UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = share;
+		
+		sortCriteria = @"All Groups";
     }
     return self;
 }

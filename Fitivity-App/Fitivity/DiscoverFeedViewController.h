@@ -15,7 +15,7 @@
 #import "DiscoverCell.h"
 #import "MBProgressHUD.h"
 
-@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate> {
+@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
 	PFGeoPoint *userGeoPoint;
 	
 	int todayCells;
@@ -25,6 +25,7 @@
 - (void)handlePushNotification:(PFObject *)pa;
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) NSString *sortCriteria;
 @property (nonatomic, assign) BOOL loadedInitialData;
 
 @end
