@@ -79,8 +79,7 @@
 		[event setObject:user forKey:@"creator"];
 		[event setObject:group forKey:@"group"];
 		[event setObject:[NSNumber numberWithInt:1] forKey:@"number"]; //Only one user currently
-		[event setObject:@"NEW" forKey:@"status"];	//Just created groups are new
-		[event setObject:@"NORMAL" forKey:@"type"];	//Groups have type of NORMAL
+		[event setObject:[NSNumber numberWithInt:0] forKey:@"postType"];
 		
 		//If it doesn't save the first time, don't worry about it and try again in the future.
 		if (![event save]) {
@@ -139,7 +138,6 @@
 		//If both have been selected present the group
 		if (hasPickedActivity && hasPickedLocation) {
 			
-			// MAKE SURE THIS IS UNCOMMENTED OUT FOR FINAL TESTING!!!
 			if (![[FConfig instance] canCreateGroup]) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max number (5) of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 				[alert show];

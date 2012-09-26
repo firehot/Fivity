@@ -129,7 +129,7 @@
 
 - (void)attemptUpdateGroupInfo:(BOOL)userJoining {
 	@synchronized(self) {
-		//Update group member count & status logic
+		//Update group member count logic
 		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
 		[query whereKey:@"group" equalTo:group];
 		[query whereKey:@"type" equalTo:@"NORMAL"];
@@ -142,7 +142,6 @@
 				//User is joining the group
 				int temp = [num integerValue] + 1;
 				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
-				[updateGroup setObject:@"OLD" forKey:@"status"];
 			}
 			else if (!userJoining && [num integerValue] > 0) {
 				//User is unjoining from the group

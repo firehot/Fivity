@@ -124,18 +124,12 @@
 		
 		PFUser *user = [pa objectForKey:@"creator"];
 		[user fetchIfNeeded];
-		
-		PFFile *pic = [user objectForKey:@"image"];
-		
+				
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ proposed a group activity", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
-		[self imageView:cell.pictureView setImage:pic styled:YES];
-		
-		[cell setDelegate:self];
-		[cell setUser:user];
 	}
 }
 
@@ -159,29 +153,21 @@
 		
 		PFUser *user = [pa objectForKey:@"creator"];
 		[user fetchIfNeeded];
-		
-		PFFile *pic = [user objectForKey:@"image"];
-		
+				
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ proposed a group activity", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
 		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
-		[self imageView:cell.pictureView setImage:pic styled:YES];
-		
-		[cell setDelegate:self];
-		[cell setUser:user];
 	}
 }
 
-- (void)configureGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object {
+- (void)configureGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object memberCount:(int)count {
 	if (!object) {
 		return;
 	}
-	
-	int numberOfMembers = [[object objectForKey:@"number"] integerValue];
-	
-	[cell.titleLabel setText:[NSString stringWithFormat:@"%i people are doing", numberOfMembers]];
+		
+	[cell.titleLabel setText:[NSString stringWithFormat:@"%i people are doing", count]];
 	[cell.pictureView setImage:[UIImage imageNamed:@"group_icon.png"]];
 	
 	//Get the group reference
@@ -209,7 +195,7 @@
 	if (group && user) {
 		[group fetchIfNeeded];
 		[user fetchIfNeeded];
-		
+				
 		PFFile *pic = [user objectForKey:@"image"];
 		
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
@@ -381,9 +367,7 @@
 	[object fetchIfNeeded];
 	
 	//Get the type of the activity
-	NSString *typeString = [object objectForKey:@"type"];
-	NSString *statusString = [object objectForKey:@"status"];
-	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : ([statusString isEqualToString:@"COMMENT"]) ? kCellTypeComment : kCellTypePA;
+	int type = [[object objectForKey:@"postType"] integerValue];
 	int numberOfMemebers = 0;
 	
 	if (type == kCellTypeGroup) {
@@ -393,7 +377,7 @@
 	switch (type) {
 		case kCellTypeGroup:
 			if (numberOfMemebers > 1) {
-				[self configureGroupCell:cell withObject:object];	//Configure for multiple people doing this
+				[self configureGroupCell:cell withObject:object memberCount:numberOfMemebers];	//Configure for multiple people doing this
 			}
 			else {
 				[self configureNewGroupCell:cell withObject:object];	//New event with only one user

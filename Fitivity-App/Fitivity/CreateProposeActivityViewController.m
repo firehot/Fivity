@@ -61,8 +61,7 @@
         PFObject *activity = [PFObject objectWithClassName:@"ActivityEvent"];
         [activity setObject:[PFUser currentUser] forKey:@"creator"];
         [activity setObject:[NSNumber numberWithInt:1] forKey:@"number"];
-        [activity setObject:@"N/A" forKey:@"status"];
-        [activity setObject:@"GROUP" forKey:@"type"];
+         [activity setObject:[NSNumber numberWithInt:1] forKey:@"postType"];
 		
 		//Get a reference to the proposed activity we just created and make sure it is valid
 		PFObject *pa = [self getPARefFromServer];

@@ -184,7 +184,7 @@
 		[feed fetchIfNeeded];
 		
 		if (feed) {
-			[feed setObject:@"COMMENT" forKey:@"status"];
+			[feed setObject:[NSNumber numberWithInt:2] forKey:@"postType"];
 			[feed setObject:[PFUser currentUser] forKey:@"creator"];
 			
 			if (![feed save]) {
