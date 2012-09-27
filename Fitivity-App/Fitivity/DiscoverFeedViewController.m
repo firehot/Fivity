@@ -47,6 +47,12 @@
     [sheet showFromTabBar:[[d tabBarView] backTabBar]];
 }
 
+- (void)showSortPicker {
+	SortView *sv = [[SortView alloc] initWithFrame:self.view.frame];
+	[sv setDelegate:self];
+	[sv show];
+}
+
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
 	imgView.image = [UIImage imageNamed:@"b_avatar_settings.png"]; //Placeholder
 	
@@ -210,22 +216,22 @@
 	}
 }
 
-#pragma mark - UIPickerView Delegate
+#pragma mark - SortViewDelegate 
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return @"Activity";
-}
+- (void)sortView:(SortView *)view didFinishPickingSortCriteria:(NSString *)criteria {
+	[view dismiss];
+	sortCriteria = criteria;
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
 	
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-	return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return 15;
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeIndeterminate;
+	HUD.labelText = @"Loading...";
+	[HUD show:YES];
+	[HUD hide:YES afterDelay:3.0];
+	
+	[self loadObjects];
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -343,7 +349,7 @@
 	PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
 	[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
 	
-	if (![sortCriteria isEqualToString:@"All Groups"]) {
+	if (![sortCriteria isEqualToString:@"All Activities"]) {
 		[innerGroupQuery whereKey:@"activity" equalTo:sortCriteria];
 	}
 	
@@ -571,7 +577,7 @@
         UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = share;
 		
-		sortCriteria = @"All Groups";
+		sortCriteria = @"All Activities";
     }
     return self;
 }
@@ -586,6 +592,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	UIBarButtonItem *sort = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(showSortPicker)];
+	self.navigationItem.rightBarButtonItem = sort;
 	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
     

@@ -14,8 +14,9 @@
 #import "LoginViewController.h"
 #import "DiscoverCell.h"
 #import "MBProgressHUD.h"
+#import "SortView.h"
 
-@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate, SortViewDelegate> {
 	PFGeoPoint *userGeoPoint;
 	
 	int todayCells;

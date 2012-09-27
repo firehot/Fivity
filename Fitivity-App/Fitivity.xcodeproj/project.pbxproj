@@ -87,7 +87,6 @@
 		6C61768C15B0F24800E74B95 /* NSRegularExpression+FITUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD2F58815B0E77A0032FA34 /* NSRegularExpression+FITUtilities.m */; };
 		6C623AA115E458A20025DE76 /* ChallengesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C623AA015E458A10025DE76 /* ChallengesViewController.m */; };
 		6C623AA315E45F650025DE76 /* ChallengesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C623AA215E45F650025DE76 /* ChallengesViewController.xib */; };
-		6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C647DF515CEE6B800366A74 /* ActivityEvent.m */; };
 		6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C67187215F57B88002A3CC1 /* ExerciseViewController.m */; };
 		6C67187515F57B88002A3CC1 /* ExerciseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */; };
 		6C7722AF15B1EB670040DB1D /* ChooseActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C7722AD15B1EB670040DB1D /* ChooseActivityViewController.m */; };
@@ -149,6 +148,7 @@
 		6CB1A75B15ACFFBC00C0FF75 /* OpeningLogoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB1A75915ACFFBC00C0FF75 /* OpeningLogoViewController.xib */; };
 		6CB1B21915B1A17B004DDDCA /* FTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */; };
 		6CB3EBFB15E6E28100BDE38B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3EBFA15E6E26A00BDE38B /* MBProgressHUD.m */; };
+		6CB5008E1613CDD800604CB0 /* SortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB5008D1613CDD800604CB0 /* SortView.m */; };
 		6CB99C9B160A9DAC008547D1 /* bv3_current_location_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB99C97160A9DAC008547D1 /* bv3_current_location_down.png */; };
 		6CB99C9C160A9DAC008547D1 /* bv3_current_location_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB99C98160A9DAC008547D1 /* bv3_current_location_down@2x.png */; };
 		6CB99C9D160A9DAC008547D1 /* bv3_current_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB99C99160A9DAC008547D1 /* bv3_current_location.png */; };
@@ -535,8 +535,6 @@
 		6C623AA215E45F650025DE76 /* ChallengesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengesViewController.xib; sourceTree = "<group>"; };
 		6C623AA415E460B80025DE76 /* ChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeCell.h; sourceTree = "<group>"; };
 		6C623AA515E460B80025DE76 /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
-		6C647DF415CEE6B800366A74 /* ActivityEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityEvent.h; sourceTree = "<group>"; };
-		6C647DF515CEE6B800366A74 /* ActivityEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityEvent.m; sourceTree = "<group>"; };
 		6C67187115F57B88002A3CC1 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseViewController.h; sourceTree = "<group>"; };
 		6C67187215F57B88002A3CC1 /* ExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseViewController.m; sourceTree = "<group>"; };
 		6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExerciseViewController.xib; path = Fitivity/ExerciseViewController.xib; sourceTree = "<group>"; };
@@ -621,6 +619,8 @@
 		6CB1B21815B1A10D004DDDCA /* FTabBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FTabBarViewController.xib; path = Fitivity/FTabBarViewController.xib; sourceTree = "<group>"; };
 		6CB3EBF915E6E26A00BDE38B /* MBProgressHUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		6CB3EBFA15E6E26A00BDE38B /* MBProgressHUD.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		6CB5008C1613CDD800604CB0 /* SortView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortView.h; sourceTree = "<group>"; };
+		6CB5008D1613CDD800604CB0 /* SortView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortView.m; sourceTree = "<group>"; };
 		6CB99C97160A9DAC008547D1 /* bv3_current_location_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bv3_current_location_down.png; sourceTree = "<group>"; };
 		6CB99C98160A9DAC008547D1 /* bv3_current_location_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bv3_current_location_down@2x.png"; sourceTree = "<group>"; };
 		6CB99C99160A9DAC008547D1 /* bv3_current_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bv3_current_location.png; sourceTree = "<group>"; };
@@ -1106,8 +1106,8 @@
 		6C647DF215CEE69700366A74 /* Helper Class */ = {
 			isa = PBXGroup;
 			children = (
-				6C647DF415CEE6B800366A74 /* ActivityEvent.h */,
-				6C647DF515CEE6B800366A74 /* ActivityEvent.m */,
+				6CB5008C1613CDD800604CB0 /* SortView.h */,
+				6CB5008D1613CDD800604CB0 /* SortView.m */,
 			);
 			name = "Helper Class";
 			sourceTree = "<group>";
@@ -2229,7 +2229,6 @@
 				6CD705EA15BB17B6002FFC53 /* GroupMembersCell.m in Sources */,
 				6C57B6F015C20BCE000048DD /* ProposedActivityCell.m in Sources */,
 				6C57B71315C21ADC000048DD /* ProposedActivityViewController.m in Sources */,
-				6C647DF615CEE6B800366A74 /* ActivityEvent.m in Sources */,
 				6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */,
 				6C90CA1715D31EE200408193 /* DiscoverFeedViewController.m in Sources */,
 				6C90CA2115D34E0600408193 /* AddLocationHomeViewController.m in Sources */,
@@ -2239,6 +2238,7 @@
 				57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */,
 				6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */,
 				6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */,
+				6CB5008E1613CDD800604CB0 /* SortView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
