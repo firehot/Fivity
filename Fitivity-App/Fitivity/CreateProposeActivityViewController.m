@@ -118,8 +118,8 @@
 					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", [group objectId]];
 					NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
 										  [NSString stringWithFormat:@"%@ proposed an activity in the group %@", [[PFUser currentUser] username], [group objectForKey:@"activity"]], @"alert",
-										  @"increment", @"badge_type",
-										  [activity objectId], @"pa_id", nil];
+										  @"Increment", @"badge",
+										  [activity objectId], @"pa_id", @"default", @"sound", nil];
 					
 					PFPush *push = [[PFPush alloc] init];
 					[push setChannel:channel];

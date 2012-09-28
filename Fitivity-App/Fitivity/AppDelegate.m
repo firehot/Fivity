@@ -93,12 +93,6 @@
 		if (range.location == NSNotFound) {
 			
 			[PFPush handlePush:userInfo];
-			NSInteger count = [application applicationIconBadgeNumber];
-			NSString *badgeType = [userInfo objectForKey:@"badge_type"];
-			
-			if ([badgeType isEqualToString:@"increment"]) {
-				[application setApplicationIconBadgeNumber:++count];
-			}
 			
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Acitivty" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Join", nil];
 			[alert show];
