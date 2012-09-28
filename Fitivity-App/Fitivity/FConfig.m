@@ -21,6 +21,7 @@
 #define kPostGroupStart		@"groupshare"
 #define kPostPAStart		@"pashare"
 #define kPostChallenge		@"challengeshare"
+#define kSortedFeedKey		@"All Activities"
 
 #define kCreateDataPath		@"/createRecords.plist"
 #define kActivityDataPath	@"/groupActivityRecords.plist"
@@ -35,6 +36,7 @@
 @implementation FConfig
 
 @synthesize mostRecentCoordinate;
+@synthesize searchActivities;
 
 static FConfig *instance;
 
@@ -226,6 +228,11 @@ static FConfig *instance;
 	[defaults setBool:status forKey:kPostChallenge];
 }
 
+- (void)setSortedFeedKey:(NSString *)key {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:key forKey:kSortedFeedKey];
+}
+
 - (void)setSharedForChallenge:(NSString *)challengeID {
     if ([challengesViewed objectForKey:challengeID] == nil) {
         [challengesViewed setObject:@"Shared" forKey:challengeID];
@@ -252,7 +259,21 @@ static FConfig *instance;
 			}
 		}
 	}];
+}
 
+- (void)initializeSearchActivites {
+	PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
+	[query addAscendingOrder:@"name"];
+	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+		if (!error) {
+			//searchActivities = [NSMutableArray arrayWithArray:objects];
+			searchActivities = [[NSMutableArray alloc] initWithObjects:@"All Activities", nil];
+			
+			for (PFObject *o in objects) {
+				[searchActivities addObject:[o objectForKey:@"name"]];
+			}
+		}
+	}];
 }
 
 #pragma mark - UIColor methods
@@ -371,7 +392,7 @@ static FConfig *instance;
 	return (placeTypes == nil) ? [[NSDictionary alloc] init] : placeTypes;
 }
 
-#pragma mark NetworkStatus Methods 
+#pragma mark - NetworkStatus Methods 
 
 - (NetworkStatus)currentNetworkStatus {
 	Reachability *hostReach = [Reachability reachabilityForInternetConnection];
@@ -393,6 +414,7 @@ static FConfig *instance;
 }
 
 - (NSString *)getParseClientKey {
+	[self performSelector:@selector(initializeSearchActivites) withObject:nil afterDelay:0.4];
 	[self performSelector:@selector(initializeChallenges) withObject:nil afterDelay:0.4];
 	return kParseClientKey;
 }
@@ -415,6 +437,10 @@ static FConfig *instance;
 
 - (NSString *)getGooglePlacesAPIKey {
 	return kGooglePlacesAPIKey;
+}
+
+- (NSString *)getSortedFeedKey {
+	return [[NSUserDefaults standardUserDefaults] objectForKey:kSortedFeedKey];
 }
 
 @end

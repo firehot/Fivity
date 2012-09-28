@@ -342,10 +342,10 @@
 			[self performSelectorInBackground:@selector(attemptGetUserGroups) withObject:nil];
 		}
 		
-		if (userProfile && [PFFacebookUtils isLinkedWithUser:userProfile]) {
-			//Load FB name and Pic
-			[self requestFacebookData];
-		}
+//		if (userProfile && [PFFacebookUtils isLinkedWithUser:userProfile]) {
+//			//Load FB name and Pic
+//			[self requestFacebookData];
+//		}
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];

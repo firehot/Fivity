@@ -13,10 +13,15 @@
 @interface SortView : UIView <UIPickerViewDataSource, UIPickerViewDelegate> {
 	UIPickerView *sortPicker;
 	UINavigationBar *navBar;
+	
+	NSString *pickedActivity;
+	NSArray *items;
 }
 
 - (void)show;
 - (void)dismiss;
+
+- (id)initWithFrame:(CGRect)frame items:(NSArray *)i selectedKey:(NSString *)key ;
 
 @property (nonatomic, assign) id <SortViewDelegate> delegate;
 

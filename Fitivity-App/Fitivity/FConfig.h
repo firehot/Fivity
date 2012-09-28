@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic, assign) CLLocationCoordinate2D mostRecentCoordinate;
-
+@property (nonatomic, retain) NSMutableArray *searchActivities;
 // Get the singleton instance
 + (FConfig *)instance;
 
@@ -46,6 +46,7 @@
 - (NSString *)getGooglePlacesAPIKey;
 - (NSString *)getChallengeIDForActivityType:(NSString *)type;
 - (NSString *)getItunesAppLink;
+- (NSString *)getSortedFeedKey;
 
 - (UIColor *)getFitivityBlue;
 
@@ -58,6 +59,7 @@
 - (void)setSharePAPost:(BOOL)status;
 - (void)setShareGroupPost:(BOOL)status;
 - (void)setShareChallenge:(BOOL)status;
+- (void)setSortedFeedKey:(NSString *)key;
 
 - (NSDictionary *)getTypes;
 

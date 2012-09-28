@@ -15,11 +15,11 @@
 #pragma mark - UIPickerView Delegate
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return @"Activity";
+	return [items objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-	
+	pickedActivity = [[pickerView delegate] pickerView:pickerView titleForRow:row forComponent:component];
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -27,7 +27,7 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return 15;
+	return [items count];
 }
 
 #pragma mark - Helpers
@@ -51,7 +51,11 @@
 
 - (void)callDelegate {
 	if ([delegate respondsToSelector:@selector(sortView:didFinishPickingSortCriteria:)]) {
-		[delegate sortView:self didFinishPickingSortCriteria:@"Basketball"];
+		if (pickedActivity == nil) {
+			pickedActivity = [[FConfig instance] getSortedFeedKey];
+		}
+		[[FConfig instance] setSortedFeedKey:pickedActivity];
+		[delegate sortView:self didFinishPickingSortCriteria:pickedActivity];
 	}
 }
 
@@ -68,9 +72,11 @@
     [self performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:1.0];
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame items:(NSArray *)i selectedKey:(NSString *)key {
     self = [super initWithFrame:frame];
     if (self) {
+		items = i;
+		
 		UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
         
         self.frame = mainWindow.frame;
@@ -93,6 +99,9 @@
 		sortPicker.frame = CGRectMake(0.0, 265.0, 320.0, 216.0);
 		[sortPicker setShowsSelectionIndicator:YES];
 		[sortPicker setDelegate:self];
+		
+		int row = [items indexOfObject:key];
+		[sortPicker selectRow:row inComponent:0 animated:NO];
 		
 		[self addSubview:navBar];
 		[self addSubview:hideButton];

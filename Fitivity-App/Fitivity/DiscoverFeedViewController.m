@@ -48,7 +48,7 @@
 }
 
 - (void)showSortPicker {
-	SortView *sv = [[SortView alloc] initWithFrame:self.view.frame];
+	SortView *sv = [[SortView alloc] initWithFrame:self.view.frame items:[[FConfig instance] searchActivities] selectedKey:[[FConfig instance] getSortedFeedKey]];
 	[sv setDelegate:self];
 	[sv show];
 }
@@ -220,18 +220,29 @@
 
 - (void)sortView:(SortView *)view didFinishPickingSortCriteria:(NSString *)criteria {
 	[view dismiss];
-	sortCriteria = criteria;
-
-	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-	[self.navigationController.view addSubview:HUD];
 	
-	HUD.delegate = self;
-	HUD.mode = MBProgressHUDModeIndeterminate;
-	HUD.labelText = @"Loading...";
-	[HUD show:YES];
-	[HUD hide:YES afterDelay:3.0];
-	
-	[self loadObjects];
+	if (![sortCriteria isEqualToString:criteria]) {
+		sortCriteria = criteria;
+		
+		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeIndeterminate;
+		HUD.labelText = @"Loading...";
+		[HUD show:YES];
+		
+		NSTimeInterval delay = 5.5;
+		if ([[FConfig instance] connected]) {
+			if ([[FConfig instance] currentNetworkStatus] == ReachableViaWiFi) {
+				delay = 3.0;
+			}
+		}
+		
+		[HUD hide:YES afterDelay:delay];
+		
+		[self loadObjects];
+	}
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -278,6 +289,15 @@
 
 - (void)userLoggedIn {
 	if ([self.objects count] == 0) {
+		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeIndeterminate;
+		HUD.labelText = @"Loading...";
+		[HUD show:YES];
+		[HUD hide:YES afterDelay:3.0];
+		
 		[self loadObjects];
 	}
 }
@@ -519,6 +539,15 @@
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
 	if ([self.objects count] == 0) {
+		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeIndeterminate;
+		HUD.labelText = @"Loading...";
+		[HUD show:YES];
+		[HUD hide:YES afterDelay:3.0];
+		
 		[self loadObjects];
 	}
 	
@@ -577,7 +606,7 @@
         UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
         self.navigationItem.leftBarButtonItem = share;
 		
-		sortCriteria = @"All Activities";
+		sortCriteria = [[FConfig instance] getSortedFeedKey];
     }
     return self;
 }
