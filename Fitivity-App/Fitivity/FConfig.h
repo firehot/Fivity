@@ -63,6 +63,8 @@
 
 - (NSDictionary *)getTypes;
 
+- (NSArray *)getFacebookPermissions;
+
 - (NetworkStatus)currentNetworkStatus;
 
 @end

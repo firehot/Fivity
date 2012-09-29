@@ -139,10 +139,8 @@
 			
 			return;
 		}
-		
-		NSArray *permissionsArray = [NSArray arrayWithObjects:@"user_about_me", @"user_location", @"email", @"publish_stream", @"offline_access", nil];
-		
-		[PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error){
+				
+		[PFFacebookUtils logInWithPermissions:[[FConfig instance] getFacebookPermissions] block:^(PFUser *user, NSError *error){
 			if (error || !user) {
 				NSString *errorMessage = @"Couldn't login due to unknown error.";
 				if (error) {

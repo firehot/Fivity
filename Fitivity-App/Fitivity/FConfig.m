@@ -392,6 +392,12 @@ static FConfig *instance;
 	return (placeTypes == nil) ? [[NSDictionary alloc] init] : placeTypes;
 }
 
+#pragma mark - NSArray Methods 
+
+- (NSArray *)getFacebookPermissions {
+	return [NSArray arrayWithObjects:@"user_about_me", @"user_birthday", @"user_location", @"email", @"publish_stream", @"offline_access", nil];
+}
+
 #pragma mark - NetworkStatus Methods 
 
 - (NetworkStatus)currentNetworkStatus {

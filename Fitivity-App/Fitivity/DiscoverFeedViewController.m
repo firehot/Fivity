@@ -369,7 +369,7 @@
 	PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
 	[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
 	
-	if (![sortCriteria isEqualToString:@"All Activities"]) {
+	if (sortCriteria != nil && ![sortCriteria isEqualToString:@"All Activities"]) {
 		[innerGroupQuery whereKey:@"activity" equalTo:sortCriteria];
 	}
 	

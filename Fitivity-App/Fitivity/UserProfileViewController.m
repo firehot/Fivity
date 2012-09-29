@@ -13,6 +13,7 @@
 #import "GooglePlacesObject.h"
 #import "ProfileCell.h"
 #import "NDArtworkPopout.h"
+#import "NSString+StateAbreviator.h"
 
 @interface UserProfileViewController ()
 
@@ -23,9 +24,11 @@
 @synthesize mainUser;
 @synthesize userProfile;
 @synthesize groupsTable;
-@synthesize userNameLabel;
+@synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel;
 @synthesize userPicture;
 @synthesize facebookProfilePicture;
+@synthesize groupsView, aboutMeView;
+@synthesize segControl, toolbar;
 
 #pragma mark - Helper Methods 
 
@@ -154,16 +157,71 @@
 	
 	PFUser *user = [PFUser currentUser];
 	[user setObject:imageFile forKey:@"image"];
+	
+	if (![userAgeLabel.text isEqualToString:@"Age "]) {
+		int age = [[userAgeLabel.text stringByReplacingOccurrencesOfString:@"Age " withString:@""] intValue];
+		[user setObject:[NSNumber numberWithInt:age] forKey:@"age"];
+	}
+	
+	[user setObject:userHometownLabel.text forKey:@"hometown"];
 	[user save];
 
+}
+
+- (NSString *)getAgeString:(NSString *)birthDay {
+	NSDateFormatter *df = [[NSDateFormatter alloc] init];
+	[df setDateFormat:@"MM/DD/YYYY"];
+	NSDate *dob = [df dateFromString:birthDay];
+	
+	if (dob == nil || birthDay == nil) {
+		// Hasn't authorized yet
+		if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+			[PFFacebookUtils linkUser:[PFUser currentUser] permissions:[[FConfig instance] getFacebookPermissions] block:^(BOOL succeeded, NSError *error) {
+				if (succeeded) {
+					[self requestFacebookData];
+				}
+			}];
+		}
+		return @"Age ";
+	}
+	
+	int age;
+	
+	NSCalendar *calendar = [NSCalendar currentCalendar];
+	unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit;
+	NSDateComponents *dateComponentsNow = [calendar components:unitFlags fromDate:[NSDate date]];
+	NSDateComponents *dateComponentsBirth = [calendar components:unitFlags fromDate:dob];
+	
+	if (([dateComponentsNow month] < [dateComponentsBirth month]) ||
+		(([dateComponentsNow month] == [dateComponentsBirth month]) && ([dateComponentsNow day] < [dateComponentsBirth day]))) {
+		age = [dateComponentsNow year] - [dateComponentsBirth year] - 1;
+	} else {
+		age = [dateComponentsNow year] - [dateComponentsBirth year];
+	}
+	
+	return [NSString stringWithFormat:@"Age %i", age];
 }
 
 - (void)requestFacebookData {
 	
 	if (PF_FBSession.activeSession.isOpen) {
 		[[PF_FBRequest requestForMe] startWithCompletionHandler:^(PF_FBRequestConnection *connection, NSDictionary<PF_FBGraphUser> *user, NSError *error) {
-			if (!error) {
+			if (!error) {				
+				NSArray *location = [user.location.name componentsSeparatedByCharactersInSet:[NSCharacterSet punctuationCharacterSet]];
+				NSString *state;
+				if ([location count] > 1) {
+					//Assumes the location is CITY, STATE format 
+					state = [location objectAtIndex:1];
+					state = [[state stringByReplacingOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range:NSMakeRange(0, 2)] abreviateStateString];
+					
+					self.userHometownLabel.text = [[location objectAtIndex:0] stringByAppendingString:[NSString stringWithFormat:@", %@", state]];
+				} else {
+					self.userHometownLabel.text = user.location.name;
+				}
+				
 				self.userNameLabel.text = user.name;
+				self.userAgeLabel.text = [self getAgeString:user.birthday];
+				self.userOcupationLabel.text = user.fileType;
 				self.facebookProfilePicture.profileID = user.id;
 				
 				NSTimeInterval delay = 4.0;
@@ -330,6 +388,17 @@
 	[pop show];
 }
 
+- (IBAction)updateViews:(id)sender {
+	UISegmentedControl *seg = (UISegmentedControl *)sender;
+	if ([seg selectedSegmentIndex] == 0) {
+		[groupsView setHidden:NO];
+		[aboutMeView setHidden:YES];
+	} else {
+		[groupsView setHidden:YES];
+		[aboutMeView setHidden:NO];
+	}
+}
+
 #pragma mark - View Lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user {
@@ -364,6 +433,14 @@
     [super viewDidLoad];
 			
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+	[self.segControl setTintColor:[[FConfig instance] getFitivityBlue]];
+	[self.toolbar setTintColor:[[FConfig instance] getFitivityBlue]];
+	
+	[self.displayView addSubview:groupsView];
+	[self.displayView addSubview:aboutMeView];
+	[aboutMeView setHidden:YES];
+	
+	[aboutMeView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	
 	if (!userProfile) {
 		userProfile = [PFUser currentUser];
@@ -405,6 +482,12 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[self setFacebookProfilePicture:nil];
+	[self setDisplayView:nil];
+	[self setUserAgeLabel:nil];
+	[self setUserHometownLabel:nil];
+	[self setUserOcupationLabel:nil];
+	[self setToolbar:nil];
+	[self setSegControl:nil];
     [super viewDidUnload];
 }
 

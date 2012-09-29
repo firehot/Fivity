@@ -104,8 +104,7 @@ bool shareActivity;
 - (IBAction)linkUserWithFacebook:(id)sender {
 	//If they aren't linked with facebook, go to facebook and authenticate the app. Otherwise unlink the account
 	if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-		NSArray *permissionsArray = [NSArray arrayWithObjects:@"user_about_me", @"user_location", @"email", @"publish_stream", @"offline_access", nil];
-		[PFFacebookUtils linkUser:[PFUser currentUser] permissions:permissionsArray block:^(BOOL succeeded, NSError *error) {
+		[PFFacebookUtils linkUser:[PFUser currentUser] permissions:[[FConfig instance] getFacebookPermissions] block:^(BOOL succeeded, NSError *error) {
 			if (succeeded) {
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"facebookLogin" object:self];
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is now linked with Facebook!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
