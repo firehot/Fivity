@@ -136,6 +136,8 @@
 		6CA2691915AE2DEB00CD205C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA2691815AE2DEB00CD205C /* MobileCoreServices.framework */; };
 		6CA2691B15AE2E1200CD205C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA2691A15AE2E1200CD205C /* Security.framework */; };
 		6CAA52B21617295E00527B1B /* NSString+StateAbreviator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52B11617295E00527B1B /* NSString+StateAbreviator.m */; };
+		6CAA52BB1617894A00527B1B /* AboutGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52B91617894A00527B1B /* AboutGroupViewController.m */; };
+		6CAA52BC1617894A00527B1B /* AboutGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */; };
 		6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */; };
 		6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */; };
 		6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72915ACFC1D00C0FF75 /* CoreGraphics.framework */; };
@@ -598,6 +600,9 @@
 		6CA2691A15AE2E1200CD205C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6CAA52B01617295E00527B1B /* NSString+StateAbreviator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StateAbreviator.h"; sourceTree = "<group>"; };
 		6CAA52B11617295E00527B1B /* NSString+StateAbreviator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StateAbreviator.m"; sourceTree = "<group>"; };
+		6CAA52B81617894A00527B1B /* AboutGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutGroupViewController.h; sourceTree = "<group>"; };
+		6CAA52B91617894A00527B1B /* AboutGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutGroupViewController.m; sourceTree = "<group>"; };
+		6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutGroupViewController.xib; path = Fitivity/AboutGroupViewController.xib; sourceTree = "<group>"; };
 		6CB1A72115ACFC1D00C0FF75 /* Fitivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fitivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1652,6 +1657,8 @@
 				6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */,
 				6C57B71015C21ADC000048DD /* ProposedActivityViewController.h */,
 				6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */,
+				6CAA52B81617894A00527B1B /* AboutGroupViewController.h */,
+				6CAA52B91617894A00527B1B /* AboutGroupViewController.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1710,6 +1717,7 @@
 				6C90CA2015D34E0600408193 /* AddLocationHomeViewController.xib */,
 				6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */,
 				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
+				6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */,
 				575AECA315B6051200324958 /* GroupPageViewController.xib */,
 				6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */,
 				6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */,
@@ -2170,6 +2178,7 @@
 				6CB99C9C160A9DAC008547D1 /* bv3_current_location_down@2x.png in Resources */,
 				6CB99C9D160A9DAC008547D1 /* bv3_current_location.png in Resources */,
 				6CB99C9E160A9DAC008547D1 /* bv3_current_location@2x.png in Resources */,
+				6CAA52BC1617894A00527B1B /* AboutGroupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2245,6 +2254,7 @@
 				6C67187415F57B88002A3CC1 /* ExerciseViewController.m in Sources */,
 				6CB5008E1613CDD800604CB0 /* SortView.m in Sources */,
 				6CAA52B21617295E00527B1B /* NSString+StateAbreviator.m in Sources */,
+				6CAA52BB1617894A00527B1B /* AboutGroupViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

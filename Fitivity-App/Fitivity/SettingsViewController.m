@@ -259,18 +259,16 @@ bool shareActivity;
 - (IBAction)togglePushNotifications:(id)sender {
 	
 	//Run in background on another thread to avoid GUI lag
-	if(!pushNotifications){
-    [self performSelectorInBackground:@selector(registerPushNotificationsForCurrentUser) withObject:nil];
+	if(!pushNotifications) {
+		[self performSelectorInBackground:@selector(registerPushNotificationsForCurrentUser) withObject:nil];
 	
-	[[FConfig instance] setDoesHaveNotifications:YES];
+		[[FConfig instance] setDoesHaveNotifications:YES];
 	
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on.png"] forState:UIControlStateNormal];
-    [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_contorl_on_down.png"] forState:UIControlStateHighlighted];
+		[pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on.png"] forState:UIControlStateNormal];
+		[pushNotificationsButton setImage:[UIImage imageNamed:@"pn_contorl_on_down.png"] forState:UIControlStateHighlighted];
         
-    pushNotifications = YES;
-        
-        NSLog(@"Push notifications have been turned on");
-    }
+		pushNotifications = YES;
+	}
     else {
         [self performSelectorInBackground:@selector(unregisterPushNotificationsForCurrentUser) withObject:nil];
         
@@ -278,8 +276,8 @@ bool shareActivity;
         
         [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off.png"] forState:UIControlStateNormal];
         [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_off_down.png"] forState:UIControlStateHighlighted];
-        NSLog(@"Push notifications have been turned off");
-    pushNotifications = NO;
+
+		pushNotifications = NO;
     }
 }
 
@@ -287,7 +285,7 @@ bool shareActivity;
 
 - (void)setUpNotificationGUI {
 	BOOL status = [[FConfig instance] doesHavePushNotifications];
-    
+	
 	if (status) {
         [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on.png"] forState:UIControlStateNormal];
         [pushNotificationsButton setImage:[UIImage imageNamed:@"pn_control_on_down.png"] forState:UIControlStateHighlighted];

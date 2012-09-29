@@ -37,6 +37,10 @@
 	[self.navigationController pushViewController:settings animated:YES];
 }
 
+- (void)editInformation {
+	
+}
+
 - (void)attemptGetUserGroups {
 	
 	if (![[FConfig instance] connected]) {
@@ -176,7 +180,11 @@
 		int age = [[userAgeLabel.text stringByReplacingOccurrencesOfString:@"Age " withString:@""] intValue];
 		[user setObject:[NSNumber numberWithInt:age] forKey:@"age"];
 	}
-	[user setObject:userOcupationLabel.text forKey:@"occupation"];
+	
+	if (userOcupationLabel.text != nil) {
+		[user setObject:userOcupationLabel.text forKey:@"occupation"];
+	}
+	
 	[user setObject:userBioView.text forKey:@"bio"];
 	[user setObject:userHometownLabel.text forKey:@"hometown"];
 	[user save];
@@ -237,7 +245,6 @@
 				
 				self.userNameLabel.text = user.name;
 				self.userAgeLabel.text = [self getAgeString:user.birthday];
-				self.userOcupationLabel.text = user.fileType;
 				self.facebookProfilePicture.profileID = user.id;
 				
 				NSTimeInterval delay = 4.0;
@@ -247,37 +254,63 @@
 					} 
 					[self performSelector:@selector(getImageRepresentationOfFBProfilePicture) withObject:nil afterDelay:delay];
 				}				
+			} else {
+				//If there is an error load what is in parse
+				PFFile *pic = [userProfile objectForKey:@"image"];
+				if (pic && pic != [NSNull null]) {
+					NSData *picData = [pic getData];
+					[self.userPicture setImage:[UIImage imageWithData:picData]];
+				}
+				[self.userNameLabel setText:[userProfile username]];
+				
+				if ([[userProfile objectForKey:@"age"] intValue] == 0) {
+					[self.userAgeLabel setText:@""];
+				} else {
+					[self.userAgeLabel setText:[NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]]];
+				}
+				
+				[self.userHometownLabel setText:[userProfile objectForKey:@"hometown"]];
 			}
 		}];
 		
 		// Get extended info
 		[[PF_FBRequest requestForGraphPath:@"me/?fields=bio,education,work"] startWithCompletionHandler:^(PF_FBRequestConnection *connection, NSDictionary<PF_FBGraphObject> *result, NSError *error){
 			
-			if (result == nil) {
-				return;
-			}
-			
-			userBioView.text = [result objectForKey:@"bio"];
-			
-			//Array of Dictionaries
-			NSArray *education = [result objectForKey:@"education"];
-			//Array of Dictionaries
-			NSArray *work = [result objectForKey:@"work"];
-			
-			if (work == nil || [work count] == 0) {
-				if (education != nil && [education count] > 0) {
-					//Schools are listed starting with oldest
-//					NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
-//					NSDictionary *school = [ed objectForKey:@"school"];
-
-					userOcupationLabel.text = @"Student";
+			if (!error) {
+				if (result == nil) {
+					return;
+				}
+				
+				userBioView.text = [result objectForKey:@"bio"];
+				
+				//Array of Dictionaries
+				NSArray *education = [result objectForKey:@"education"];
+				//Array of Dictionaries
+				NSArray *work = [result objectForKey:@"work"];
+				
+				if (work == nil || [work count] == 0) {
+					if (education != nil && [education count] > 0) {
+						//Schools are listed starting with oldest
+//						NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
+//						NSDictionary *school = [ed objectForKey:@"school"];
+						
+						userOcupationLabel.text = @"Student";
+					}
+				} else {
+					NSDictionary *w = (NSDictionary *)[work objectAtIndex:0];
+//					NSDictionary *employer = [w objectForKey:@"employer"];
+					NSDictionary *job = [w objectForKey:@"position"];
+					
+					NSString *j = [job objectForKey:@"name"];
+					if (j == nil || [j isEqualToString:@" "]) {
+						[self.userOcupationLabel setText:[userProfile objectForKey:@"occupation"]];
+					} else {
+						userOcupationLabel.text = j;
+					}
 				}
 			} else {
-				NSDictionary *w = (NSDictionary *)[work objectAtIndex:0];
-//				NSDictionary *employer = [w objectForKey:@"employer"];
-				NSDictionary *job = [w objectForKey:@"position"];
-				
-				userOcupationLabel.text = (NSString *)[job objectForKey:@"name"];
+				[self.userOcupationLabel setText:[userProfile objectForKey:@"occupation"]];
+				[self.userBioView setText:[userProfile objectForKey:@"bio"]];
 			}
 		}];
 	}
@@ -514,8 +547,12 @@
         UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = settings;
 		
+		UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editInformation)];
+		self.navigationItem.leftBarButtonItem = editButton;
+		
 		updatedGroups = [[NSMutableDictionary alloc] init];
 	}
+	
     self.groupsTable.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
 	self.groupsTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 }
