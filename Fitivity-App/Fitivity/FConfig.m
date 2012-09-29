@@ -395,7 +395,7 @@ static FConfig *instance;
 #pragma mark - NSArray Methods 
 
 - (NSArray *)getFacebookPermissions {
-	return [NSArray arrayWithObjects:@"user_about_me", @"user_birthday", @"user_location", @"email", @"publish_stream", @"offline_access", nil];
+	return [NSArray arrayWithObjects:@"user_about_me", @"user_birthday", @"user_location", @"user_work_history", @"user_education_history", @"email", @"publish_stream", @"offline_access", nil];
 }
 
 #pragma mark - NetworkStatus Methods 

@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userOcupationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userHometownLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userPicture;
+@property (weak, nonatomic) IBOutlet UITextView *userBioView;
 @property (strong, nonatomic) IBOutlet PF_FBProfilePictureView *facebookProfilePicture;
 
 @end

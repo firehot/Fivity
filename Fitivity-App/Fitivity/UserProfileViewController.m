@@ -24,7 +24,7 @@
 @synthesize mainUser;
 @synthesize userProfile;
 @synthesize groupsTable;
-@synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel;
+@synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel, userBioView;
 @synthesize userPicture;
 @synthesize facebookProfilePicture;
 @synthesize groupsView, aboutMeView;
@@ -205,6 +205,7 @@
 - (void)requestFacebookData {
 	
 	if (PF_FBSession.activeSession.isOpen) {
+		//Get basic info
 		[[PF_FBRequest requestForMe] startWithCompletionHandler:^(PF_FBRequestConnection *connection, NSDictionary<PF_FBGraphUser> *user, NSError *error) {
 			if (!error) {				
 				NSArray *location = [user.location.name componentsSeparatedByCharactersInSet:[NSCharacterSet punctuationCharacterSet]];
@@ -231,6 +232,32 @@
 					} 
 					[self performSelector:@selector(getImageRepresentationOfFBProfilePicture) withObject:nil afterDelay:delay];
 				}				
+			}
+		}];
+		
+		// Get extended info
+		[[PF_FBRequest requestForGraphPath:@"me/?fields=bio,education,work"] startWithCompletionHandler:^(PF_FBRequestConnection *connection, NSDictionary<PF_FBGraphObject> *result, NSError *error){
+			userBioView.text = [result objectForKey:@"bio"];
+			
+			//Array of Dictionaries
+			NSArray *education = [result objectForKey:@"education"];
+			//Array of Dictionaries
+			NSArray *work = [result objectForKey:@"work"];
+			
+			if (work == nil || [work count] == 0) {
+				if (education != nil && [education count] > 0) {
+					//Schools are listed starting with oldest
+					NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
+					NSDictionary *school = [ed objectForKey:@"school"];
+
+					userOcupationLabel.text = [NSString stringWithFormat:@"Student at %@", [school objectForKey:@"name"]];
+				}
+			} else {
+				NSDictionary *w = (NSDictionary *)[work objectAtIndex:0];
+				NSDictionary *employer = [w objectForKey:@"employer"];
+				NSDictionary *job = [w objectForKey:@"position"];
+				
+				userOcupationLabel.text = [NSString stringWithFormat:@"%@ at %@", [job objectForKey:@"name"], [employer objectForKey:@"name"]];
 			}
 		}];
 	}
@@ -488,6 +515,7 @@
 	[self setUserOcupationLabel:nil];
 	[self setToolbar:nil];
 	[self setSegControl:nil];
+	[self setUserBioView:nil];
     [super viewDidUnload];
 }
 
