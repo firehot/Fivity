@@ -66,7 +66,8 @@
 	}];
 }
 
-- (void)setCorrectPicture {
+- (void)setCorrectData {
+		
 	if (mainUser && [PFFacebookUtils isLinkedWithUser:userProfile]) {
 		[self requestFacebookData];
 	}
@@ -76,6 +77,19 @@
 			NSData *picData = [pic getData];
 			[self.userPicture setImage:[UIImage imageWithData:picData]];
 		}
+		[self.userNameLabel setText:[userProfile username]];
+		[self.userOcupationLabel setText:[userProfile objectForKey:@"occupation"]];
+		
+		if ([[userProfile objectForKey:@"age"] intValue] == 0) {
+			[self.userAgeLabel setText:@""];
+		} else {
+			[self.userAgeLabel setText:[NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]]];
+		}
+		
+		
+		[self.userHometownLabel setText:[userProfile objectForKey:@"hometown"]];
+		[self.userBioView setText:[userProfile objectForKey:@"bio"]];
+
 	}
 	
 	//Round the pictures edges and add border
@@ -162,7 +176,8 @@
 		int age = [[userAgeLabel.text stringByReplacingOccurrencesOfString:@"Age " withString:@""] intValue];
 		[user setObject:[NSNumber numberWithInt:age] forKey:@"age"];
 	}
-	
+	[user setObject:userOcupationLabel.text forKey:@"occupation"];
+	[user setObject:userBioView.text forKey:@"bio"];
 	[user setObject:userHometownLabel.text forKey:@"hometown"];
 	[user save];
 
@@ -182,7 +197,7 @@
 				}
 			}];
 		}
-		return @"Age ";
+		return @"";
 	}
 	
 	int age;
@@ -237,6 +252,11 @@
 		
 		// Get extended info
 		[[PF_FBRequest requestForGraphPath:@"me/?fields=bio,education,work"] startWithCompletionHandler:^(PF_FBRequestConnection *connection, NSDictionary<PF_FBGraphObject> *result, NSError *error){
+			
+			if (result == nil) {
+				return;
+			}
+			
 			userBioView.text = [result objectForKey:@"bio"];
 			
 			//Array of Dictionaries
@@ -247,17 +267,17 @@
 			if (work == nil || [work count] == 0) {
 				if (education != nil && [education count] > 0) {
 					//Schools are listed starting with oldest
-					NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
-					NSDictionary *school = [ed objectForKey:@"school"];
+//					NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
+//					NSDictionary *school = [ed objectForKey:@"school"];
 
-					userOcupationLabel.text = [NSString stringWithFormat:@"Student at %@", [school objectForKey:@"name"]];
+					userOcupationLabel.text = @"Student";
 				}
 			} else {
 				NSDictionary *w = (NSDictionary *)[work objectAtIndex:0];
-				NSDictionary *employer = [w objectForKey:@"employer"];
+//				NSDictionary *employer = [w objectForKey:@"employer"];
 				NSDictionary *job = [w objectForKey:@"position"];
 				
-				userOcupationLabel.text = [NSString stringWithFormat:@"%@ at %@", [job objectForKey:@"name"], [employer objectForKey:@"name"]];
+				userOcupationLabel.text = (NSString *)[job objectForKey:@"name"];
 			}
 		}];
 	}
@@ -473,9 +493,7 @@
 		userProfile = [PFUser currentUser];
 	}
 	
-	[self setCorrectPicture];
-	
-	[self.userNameLabel setText:[userProfile username]];
+	[self setCorrectData];
 	
 	//If the results didn't load at init, try to reload them.
 	if (!groupResults) {
