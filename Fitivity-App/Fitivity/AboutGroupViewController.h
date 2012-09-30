@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+
+#import "FGalleryViewController.h"
 #import "MBProgressHUD.h"
 
-@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate>
+@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate> 
 
 - (IBAction)viewMembers:(id)sender;
 - (IBAction)inviteMembers:(id)sender;
@@ -17,5 +20,8 @@
 - (IBAction)addPhoto:(id)sender;
 - (IBAction)viewRateGroup:(id)sender;
 - (IBAction)viewReviews:(id)sender;
+
+@property (nonatomic, retain) PFObject *groupRef;
+@property (nonatomic, retain) NSArray *photoResults;
 
 @end

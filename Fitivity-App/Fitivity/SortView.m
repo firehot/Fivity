@@ -100,6 +100,10 @@
 		[sortPicker setShowsSelectionIndicator:YES];
 		[sortPicker setDelegate:self];
 		
+		if (key == nil) {
+			key = @"All Activities";
+		}
+		
 		int row = [items indexOfObject:key];
 		[sortPicker selectRow:row inComponent:0 animated:NO];
 		

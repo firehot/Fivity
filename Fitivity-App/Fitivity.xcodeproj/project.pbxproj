@@ -138,6 +138,12 @@
 		6CAA52B21617295E00527B1B /* NSString+StateAbreviator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52B11617295E00527B1B /* NSString+StateAbreviator.m */; };
 		6CAA52BB1617894A00527B1B /* AboutGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52B91617894A00527B1B /* AboutGroupViewController.m */; };
 		6CAA52BC1617894A00527B1B /* AboutGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */; };
+		6CAA52CE1618FBAB00527B1B /* FGalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52C91618FB3200527B1B /* FGalleryViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		6CAA52CF1618FBAB00527B1B /* FGalleryPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52CB1618FB3200527B1B /* FGalleryPhotoView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		6CAA52D01618FBAB00527B1B /* FGalleryPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52CD1618FB3200527B1B /* FGalleryPhoto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		6CAA52F216190A5800527B1B /* RateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52F016190A5800527B1B /* RateGroupViewController.m */; };
+		6CAA52F316190A5800527B1B /* RateGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CAA52F116190A5800527B1B /* RateGroupViewController.xib */; };
+		6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52FC16190C0000527B1B /* ReviewsViewController.m */; };
 		6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */; };
 		6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */; };
 		6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72915ACFC1D00C0FF75 /* CoreGraphics.framework */; };
@@ -603,6 +609,17 @@
 		6CAA52B81617894A00527B1B /* AboutGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutGroupViewController.h; sourceTree = "<group>"; };
 		6CAA52B91617894A00527B1B /* AboutGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutGroupViewController.m; sourceTree = "<group>"; };
 		6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AboutGroupViewController.xib; path = Fitivity/AboutGroupViewController.xib; sourceTree = "<group>"; };
+		6CAA52C81618FB3200527B1B /* FGalleryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FGalleryViewController.h; sourceTree = "<group>"; };
+		6CAA52C91618FB3200527B1B /* FGalleryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FGalleryViewController.m; sourceTree = "<group>"; };
+		6CAA52CA1618FB3200527B1B /* FGalleryPhotoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FGalleryPhotoView.h; sourceTree = "<group>"; };
+		6CAA52CB1618FB3200527B1B /* FGalleryPhotoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FGalleryPhotoView.m; sourceTree = "<group>"; };
+		6CAA52CC1618FB3200527B1B /* FGalleryPhoto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FGalleryPhoto.h; sourceTree = "<group>"; };
+		6CAA52CD1618FB3200527B1B /* FGalleryPhoto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FGalleryPhoto.m; sourceTree = "<group>"; };
+		6CAA52EF16190A5800527B1B /* RateGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RateGroupViewController.h; sourceTree = "<group>"; };
+		6CAA52F016190A5800527B1B /* RateGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RateGroupViewController.m; sourceTree = "<group>"; };
+		6CAA52F116190A5800527B1B /* RateGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RateGroupViewController.xib; path = Fitivity/RateGroupViewController.xib; sourceTree = "<group>"; };
+		6CAA52FB16190BFF00527B1B /* ReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsViewController.h; sourceTree = "<group>"; };
+		6CAA52FC16190C0000527B1B /* ReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsViewController.m; sourceTree = "<group>"; };
 		6CB1A72115ACFC1D00C0FF75 /* Fitivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fitivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1291,9 +1308,78 @@
 			name = Opening;
 			sourceTree = "<group>";
 		};
+		6CAA52C71618FB1400527B1B /* FGallery */ = {
+			isa = PBXGroup;
+			children = (
+				6CAA52C81618FB3200527B1B /* FGalleryViewController.h */,
+				6CAA52C91618FB3200527B1B /* FGalleryViewController.m */,
+				6CAA52CA1618FB3200527B1B /* FGalleryPhotoView.h */,
+				6CAA52CB1618FB3200527B1B /* FGalleryPhotoView.m */,
+				6CAA52CC1618FB3200527B1B /* FGalleryPhoto.h */,
+				6CAA52CD1618FB3200527B1B /* FGalleryPhoto.m */,
+			);
+			name = FGallery;
+			sourceTree = "<group>";
+		};
+		6CAA52ED16190A0000527B1B /* About Group */ = {
+			isa = PBXGroup;
+			children = (
+				6CAA52B81617894A00527B1B /* AboutGroupViewController.h */,
+				6CAA52B91617894A00527B1B /* AboutGroupViewController.m */,
+				6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */,
+				6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */,
+				6CAA52EF16190A5800527B1B /* RateGroupViewController.h */,
+				6CAA52F016190A5800527B1B /* RateGroupViewController.m */,
+				6CAA52FB16190BFF00527B1B /* ReviewsViewController.h */,
+				6CAA52FC16190C0000527B1B /* ReviewsViewController.m */,
+			);
+			name = "About Group";
+			sourceTree = "<group>";
+		};
+		6CAA52EE16190A1600527B1B /* Proposed Activities */ = {
+			isa = PBXGroup;
+			children = (
+				6C4E34EE15BC499100A6986C /* CreateProposeActivityViewController.h */,
+				6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */,
+				6C57B71015C21ADC000048DD /* ProposedActivityViewController.h */,
+				6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */,
+			);
+			name = "Proposed Activities";
+			sourceTree = "<group>";
+		};
+		6CAA52F416190A6300527B1B /* Activity Creation */ = {
+			isa = PBXGroup;
+			children = (
+				6CDCD5B515B1ADE300986AA2 /* ActivityHomeViewController.xib */,
+				6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */,
+				6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */,
+				6C90CA2015D34E0600408193 /* AddLocationHomeViewController.xib */,
+				6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */,
+				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
+			);
+			name = "Activity Creation";
+			sourceTree = "<group>";
+		};
+		6CAA52F516190A8700527B1B /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */,
+				575AECA315B6051200324958 /* GroupPageViewController.xib */,
+				6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */,
+				6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */,
+				6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */,
+				6C623AA215E45F650025DE76 /* ChallengesViewController.xib */,
+				6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */,
+				6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */,
+				6CAA52F116190A5800527B1B /* RateGroupViewController.xib */,
+			);
+			name = Groups;
+			sourceTree = "<group>";
+		};
 		6CB1A71615ACFC1D00C0FF75 = {
 			isa = PBXGroup;
 			children = (
+				6CAA52C71618FB1400527B1B /* FGallery */,
 				6CB3EBF715E6E25600BDE38B /* MBProgressHUD */,
 				6C4C5BC015D1DD1C00E63CD3 /* DDAnnotation */,
 				6C08841B15B1C56000670936 /* Google Places */,
@@ -1648,17 +1734,11 @@
 		6CD705E215BB007A002FFC53 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				6CAA52EE16190A1600527B1B /* Proposed Activities */,
+				6CAA52ED16190A0000527B1B /* About Group */,
 				6CDCECFF15F55475009D8E23 /* Challenges */,
 				575AECA115B6051200324958 /* GroupPageViewController.h */,
 				575AECA215B6051200324958 /* GroupPageViewController.m */,
-				6CD705E315BB00AE002FFC53 /* GroupMembersViewController.h */,
-				6CD705E415BB00AE002FFC53 /* GroupMembersViewController.m */,
-				6C4E34EE15BC499100A6986C /* CreateProposeActivityViewController.h */,
-				6C57B71715C21C42000048DD /* CreateProposeActivityViewController.m */,
-				6C57B71015C21ADC000048DD /* ProposedActivityViewController.h */,
-				6C57B71115C21ADC000048DD /* ProposedActivityViewController.m */,
-				6CAA52B81617894A00527B1B /* AboutGroupViewController.h */,
-				6CAA52B91617894A00527B1B /* AboutGroupViewController.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1710,21 +1790,9 @@
 		6CDCD5B115B1ADBC00986AA2 /* Activity */ = {
 			isa = PBXGroup;
 			children = (
+				6CAA52F516190A8700527B1B /* Groups */,
 				6C7722CB15B209800040DB1D /* Cells */,
-				6CDCD5B515B1ADE300986AA2 /* ActivityHomeViewController.xib */,
-				6C08845C15B1D3D300670936 /* ChooseLocationViewController.xib */,
-				6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */,
-				6C90CA2015D34E0600408193 /* AddLocationHomeViewController.xib */,
-				6C7722AE15B1EB670040DB1D /* ChooseActivityViewController.xib */,
-				6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */,
-				6CAA52BA1617894A00527B1B /* AboutGroupViewController.xib */,
-				575AECA315B6051200324958 /* GroupPageViewController.xib */,
-				6CD705E515BB00AE002FFC53 /* GroupMembersViewController.xib */,
-				6C4E34F015BC499100A6986C /* CreateProposeActivityViewController.xib */,
-				6C57B71215C21ADC000048DD /* ProposedActivityViewController.xib */,
-				6C623AA215E45F650025DE76 /* ChallengesViewController.xib */,
-				6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */,
-				6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */,
+				6CAA52F416190A6300527B1B /* Activity Creation */,
 			);
 			name = Activity;
 			sourceTree = "<group>";
@@ -2179,6 +2247,7 @@
 				6CB99C9D160A9DAC008547D1 /* bv3_current_location.png in Resources */,
 				6CB99C9E160A9DAC008547D1 /* bv3_current_location@2x.png in Resources */,
 				6CAA52BC1617894A00527B1B /* AboutGroupViewController.xib in Resources */,
+				6CAA52F316190A5800527B1B /* RateGroupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2189,6 +2258,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CAA52CE1618FBAB00527B1B /* FGalleryViewController.m in Sources */,
+				6CAA52CF1618FBAB00527B1B /* FGalleryPhotoView.m in Sources */,
+				6CAA52D01618FBAB00527B1B /* FGalleryPhoto.m in Sources */,
 				6C2813FD160677C9006B2DC6 /* AnimatedGif.m in Sources */,
 				6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */,
 				6C4C5BD415D1DD4D00E63CD3 /* DDAnnotation.m in Sources */,
@@ -2255,6 +2327,8 @@
 				6CB5008E1613CDD800604CB0 /* SortView.m in Sources */,
 				6CAA52B21617295E00527B1B /* NSString+StateAbreviator.m in Sources */,
 				6CAA52BB1617894A00527B1B /* AboutGroupViewController.m in Sources */,
+				6CAA52F216190A5800527B1B /* RateGroupViewController.m in Sources */,
+				6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
