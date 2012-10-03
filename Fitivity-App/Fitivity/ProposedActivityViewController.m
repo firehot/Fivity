@@ -25,7 +25,8 @@
 #define kSecondCellMove					90
 #define kThirdCellMove					160
 #define kTextFieldAnimationDuration    0.3f
-#define kMaxCharCount	350
+#define kMaxCharCount					350
+#define kMoreLimit						75
 
 @interface ProposedActivityViewController ()
 
@@ -44,6 +45,7 @@
 @synthesize activityComment;
 @synthesize commentsTable;
 @synthesize parent;
+@synthesize moreIcon;
 
 #pragma mark - Actions
 
@@ -645,6 +647,12 @@
 	creatorName.text = [creator objectForKey:@"username"];
 	activityMessage.text = [parent objectForKey:@"activityMessage"];
 	
+	if (activityMessage.text.length >= kMoreLimit) {
+		[moreIcon setHidden:NO];
+	} else {
+		[moreIcon setHidden:YES];
+	}
+	
 	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
 
 	posting = NO;
@@ -671,6 +679,7 @@
 	[self setActivityComment:nil];
 	[self setPlaceLabel:nil];
 	[self setInButton:nil];
+    [self setMoreIcon:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

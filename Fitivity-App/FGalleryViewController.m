@@ -295,9 +295,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	
-    [[GANTracker sharedTracker] trackPageview:@"/Viewed_Photos" withError:nil];
-    
+	    
     _isActive = YES;
     
     self.useThumbnailView = _useThumbnailView;

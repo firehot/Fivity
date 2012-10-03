@@ -11,8 +11,11 @@
 
 #import "FGalleryViewController.h"
 #import "MBProgressHUD.h"
+#import "GooglePlacesObject.h"
 
-@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate> 
+@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate>
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group activity:(NSString *)a place:(GooglePlacesObject *)p;
 
 - (IBAction)viewMembers:(id)sender;
 - (IBAction)inviteMembers:(id)sender;
@@ -21,7 +24,17 @@
 - (IBAction)viewRateGroup:(id)sender;
 - (IBAction)viewReviews:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *activityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionView;
+@property (weak, nonatomic) IBOutlet UIImageView *starOne;
+@property (weak, nonatomic) IBOutlet UIImageView *starTwo;
+@property (weak, nonatomic) IBOutlet UIImageView *starThree;
+@property (weak, nonatomic) IBOutlet UIImageView *starFour;
+@property (weak, nonatomic) IBOutlet UIImageView *starFive;
+
 @property (nonatomic, retain) PFObject *groupRef;
 @property (nonatomic, retain) NSArray *photoResults;
+@property (nonatomic, retain) GooglePlacesObject *place;
 
 @end

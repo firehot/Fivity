@@ -24,13 +24,16 @@
 
 @synthesize groupRef;
 @synthesize photoResults;
+@synthesize place;
+@synthesize activityLabel, ratingLabel, descriptionView;
+@synthesize starOne, starTwo, starThree, starFour, starFive;
 
 #pragma mark - IBAction's 
 
 - (IBAction)viewMembers:(id)sender {
 	GroupMembersViewController *members = [[GroupMembersViewController alloc]	initWithNibName:@"GroupMembersViewController"
 																				bundle:nil
-																				place:[groupRef objectForKey:@"place"]
+																				place:place
 																				activity:[groupRef objectForKey:@"activity"]];
 	[self.navigationController pushViewController:members animated:YES];
 }
@@ -105,6 +108,41 @@
 	}
 }
 
+- (void)setCorrectRating:(NSNumber *)num {
+	int stars = [num intValue];
+	UIImage *active = [UIImage imageNamed:@"star_active.png"];
+	
+	switch (stars) {
+		case 1:
+			[starOne setImage:active];
+			break;
+		case 2:
+			[starOne setImage:active];
+			[starTwo setImage:active];
+			break;
+		case 3:
+			[starOne setImage:active];
+			[starTwo setImage:active];
+			[starThree setImage:active];
+			break;
+		case 4:
+			[starOne setImage:active];
+			[starTwo setImage:active];
+			[starThree setImage:active];
+			[starFour setImage:active];
+			break;
+		case 5:
+			[starOne setImage:active];
+			[starTwo setImage:active];
+			[starThree setImage:active];
+			[starFour setImage:active];
+			[starFive setImage:active];
+			break;
+		default:
+			break;
+	}
+}
+
 #pragma mark - UIImagePickerViewController Delegate 
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -158,13 +196,13 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
     
-	NSString *place, *activity;
-	place = [groupRef objectForKey:@"place"];
+	NSString *p, *activity;
+	p = [groupRef objectForKey:@"place"];
 	activity = [groupRef objectForKey:@"activity"];
 	
     if ([title isEqualToString:@"Facebook"]) {
 		
-		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community.", place, activity];
+		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community.", p, activity];
 		
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
@@ -178,12 +216,12 @@
 		
         [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. Download it for free in the Apple App Store.", place, activity];
+		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. Download it for free in the Apple App Store.", p, activity];
         [[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. Download it for free now in the Apple App Store. %@", place, activity, [[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. Download it for free now in the Apple App Store. %@", p, activity, [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. You can download the free fitivity app in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", place, activity, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		NSString *bodyHTML = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community. You can download the free fitivity app in the Apple App Store or in Google Play!<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", p, activity, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];
@@ -232,10 +270,11 @@
 
 #pragma mark - View Lifecycle 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group activity:(NSString *)a place:(GooglePlacesObject *)p {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.groupRef = group;
+		self.place = p;
 		
 		if (groupRef == nil) {
 			groupRef = [PFObject objectWithClassName:@"Groups"];
@@ -243,13 +282,27 @@
 		[groupRef fetchIfNeeded];
 		
 		photoResults = [[NSArray alloc] init];
+		
+		[self.navigationItem setTitle:a];
+		
+		NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:groupRef, @"group", nil];
+		[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
+			if (!error) {
+				[self setCorrectRating:(NSNumber *)object];
+			} else {
+				NSLog(@"%@",[error description]);
+			}
+		}];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+	
+	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+	self.activityLabel.text = [place name];
+
 	[self attemptPhotosQuery];
 }
 
@@ -259,6 +312,14 @@
 }
 
 - (void)viewDidUnload {
+	[self setActivityLabel:nil];
+	[self setRatingLabel:nil];
+	[self setDescriptionView:nil];
+	[self setStarOne:nil];
+	[self setStarTwo:nil];
+	[self setStarThree:nil];
+	[self setStarFour:nil];
+	[self setStarFive:nil];
     [super viewDidUnload];
 }
 

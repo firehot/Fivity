@@ -10,7 +10,7 @@
 #import "LocationMapViewController.h"
 #import "NSError+FITParseUtilities.h"
 #import "NSAttributedString+Attributes.h"
-#import "GroupMembersViewController.h"
+#import "AboutGroupViewController.h"
 #import "CreateProposeActivityViewController.h"
 #import "ProposedActivityViewController.h"
 #import "ChallengesViewController.h"
@@ -80,8 +80,16 @@
 
 - (void)viewMemebers {
 	autoJoin = NO;
-	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
-	[self.navigationController pushViewController:members animated:YES];
+	
+	AboutGroupViewController *about = [[AboutGroupViewController alloc] initWithNibName:@"AboutGroupViewController"
+																				bundle:nil
+																				group:group
+																				activity:self.activity
+																				place:self.place];
+	[self.navigationController pushViewController:about animated:YES];
+	
+//	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
+//	[self.navigationController pushViewController:members animated:YES];
 }
 
 #pragma mark - Helper Methods
