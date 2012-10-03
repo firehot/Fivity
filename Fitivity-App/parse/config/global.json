@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Fitivity": {
+            "applicationId": "MmUj6HxQcfLSOUs31lG7uNVx9sl5dZR6gv0FqGHq", 
+            "masterKey": "q4SjbhOyaHX4pjaYW3GEGsbEnOzcqw5RfMqj9vx2"
+        }, 
+        "_default": {
+            "link": "Fitivity"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.1.5"
+    }
+}
