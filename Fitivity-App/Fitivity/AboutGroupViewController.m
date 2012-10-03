@@ -285,7 +285,7 @@
 		
 		[self.navigationItem setTitle:a];
 		
-		NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:groupRef, @"group", nil];
+		NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[groupRef objectId], @"groupID", nil];
 		[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
 			if (!error) {
 				[self setCorrectRating:(NSNumber *)object];
