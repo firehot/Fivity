@@ -2,7 +2,20 @@ Parse.Cloud.define('getAverageRating', function(request, response) {
 	var RatingObject = Parse.Object.extend('GroupReviews');
 	var query = new Parse.Query(RatingObject);
 	
-	query.equalTo('group', request.params.group);
+	var GroupObject = Parse.Object.extend('Group');
+	var groupQuery = new Parse.Query(GroupObject);
+	var groupRef = Parse.Object.extend('Group');
+	
+	groupQuery.get(request.params.groupID {
+		success: function(group) {
+			groupRef = group;
+		},
+		error: function(error) {
+			response.error('Couldn\'t get group reference');
+		}
+	});
+	
+	query.equalTo('group', groupRef);
 	query.limit(200);
 	query.find({
 		success: function(results) {
@@ -16,9 +29,9 @@ Parse.Cloud.define('getAverageRating', function(request, response) {
 			else {
 				response.error("Average not available");
 			} 
-    	},
-    	error: function(error) {
-      		response.error('Oops something went wrong!');
-    	}
+    		},
+    		error: function(error) {
+      			response.error('Oops something went wrong!');
+    		}
 	});
 });
