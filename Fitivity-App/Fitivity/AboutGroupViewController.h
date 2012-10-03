@@ -13,9 +13,11 @@
 #import "MBProgressHUD.h"
 #import "GooglePlacesObject.h"
 
-@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate>
+@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate> {
+	BOOL hasAccess;
+}
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group activity:(NSString *)a place:(GooglePlacesObject *)p;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group joined:(BOOL)j activity:(NSString *)a place:(GooglePlacesObject *)p;
 
 - (IBAction)viewMembers:(id)sender;
 - (IBAction)inviteMembers:(id)sender;

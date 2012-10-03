@@ -51,7 +51,11 @@
 }
 
 - (IBAction)addPhoto:(id)sender {
-	
+	if (!hasAccess) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Access" message:@"You must be part of this group in order to add a photo" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		return;
+	}
 	if ([[FConfig instance] connected]) {
 		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
 			UIImagePickerController *camera = [[UIImagePickerController alloc] init];
@@ -69,6 +73,11 @@
 }
 
 - (IBAction)viewRateGroup:(id)sender {
+	if (!hasAccess) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Access" message:@"You must be part of this group in order to rate it" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+                return;
+        }
 	RateGroupViewController *rating = [[RateGroupViewController alloc] initWithNibName:@"RateGroupViewController" bundle:nil];
 	[self.navigationController pushViewController:rating animated:YES];
 }
@@ -270,12 +279,13 @@
 
 #pragma mark - View Lifecycle 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group activity:(NSString *)a place:(GooglePlacesObject *)p {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group joined:(BOOL)j activity:(NSString *)a place:(GooglePlacesObject *)p {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.groupRef = group;
 		self.place = p;
-		
+		hasAccess = j;
+
 		if (groupRef == nil) {
 			groupRef = [PFObject objectWithClassName:@"Groups"];
 		}

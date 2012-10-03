@@ -84,6 +84,7 @@
 	AboutGroupViewController *about = [[AboutGroupViewController alloc] initWithNibName:@"AboutGroupViewController"
 																				bundle:nil
 																				group:group
+																				joined:alreadyJoined
 																				activity:self.activity
 																				place:self.place];
 	[self.navigationController pushViewController:about animated:YES];
