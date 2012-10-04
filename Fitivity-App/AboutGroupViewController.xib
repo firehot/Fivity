@@ -215,6 +215,8 @@
 						<string key="IBUIText">This is some description of the group...</string>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
+							<int key="IBUIAutocorrectionType">2</int>
+							<int key="IBUIReturnKeyType">9</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<int key="IBUIDataDetectorTypes">15</int>
@@ -523,6 +525,14 @@
 						<reference key="destination" ref="330975497"/>
 					</object>
 					<int key="connectionID">253</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="189073365"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">254</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -2192,7 +2202,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">253</int>
+			<int key="maxID">254</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -11,7 +11,7 @@ Parse.Cloud.define('getAverageRating', function(request, response) {
 			groupRef = group;
 		},
 		error: function(error) {
-			response.error('Couldn\'t get group reference');
+			response.error('Couldnt get group reference');
 		}
 	});
 	
@@ -29,9 +29,9 @@ Parse.Cloud.define('getAverageRating', function(request, response) {
 			else {
 				response.error("Average not available");
 			} 
-    		},
-    		error: function(error) {
-      			response.error('Oops something went wrong!');
-    		}
+    	},
+    	error: function(error) {
+      		response.error('Oops something went wrong!');
+		}
 	});
 });

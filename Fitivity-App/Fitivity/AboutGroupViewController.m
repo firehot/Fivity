@@ -39,7 +39,7 @@
 }
 
 - (IBAction)inviteMembers:(id)sender {
-	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Group" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Group" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
 	
 	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [sheet showFromTabBar:[[d tabBarView] backTabBar]];
@@ -78,7 +78,7 @@
                 [alert show];
                 return;
         }
-	RateGroupViewController *rating = [[RateGroupViewController alloc] initWithNibName:@"RateGroupViewController" bundle:nil];
+	RateGroupViewController *rating = [[RateGroupViewController alloc] initWithNibName:@"RateGroupViewController" bundle:nil group:groupRef];
 	[self.navigationController pushViewController:rating animated:YES];
 }
 
@@ -154,6 +154,14 @@
 
 #pragma mark - UIImagePickerViewController Delegate 
 
+- (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize {
+	UIGraphicsBeginImageContext(newSize);
+	[image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+	UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return newImage;
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	[picker dismissModalViewControllerAnimated:YES];
 	
@@ -161,27 +169,26 @@
 	[self.navigationController.view addSubview:HUD];
 	
 	HUD.delegate = self;
-	HUD.mode = MBProgressHUDModeDeterminate;
+	HUD.mode = MBProgressHUDModeIndeterminate;
 	HUD.labelText = @"Posting Picture";
 	
 	[HUD show:YES];
 	
 	UIImage *selected = [info objectForKey:UIImagePickerControllerOriginalImage];
-	PFFile *pic = [PFFile fileWithData:UIImagePNGRepresentation(selected)];
+	PFFile *pic = [PFFile fileWithData:UIImagePNGRepresentation([self scaleImage:selected toSize:CGSizeMake(320.0, 480.0)])];
 	
-	PFObject *groupPic = [PFObject objectWithClassName:@"GroupPhoto"];
+	PFObject *groupPic = [PFObject objectWithClassName:@"GroupPhotos"];
+	[groupPic setObject:groupRef forKey:@"group"];
 	[groupPic setObject:pic forKey:@"image"];
-	[groupPic saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-		[HUD hide:YES afterDelay:0];
-		
+	[groupPic saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){		
 		if (succeeded) {
 			HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 			HUD.mode = MBProgressHUDModeCustomView;
 			HUD.labelText = @"Posted";
 			
-			[HUD show:YES];
 			[HUD hide:YES afterDelay:1.5];
 		} else {
+			[HUD hide:YES];
 			NSString *errorMessage = [error userFriendlyParseErrorDescription:YES];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload Failed" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
@@ -198,6 +205,12 @@
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded
 	[hud removeFromSuperview];
+}
+
+#pragma mark - UITextView Delegate 
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+	[textView resignFirstResponder];
 }
 
 #pragma mark - UIActionSheetDelegate

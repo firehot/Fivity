@@ -13,7 +13,7 @@
 #import "MBProgressHUD.h"
 #import "GooglePlacesObject.h"
 
-@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate> {
+@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate> {
 	BOOL hasAccess;
 }
 

@@ -526,6 +526,19 @@
 		userProfile = [PFUser currentUser];
 	}
 	
+	// Load Cache to display immediately
+	PFFile *pic = [userProfile objectForKey:@"image"];
+	if (pic && pic != [NSNull null]) {
+		NSData *picData = [pic getData];
+		[self.userPicture setImage:[UIImage imageWithData:picData]];
+	}
+	
+	userNameLabel.text = [userProfile username];
+	userOcupationLabel.text = [userProfile objectForKey:@"occupation"];
+	userAgeLabel.text = [NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]];
+	userHometownLabel.text = [userProfile objectForKey:@"hometown"];
+	userBioView.text = [userProfile objectForKey:@"bio"];
+	
 	[self setCorrectData];
 	
 	//If the results didn't load at init, try to reload them.

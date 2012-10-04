@@ -30,6 +30,8 @@
     }
 	
 	[query whereKey:@"group" equalTo:group];
+	[query whereKey:@"review" notEqualTo:@""];
+	[query whereKey:@"review" notEqualTo:[NSNull null]];
     [query orderByDescending:@"updatedAt"];
 	
     return query;
@@ -107,7 +109,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self.navigationController setTitle:@"Reviews"];
+        [self.navigationItem setTitle:@"Reviews"];
     }
     return self;
 }

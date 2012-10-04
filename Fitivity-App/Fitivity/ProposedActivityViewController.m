@@ -384,7 +384,7 @@
 	PFUser *creator = [parent objectForKey:@"creator"];
 	PFObject *group = [parent objectForKey:@"group"];
 	[creator fetchIfNeeded];
-	
+
 	NSString *message = [NSString stringWithFormat:@"%@ proposes %@ at %@. Here are the details: %@.",	[creator username],
 						 [group objectForKey:@"activity"],
 						 [group objectForKey:@"place"],
@@ -404,7 +404,8 @@
 		
         [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
-        [[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
+		NSString *tweet = [NSString stringWithFormat:@"I'm playing %@ using fitivity. Download it for free in the Apple app store or Google Play store. Keyword search - fitivity", [group objectForKey:@"activity"]];
+        [[SocialSharer sharer] shareMessageWithTwitter:tweet image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
         [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"%@. Download it in the App Store %@", message, [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {

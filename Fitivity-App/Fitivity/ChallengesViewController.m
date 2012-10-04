@@ -106,7 +106,7 @@
 			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
 		}
 		if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
-			NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app using this link.", groupType, groupType];
+			NSString *message = [NSString stringWithFormat:@"I’m doing the %@ challenge using fitivity. Download it in the Apple App store or Google Play store. Keyword search - fitivity", groupType];
 			[[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
 		}
 	}

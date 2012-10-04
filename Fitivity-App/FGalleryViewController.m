@@ -119,7 +119,7 @@
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc
 {
 	if((self = [self initWithNibName:nil bundle:nil])) {
-		
+		[self.navigationItem setTitle:@"Photos"];
 		_photoSource = photoSrc;
 	}
 	return self;
