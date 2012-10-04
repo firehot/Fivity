@@ -607,8 +607,16 @@
         [button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
         button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
         
+		UIButton *sortButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		[sortButton setImage:[UIImage imageNamed:@"b_sort.png"] forState:UIControlStateNormal];
+		[sortButton setImage:[UIImage imageNamed:@"b_sort_down.png"] forState:UIControlStateHighlighted];
+		[sortButton addTarget:self action:@selector(showSortPicker) forControlEvents:UIControlEventTouchUpInside];
+		sortButton.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+		
         UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
+		UIBarButtonItem *sort = [[UIBarButtonItem alloc] initWithCustomView:sortButton];
         self.navigationItem.leftBarButtonItem = share;
+		self.navigationItem.rightBarButtonItem = sort;
 		
 		sortCriteria = [[FConfig instance] getSortedFeedKey];
     }
@@ -625,9 +633,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	UIBarButtonItem *sort = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(showSortPicker)];
-	self.navigationItem.rightBarButtonItem = sort;
 	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
     

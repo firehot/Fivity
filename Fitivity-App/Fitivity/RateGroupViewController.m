@@ -62,7 +62,9 @@
 	[HUD show:YES];
 	
 	[previousReview setObject:[NSNumber numberWithInt:rating] forKey:@"rating"];
-	[previousReview setObject:review.text forKey:@"review"];
+	if (![review.text isEqualToString:@""]) {
+		[previousReview setObject:review.text forKey:@"review"];
+	}
 	
 	[previousReview saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
 		if (succeeded) {
@@ -129,6 +131,7 @@
 	if (previousReview == nil) {
 		alreadyRated = NO;
 	} else {
+		[self setActiveStars:[[previousReview objectForKey:@"rating"] integerValue]];
 		alreadyRated = YES;
 	}
 }

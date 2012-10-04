@@ -16,6 +16,8 @@
 #import "SocialSharer.h"
 #import "AppDelegate.h"
 
+#define kMoveDistance		30
+
 @interface AboutGroupViewController ()
 
 @end
@@ -152,6 +154,35 @@
 	}
 }
 
+- (NSString *)getGroupRatingString:(NSNumber *)rating {
+	NSString *s;
+	
+	int r = [rating integerValue];
+	
+	switch (r) {
+		case 1:
+			s = @"Never Reliable";
+			break;
+		case 2:
+			s = @"Occasionally Reliable";
+			break;
+		case 3:
+			s = @"Pretty Reliable";
+			break;
+		case 4:
+			s = @"Frequently Reliable";
+			break;
+		case 5:
+			s = @"Always Reliable";
+			break;
+		default:
+			s = @"Not Enough Ratings...";
+			break;
+	}
+	
+	return s;
+}
+
 #pragma mark - UIImagePickerViewController Delegate 
 
 - (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize {
@@ -182,6 +213,9 @@
 	[groupPic setObject:pic forKey:@"image"];
 	[groupPic saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){		
 		if (succeeded) {
+			//Update the photos
+			[self attemptPhotosQuery];
+			
 			HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 			HUD.mode = MBProgressHUDModeCustomView;
 			HUD.labelText = @"Posted";
@@ -209,8 +243,34 @@
 
 #pragma mark - UITextView Delegate 
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
-	[textView resignFirstResponder];
+- (void) animateTextView:(UITextView *)textView Up:(BOOL)up {
+    
+    int movement = (up ? -kMoveDistance : kMoveDistance);
+    
+    [UIView beginAnimations: @"anim" context: nil];
+    [UIView setAnimationBeginsFromCurrentState: YES];
+    [UIView setAnimationDuration: 0.3];
+    self.view.frame = CGRectOffset(self.view.frame, 0, movement);
+    [UIView commitAnimations];
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+	[self animateTextView:textView Up:YES];
+	return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView {
+	[self animateTextView:textView Up:NO];
+	return YES;
+}
+
+- (BOOL)textView:(UITextView *)txtView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound) {
+        return YES;
+    }
+	
+    [txtView resignFirstResponder];
+    return NO;
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -312,6 +372,7 @@
 		[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
 			if (!error) {
 				[self setCorrectRating:(NSNumber *)object];
+				[self.ratingLabel setText:[self getGroupRatingString:(NSNumber *)object]];
 			} else {
 				NSLog(@"%@",[error description]);
 			}
@@ -323,9 +384,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	if (groupRef != nil) {
+		[descriptionView setText:[groupRef objectForKey:@"description"]];
+	}
+	
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	self.activityLabel.text = [place name];
-
+	
 	[self attemptPhotosQuery];
 }
 
