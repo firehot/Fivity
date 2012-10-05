@@ -16,6 +16,7 @@
 
 @synthesize starOne, starTwo, starThree, starFour, starFive;
 @synthesize review, group, previousReview;
+@synthesize delegate;
 
 #pragma mark - Helper Methods
 
@@ -43,6 +44,10 @@
 			HUD.mode = MBProgressHUDModeCustomView;
 			HUD.labelText = @"Posted";
 			[HUD hide:YES afterDelay:1.5];
+			
+			if ([delegate respondsToSelector:@selector(viewFinishedRatingGroup:)]) {
+				[delegate viewFinishedRatingGroup:self];
+			}
 		} else {
 			[HUD hide:YES];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Posting" message:@"Something went wrong while posting your review." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -72,6 +77,10 @@
 			HUD.mode = MBProgressHUDModeCustomView;
 			HUD.labelText = @"Posted";
 			[HUD hide:YES afterDelay:1.5];
+			
+			if ([delegate respondsToSelector:@selector(viewFinishedRatingGroup:)]) {
+				[delegate viewFinishedRatingGroup:self];
+			}
 		} else {
 			[HUD hide:YES];
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Posting" message:@"Something went wrong while posting your review." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -217,9 +226,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	if (alreadyRated && previousReview) {
+		[self.review setText:[previousReview objectForKey:@"review"]];
+		[self setActiveStars:[[previousReview objectForKey:@"rating"] integerValue]];
+	} else {
+		starCount = 0;
+	}
+	
 	[self.review becomeFirstResponder];
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
-	starCount = 0;
+	
 }
 
 - (void)didReceiveMemoryWarning {

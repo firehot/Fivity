@@ -9,7 +9,6 @@
 #import "AboutGroupViewController.h"
 #import "GroupMembersViewController.h"
 #import "NSError+FITParseUtilities.h"
-#import "RateGroupViewController.h"
 #import "ReviewsViewController.h"
 
 #import "FTabBarViewController.h"
@@ -81,6 +80,7 @@
                 return;
         }
 	RateGroupViewController *rating = [[RateGroupViewController alloc] initWithNibName:@"RateGroupViewController" bundle:nil group:groupRef];
+	[rating setDelegate:self];
 	[self.navigationController pushViewController:rating animated:YES];
 }
 
@@ -90,6 +90,19 @@
 }
 
 #pragma mark - Helper Methods 
+
+- (void)getAverageRating {
+	NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[groupRef objectId], @"groupID", nil];
+	[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
+		if (!error) {
+			[self setCorrectRating:(NSNumber *)object];
+			[self.ratingLabel setText:[self getGroupRatingString:(NSNumber *)object]];
+		} else {
+			[self.ratingLabel setText:[self getGroupRatingString:[NSNumber numberWithInt:0]]];
+			NSLog(@"%@",[error description]);
+		}
+	}];
+}
 
 - (void)attemptPhotosQuery {
 	
@@ -255,12 +268,46 @@
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-	[self animateTextView:textView Up:YES];
-	return YES;
+	if (hasAccess) {
+		[self animateTextView:textView Up:YES];
+		return YES;
+	}
+	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Access" message:@"You must be part of the group to edit the description" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+	[alert show];
+	
+	return NO;
 }
 
 - (BOOL)textViewShouldEndEditing:(UITextView *)textView {
 	[self animateTextView:textView Up:NO];
+	
+	if (textView == descriptionView) {
+		__block MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeIndeterminate;
+		HUD.labelText = @"Posting...";
+		
+		[HUD show:YES];
+		
+		PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[groupRef objectId]];
+		[g setObject:descriptionView.text forKey:@"description"];
+		
+		[g saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			if (succeeded) {
+				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+				HUD.mode = MBProgressHUDModeCustomView;
+				HUD.labelText = @"Posted";
+				[HUD hide:YES afterDelay:1.5];
+			} else {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Posting" message:@"Something went wrong while posting your description." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+			}
+		}];
+	}
+	
 	return YES;
 }
 
@@ -349,6 +396,11 @@
     // here we could implement some code to change the caption for a stored image
 }
 
+#pragma mark - RateGroupViewController Delegate 
+
+- (void)viewFinishedRatingGroup:(RateGroupViewController *)view {
+	[self getAverageRating];
+}
 
 #pragma mark - View Lifecycle 
 
@@ -367,17 +419,7 @@
 		photoResults = [[NSArray alloc] init];
 		
 		[self.navigationItem setTitle:a];
-		
-		NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[groupRef objectId], @"groupID", nil];
-		[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
-			if (!error) {
-				[self setCorrectRating:(NSNumber *)object];
-				[self.ratingLabel setText:[self getGroupRatingString:(NSNumber *)object]];
-			} else {
-				[self.ratingLabel setText:[self getGroupRatingString:[NSNumber numberWithInt:0]]];
-				NSLog(@"%@",[error description]);
-			}
-		}];
+		[self getAverageRating];
     }
     return self;
 }

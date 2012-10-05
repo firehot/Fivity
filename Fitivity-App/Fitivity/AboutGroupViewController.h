@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
+#import "RateGroupViewController.h"
 #import "FGalleryViewController.h"
 #import "MBProgressHUD.h"
 #import "GooglePlacesObject.h"
 
-@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate> {
+@interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate, RateGroupViewControllerDelegate> {
 	BOOL hasAccess;
 }
 

@@ -169,7 +169,6 @@
 						<string key="NSFrame">{{20, 99}, {280, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -1006,6 +1005,7 @@
 					<string key="className">RateGroupViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="postReview:">id</string>
 						<string key="rateFive:">id</string>
 						<string key="rateFour:">id</string>
 						<string key="rateOne:">id</string>
@@ -1013,6 +1013,10 @@
 						<string key="rateTwo:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="postReview:">
+							<string key="name">postReview:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="rateFive:">
 							<string key="name">rateFive:</string>
 							<string key="candidateClassName">id</string>

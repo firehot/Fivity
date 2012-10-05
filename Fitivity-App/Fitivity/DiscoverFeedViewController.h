@@ -16,10 +16,11 @@
 #import "MBProgressHUD.h"
 #import "SortView.h"
 
-@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate, SortViewDelegate> {
+@interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate, SortViewDelegate> {
 	PFGeoPoint *userGeoPoint;
 	
 	int todayCells;
+	BOOL shownAlert;
 }
 
 - (void)shareApp;

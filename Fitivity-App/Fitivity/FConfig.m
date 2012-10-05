@@ -29,6 +29,7 @@
 #define kChallengePath		@"/challengeRecords.plist"
 
 #define kItunesAppLink		@"http://itunes.apple.com/us/app/id558072406?mt=8"
+#define kLaunchCount		@"count"
 
 #define kMaxGroupCreates	5
 #define kMaxPACreates		2
@@ -240,6 +241,11 @@ static FConfig *instance;
 	[self saveChallengeData];
 }
 
+- (void)setLaunchCount:(int)count {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:[NSNumber numberWithInt:count] forKey:kLaunchCount];
+}
+
 - (void)initializeChallenges {
 	//Get all of the most recent challenges
 	challengeGroups = [[NSMutableDictionary alloc] init];
@@ -384,6 +390,13 @@ static FConfig *instance;
 	
 	NSString *n = (NSString *)[challengesViewed objectForKey:cid];
 	return [defaults boolForKey:kPostChallenge] && n == nil;
+}
+
+#pragma mark - int Methods
+
+- (int)getLaunchCount {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	return [[defaults objectForKey:kLaunchCount] integerValue];
 }
 
 #pragma mark - NSDictionary Methods

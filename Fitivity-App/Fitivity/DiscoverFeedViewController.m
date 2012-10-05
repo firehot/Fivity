@@ -17,6 +17,8 @@
 #import "UserProfileViewController.h"
 #import "FTabBarViewController.h"
 #import "SocialSharer.h"
+#import "NSError+FITParseUtilities.h"
+
 
 #define kFeedLimit			40
 #define kCellHeight			92.0f
@@ -25,6 +27,8 @@
 #define kCellTypeGroup		0
 #define kCellTypePA			1
 #define kCellTypeComment	2
+
+#define kRemindAfter		3
 
 #define kMetersToMiles		0.000621371192
 #define kMilesRadius		40.0
@@ -51,6 +55,16 @@
 	SortView *sv = [[SortView alloc] initWithFrame:self.view.frame items:[[FConfig instance] searchActivities] selectedKey:[[FConfig instance] getSortedFeedKey]];
 	[sv setDelegate:self];
 	[sv show];
+}
+
+- (void)handleReminders {
+	if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+		if ([[FConfig instance] getLaunchCount] % kRemindAfter == 0) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Link with Facebook!" message:@"If you link your Fitivity Account with Facebook your profile will be completed!:" delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles: @"Link Now", nil];
+			[alert setTag:2];
+			[alert show];
+		}
+	}
 }
 
 - (void)imageView:(PFImageView *)imgView setImage:(PFFile *)imageFile styled:(BOOL)styled {
@@ -282,6 +296,37 @@
     }
 }
 
+#pragma mark - UIAlertView Delegate 
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+	
+	if (!shownAlert && alertView.tag == 2) {
+		if ([title isEqualToString:@"Link Now"]) {
+			shownAlert = YES;
+			[PFFacebookUtils linkUser:[PFUser currentUser] permissions:[[FConfig instance] getFacebookPermissions] block:^(BOOL succeeded, NSError *error) {
+				if (succeeded) {
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your Fitivity account is now linked with Facebook!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+					[alert show];
+					
+					// Automatically set sharing to on
+					[[FConfig instance] setShareGroupPost:YES];
+					[[FConfig instance] setSharePAPost:YES];
+					[[FConfig instance] setShareChallenge:YES];
+				}
+				
+				if (error) {
+					NSString *errorMessage = @"An unknown error occurred while linking with Facebook";
+					errorMessage = [error userFriendlyParseErrorDescription:YES];
+					
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Link Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+					[alert show];
+				}
+			}];
+		}
+	}
+}
+
 #pragma mark - MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
@@ -343,9 +388,7 @@
 	for (PFObject *o in [self objects]) {
 		[o fetchInBackgroundWithBlock:nil];
 		temp = [o updatedAt];
-		
-		//NSLog(@"%@ --- %@", [beginningOfDay description],[temp description]);
-		
+				
 		if ([beginningOfDay compare:temp] == (NSOrderedSame | NSOrderedAscending)) {
 			todayCells++;
 		}
@@ -355,7 +398,7 @@
 		[c objectForKey:@"image"];
 	}
 	
-	//NSLog(@"Total Cells: %d", todayCells);
+	[self performSelector:@selector(handleReminders) withObject:nil afterDelay:1.0];
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
@@ -619,6 +662,7 @@
 		self.navigationItem.rightBarButtonItem = sort;
 		
 		sortCriteria = [[FConfig instance] getSortedFeedKey];
+		shownAlert = NO;
     }
     return self;
 }
@@ -626,7 +670,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        shownAlert = NO;
     }
     return self;
 }

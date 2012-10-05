@@ -11,6 +11,7 @@
 #import "NSAttributedString+Attributes.h"
 #import "UserProfileViewController.h"
 #import "GroupPageViewController.h"
+#import "AboutGroupViewController.h"
 #import "GooglePlacesObject.h"
 
 #import "SocialSharer.h"
@@ -152,6 +153,109 @@
 		}];
 	}
 
+}
+
+- (IBAction)showGroup:(id)sender {
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	HUD.tag = 4;
+	
+	[HUD show:YES];
+	[HUD hide:YES afterDelay:1.25];
+	
+	PFObject *group = [parent objectForKey:@"group"];
+	[group fetchIfNeeded];
+	
+	BOOL challenge = [[FConfig instance] groupHasChallenges:[group objectForKey:@"activity"]];
+	PFGeoPoint *point = [group objectForKey:@"location"];
+	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"]
+																latitude:point.latitude
+															   longitude:point.longitude
+															   placeIcon:nil
+																  rating:nil
+																vicinity:nil
+																	type:nil
+															   reference:nil
+																	 url:nil
+													   addressComponents:nil
+														formattedAddress:nil
+													formattedPhoneNumber:nil
+																 website:nil
+													  internationalPhone:nil
+															 searchTerms:nil
+														  distanceInFeet:nil
+														 distanceInMiles:nil];
+	
+	GroupPageViewController *g = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController"
+																		   bundle:nil place:place
+																		 activity:[group objectForKey:@"activity"]
+																		challenge:challenge
+																		 autoJoin:NO];
+	[self.navigationController pushViewController:g animated:YES];
+}
+
+- (IBAction)showAboutGroup:(id)sender {
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	HUD.tag = 3;
+	
+	[HUD show:YES];
+	[HUD hide:YES afterDelay:1.25];
+	
+	PFObject *group = [parent objectForKey:@"group"];
+	[group fetchIfNeeded];
+	
+	PFGeoPoint *point = [group objectForKey:@"location"];
+	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"]
+																latitude:point.latitude
+															   longitude:point.longitude
+															   placeIcon:nil
+																  rating:nil
+																vicinity:nil
+																	type:nil
+															   reference:nil
+																	 url:nil
+													   addressComponents:nil
+														formattedAddress:nil
+													formattedPhoneNumber:nil
+																 website:nil
+													  internationalPhone:nil
+															 searchTerms:nil
+														  distanceInFeet:nil
+														 distanceInMiles:nil];
+	
+	AboutGroupViewController *about = [[AboutGroupViewController alloc] initWithNibName:@"AboutGroupViewController"
+																		bundle:nil
+																		group:group
+																		joined:[self findUserAlreadyJoinedGroupWithActivity:[group objectForKey:@"activity"] place:place]
+																		activity:[group objectForKey:@"activity"]
+																		place:place];
+	[self.navigationController pushViewController:about animated:YES];
+}
+
+- (BOOL)findUserAlreadyJoinedGroupWithActivity:(NSString *)a place:(GooglePlacesObject *)p {
+	BOOL ret = NO;
+	
+	//Find if they are already part of the group
+	PFQuery *query = [PFQuery queryWithClassName:@"GroupMembers"];
+	[query whereKey:@"user" equalTo:[PFUser currentUser]];
+	[query whereKey:@"activity" equalTo:a];
+	[query whereKey:@"place" equalTo:[p name]];
+	
+	PFObject *result = [query getFirstObject];
+	if (result) {
+		ret = YES;
+	}
+	
+	return ret;
 }
 
 - (void)autoJoinUser:(PFUser *)user {
@@ -321,55 +425,8 @@
 	return ret;
 }
 
-/*
- *	Method is no longer in use... presents the group that the PA is part of.
- */
-- (void)viewGroup {
-	
-	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-	[self.navigationController.view addSubview:HUD];
-	
-	HUD.delegate = self;
-	HUD.mode = MBProgressHUDModeText;
-	HUD.labelText = @"Loading...";
-	HUD.tag = 2;
-	
-	[HUD show:YES];
-	[HUD hide:YES afterDelay:1.25];
-	
-	PFObject *group = [parent objectForKey:@"group"];
-	[group fetchIfNeeded];
-	
-	BOOL challenge = [[FConfig instance] groupHasChallenges:[group objectForKey:@"activity"]];
-	PFGeoPoint *point = [group objectForKey:@"location"];
-	GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"]
-															latitude:point.latitude
-															longitude:point.longitude
-															placeIcon:nil
-															rating:nil
-															vicinity:nil
-															type:nil
-															reference:nil
-															url:nil
-															addressComponents:nil
-															formattedAddress:nil
-															formattedPhoneNumber:nil
-															website:nil
-															internationalPhone:nil
-															searchTerms:nil
-															distanceInFeet:nil
-															distanceInMiles:nil];
-	
-	GroupPageViewController *g = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController"
-																	bundle:nil place:place
-																	activity:[group objectForKey:@"activity"]
-																	challenge:challenge
-																	autoJoin:NO];
-	[self.navigationController pushViewController:g animated:YES];
-}
-
 - (void)shareApp {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Activity" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Activity" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
 	
 	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [sheet showFromTabBar:[[d tabBarView] backTabBar]];

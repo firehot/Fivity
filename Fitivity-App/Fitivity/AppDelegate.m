@@ -55,6 +55,10 @@
 	//Resolve complie time errors
 	[PF_FBProfilePictureView class];
 	
+	//increment launch counter
+	int num = [[FConfig instance] getLaunchCount];
+	[[FConfig instance] setLaunchCount:++num];
+	
     return YES;
 }
 

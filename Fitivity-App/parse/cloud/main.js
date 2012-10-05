@@ -27,7 +27,7 @@ Parse.Cloud.define('getAverageRating', function(request, response) {
   			});
 		},
 		error: function(object, error) {
-			response.error('Could not find the group');
+			response.error('Could not find the group: ' + request.params.groupID + ' ' + error.message);
 		}
 	});
 });

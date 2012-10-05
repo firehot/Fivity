@@ -21,6 +21,7 @@
 
 @property (nonatomic, assign) CLLocationCoordinate2D mostRecentCoordinate;
 @property (nonatomic, retain) NSMutableArray *searchActivities;
+
 // Get the singleton instance
 + (FConfig *)instance;
 
@@ -60,11 +61,14 @@
 - (void)setShareGroupPost:(BOOL)status;
 - (void)setShareChallenge:(BOOL)status;
 - (void)setSortedFeedKey:(NSString *)key;
+- (void)setLaunchCount:(int)count;
 
 - (NSDictionary *)getTypes;
 
 - (NSArray *)getFacebookPermissions;
 
 - (NetworkStatus)currentNetworkStatus;
+
+- (int)getLaunchCount;
 
 @end

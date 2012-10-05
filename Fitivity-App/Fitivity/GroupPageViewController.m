@@ -81,6 +81,16 @@
 - (void)viewMemebers {
 	autoJoin = NO;
 	
+	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	[self.navigationController.view addSubview:HUD];
+	
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = @"Loading...";
+	
+	[HUD show:YES];
+	[HUD hide:YES afterDelay:1.33];
+	
 	AboutGroupViewController *about = [[AboutGroupViewController alloc] initWithNibName:@"AboutGroupViewController"
 																				bundle:nil
 																				group:group

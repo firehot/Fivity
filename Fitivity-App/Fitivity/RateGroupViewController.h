@@ -10,6 +10,8 @@
 
 #import "MBProgressHUD.h"
 
+@protocol RateGroupViewControllerDelegate;
+
 @interface RateGroupViewController : UIViewController <UITextFieldDelegate, MBProgressHUDDelegate> {
 	int starCount;
 	BOOL alreadyRated;
@@ -33,5 +35,12 @@
 
 @property (nonatomic, retain) PFObject *group;
 @property (nonatomic, retain) PFObject *previousReview;
+@property (nonatomic, assign) id <RateGroupViewControllerDelegate> delegate;
+
+@end
+
+@protocol RateGroupViewControllerDelegate <NSObject>
+
+- (void)viewFinishedRatingGroup:(RateGroupViewController *)view;
 
 @end
