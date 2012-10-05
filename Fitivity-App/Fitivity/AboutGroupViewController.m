@@ -374,6 +374,7 @@
 				[self setCorrectRating:(NSNumber *)object];
 				[self.ratingLabel setText:[self getGroupRatingString:(NSNumber *)object]];
 			} else {
+				[self.ratingLabel setText:[self getGroupRatingString:[NSNumber numberWithInt:0]]];
 				NSLog(@"%@",[error description]);
 			}
 		}];

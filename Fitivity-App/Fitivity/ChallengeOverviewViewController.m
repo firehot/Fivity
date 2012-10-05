@@ -27,6 +27,7 @@
 	@synchronized(self) {
 		PFQuery *query = [PFQuery queryWithClassName:@"Exercise"];
 		[query whereKey:@"parent" equalTo:day];
+		[query addAscendingOrder:@"ordering"];
 		
 		objects = [query findObjects];
 		[self.exerciseTable reloadData];
