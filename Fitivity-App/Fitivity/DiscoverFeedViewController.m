@@ -58,12 +58,16 @@
 }
 
 - (void)handleReminders {
-	if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
-		if ([[FConfig instance] getLaunchCount] % kRemindAfter == 0) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Link with Facebook!" message:@"If you link your Fitivity Account with Facebook your profile will be completed!:" delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles: @"Link Now", nil];
-			[alert setTag:2];
-			[alert show];
+	if ([self loadedInitialData]) {
+		if (![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+			if ([[FConfig instance] getLaunchCount] % kRemindAfter == 0) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Link with Facebook!" message:@"If you link your Fitivity Account with Facebook your profile will be completed!:" delegate:self cancelButtonTitle:@"No Thanks" otherButtonTitles: @"Link Now", nil];
+				[alert setTag:2];
+				[alert show];
+			}
 		}
+	} else {
+		[self performSelector:@selector(handleReminders) withObject:nil afterDelay:3.0];
 	}
 }
 
@@ -282,7 +286,7 @@
 		[[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
     } else if ([title isEqualToString:@"Twitter"]) {
 		
-        [[SocialSharer sharer] shareMessageWithTwitter:@"Do physical activities with me using fitivity. Download it for free in the Apple App store or Google Play. Keyword search - fitivity" image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareMessageWithTwitter:@"Do physical activities with me using fitivity. Download it for free in the Apple App store. Search fitivity" image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"SMS"]) {
         [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Join our fitivity community to get active with myself and other people interested in pick-up sports, fitness, running, or recreation. You can download it for free in the Apple App Store or in Google Play. %@", [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
@@ -397,8 +401,6 @@
 		[c fetch];
 		[c objectForKey:@"image"];
 	}
-	
-	[self performSelector:@selector(handleReminders) withObject:nil afterDelay:1.0];
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
@@ -663,6 +665,7 @@
 		
 		sortCriteria = [[FConfig instance] getSortedFeedKey];
 		shownAlert = NO;
+		[self performSelector:@selector(handleReminders) withObject:nil afterDelay:3.0];
     }
     return self;
 }

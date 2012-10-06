@@ -89,6 +89,13 @@
 	
 	tempPushInfo = userInfo;
 	NSString *message = [(NSDictionary *)[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+	NSString *paid = [(NSDictionary *)[userInfo objectForKey:@"aps"] objectForKey:@"pa_id"];
+	
+	//This isn't a proposed activity push
+	if (paid == nil) {
+		[PFPush handlePush:userInfo];
+		return;
+	}
 	
 	if ([PFUser currentUser]) {
 		
