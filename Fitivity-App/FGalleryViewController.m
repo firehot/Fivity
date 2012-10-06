@@ -74,9 +74,9 @@
 @synthesize useThumbnailView = _useThumbnailView;
 @synthesize startingIndex = _startingIndex;
 @synthesize beginsInThumbnailView = _beginsInThumbnailView;
+@synthesize hideTitle = _hideTitle;
 
 #pragma mark - Public Methods
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -91,6 +91,7 @@
         // set defaults
         _useThumbnailView                   = YES;
 		_prevStatusStyle					= [[UIApplication sharedApplication] statusBarStyle];
+        _hideTitle                          = NO;
 		
 		// create storage objects
 		_currentIndex						= 0;
@@ -116,10 +117,36 @@
 }
 
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	
+	if (self != nil) {
+		self.galleryID						= [NSString stringWithFormat:@"%p", self];
+		
+        // configure view controller
+		self.hidesBottomBarWhenPushed		= YES;
+        
+        // set defaults
+        _useThumbnailView                   = YES;
+		_prevStatusStyle					= [[UIApplication sharedApplication] statusBarStyle];
+        _hideTitle                          = NO;
+		
+		// create storage objects
+		_currentIndex						= 0;
+        _startingIndex                      = 0;
+		_photoLoaders						= [[NSMutableDictionary alloc] init];
+		_photoViews							= [[NSMutableArray alloc] init];
+		_photoThumbnailViews				= [[NSMutableArray alloc] init];
+		_barItems							= [[NSMutableArray alloc] init];
+	}
+	
+	return self;
+}
+
 - (id)initWithPhotoSource:(NSObject<FGalleryViewControllerDelegate>*)photoSrc
 {
 	if((self = [self initWithNibName:nil bundle:nil])) {
-		[self.navigationItem setTitle:@"Photos"];
+		
 		_photoSource = photoSrc;
 	}
 	return self;
@@ -295,7 +322,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	    
+	
     _isActive = YES;
     
     self.useThumbnailView = _useThumbnailView;
@@ -324,6 +351,7 @@
 	_isActive = NO;
 
 	[[UIApplication sharedApplication] setStatusBarStyle:_prevStatusStyle animated:animated];
+	[self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 
@@ -445,10 +473,15 @@
 
 - (void)setUseThumbnailView:(BOOL)useThumbnailView
 {
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: NSLocalizedString(@"Back", @"") style: UIBarButtonItemStyleBordered target: nil action: nil];
+    [[self navigationItem] setBackBarButtonItem: newBackButton];
+    [newBackButton release];
+    
     _useThumbnailView = useThumbnailView;
     if( self.navigationController ) {
         if (_useThumbnailView) {
-            UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:@"See All" style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)] autorelease];
+            UIBarButtonItem *btn = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"See all", @"") style:UIBarButtonItemStylePlain target:self action:@selector(handleSeeAllTouch:)] autorelease];
             [self.navigationItem setRightBarButtonItem:btn animated:YES];
         }
         else {
@@ -523,27 +556,30 @@
 
 - (void)enterFullscreen
 {
-	_isFullscreen = YES;
-	
-	[self disableApp];
-	
-	UIApplication* application = [UIApplication sharedApplication];
-	if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
-		[[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
-	} else {
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-		[[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-	}
-	
-	[self.navigationController setNavigationBarHidden:YES animated:YES];
-	
-	[UIView beginAnimations:@"galleryOut" context:nil];
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDidStopSelector:@selector(enableApp)];
-	_toolbar.alpha = 0.0;
-	_captionContainer.alpha = 0.0;
-	[UIView commitAnimations];
+    if (!_isThumbViewShowing)
+    {
+        _isFullscreen = YES;
+        
+        [self disableApp];
+        
+//        UIApplication* application = [UIApplication sharedApplication];
+//        if ([application respondsToSelector: @selector(setStatusBarHidden:withAnimation:)]) {
+//            [[UIApplication sharedApplication] setStatusBarHidden: YES withAnimation: UIStatusBarAnimationFade]; // 3.2+
+//        } else {
+//    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+//            [[UIApplication sharedApplication] setStatusBarHidden: YES animated:YES]; // 2.0 - 3.2
+//    #pragma GCC diagnostic warning "-Wdeprecated-declarations"
+//        }
+        
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        
+        [UIView beginAnimations:@"galleryOut" context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(enableApp)];
+        _toolbar.alpha = 0.0;
+        _captionContainer.alpha = 0.0;
+        [UIView commitAnimations];
+    }
 }
 
 
@@ -649,7 +685,11 @@
 
 - (void)updateTitle
 {
-	[self setTitle:[NSString stringWithFormat:@"%i of %i", _currentIndex+1, [_photoSource numberOfPhotosForPhotoGallery:self]]];
+    if (!_hideTitle){
+        [self setTitle:[NSString stringWithFormat:@"%i %@ %i", _currentIndex+1, NSLocalizedString(@"of", @"") , [_photoSource numberOfPhotosForPhotoGallery:self]]];
+    }else{
+        [self setTitle:@""];
+    }
 }
 
 
@@ -760,7 +800,7 @@
     _isThumbViewShowing = YES;
     
     [self arrangeThumbs];
-    [self.navigationItem.rightBarButtonItem setTitle:@"Done"];
+    [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"Close", @"")];
     
     if (animation) {
         // do curl animation
@@ -779,7 +819,7 @@
 - (void)hideThumbnailViewWithAnimation:(BOOL)animation
 {
     _isThumbViewShowing = NO;
-    [self.navigationItem.rightBarButtonItem setTitle:@"See All"];
+    [self.navigationItem.rightBarButtonItem setTitle:NSLocalizedString(@"See all", @"")];
     
     if (animation) {
         // do curl animation
@@ -1083,27 +1123,39 @@
 	// unload fullsize and thumbnail images for all our images except at the current index.
 	NSArray *keys = [_photoLoaders allKeys];
 	NSUInteger i, count = [keys count];
-	for (i = 0; i < count; i++) 
-	{
-		if( i != _currentIndex )
-		{
-			FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
-			[photo unloadFullsize];
-			[photo unloadThumbnail];
-			
-			// unload main image thumb
-			FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-			
-			// unload thumb tile
-			photoView = [_photoThumbnailViews objectAtIndex:i];
-			photoView.imageView.image = nil;
-		}
-	}
+    if (_isThumbViewShowing==YES) {
+        for (i = 0; i < count; i++)
+        {
+            FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+            [photo unloadFullsize];
+            
+            // unload main image thumb
+            FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+            photoView.imageView.image = nil;
+        }
+    } else {
+        for (i = 0; i < count; i++)
+        {
+            if( i != _currentIndex )
+            {
+                FGalleryPhoto *photo = [_photoLoaders objectForKey:[keys objectAtIndex:i]];
+                [photo unloadFullsize];
+                [photo unloadThumbnail];
+                
+                // unload main image thumb
+                FGalleryPhotoView *photoView = [_photoViews objectAtIndex:i];
+                photoView.imageView.image = nil;
+                
+                // unload thumb tile
+                photoView = [_photoThumbnailViews objectAtIndex:i];
+                photoView.imageView.image = nil;
+            }
+        }
+    }
 }
 
 
-- (void)dealloc {	
+- (void)dealloc {
 	
 	// remove KVO listener
 	[_container removeObserver:self forKeyPath:@"frame"];
@@ -1187,6 +1239,21 @@
 	{
         return YES;
 	}
+
+	// To preserve the UINavigationController's defined behavior,
+	// walk its stack.  If all of the view controllers in the stack
+	// agree they can rotate to the given orientation, then allow it.
+	BOOL supported = YES;
+	for(UIViewController *sub in self.viewControllers)
+	{
+		if(![sub shouldAutorotateToInterfaceOrientation:interfaceOrientation])
+		{
+			supported = NO;
+			break;
+		}
+	}	
+	if(supported)
+		return YES;
 	
 	// we need to support at least one type of auto-rotation we'll get warnings.
 	// so, we'll just support the basic portrait.

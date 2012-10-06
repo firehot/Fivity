@@ -91,6 +91,9 @@
 
 #pragma mark - Helper Methods 
 
+/*
+ *	Using cloud code get the average rating of the group
+ */
 - (void)getAverageRating {
 	NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[groupRef objectId], @"groupID", nil];
 	[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
@@ -104,6 +107,9 @@
 	}];
 }
 
+/*
+ *	Retrieve all of the photos for this group
+ */
 - (void)attemptPhotosQuery {
 	
 	if (![[FConfig instance] connected]) {
@@ -132,6 +138,9 @@
 	}
 }
 
+/*
+ *	Set the number of stars to the average
+ */
 - (void)setCorrectRating:(NSNumber *)num {
 	int stars = [num intValue];
 	UIImage *active = [UIImage imageNamed:@"star_active.png"];
@@ -167,6 +176,9 @@
 	}
 }
 
+/*
+ *	Set the group rating label based on the number of stars
+ */
 - (NSString *)getGroupRatingString:(NSNumber *)rating {
 	NSString *s;
 	
@@ -198,6 +210,9 @@
 
 #pragma mark - UIImagePickerViewController Delegate 
 
+/*
+ *	Take in an image and scale it to the given size
+ */
 - (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize {
 	UIGraphicsBeginImageContext(newSize);
 	[image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
@@ -206,6 +221,9 @@
 	return newImage;
 }
 
+/*
+ *	Once done picking the image, scale it to reduce the data size then upload to parse
+ */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 	[picker dismissModalViewControllerAnimated:YES];
 	
@@ -283,29 +301,32 @@
 	[self animateTextView:textView Up:NO];
 	
 	if (textView == descriptionView) {
-		__block MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-		[self.navigationController.view addSubview:HUD];
-		
-		HUD.delegate = self;
-		HUD.mode = MBProgressHUDModeIndeterminate;
-		HUD.labelText = @"Posting...";
-		
-		[HUD show:YES];
-		
-		PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[groupRef objectId]];
-		[g setObject:descriptionView.text forKey:@"description"];
-		
-		[g saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			if (succeeded) {
-				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-				HUD.mode = MBProgressHUDModeCustomView;
-				HUD.labelText = @"Posted";
-				[HUD hide:YES afterDelay:1.5];
-			} else {
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Posting" message:@"Something went wrong while posting your description." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-				[alert show];
-			}
-		}];
+		//Don't use an api call if it is the same... 
+		if (![[groupRef objectForKey:@"description"] isEqualToString:descriptionView.text]) {
+			__block MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+			[self.navigationController.view addSubview:HUD];
+			
+			HUD.delegate = self;
+			HUD.mode = MBProgressHUDModeIndeterminate;
+			HUD.labelText = @"Posting...";
+			
+			[HUD show:YES];
+			
+			PFObject *g = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:[groupRef objectId]];
+			[g setObject:descriptionView.text forKey:@"description"];
+			
+			[g saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				if (succeeded) {
+					HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+					HUD.mode = MBProgressHUDModeCustomView;
+					HUD.labelText = @"Posted";
+					[HUD hide:YES afterDelay:1.5];
+				} else {
+					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Posting" message:@"Something went wrong while posting your description." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+					[alert show];
+				}
+			}];
+		}
 	}
 	
 	return YES;
