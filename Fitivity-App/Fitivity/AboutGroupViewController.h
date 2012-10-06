@@ -15,6 +15,9 @@
 #import "GooglePlacesObject.h"
 
 @interface AboutGroupViewController : UIViewController <UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, MBProgressHUDDelegate, FGalleryViewControllerDelegate, RateGroupViewControllerDelegate> {
+	
+	FGalleryViewController *gallery;
+	
 	BOOL hasAccess;
 }
 
@@ -38,6 +41,7 @@
 
 @property (nonatomic, retain) PFObject *groupRef;
 @property (nonatomic, retain) NSArray *photoResults;
+@property (nonatomic, retain) NSMutableArray *photoURLResults;
 @property (nonatomic, retain) GooglePlacesObject *place;
 
 @end

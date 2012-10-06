@@ -24,7 +24,7 @@
 @implementation AboutGroupViewController
 
 @synthesize groupRef;
-@synthesize photoResults;
+@synthesize photoResults, photoURLResults;
 @synthesize place;
 @synthesize activityLabel, ratingLabel, descriptionView;
 @synthesize starOne, starTwo, starThree, starFour, starFive;
@@ -46,9 +46,19 @@
     [sheet showFromTabBar:[[d tabBarView] backTabBar]];
 }
 
-- (IBAction)viewGroupPhotos:(id)sender {	
-	FGalleryViewController *gallery = [[FGalleryViewController alloc] initWithPhotoSource:self];
-	[self.navigationController pushViewController:gallery animated:YES];
+- (IBAction)viewGroupPhotos:(id)sender {
+	
+	UIImage *trashIcon = [UIImage imageNamed:@"photo-gallery-trashcan.png"];
+	UIBarButtonItem *trashButton = [[UIBarButtonItem alloc] initWithImage:trashIcon style:UIBarButtonItemStylePlain target:self action:@selector(handleTrashButtonTouch:)];
+	NSArray *barItems = [NSArray arrayWithObject:trashButton];
+	
+	if ([photoURLResults count] > 0) {
+		gallery = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
+		[self.navigationController pushViewController:gallery animated:YES];
+	} else {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Photos" message:@"There are no photo's for this group yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+	}
 }
 
 - (IBAction)addPhoto:(id)sender {
@@ -122,6 +132,7 @@
 		
 		[query findObjectsInBackgroundWithBlock: ^(NSArray *objects, NSError *error){
 			if (!error) {
+				photoResults = objects;
 				NSMutableArray *urls = [[NSMutableArray alloc] init];
 				PFFile *pic;
 				for (PFObject *o in objects) {
@@ -130,9 +141,9 @@
 						[urls addObject:[pic url]];
 					}
 				}
-				photoResults = [NSArray arrayWithArray:urls];
+				photoURLResults = urls;
 			} else {
-				photoResults = [[NSArray alloc] init];
+				photoURLResults = [[NSMutableArray alloc] init];
 			}
 		}];
 	}
@@ -237,7 +248,16 @@
 	[HUD show:YES];
 	
 	UIImage *selected = [info objectForKey:UIImagePickerControllerOriginalImage];
-	PFFile *pic = [PFFile fileWithData:UIImagePNGRepresentation([self scaleImage:selected toSize:CGSizeMake(320.0, 480.0)])];
+	CGSize size;
+	
+	//landscape photo
+	if (selected.size.height < selected.size.width) {
+		size = CGSizeMake(480, 320);
+	} else {
+		size = CGSizeMake(320, 480);
+	}
+	
+	PFFile *pic = [PFFile fileWithData:UIImagePNGRepresentation([self scaleImage:selected toSize:size])];
 	
 	PFObject *groupPic = [PFObject objectWithClassName:@"GroupPhotos"];
 	[groupPic setObject:groupRef forKey:@"group"];
@@ -385,7 +405,7 @@
 
 
 - (int)numberOfPhotosForPhotoGallery:(FGalleryViewController *)gallery {
-	return [photoResults count];
+	return [photoURLResults count];
 }
 
 
@@ -404,13 +424,29 @@
 }
 
 - (NSString*)photoGallery:(FGalleryViewController *)gallery urlForPhotoSize:(FGalleryPhotoSize)size atIndex:(NSUInteger)index {
-    return [photoResults objectAtIndex:index];
+    return [photoURLResults objectAtIndex:index];
 }
 
 - (void)handleTrashButtonTouch:(id)sender {
-    // here we could remove images from our local array storage and tell the gallery to remove that image
-    // ex:
-    //[localGallery removeImageAtIndex:[localGallery currentIndex]];
+    [gallery removeImageAtIndex:[gallery currentIndex]];
+	
+	int index = [gallery currentIndex];
+	if ([photoResults count] >= index+1) {
+		PFObject *image = [photoResults objectAtIndex:index];
+		if (![image delete]) {
+			[image deleteEventually];
+		}
+	}
+		
+	if ([photoURLResults count] >= index+1) {
+		[photoURLResults removeObjectAtIndex:index];
+	}
+	
+	if ([photoURLResults count] == 0) {
+		[self.navigationController popViewControllerAnimated:YES];
+	} else {
+		[gallery reloadGallery];
+	}
 }
 
 - (void)handleEditCaptionButtonTouch:(id)sender {
