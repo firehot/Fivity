@@ -450,10 +450,18 @@
 	
 	if (groupRef != nil) {
 		[descriptionView setText:[groupRef objectForKey:@"description"]];
+		
+		// If they are part of the group and there is no description yet
+		if (hasAccess && [descriptionView.text isEqualToString:@""]) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Write Description" message:@"Take a minute and complete this group's information by writing a brief description!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];
+		}
 	}
 	
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	self.activityLabel.text = [place name];
+	
+	
 	
 	[self attemptPhotosQuery];
 }
