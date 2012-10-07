@@ -484,6 +484,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	[ratingLabel setTextColor:[[FConfig instance] getFitivityGreen]];
+	
 	if (groupRef != nil) {
 		[descriptionView setText:[groupRef objectForKey:@"description"]];
 		
@@ -496,8 +498,6 @@
 	
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	self.activityLabel.text = [place name];
-	
-	
 	
 	[self attemptPhotosQuery];
 }

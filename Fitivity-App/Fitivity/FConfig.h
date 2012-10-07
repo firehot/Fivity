@@ -50,6 +50,7 @@
 - (NSString *)getSortedFeedKey;
 
 - (UIColor *)getFitivityBlue;
+- (UIColor *)getFitivityGreen;
 
 - (void)showLogoNavBar:(BOOL)status;
 - (void)setDoesHaveNotifications:(BOOL)status;

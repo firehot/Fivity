@@ -288,6 +288,10 @@ static FConfig *instance;
 	return [UIColor colorWithRed:142.0/255.0f green:198.0/255.0f blue:250.0/255.0f alpha:1];
 }
 
+- (UIColor *)getFitivityGreen {
+	return [UIColor colorWithRed:23.0/255.0f green:62.0/255.0f blue:15.0/255.0f alpha:1];
+}
+
 #pragma mark - BOOL methods
 
 - (BOOL)groupHasChallenges:(NSString *)groupType {
