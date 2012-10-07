@@ -236,6 +236,8 @@
 		6CDCD5BD15B1B00200986AA2 /* FTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB1B21815B1A10D004DDDCA /* FTabBarViewController.xib */; };
 		6CE3611415F2555F00F8F783 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3611115F2549200F8F783 /* Icon.png */; };
 		6CE3611515F2556100F8F783 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CE3611215F2549200F8F783 /* Icon@2x.png */; };
+		6CE8D2A1162203D100A4F9D3 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CE8D29F162203D100A4F9D3 /* EditProfileViewController.m */; };
+		6CE8D2A2162203D100A4F9D3 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CE8D2A0162203D100A4F9D3 /* EditProfileViewController.xib */; };
 		6CEFED8015B3641500211CB0 /* ChooseActivityHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */; };
 		6CF2C71115B4EAF9001E3353 /* FitivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */; };
 		F10C6E9415F05D5B00D64276 /* b_facebook_link_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F10C6E8C15F05D5B00D64276 /* b_facebook_link_down.png */; };
@@ -780,6 +782,9 @@
 		6CE3611115F2549200F8F783 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6CE3611215F2549200F8F783 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		6CE3611315F2549200F8F783 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		6CE8D29E162203D100A4F9D3 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		6CE8D29F162203D100A4F9D3 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileViewController.m; sourceTree = "<group>"; };
+		6CE8D2A0162203D100A4F9D3 /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EditProfileViewController.xib; path = Fitivity/EditProfileViewController.xib; sourceTree = "<group>"; };
 		6CEFED7E15B3641500211CB0 /* ChooseActivityHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityHeaderView.h; sourceTree = "<group>"; };
 		6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityHeaderView.m; sourceTree = "<group>"; };
 		6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FitivityIcon.png; sourceTree = "<group>"; };
@@ -1178,6 +1183,8 @@
 			children = (
 				6C42C50615BA196900ACB549 /* NDArtworkPopout.h */,
 				6C42C50715BA196900ACB549 /* NDArtworkPopout.m */,
+				6CE8D29E162203D100A4F9D3 /* EditProfileViewController.h */,
+				6CE8D29F162203D100A4F9D3 /* EditProfileViewController.m */,
 			);
 			name = "Helper Classes";
 			sourceTree = "<group>";
@@ -1922,6 +1929,7 @@
 			children = (
 				6C50011F15B6368500029AFD /* Cells */,
 				6CDCD5BA15B1AE9700986AA2 /* UserProfileViewController.xib */,
+				6CE8D2A0162203D100A4F9D3 /* EditProfileViewController.xib */,
 				6C3E596A15B7A447009E2A00 /* SettingsViewController.xib */,
 			);
 			name = Profile;
@@ -2432,6 +2440,7 @@
 				6C25CD7416207649008D0924 /* photo-gallery-right.png in Resources */,
 				6C25CD7516207649008D0924 /* photo-gallery-right@2x.png in Resources */,
 				6C25CD7616207649008D0924 /* photo-gallery-trashcan.png in Resources */,
+				6CE8D2A2162203D100A4F9D3 /* EditProfileViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2513,6 +2522,7 @@
 				6CAA52BB1617894A00527B1B /* AboutGroupViewController.m in Sources */,
 				6CAA52F216190A5800527B1B /* RateGroupViewController.m in Sources */,
 				6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */,
+				6CE8D2A1162203D100A4F9D3 /* EditProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

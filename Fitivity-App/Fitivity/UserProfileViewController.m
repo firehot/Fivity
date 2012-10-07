@@ -38,7 +38,9 @@
 }
 
 - (void)editInformation {
-	
+	EditProfileViewController *edit = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:nil];
+	[edit setDelegate:self];
+	[self presentModalViewController:edit animated:YES];
 }
 
 - (void)attemptGetUserGroups {
@@ -316,6 +318,27 @@
 	}
 }
 
+- (void)loadCachedData {
+	// Load Cache to display immediately
+	PFFile *pic = [userProfile objectForKey:@"image"];
+	if (pic && pic != [NSNull null]) {
+		NSData *picData = [pic getData];
+		[self.userPicture setImage:[UIImage imageWithData:picData]];
+	}
+	
+	userNameLabel.text = [userProfile username];
+	userOcupationLabel.text = [userProfile objectForKey:@"occupation"];
+	userAgeLabel.text = [NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]];
+	userHometownLabel.text = [userProfile objectForKey:@"hometown"];
+	userBioView.text = [userProfile objectForKey:@"bio"];
+}
+
+#pragma mark - EditProfileViewController Delegate
+
+-(void)userDidUpdateProfile {
+	[self loadCachedData];
+}
+
 #pragma mark - MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
@@ -525,20 +548,8 @@
 	if (!userProfile) {
 		userProfile = [PFUser currentUser];
 	}
-	
-	// Load Cache to display immediately
-	PFFile *pic = [userProfile objectForKey:@"image"];
-	if (pic && pic != [NSNull null]) {
-		NSData *picData = [pic getData];
-		[self.userPicture setImage:[UIImage imageWithData:picData]];
-	}
-	
-	userNameLabel.text = [userProfile username];
-	userOcupationLabel.text = [userProfile objectForKey:@"occupation"];
-	userAgeLabel.text = [NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]];
-	userHometownLabel.text = [userProfile objectForKey:@"hometown"];
-	userBioView.text = [userProfile objectForKey:@"bio"];
-	
+
+	[self loadCachedData];
 	[self setCorrectData];
 	
 	//If the results didn't load at init, try to reload them.
@@ -560,9 +571,12 @@
         UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = settings;
 		
-		UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editInformation)];
-		self.navigationItem.leftBarButtonItem = editButton;
-		
+		// Can't edit information that is pulled from FB
+		if (![PFFacebookUtils isLinkedWithUser:userProfile]) {
+			UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editInformation)];
+			self.navigationItem.leftBarButtonItem = editButton;
+		}
+
 		updatedGroups = [[NSMutableDictionary alloc] init];
 	}
 	

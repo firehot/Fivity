@@ -13,10 +13,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "MBProgressHUD.h"
+#import "EditProfileViewController.h"
 
 #define kHeaderHeight		40
 
-@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, MBProgressHUDDelegate> {
+@interface UserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, EditProfileViewControllerDelegate, MBProgressHUDDelegate> {
 	PFUser *userProfile;
 	
 	NSMutableArray *groupResults;
