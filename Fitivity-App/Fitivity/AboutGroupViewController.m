@@ -68,13 +68,12 @@
 		return;
 	}
 	if ([[FConfig instance] connected]) {
-		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-			UIImagePickerController *camera = [[UIImagePickerController alloc] init];
-			[camera setDelegate:self];
-			[camera setSourceType:UIImagePickerControllerSourceTypeCamera];
-			[self presentViewController:camera animated:YES completion:nil];
+		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+			UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Pick Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Album", nil];
+			AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+			[sheet showFromTabBar:[[d tabBarView] backTabBar]];
 		} else {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Camera" message:@"This feature is not available for your device" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"This feature is not available for your device" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 		}
 	} else {
@@ -97,6 +96,11 @@
 - (IBAction)viewReviews:(id)sender {
 	ReviewsViewController *reviews = [[ReviewsViewController alloc] initWithStyle:UITableViewStylePlain group:groupRef];
 	[self.navigationController pushViewController:reviews animated:YES];
+}
+
+- (IBAction)toggleEdit:(id)sender {
+	[descriptionView setEditable:YES];
+	[descriptionView becomeFirstResponder];
 }
 
 #pragma mark - Helper Methods 
@@ -321,6 +325,9 @@
 	[self animateTextView:textView Up:NO];
 	
 	if (textView == descriptionView) {
+		
+		[descriptionView setEditable:NO];
+		
 		//Don't use an api call if it is the same... 
 		if (![[groupRef objectForKey:@"description"] isEqualToString:descriptionView.text]) {
 			__block MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -370,7 +377,17 @@
 	p = [groupRef objectForKey:@"place"];
 	activity = [groupRef objectForKey:@"activity"];
 	
-    if ([title isEqualToString:@"Facebook"]) {
+	if ([title isEqualToString:@"Camera"]) {
+		UIImagePickerController *camera = [[UIImagePickerController alloc] init];
+		[camera setDelegate:self];
+		[camera setSourceType:UIImagePickerControllerSourceTypeCamera];
+		[self presentViewController:camera animated:YES completion:nil];
+	} else if ([title isEqualToString:@"Photo Album"]) {
+		UIImagePickerController *camera = [[UIImagePickerController alloc] init];
+		[camera setDelegate:self];
+		[camera setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+		[self presentViewController:camera animated:YES completion:nil];
+	} else if ([title isEqualToString:@"Facebook"]) {
 		
 		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community.", p, activity];
 		
@@ -481,25 +498,28 @@
     return self;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[descriptionView setEditable:NO];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	[ratingLabel setTextColor:[[FConfig instance] getFitivityGreen]];
+	[self attemptPhotosQuery];
 	
 	if (groupRef != nil) {
 		[descriptionView setText:[groupRef objectForKey:@"description"]];
 		
 		// If they are part of the group and there is no description yet
-		if (hasAccess && [descriptionView.text isEqualToString:@""]) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Write Description" message:@"Take a minute and complete this group's information by writing a brief description!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		if (hasAccess && ([descriptionView.text isEqualToString:@""] || [photoURLResults count] == 0)) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Write Description" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review in the about group section." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
 		}
 	}
 	
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	self.activityLabel.text = [place name];
-	
-	[self attemptPhotosQuery];
 }
 
 - (void)didReceiveMemoryWarning {

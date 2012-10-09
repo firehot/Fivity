@@ -27,7 +27,7 @@
 @synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel, userBioView;
 @synthesize userPicture;
 @synthesize facebookProfilePicture;
-@synthesize groupsView, aboutMeView;
+@synthesize groupsView, aboutMeView, acitivitesView;
 @synthesize segControl, toolbar;
 
 #pragma mark - Helper Methods 
@@ -496,9 +496,15 @@
 	if ([seg selectedSegmentIndex] == 0) {
 		[groupsView setHidden:NO];
 		[aboutMeView setHidden:YES];
+		[acitivitesView setHidden:YES];
+	} else if ([seg selectedSegmentIndex] == 1){
+		[groupsView setHidden:YES];
+		[aboutMeView setHidden:YES];
+		[acitivitesView setHidden:NO];
 	} else {
 		[groupsView setHidden:YES];
 		[aboutMeView setHidden:NO];
+		[acitivitesView setHidden:YES];
 	}
 }
 
@@ -519,6 +525,7 @@
 //			[self requestFacebookData];
 //		}
 		
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCachedData) name:@"loggedIn" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidLoad) name:@"changedInformation" object:nil];
@@ -541,7 +548,9 @@
 	
 	[self.displayView addSubview:groupsView];
 	[self.displayView addSubview:aboutMeView];
+	[self.displayView addSubview:acitivitesView];
 	[aboutMeView setHidden:YES];
+	[acitivitesView setHidden:YES];
 	
 	[aboutMeView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	
@@ -598,6 +607,7 @@
 	[self setToolbar:nil];
 	[self setSegControl:nil];
 	[self setUserBioView:nil];
+	[self setAcitivitesView:nil];
     [super viewDidUnload];
 }
 

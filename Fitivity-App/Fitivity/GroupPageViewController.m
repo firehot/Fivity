@@ -615,6 +615,15 @@
 	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.navigationItem.rightBarButtonItem = members;
 
+	if (autoJoin) {
+		int64_t delayInSeconds = 2.2;
+		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Complete Group" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review in the about group section" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];
+		});
+	}
+	
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewProposedActivity) name:@"addedPA" object:nil];
 }

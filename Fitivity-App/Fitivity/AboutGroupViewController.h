@@ -29,6 +29,7 @@
 - (IBAction)addPhoto:(id)sender;
 - (IBAction)viewRateGroup:(id)sender;
 - (IBAction)viewReviews:(id)sender;
+- (IBAction)toggleEdit:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ratingLabel;

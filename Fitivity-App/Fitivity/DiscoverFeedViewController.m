@@ -165,6 +165,8 @@
 		return;
 	}
 	
+	[cell.pictureView setImage:[UIImage imageNamed:@"activity_icon.png"]];
+	
 	//Get the PA and the parent group
 	PFObject *pa = [object objectForKey:@"proposedActivity"];
 	PFObject *group = [object objectForKey:@"group"];
@@ -353,6 +355,8 @@
 		
 		[self loadObjects];
 	}
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"loggedIn" object:self];
 }
 
 #pragma mark - DiscoverCell Delegate

@@ -104,8 +104,13 @@
 }
 
 - (void) presentLoginViewController {
-	LoginViewController *login = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-	[self presentModalViewController:login animated:YES];
+	loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+	
+	if ([self.leftRootViewController respondsToSelector:@selector(shareApp)]) {
+		[loginView setDelegate:(DiscoverFeedViewController *)self.leftRootViewController];
+	}
+	
+	[self presentModalViewController:loginView animated:YES];
 	[self performSelector:@selector(leftTabButtonPushed:) withObject:nil afterDelay:1.5]; //delay to prevent changing while animation is happening
 }
 

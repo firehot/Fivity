@@ -56,7 +56,7 @@
 }
 
 - (void)shareApp {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Group" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Group" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
 	
 	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [sheet showFromTabBar:[[d tabBarView] backTabBar]];
@@ -210,16 +210,16 @@
     self.navigationItem.title = @"Members";
 	self.membersTable.backgroundColor = [UIColor whiteColor];
 	
-//	UIImage *shareApp = [UIImage imageNamed:@"b_invite.png"];
-//	UIImage *shareAppDown = [UIImage imageNamed:@"b_invite_down.png"];
-//	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//	[button setImage:shareApp forState:UIControlStateNormal];
-//	[button setImage:shareAppDown forState:UIControlStateHighlighted];
-//	[button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
-//	button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
-//	
-//	UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
-//	self.navigationItem.rightBarButtonItem = share;
+	UIImage *shareApp = [UIImage imageNamed:@"b_invite.png"];
+	UIImage *shareAppDown = [UIImage imageNamed:@"b_invite_down.png"];
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+	[button setImage:shareApp forState:UIControlStateNormal];
+	[button setImage:shareAppDown forState:UIControlStateHighlighted];
+	[button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
+	button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+	
+	UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
+	self.navigationItem.rightBarButtonItem = share;
 }
 
 - (void)viewDidUnload {
