@@ -526,8 +526,13 @@
 	//Get the data if it hasn't been pulled from the server yet
 	[object fetchIfNeeded];
 	
-	NSString *typeString = [object objectForKey:@"type"];
-	int type = ([typeString isEqualToString:@"NORMAL"]) ? kCellTypeGroup : kCellTypePA;
+	//Get the type of the activity
+	int type = [[object objectForKey:@"postType"] integerValue];
+	int numberOfMemebers = 0;
+	
+	if (type == kCellTypeGroup) {
+		numberOfMemebers = [[object objectForKey:@"number"] integerValue];
+	}
 	
 	if (!object) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Loading" message:@"Cannot load this activity at this time" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
