@@ -15,6 +15,7 @@
 @implementation RateGroupViewController
 
 @synthesize starOne, starTwo, starThree, starFour, starFive;
+@synthesize ratingLabel;
 @synthesize review, group, previousReview;
 @synthesize delegate;
 
@@ -93,6 +94,8 @@
 	UIImage *active = [UIImage imageNamed:@"star_active.png"];
 	UIImage *inactive = [UIImage imageNamed:@"star_inactive.png"];
 	
+	[self getGroupRatingString:num];
+	
 	//reset all images
 	[starOne setImage:inactive forState:UIControlStateNormal];
 	[starTwo setImage:inactive forState:UIControlStateNormal];
@@ -143,6 +146,36 @@
 		[self setActiveStars:[[previousReview objectForKey:@"rating"] integerValue]];
 		alreadyRated = YES;
 	}
+}
+
+/*
+ *	Set the group rating label based on the number of stars
+ */
+- (void)getGroupRatingString:(int)rating {
+	NSString *s;
+	
+	switch (rating) {
+		case 1:
+			s = @"Never Reliable";
+			break;
+		case 2:
+			s = @"Occasionally Reliable";
+			break;
+		case 3:
+			s = @"Pretty Reliable";
+			break;
+		case 4:
+			s = @"Frequently Reliable";
+			break;
+		case 5:
+			s = @"Always Reliable";
+			break;
+		default:
+			s = @"Not Enough Ratings...";
+			break;
+	}
+	[ratingLabel setText:s];
+	[ratingLabel setTextColor:[[FConfig instance] getFitivityGreen]];
 }
 
 #pragma mark - IBActions
@@ -227,7 +260,7 @@
     [super viewDidLoad];
 	
 	if (alreadyRated && previousReview) {
-		[self.review setText:[previousReview objectForKey:@"review"]];
+		//[self.review setText:[previousReview objectForKey:@"review"]];
 		[self setActiveStars:[[previousReview objectForKey:@"rating"] integerValue]];
 	} else {
 		starCount = 0;
@@ -250,6 +283,7 @@
     [self setStarFour:nil];
     [self setStarFive:nil];
 	[self setReview:nil];
+	[self setRatingLabel:nil];
     [super viewDidUnload];
 }
 

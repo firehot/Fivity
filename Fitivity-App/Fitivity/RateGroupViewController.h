@@ -32,6 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *starFour;
 @property (weak, nonatomic) IBOutlet UIButton *starFive;
 @property (weak, nonatomic) IBOutlet UITextField *review;
+@property (weak, nonatomic) IBOutlet UILabel *ratingLabel;
 
 @property (nonatomic, retain) PFObject *group;
 @property (nonatomic, retain) PFObject *previousReview;

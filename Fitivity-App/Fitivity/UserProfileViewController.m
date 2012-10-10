@@ -27,7 +27,7 @@
 @synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel, userBioView;
 @synthesize userPicture;
 @synthesize facebookProfilePicture;
-@synthesize groupsView, aboutMeView, acitivitesView;
+@synthesize groupsView, aboutMeView;
 @synthesize segControl, toolbar;
 
 #pragma mark - Helper Methods 
@@ -496,16 +496,10 @@
 	if ([seg selectedSegmentIndex] == 0) {
 		[groupsView setHidden:NO];
 		[aboutMeView setHidden:YES];
-		[acitivitesView setHidden:YES];
-	} else if ([seg selectedSegmentIndex] == 1){
-		[groupsView setHidden:YES];
-		[aboutMeView setHidden:YES];
-		[acitivitesView setHidden:NO];
 	} else {
 		[groupsView setHidden:YES];
 		[aboutMeView setHidden:NO];
-		[acitivitesView setHidden:YES];
-	}
+	} 
 }
 
 #pragma mark - View Lifecycle
@@ -548,9 +542,7 @@
 	
 	[self.displayView addSubview:groupsView];
 	[self.displayView addSubview:aboutMeView];
-	[self.displayView addSubview:acitivitesView];
 	[aboutMeView setHidden:YES];
-	[acitivitesView setHidden:YES];
 	
 	[aboutMeView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 	
@@ -607,7 +599,6 @@
 	[self setToolbar:nil];
 	[self setSegControl:nil];
 	[self setUserBioView:nil];
-	[self setAcitivitesView:nil];
     [super viewDidUnload];
 }
 

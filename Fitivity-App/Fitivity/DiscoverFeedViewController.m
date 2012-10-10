@@ -563,7 +563,17 @@
 			[HUD hide:YES];
 			break;
 		}
+		case kCellTypeComment: {
+			PFObject *selectedPA = [object objectForKey:@"proposedActivity"];
+			[selectedPA fetchIfNeeded];
+			ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:selectedPA];
+			
+			[self.navigationController pushViewController:pa animated:YES];
+			[HUD hide:YES];
+			break;
+		}
 		default:
+			[HUD hide:YES];
 			break;
 	}
 	

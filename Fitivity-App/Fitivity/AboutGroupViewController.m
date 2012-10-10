@@ -379,11 +379,13 @@
 	
 	if ([title isEqualToString:@"Camera"]) {
 		UIImagePickerController *camera = [[UIImagePickerController alloc] init];
+		[[camera navigationBar] setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
 		[camera setDelegate:self];
 		[camera setSourceType:UIImagePickerControllerSourceTypeCamera];
 		[self presentViewController:camera animated:YES completion:nil];
 	} else if ([title isEqualToString:@"Photo Album"]) {
 		UIImagePickerController *camera = [[UIImagePickerController alloc] init];
+		[[camera navigationBar] setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
 		[camera setDelegate:self];
 		[camera setSourceType:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
 		[self presentViewController:camera animated:YES completion:nil];

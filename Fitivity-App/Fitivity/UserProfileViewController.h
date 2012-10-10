@@ -32,7 +32,6 @@
 
 @property (nonatomic, retain) IBOutlet UIView *groupsView;
 @property (nonatomic, retain) IBOutlet UIView *aboutMeView;
-@property (strong, nonatomic) IBOutlet UIView *acitivitesView;
 @property (weak, nonatomic) IBOutlet UIView *displayView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
