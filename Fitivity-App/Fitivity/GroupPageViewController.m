@@ -611,8 +611,8 @@
     self.activityLabel.text = [place name];
 	
 	
-	UIImage *memberImage = [UIImage imageNamed:@"b_members.png"];
-    UIImage *memberImageDown = [UIImage imageNamed:@"b_members_down.png"];
+	UIImage *memberImage = [UIImage imageNamed:@"b_group.png"];
+    UIImage *memberImageDown = [UIImage imageNamed:@"b_group_down.png"];
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 	[button setImage:memberImage forState:UIControlStateNormal];
     [button setImage:memberImageDown forState:UIControlStateHighlighted];

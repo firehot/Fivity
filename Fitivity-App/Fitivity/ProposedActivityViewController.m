@@ -51,6 +51,13 @@
 
 #pragma mark - Actions
 
+- (IBAction)shareApp:(id)sender {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Activity" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
+	
+	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+}
+
 - (IBAction) textFieldDidUpdate:(id)sender {
 	
 	//Get the text field, then determine what the current count is.
@@ -199,6 +206,9 @@
 	[self.navigationController pushViewController:g animated:YES];
 }
 
+/*
+ *	No longer used for this view... Leaving in case someone changes their mind.
+ */
 - (IBAction)showAboutGroup:(id)sender {
 	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 	[self.navigationController.view addSubview:HUD];
@@ -426,13 +436,6 @@
 	return ret;
 }
 
-- (void)shareApp {
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Activity" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
-	
-	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
-}
-
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -502,7 +505,7 @@
 	}
 }
 
-#pragma mark - ProposedActivityCell Delegate 
+#pragma mark - CommentCell Delegate 
 
 - (void)userWantsProfileAtRow:(NSInteger)row {
 	PFObject *comment = [results objectAtIndex:row];
@@ -666,12 +669,12 @@
 			}			
 		}
 		
-		UIImage *shareApp = [UIImage imageNamed:@"b_invite.png"];
-		UIImage *shareAppDown = [UIImage imageNamed:@"b_invite_down.png"];
+		UIImage *shareApp = [UIImage imageNamed:@"b_group.png"];
+		UIImage *shareAppDown = [UIImage imageNamed:@"b_group_down.png"];
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 		[button setImage:shareApp forState:UIControlStateNormal];
 		[button setImage:shareAppDown forState:UIControlStateHighlighted];
-		[button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
+		[button addTarget:self action:@selector(showGroup:) forControlEvents:UIControlEventTouchUpInside];
 		button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
 		
 		UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];

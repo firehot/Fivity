@@ -318,6 +318,11 @@
 	}
 }
 
+- (void)reloadAfterLogin {
+	userProfile = [PFUser currentUser];
+	[self loadCachedData];
+}
+
 - (void)loadCachedData {
 	// Load Cache to display immediately
 	PFFile *pic = [userProfile objectForKey:@"image"];
@@ -519,7 +524,7 @@
 //			[self requestFacebookData];
 //		}
 		
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadCachedData) name:@"loggedIn" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAfterLogin) name:@"loggedIn" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidLoad) name:@"changedInformation" object:nil];

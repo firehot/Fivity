@@ -24,12 +24,14 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil proposedActivity:(PFObject *)pa;
-- (IBAction) textFieldDidUpdate:(id)sender;
+
+- (IBAction)textFieldDidUpdate:(id)sender;
 - (IBAction)showHeaderMessage:(id)sender;
 - (IBAction)showPostCreator:(id)sender;
 - (IBAction)postImIn:(id)sender;
 - (IBAction)showGroup:(id)sender;
 - (IBAction)showAboutGroup:(id)sender;
+- (IBAction)shareApp:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *activityHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *creatorPicture;

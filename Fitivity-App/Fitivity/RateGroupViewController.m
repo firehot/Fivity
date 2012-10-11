@@ -182,14 +182,14 @@
 
 - (IBAction)postReview:(id)sender {
 	if ([[FConfig instance] connected]) {
-		if (starCount != 0) {
+		if (starCount != 0 && review.text.length > 2) {
 			if (!alreadyRated) {
 				[self rateWithNum:starCount];
 			} else {
 				[self updateRatingWithNum:starCount];
 			}
 		} else {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Rating" message:@"You haven't rated the app yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Rating" message:@"You haven't rated & reviewed the app yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
 		}
 	} else {

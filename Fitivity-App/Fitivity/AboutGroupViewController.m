@@ -514,7 +514,7 @@
 		[descriptionView setText:[groupRef objectForKey:@"description"]];
 		
 		// If they are part of the group and there is no description yet
-		if (hasAccess && ([descriptionView.text isEqualToString:@""] || [photoURLResults count] == 0)) {
+		if (hasAccess && ([descriptionView.text isEqualToString:@""] && [photoURLResults count] == 0)) {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Write Description" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review in the about group section." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
 		}

@@ -7,7 +7,9 @@
 //
 
 #import "ReviewsViewController.h"
-#import "CommentCell.h"
+#import "UserProfileViewController.h"
+
+#define kMoreTextLimit		75
 
 @interface ReviewsViewController ()
 
@@ -25,6 +27,16 @@
 	return [formatter stringFromDate:date];
 }
 
+#pragma mark - CommentCell Delegate
+
+- (void)userWantsProfileAtRow:(NSInteger)row {
+	PFObject *comment = [self.objects objectAtIndex:row];
+	PFUser *user = [comment objectForKey:@"user"];
+	
+	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
+	[self.navigationController pushViewController:profile animated:YES];
+}
+
 #pragma mark - PFTableViewController Delegate 
 
 // Override to customize what kind of query to perform on the class. The default is to query for
@@ -40,6 +52,7 @@
 	
 	[query whereKey:@"group" equalTo:group];
 	[query whereKey:@"review" notEqualTo:@""];
+	[query whereKey:@"review" notEqualTo:@" "];
 	[query whereKey:@"review" notEqualTo:[NSNull null]];
     [query orderByDescending:@"updatedAt"];
 	
@@ -58,6 +71,9 @@
 		cell = [nib objectAtIndex:0];
     }
 		
+	NSLog(@"%@", [object description]);
+	[object fetch];
+	
 	[cell.userPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	
 	//Style picture
@@ -68,8 +84,18 @@
 	
 	cell.commentMessage.text = [object objectForKey:@"review"];
 	cell.commentMessage.adjustsFontSizeToFitWidth = YES;
-	cell.userName.text = @"user";
-	cell.time.text = [self getFormattedStringForDate:[object createdAt]];
+	
+	if (cell.commentMessage.text.length >= kMoreTextLimit) {
+		[cell.moreIcon setHidden:NO];
+	} else {
+		[cell.moreIcon setHidden:YES];
+	}
+	
+	cell.userName.text = @"User";
+	cell.time.text = [self getFormattedStringForDate:[object updatedAt]];
+	
+	[cell setTag:indexPath.row];
+	[cell setDelegate:self];
 	
     return cell;
 }
@@ -78,27 +104,18 @@
 	return 70;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//	return kHeaderHeight;
-//}
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
-//    [label setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_heading_header.png"]]];
-//    [label setTextAlignment:UITextAlignmentCenter];
-//    [label setTextColor:[UIColor whiteColor]];
-//    [label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-//    [label setText:@"Newsfeed"];
-//	
-//    [header addSubview:label];
-//    return header;
-//}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	PFObject *object = [self objectAtIndexPath:indexPath];
+	[object fetchIfNeeded];
+	
+	NSString *message = [object objectForKey:@"review"];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Review" message:message delegate:self cancelButtonTitle:@"Done" otherButtonTitles: nil];
+	[alert show];
+	
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -139,8 +156,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 	
-	[self.tableView setBackgroundColor:[UIColor clearColor]];
-	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
+	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
+    self.tableView.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
 }
 
 - (void)didReceiveMemoryWarning {

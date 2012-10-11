@@ -9,7 +9,9 @@
 #import <Parse/Parse.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface ReviewsViewController : PFQueryTableViewController
+#import "CommentCell.h"
+
+@interface ReviewsViewController : PFQueryTableViewController <CommentCellDelegate>
 
 - (id)initWithStyle:(UITableViewStyle)style group:(PFObject *)g;
 
