@@ -27,7 +27,8 @@
 #define kThirdCellMove					160
 #define kTextFieldAnimationDuration    0.3f
 #define kMaxCharCount					350
-#define kMoreLimit						75
+#define kHeaderMoreLimit				75
+#define kCellMoreLimit					125
 
 @interface ProposedActivityViewController ()
 
@@ -548,6 +549,11 @@
 	[cell.userPicture.layer setBorderWidth:2];
     
 	cell.commentMessage.text = [currentPA objectForKey:@"message"];
+		
+	if (cell.commentMessage.text.length < kCellMoreLimit) {
+		cell.moreIcon.hidden = YES;
+	}
+	
 	cell.commentMessage.adjustsFontSizeToFitWidth = YES;
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.time.text = [self getFormattedStringForDate:[currentPA createdAt]];
@@ -705,7 +711,7 @@
 	creatorName.text = [creator objectForKey:@"username"];
 	activityMessage.text = [parent objectForKey:@"activityMessage"];
 	
-	if (activityMessage.text.length >= kMoreLimit) {
+	if (activityMessage.text.length >= kHeaderMoreLimit) {
 		[moreIcon setHidden:NO];
 	} else {
 		[moreIcon setHidden:YES];

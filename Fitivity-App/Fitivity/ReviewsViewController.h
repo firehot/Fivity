@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface ReviewsViewController : PFQueryTableViewController
 

@@ -16,6 +16,7 @@
 @synthesize activityMessage;
 @synthesize timeAgoLabel;
 @synthesize notificationImage;
+@synthesize moreIcon;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

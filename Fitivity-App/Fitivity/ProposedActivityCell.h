@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *activityMessage;
 @property (weak, nonatomic) IBOutlet UILabel *timeAgoLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *notificationImage;
+@property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
 
 @end
 

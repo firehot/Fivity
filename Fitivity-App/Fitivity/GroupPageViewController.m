@@ -26,6 +26,8 @@
 #define kSecondsInHour          3600
 #define kSecondsInDay           86400
 
+#define kPACellMoreIcon			75
+
 @interface GroupPageViewController ()
 
 @end
@@ -151,13 +153,13 @@
 		//Update group member count logic
 		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
 		[query whereKey:@"group" equalTo:group];
-		[query whereKey:@"type" equalTo:@"NORMAL"];
+		[query whereKey:@"postType" equalTo:[NSNumber numberWithInt:0]];
 		
 		PFObject *updateGroup = [query getFirstObject];
 		
 		if (updateGroup) {
 			NSNumber *num = [updateGroup objectForKey:@"number"];
-			if (userJoining && !autoJoin) {
+			if (userJoining && (!autoJoin || alreadyJoined)) {
 				//User is joining the group
 				int temp = [num integerValue] + 1;
 				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
@@ -481,6 +483,11 @@
 	[attStr setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
 	[attStr setTextColor:[UIColor blackColor]];
 	cell.activityMessage.text = [currentPA objectForKey:@"activityMessage"];
+	
+	if (cell.activityMessage.text.length < kPACellMoreIcon) {
+		cell.moreIcon.hidden = YES;
+	}
+	
 	cell.userName.text = [user objectForKey:@"username"];
 	cell.timeAgoLabel.text = [self getTimeSincePost:currentPA];
 	

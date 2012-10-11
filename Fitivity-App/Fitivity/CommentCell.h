@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *commentMessage;
 @property (weak, nonatomic) IBOutlet UILabel *time;
+@property (weak, nonatomic) IBOutlet UIImageView *moreIcon;
 
 @end
 

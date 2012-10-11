@@ -7,6 +7,7 @@
 //
 
 #import "ReviewsViewController.h"
+#import "CommentCell.h"
 
 @interface ReviewsViewController ()
 
@@ -15,6 +16,14 @@
 @implementation ReviewsViewController
 
 @synthesize group;
+
+#pragma mark - Helper Methods
+
+- (NSString *)getFormattedStringForDate:(NSDate *)date {
+	NSDateFormatter *formatter = [[NSDateFormatter  alloc] init];
+	[formatter setDateFormat:@"MM/dd"];
+	return [formatter stringFromDate:date];
+}
 
 #pragma mark - PFTableViewController Delegate 
 
@@ -43,18 +52,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
 	static NSString *cellIdentifier = @"Cell";
 	
-	PFTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[PFTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil];
+		cell = [nib objectAtIndex:0];
     }
+		
+	[cell.userPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
 	
-	cell.textLabel.text = [object objectForKey:@"review"];
+	//Style picture
+	[cell.userPicture.layer setCornerRadius:10.0f];
+	[cell.userPicture.layer setMasksToBounds:YES];
+	[cell.userPicture.layer setBorderColor:[[[FConfig instance] getFitivityBlue] CGColor]];
+	[cell.userPicture.layer setBorderWidth:2];
+	
+	cell.commentMessage.text = [object objectForKey:@"review"];
+	cell.commentMessage.adjustsFontSizeToFitWidth = YES;
+	cell.userName.text = @"user";
+	cell.time.text = [self getFormattedStringForDate:[object createdAt]];
 	
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 80;
+	return 70;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -117,6 +138,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	
+	[self.tableView setBackgroundColor:[UIColor clearColor]];
+	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
 }
 
 - (void)didReceiveMemoryWarning {
