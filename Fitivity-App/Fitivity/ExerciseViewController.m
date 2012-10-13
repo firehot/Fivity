@@ -126,6 +126,10 @@
 	}
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)viewDidUnload {
     [self setYoutubeView:nil];
     [self setImage:nil];

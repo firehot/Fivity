@@ -59,20 +59,6 @@
 									<string key="NSResourceName">b_cell_activities_down.png</string>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="259756880">
-								<reference key="NSNextResponder" ref="148748576"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{10, 10}, {25, 25}}</string>
-								<reference key="NSSuperview" ref="148748576"/>
-								<reference key="NSWindow"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage" id="473212749">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">more.png</string>
-								</object>
-							</object>
 							<object class="IBUILabel" id="228470763">
 								<reference key="NSNextResponder" ref="148748576"/>
 								<int key="NSvFlags">292</int>
@@ -222,7 +208,10 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIImage" ref="473212749"/>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">more.png</string>
+								</object>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 95}</string>
@@ -341,7 +330,6 @@
 							<reference ref="471041638"/>
 							<reference ref="228470763"/>
 							<reference ref="285890799"/>
-							<reference ref="259756880"/>
 							<reference ref="723433040"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -382,11 +370,6 @@
 						<reference key="parent" ref="892947095"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">17</int>
-						<reference key="object" ref="259756880"/>
-						<reference key="parent" ref="892947095"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">18</int>
 						<reference key="object" ref="723433040"/>
 						<reference key="parent" ref="892947095"/>
@@ -400,7 +383,6 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2.CustomClassName">ProposedActivityCell</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

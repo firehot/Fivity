@@ -11,10 +11,11 @@
 
 #import "CommentCell.h"
 
-@interface ReviewsViewController : PFQueryTableViewController <CommentCellDelegate>
+@interface ReviewsViewController : UITableViewController <CommentCellDelegate>
 
 - (id)initWithStyle:(UITableViewStyle)style group:(PFObject *)g;
 
 @property (nonatomic, retain) PFObject *group;
+@property (nonatomic, retain) NSMutableArray *results;
 
 @end

@@ -9,7 +9,7 @@
 #import "ReviewsViewController.h"
 #import "UserProfileViewController.h"
 
-#define kMoreTextLimit		75
+#define kMoreTextLimit		85
 
 @interface ReviewsViewController ()
 
@@ -18,6 +18,7 @@
 @implementation ReviewsViewController
 
 @synthesize group;
+@synthesize results;
 
 #pragma mark - Helper Methods
 
@@ -27,42 +28,46 @@
 	return [formatter stringFromDate:date];
 }
 
+- (void)getReviews {
+	@synchronized(self) {
+		PFQuery *query = [PFQuery queryWithClassName:@"GroupReviews"];
+		
+		// If no objects are loaded in memory, we look to the cache first to fill the table
+		// and then subsequently do a query against the network.
+		if ([self.results count] == 0) {
+			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+		}
+		
+		[query whereKey:@"group" equalTo:group];
+		[query whereKey:@"review" notEqualTo:[NSNull null]];
+		[query orderByDescending:@"updatedAt"];
+		[query setLimit:50];
+		
+		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+			if (!error) {
+				results = [NSMutableArray arrayWithArray:objects];
+				[self.tableView reloadData];
+			}
+		}];
+	}
+}
+
 #pragma mark - CommentCell Delegate
 
 - (void)userWantsProfileAtRow:(NSInteger)row {
-	PFObject *comment = [self.objects objectAtIndex:row];
+	PFObject *comment = [self.results objectAtIndex:row];
 	PFUser *user = [comment objectForKey:@"user"];
 	
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
 	[self.navigationController pushViewController:profile animated:YES];
 }
 
-#pragma mark - PFTableViewController Delegate 
-
-// Override to customize what kind of query to perform on the class. The default is to query for
-// all objects ordered by createdAt descending.
-- (PFQuery *)queryForTable {
-    PFQuery *query = [PFQuery queryWithClassName:self.className];
-	
-	// If no objects are loaded in memory, we look to the cache first to fill the table
-    // and then subsequently do a query against the network.
-    if ([self.objects count] == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    }
-	
-	[query whereKey:@"group" equalTo:group];
-	[query whereKey:@"review" notEqualTo:@""];
-	[query whereKey:@"review" notEqualTo:@" "];
-	[query whereKey:@"review" notEqualTo:[NSNull null]];
-    [query orderByDescending:@"updatedAt"];
-	
-    return query;
-}
+#pragma mark - UITableViewController Delegate 
 
 
 // Override to customize the look of a cell representing an object. The default is to display
 // a UITableViewCellStyleDefault style cell with the label being the first key in the object.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *cellIdentifier = @"Cell";
 	
 	CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -70,11 +75,20 @@
 		NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
     }
-		
-	NSLog(@"%@", [object description]);
+	
+	PFObject *object = [results objectAtIndex:indexPath.row];
 	[object fetch];
 	
-	[cell.userPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
+	PFUser *user = [object objectForKey:@"creator"];
+	[user fetchIfNeeded];
+	
+	if (user != nil) {
+		PFFile *picData = [user objectForKey:@"image"];
+		[cell.userPicture setImage:[UIImage imageWithData:[picData getData]]];
+		cell.userName.text = [user username];
+	} else {
+		[cell.userPicture setImage:[UIImage imageNamed:@"b_avatar_settings.png"]];
+	}
 	
 	//Style picture
 	[cell.userPicture.layer setCornerRadius:10.0f];
@@ -84,15 +98,13 @@
 	
 	cell.commentMessage.text = [object objectForKey:@"review"];
 	cell.commentMessage.adjustsFontSizeToFitWidth = YES;
+	cell.time.text = [self getFormattedStringForDate:[object updatedAt]];
 	
 	if (cell.commentMessage.text.length >= kMoreTextLimit) {
 		[cell.moreIcon setHidden:NO];
 	} else {
 		[cell.moreIcon setHidden:YES];
 	}
-	
-	cell.userName.text = @"User";
-	cell.time.text = [self getFormattedStringForDate:[object updatedAt]];
 	
 	[cell setTag:indexPath.row];
 	[cell setDelegate:self];
@@ -104,12 +116,20 @@
 	return 70;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return [results count];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	PFObject *object = [self objectAtIndexPath:indexPath];
+	PFObject *object = [self.results objectAtIndex:indexPath.row];
 	[object fetchIfNeeded];
 	
 	NSString *message = [object objectForKey:@"review"];
@@ -124,21 +144,10 @@
 - (id)initWithStyle:(UITableViewStyle)style group:(PFObject *)g {
     self = [super initWithStyle:style];
     if (self) {
-		
 		self.group = g;
 		[group fetchIfNeeded];
 		
-        // The className to query on
-        self.className = @"GroupReviews";
-        
-        // Whether the built-in pull-to-refresh is enabled
-        self.pullToRefreshEnabled = NO;
-        
-        // Whether the built-in pagination is enabled
-        self.paginationEnabled = YES;
-        
-        // The number of objects to show per page
-        self.objectsPerPage = 10;
+		[self getReviews];
     }
 	
     return self;
@@ -152,9 +161,14 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	
 	
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];

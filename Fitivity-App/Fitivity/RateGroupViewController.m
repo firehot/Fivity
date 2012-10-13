@@ -35,8 +35,7 @@
 	[r setObject:[NSNumber numberWithInt:rating] forKey:@"rating"];
 	[r setObject:review.text forKey:@"review"];
 	
-	PFObject *user = [PFObject objectWithoutDataWithClassName:@"User" objectId:[[PFUser currentUser] objectId]];
-	[r setObject:user forKey:@"user"];
+	[r setObject:[PFUser currentUser] forKey:@"creator"];
 	[r setObject:group forKey:@"group"];
 	
 	[r saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
@@ -137,7 +136,7 @@
 - (void)checkIfUserAlreadyRated {
 	PFQuery *query = [PFQuery queryWithClassName:@"GroupReviews"];
 	[query whereKey:@"group" equalTo:group];
-	[query whereKey:@"user" equalTo:[PFObject objectWithoutDataWithClassName:@"User" objectId:[[PFUser currentUser] objectId]]];
+	[query whereKey:@"creator" equalTo:[PFObject objectWithoutDataWithClassName:@"User" objectId:[[PFUser currentUser] objectId]]];
 	
 	previousReview = [query getFirstObject];
 	if (previousReview == nil) {
