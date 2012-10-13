@@ -85,7 +85,13 @@
 		navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0, 22.0, 320.0, 40.0)];
 		[navBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 		
-		UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(callDelegate)];
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button setImage:[UIImage imageNamed:@"b_done.png"] forState:UIControlStateNormal];
+		[button setImage:[UIImage imageNamed:@"b_done_down.png"] forState:UIControlStateHighlighted];
+		[button addTarget:self action:@selector(callDelegate) forControlEvents:UIControlEventTouchUpInside];
+		button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+		
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
 		UINavigationItem *item = [[UINavigationItem alloc] init];
 		item.rightBarButtonItem = doneButton;
 		item.hidesBackButton = YES;

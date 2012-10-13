@@ -15,11 +15,13 @@
 - (IBAction)cancel:(id)sender;
 - (IBAction)save:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UITextField *nameField;
 @property (weak, nonatomic) IBOutlet UITextField *ageField;
 @property (weak, nonatomic) IBOutlet UITextField *locationField;
 @property (weak, nonatomic) IBOutlet UITextField *occupationField;
 @property (weak, nonatomic) IBOutlet UITextField *bioField;
+@property (weak, nonatomic) IBOutlet UITextField *workplaceField;
+
+@property (weak, nonatomic) IBOutlet UIToolbar *bar;
 
 @property (nonatomic, assign) id <EditProfileViewControllerDelegate> delegate;
 

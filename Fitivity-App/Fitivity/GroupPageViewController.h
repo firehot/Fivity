@@ -22,6 +22,7 @@
 	NSMutableArray *results;
 	
 	PFObject *groupMember, *group;
+	UIBarButtonItem *joinButton;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c autoJoin:(BOOL)yn;
@@ -30,11 +31,11 @@
 - (IBAction)joinGroup:(id)sender;
 - (IBAction)proposeGroupActivity:(id)sender;
 - (IBAction)showChallenges:(id)sender;
+- (IBAction)viewAboutGroup:(id)sender;
 
 @property (nonatomic, retain) GooglePlacesObject *place;
 @property (nonatomic, retain) NSString *activity;
 
-@property (weak, nonatomic) IBOutlet UIButton *joinButton;
 @property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 @property (weak, nonatomic) IBOutlet UITableView *proposedTable;
 

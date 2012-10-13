@@ -24,23 +24,18 @@
 @synthesize mainUser;
 @synthesize userProfile;
 @synthesize groupsTable;
-@synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel, userBioView;
+@synthesize userNameLabel, userAgeLabel, userHometownLabel, userOcupationLabel, userWorkLabel, userBioView;
 @synthesize userPicture;
 @synthesize facebookProfilePicture;
 @synthesize groupsView, aboutMeView;
 @synthesize segControl, toolbar;
+@synthesize editButton;
 
 #pragma mark - Helper Methods 
 
 - (void) showSettings {
 	SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
 	[self.navigationController pushViewController:settings animated:YES];
-}
-
-- (void)editInformation {
-	EditProfileViewController *edit = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:nil];
-	[edit setDelegate:self];
-	[self presentModalViewController:edit animated:YES];
 }
 
 - (void)attemptGetUserGroups {
@@ -84,7 +79,7 @@
 			[self.userPicture setImage:[UIImage imageWithData:picData]];
 		}
 		[self.userNameLabel setText:[userProfile username]];
-		[self.userOcupationLabel setText:[userProfile objectForKey:@"occupation"]];
+		[self.userOcupationLabel setText:[[userProfile objectForKey:@"occupation"] stringByAppendingString:@" at"]];
 		
 		if ([[userProfile objectForKey:@"age"] intValue] == 0) {
 			[self.userAgeLabel setText:@""];
@@ -94,6 +89,7 @@
 		
 		
 		[self.userHometownLabel setText:[userProfile objectForKey:@"hometown"]];
+		[self.userWorkLabel setText:[userProfile objectForKey:@"workPlace"]];
 		[self.userBioView setText:[userProfile objectForKey:@"bio"]];
 
 	}
@@ -184,7 +180,11 @@
 	}
 	
 	if (userOcupationLabel.text != nil) {
-		[user setObject:userOcupationLabel.text forKey:@"occupation"];
+		[user setObject:[userOcupationLabel.text stringByReplacingOccurrencesOfString:@" at" withString:@""] forKey:@"occupation"];
+	}
+	
+	if (userWorkLabel.text != nil) {
+		[user setObject:userWorkLabel.text forKey:@"workPlace"];
 	}
 	
 	[user setObject:userBioView.text forKey:@"bio"];
@@ -293,26 +293,31 @@
 				if (work == nil || [work count] == 0) {
 					if (education != nil && [education count] > 0) {
 						//Schools are listed starting with oldest
-//						NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
-//						NSDictionary *school = [ed objectForKey:@"school"];
+						NSDictionary *ed = (NSDictionary *)[education objectAtIndex:[education count]-1];
+						NSDictionary *school = [ed objectForKey:@"school"];
 						
 						userOcupationLabel.text = @"Student";
+						userWorkLabel.text = [school objectForKey:@"name"];
 					}
 				} else {
 					NSDictionary *w = (NSDictionary *)[work objectAtIndex:0];
-//					NSDictionary *employer = [w objectForKey:@"employer"];
+					NSDictionary *employer = [w objectForKey:@"employer"];
 					NSDictionary *job = [w objectForKey:@"position"];
 					
 					NSString *j = [job objectForKey:@"name"];
+					NSString *work = [employer objectForKey:@"name"];
 					if (j == nil || [j isEqualToString:@" "]) {
 						[self.userOcupationLabel setText:[userProfile objectForKey:@"occupation"]];
+						[self.userWorkLabel setText:[[userProfile objectForKey:@"workPlace"] stringByAppendingString:@" at"]];
 					} else {
-						userOcupationLabel.text = j;
+						userOcupationLabel.text = [j stringByAppendingString:@" at"];
+						userWorkLabel.text = work;
 					}
 				}
 			} else {
 				[self.userOcupationLabel setText:[userProfile objectForKey:@"occupation"]];
 				[self.userBioView setText:[userProfile objectForKey:@"bio"]];
+				[self.userWorkLabel setText:[[userProfile objectForKey:@"workPlace"] stringByAppendingString:@" at"]];
 			}
 		}];
 	}
@@ -336,6 +341,7 @@
 	userAgeLabel.text = [NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]];
 	userHometownLabel.text = [userProfile objectForKey:@"hometown"];
 	userBioView.text = [userProfile objectForKey:@"bio"];
+	userWorkLabel.text = [[userProfile objectForKey:@"workPlace"] stringByAppendingString:@" at"];
 }
 
 #pragma mark - EditProfileViewController Delegate
@@ -491,6 +497,12 @@
 
 #pragma mark - IBAction's 
 
+- (IBAction)editInformation:(id)sender {
+	EditProfileViewController *edit = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:nil];
+	[edit setDelegate:self];
+	[self presentModalViewController:edit animated:YES];
+}
+
 - (IBAction)enlargePicture:(id)sender {
 	NDArtworkPopout *pop = [[NDArtworkPopout alloc] initWithImage:userPicture.image];
 	[pop show];
@@ -535,6 +547,17 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[groupsTable reloadData];
     
+	if (mainUser) {
+		// Can't edit information that is pulled from FB
+		if (![PFFacebookUtils isLinkedWithUser:userProfile]) {
+			[editButton setHidden:NO];
+		} else {
+			[editButton setHidden:YES];
+		}
+	} else {
+		[editButton setHidden:YES];
+	}
+	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 
@@ -576,12 +599,6 @@
 		
         UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = settings;
-		
-		// Can't edit information that is pulled from FB
-		if (![PFFacebookUtils isLinkedWithUser:userProfile]) {
-			UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editInformation)];
-			self.navigationItem.leftBarButtonItem = editButton;
-		}
 
 		updatedGroups = [[NSMutableDictionary alloc] init];
 	}
@@ -604,6 +621,8 @@
 	[self setToolbar:nil];
 	[self setSegControl:nil];
 	[self setUserBioView:nil];
+    [self setUserWorkLabel:nil];
+	[self setEditButton:nil];
     [super viewDidUnload];
 }
 

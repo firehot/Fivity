@@ -34,7 +34,6 @@
 
 @implementation GroupPageViewController
 
-@synthesize joinButton;
 @synthesize activityLabel;
 @synthesize proposedTable;
 @synthesize place, activity;
@@ -80,7 +79,7 @@
 	[self.navigationController pushViewController:challenge animated:YES];
 }
 
-- (void)viewMemebers {
+- (IBAction)viewAboutGroup:(id)sender {
 	autoJoin = NO;
 	
 	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -123,12 +122,28 @@
 - (void)updateJoiningGUI {
 	//When the user is part of the group display the unjoin button otherwise display the join button
 	if (alreadyJoined) {
-		[joinButton setImage:[UIImage imageNamed:@"b_leave.png"] forState:UIControlStateNormal];
-		[joinButton setImage:[UIImage imageNamed:@"b_leave_down.png"] forState:UIControlStateHighlighted];
+		UIImage *memberImage = [UIImage imageNamed:@"b_leave.png"];
+		UIImage *memberImageDown = [UIImage imageNamed:@"b_leave_down.png"];
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button setImage:memberImage forState:UIControlStateNormal];
+		[button setImage:memberImageDown forState:UIControlStateHighlighted];
+		[button addTarget:self action:@selector(joinGroup:) forControlEvents:UIControlEventTouchUpInside];
+		button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
+		
+		joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+		self.navigationItem.rightBarButtonItem = joinButton;
 	}
 	else {
-		[joinButton setImage:[UIImage imageNamed:@"b_join.png"] forState:UIControlStateNormal];
-		[joinButton setImage:[UIImage imageNamed:@"b_join_down.png"] forState:UIControlStateHighlighted];
+		UIImage *memberImage = [UIImage imageNamed:@"b_join.png"];
+		UIImage *memberImageDown = [UIImage imageNamed:@"b_join_down.png"];
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button setImage:memberImage forState:UIControlStateNormal];
+		[button setImage:memberImageDown forState:UIControlStateHighlighted];
+		[button addTarget:self action:@selector(joinGroup:) forControlEvents:UIControlEventTouchUpInside];
+		button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
+		
+		joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+		self.navigationItem.rightBarButtonItem = joinButton;
 	}
 }
 
@@ -611,16 +626,16 @@
     self.activityLabel.text = [place name];
 	
 	
-	UIImage *memberImage = [UIImage imageNamed:@"b_group.png"];
-    UIImage *memberImageDown = [UIImage imageNamed:@"b_group_down.png"];
+	UIImage *memberImage = [UIImage imageNamed:@"b_join.png"];
+    UIImage *memberImageDown = [UIImage imageNamed:@"b_join_down.png"];
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 	[button setImage:memberImage forState:UIControlStateNormal];
     [button setImage:memberImageDown forState:UIControlStateHighlighted];
-	[button addTarget:self action:@selector(viewMemebers) forControlEvents:UIControlEventTouchUpInside];
+	[button addTarget:self action:@selector(joinGroup:) forControlEvents:UIControlEventTouchUpInside];
 	button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
 	
-	UIBarButtonItem *members = [[UIBarButtonItem alloc] initWithCustomView:button];
-	self.navigationItem.rightBarButtonItem = members;
+	joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+	self.navigationItem.rightBarButtonItem = joinButton;
 
 	if (autoJoin) {
 		int64_t delayInSeconds = 2.2;
@@ -638,9 +653,7 @@
 - (void)viewDidUnload {
     [self setActivityLabel:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	
-	[self setJoinButton:nil];
-    [super viewDidUnload];
+	[super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

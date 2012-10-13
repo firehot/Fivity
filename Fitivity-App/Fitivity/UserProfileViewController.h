@@ -25,8 +25,10 @@
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user;
+
 - (IBAction)enlargePicture:(id)sender;
 - (IBAction)updateViews:(id)sender;
+- (IBAction)editInformation:(id)sender;
 
 @property (nonatomic, getter = isMainUser) BOOL mainUser;
 
@@ -35,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIView *displayView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @property (nonatomic, retain) PFUser *userProfile;
 @property (weak, nonatomic) IBOutlet UITableView *groupsTable;
@@ -42,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userAgeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userOcupationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userHometownLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userWorkLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userPicture;
 @property (weak, nonatomic) IBOutlet UITextView *userBioView;
 @property (strong, nonatomic) IBOutlet PF_FBProfilePictureView *facebookProfilePicture;

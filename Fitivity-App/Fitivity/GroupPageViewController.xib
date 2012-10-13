@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1536</int>
-		<string key="IBDocument.SystemVersion">12C54</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.InterfaceBuilderVersion">2843</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1926</string>
+			<string key="NS.object.0">1929</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -204,13 +204,14 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="487911278"/>
-						<object class="NSCustomResource" key="IBUIHighlightedImage">
+						<object class="NSCustomResource" key="IBUIHighlightedImage" id="47431936">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">b_join_down.png</string>
+							<string key="NSResourceName">b_about_group_down.png</string>
 						</object>
-						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+						<reference key="IBUISelectedImage" ref="47431936"/>
+						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">b_join.png</string>
+							<string key="NSResourceName">b_about_group.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="428115323"/>
 						<reference key="IBUIFont" ref="1059578188"/>
@@ -325,12 +326,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">joinGroup:</string>
+						<string key="label">viewAboutGroup:</string>
 						<reference key="source" ref="194896560"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">17</int>
+					<int key="connectionID">29</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -450,7 +451,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">28</int>
+			<int key="maxID">29</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -462,6 +463,7 @@
 						<string key="proposeGroupActivity:">id</string>
 						<string key="showChallenges:">id</string>
 						<string key="showGroupMap:">id</string>
+						<string key="viewAboutGroup:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="joinGroup:">
@@ -480,20 +482,19 @@
 							<string key="name">showGroupMap:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="viewAboutGroup:">
+							<string key="name">viewAboutGroup:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="activityLabel">UILabel</string>
-						<string key="joinButton">UIButton</string>
 						<string key="proposedTable">UITableView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="activityLabel">
 							<string key="name">activityLabel</string>
 							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="joinButton">
-							<string key="name">joinButton</string>
-							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="proposedTable">
 							<string key="name">proposedTable</string>
@@ -512,10 +513,10 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="b_about_group.png">{90, 40}</string>
+			<string key="b_about_group_down.png">{90, 40}</string>
 			<string key="b_challenge.png">{300, 32}</string>
 			<string key="b_challenge_down.png">{300, 32}</string>
-			<string key="b_join.png">{90, 40}</string>
-			<string key="b_join_down.png">{90, 40}</string>
 			<string key="b_map.png">{90, 25}</string>
 			<string key="b_map_down.png">{90, 25}</string>
 			<string key="b_propose_activity.png">{196, 72}</string>
@@ -523,6 +524,6 @@
 			<string key="bg_activity_header.png">{320, 29}</string>
 			<string key="bg_buttons_space.png">{320, 122}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1926</string>
+		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
 </archive>
