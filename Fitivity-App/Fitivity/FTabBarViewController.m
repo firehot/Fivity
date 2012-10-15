@@ -75,14 +75,17 @@
 }
 
 -(void)showLeftTab {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedTab" object:self];
 	[self updateDisplayedViewControllerTo:self.leftNavigationController];
 }
 
 -(void)showRightTab {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedTab" object:self];
 	[self updateDisplayedViewControllerTo:self.rightNavigationController];
 }
 
 -(void)showCenterTab {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedTab" object:self];
 	[self updateDisplayedViewControllerTo:self.centerNavigationController];
 }
 

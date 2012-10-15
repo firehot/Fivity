@@ -187,7 +187,13 @@
 				
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 			}
-		}	
+		} else {
+			if (hasPickedActivity) {
+				
+			} else if (hasPickedLocation) {
+				
+			}
+		}
 	}
 }
 
@@ -244,6 +250,8 @@
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_location.png"]];
 	hasPickedActivity = NO; //Nothing picked when loaded
 	hasPickedLocation = NO;
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetState) name:@"changedTab" object:nil];
 }
 
 - (void)viewDidUnload {

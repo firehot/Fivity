@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface ChallengeOverviewViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface ChallengeOverviewViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate> {
 	PFObject *day;
 	NSArray *objects;
 }

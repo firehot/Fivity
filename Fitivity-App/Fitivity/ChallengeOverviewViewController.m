@@ -10,6 +10,9 @@
 #import "ExerciseViewController.h"
 #import "ChallengeCell.h"
 
+#import "AppDelegate.h"
+#import "FTabBarViewController.h"
+
 #define kCellHeight		72.0f
 
 @interface ChallengeOverviewViewController ()
@@ -32,6 +35,50 @@
 		objects = [query findObjects];
 		[self.exerciseTable reloadData];
 	}
+}
+
+- (void)shareApp {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Challenge" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+	
+	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    NSString *type = self.navigationItem.title;
+	
+    if ([title isEqualToString:@"Facebook"]) {
+		
+		NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals.", type, type];
+		
+		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+									   [[FConfig instance] getFacebookAppID], @"app_id",
+									   [[FConfig instance] getItunesAppLink], @"link",
+									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+									   @"Fitivity", @"name",
+	                                   message, @"caption",
+									   @"Download the free fitivity app in the Apple App Store or in Google Play", @"description",
+									   @"Go download this app!",  @"message",
+									   nil];
+		
+        [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
+    } else if ([title isEqualToString:@"Twitter"]) {
+		NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app using this link.", type, type];
+		[[SocialSharer sharer] shareMessageWithTwitter:message image:nil link:nil];
+    } else if ([title isEqualToString:@"SMS"]) {
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. Download the free fitivity app in the Apple App Store or in Google Play. %@", type, type, [[FConfig instance] getItunesAppLink]]];
+    } else if ([title isEqualToString:@"Email"]) {
+		NSString *bodyHTML = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals. You can download it for free in the Apple App Store or in Google Play! Download it now in the Apple App Store: <a href=\"%@\">%@</a>", type, type, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		
+		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
+		NSData *picture = [NSData dataWithContentsOfFile:path];
+		NSDictionary *data = [[NSDictionary alloc] initWithObjectsAndKeys: picture, @"data", @"image/png", @"mimeType", @"FitivityIcon", @"fileName", nil];
+		
+        [[SocialSharer sharer] shareEmailMessage:bodyHTML title:@"Fitivity App" attachment:data isHTML:YES];
+    }
 }
 
 #pragma mark - Table view data source
@@ -110,6 +157,17 @@
 	[self.view sendSubviewToBack:imgView];
 	[overview setBackgroundColor:[UIColor clearColor]];
 	[overview setText:[day objectForKey:@"overview"]];
+	
+	UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
+	UIImage *shareAppDown = [UIImage imageNamed:@"b_share_down.png"];
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+	[button setImage:shareApp forState:UIControlStateNormal];
+	[button setImage:shareAppDown forState:UIControlStateHighlighted];
+	[button addTarget:self action:@selector(shareApp) forControlEvents:UIControlEventTouchUpInside];
+	button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+	
+	UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
+	self.navigationItem.rightBarButtonItem = share;
 }
 
 - (void)viewDidUnload {

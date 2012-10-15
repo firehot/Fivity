@@ -269,7 +269,8 @@ static FConfig *instance;
 
 - (void)initializeSearchActivites {
 	PFQuery *query = [PFQuery queryWithClassName:@"Activity"];
-	[query addAscendingOrder:@"popularity"];
+	//[query addAscendingOrder:@"popularity"];
+	[query addAscendingOrder:@"name"];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 		if (!error) {
 			//searchActivities = [NSMutableArray arrayWithArray:objects];
