@@ -117,7 +117,7 @@
 		//Update group member count
 		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
 		[query whereKey:@"group" equalTo:group];
-		[query whereKey:@"type" equalTo:@"NORMAL"];
+		[query whereKey:@"postType" equalTo:[NSNumber numberWithInt:0]];
 		
 		PFObject *updateGroup = [query getFirstObject];
 		[updateGroup fetchIfNeeded];
@@ -127,9 +127,17 @@
 			if ([num integerValue] > 0) {
 				//User is unjoining from the group
 				int temp = [num integerValue] - 1;
-				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Count" message:[NSString stringWithFormat:@"Was %d now %d", [num integerValue], temp] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+				[alert show];
+				
+				if (temp == 0) {
+					[updateGroup delete];
+				} else {
+					[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+					[updateGroup save];
+				}
 			}
-			[updateGroup save];
 		}
 	}
 }
