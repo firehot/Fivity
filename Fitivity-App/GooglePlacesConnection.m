@@ -79,7 +79,7 @@
     
 }
 //Method is called during UISearchBar search
--(void)getGoogleObjectsWithQuery:(NSString *)query andCoordinates:(CLLocationCoordinate2D)coords andTypes:(NSString *)types {
+-(void)getGoogleObjectsWithQuery:(NSString *)query andCoordinates:(CLLocationCoordinate2D)coords andTypes:(NSString *)types useToken:(BOOL)ignore {
     
     //NEW setting userlocation to the coords passed in for later use
     userLocation = coords;
@@ -92,7 +92,7 @@
     
     NSString *gurl = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&rankby=distance&types=%@&name=%@&sensor=true&key=%@",centerLat, centerLng, types, query, [[FConfig instance] getGooglePlacesAPIKey]];
     
-	if (hasPageToken) {
+	if (ignore && hasPageToken) {
 		gurl = [gurl stringByAppendingFormat:@"&pagetoken=%@",nextPageToken];
 	}
 	

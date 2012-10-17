@@ -48,7 +48,7 @@
 
 -(void)getGoogleObjectsWithQuery:(NSString *)query 
                   andCoordinates:(CLLocationCoordinate2D)coords 
-                        andTypes:(NSString *)types;
+                        andTypes:(NSString *)types useToken:(BOOL)ignore;
 
 -(void)getGoogleObjects:(CLLocationCoordinate2D)coords 
                andTypes:(NSString *)types;

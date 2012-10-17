@@ -81,7 +81,7 @@
     
     [googlePlacesConnection getGoogleObjectsWithQuery:searchString 
                                        andCoordinates:CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude) 
-                                             andTypes:searchLocations];
+                                             andTypes:searchLocations useToken:NO];
     
     [tableView reloadData];
 }
