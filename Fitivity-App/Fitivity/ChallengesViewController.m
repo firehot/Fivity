@@ -22,8 +22,8 @@
 @end
 
 @implementation ChallengesViewController
-@synthesize tableView;
 
+@synthesize tableView;
 @synthesize groupType, challenges;
 
 #pragma mark - Helper Methods
@@ -207,6 +207,9 @@
 	UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithCustomView:button];
 	self.navigationItem.rightBarButtonItem = share;
 
+	tableView.backgroundColor = [UIColor clearColor];
+	tableView.separatorColor = [UIColor clearColor];
+	
 	[self shareViewChallenge];
 }
 
@@ -247,8 +250,6 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FirstChallengeCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
     }
-
-	[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	
 	NSMutableArray *a = [challenges objectAtIndex:indexPath.section];
 	PFObject *current = [a objectAtIndex:indexPath.row];

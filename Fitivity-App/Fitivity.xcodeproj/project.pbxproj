@@ -126,6 +126,7 @@
 		6C77230415B20F340040DB1D /* LocationCellIconImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C77230215B20F100040DB1D /* LocationCellIconImage@2x.png */; };
 		6C78369E15EA9CCC00ACB712 /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C78369C15EA9CCC00ACB712 /* 37x-Checkmark.png */; };
 		6C78369F15EA9CCC00ACB712 /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C78369D15EA9CCC00ACB712 /* 37x-Checkmark@2x.png */; };
+		6C79301A162F53C700CBD023 /* SecondChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C793019162F53C700CBD023 /* SecondChallengeCell.m */; };
 		6C86225D15F55FB7002FF9AD /* ChallengeOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */; };
 		6C86225E15F55FB7002FF9AD /* ChallengeOverviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */; };
 		6C86658715AFA1A6004D932F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C86658515AFA1A6004D932F /* LoginViewController.m */; };
@@ -631,8 +632,6 @@
 		6C623A9F15E458A10025DE76 /* ChallengesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengesViewController.h; sourceTree = "<group>"; };
 		6C623AA015E458A10025DE76 /* ChallengesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengesViewController.m; sourceTree = "<group>"; };
 		6C623AA215E45F650025DE76 /* ChallengesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengesViewController.xib; sourceTree = "<group>"; };
-		6C623AA415E460B80025DE76 /* ChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeCell.h; sourceTree = "<group>"; };
-		6C623AA515E460B80025DE76 /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
 		6C67187115F57B88002A3CC1 /* ExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExerciseViewController.h; sourceTree = "<group>"; };
 		6C67187215F57B88002A3CC1 /* ExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExerciseViewController.m; sourceTree = "<group>"; };
 		6C67187315F57B88002A3CC1 /* ExerciseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ExerciseViewController.xib; path = Fitivity/ExerciseViewController.xib; sourceTree = "<group>"; };
@@ -662,6 +661,8 @@
 		6C77230215B20F100040DB1D /* LocationCellIconImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LocationCellIconImage@2x.png"; sourceTree = "<group>"; };
 		6C78369C15EA9CCC00ACB712 /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		6C78369D15EA9CCC00ACB712 /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
+		6C793018162F53C700CBD023 /* SecondChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondChallengeCell.h; sourceTree = "<group>"; };
+		6C793019162F53C700CBD023 /* SecondChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondChallengeCell.m; sourceTree = "<group>"; };
 		6C86225A15F55FB7002FF9AD /* ChallengeOverviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeOverviewViewController.h; sourceTree = "<group>"; };
 		6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeOverviewViewController.m; sourceTree = "<group>"; };
 		6C86225C15F55FB7002FF9AD /* ChallengeOverviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChallengeOverviewViewController.xib; path = Fitivity/ChallengeOverviewViewController.xib; sourceTree = "<group>"; };
@@ -1406,12 +1407,12 @@
 				6CD705E915BB17B6002FFC53 /* GroupMembersCell.m */,
 				6C57B6EE15C20BCE000048DD /* ProposedActivityCell.h */,
 				6C57B6EF15C20BCE000048DD /* ProposedActivityCell.m */,
-				6C623AA415E460B80025DE76 /* ChallengeCell.h */,
-				6C623AA515E460B80025DE76 /* ChallengeCell.m */,
 				F19C900015EA551100298980 /* CommentCell.h */,
 				F19C900115EA551100298980 /* CommentCell.m */,
 				6CB05E7E162E2A2500EC9413 /* FirstChallengeCell.h */,
 				6CB05E7F162E2A2500EC9413 /* FirstChallengeCell.m */,
+				6C793018162F53C700CBD023 /* SecondChallengeCell.h */,
+				6C793019162F53C700CBD023 /* SecondChallengeCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2631,6 +2632,7 @@
 				6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */,
 				6CE8D2A1162203D100A4F9D3 /* EditProfileViewController.m in Sources */,
 				6CB05E80162E2A2500EC9413 /* FirstChallengeCell.m in Sources */,
+				6C79301A162F53C700CBD023 /* SecondChallengeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

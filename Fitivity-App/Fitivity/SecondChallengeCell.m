@@ -1,17 +1,16 @@
 //
-//  ChallengeCell.m
+//  SecondChallengeCell.m
 //  Fitivity
 //
-//  Created by Nathan Doe on 9/6/12.
+//  Created by Nathan Doe on 10/17/12.
 //  Copyright (c) 2012 Fitivity. All rights reserved.
 //
 
-#import "ChallengeCell.h"
+#import "SecondChallengeCell.h"
 
-@implementation ChallengeCell
+@implementation SecondChallengeCell
 
-@synthesize exerciseLabel;
-@synthesize amountLabel;
+@synthesize exerciseLabel, amountLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

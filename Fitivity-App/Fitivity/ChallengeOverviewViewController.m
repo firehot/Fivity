@@ -8,7 +8,7 @@
 
 #import "ChallengeOverviewViewController.h"
 #import "ExerciseViewController.h"
-#import "ChallengeCell.h"
+#import "SecondChallengeCell.h"
 
 #import "AppDelegate.h"
 #import "FTabBarViewController.h"
@@ -101,7 +101,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 	
-	ChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	SecondChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ChallengeCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
