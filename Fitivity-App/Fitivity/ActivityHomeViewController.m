@@ -189,9 +189,9 @@
 			}
 		} else {
 			if (hasPickedActivity) {
-				
+				[self performSelector:@selector(chooseLocation:) withObject:nil afterDelay:0.5];
 			} else if (hasPickedLocation) {
-				
+				[self performSelector:@selector(chooseActivity:) withObject:nil afterDelay:0.5];
 			}
 		}
 	}

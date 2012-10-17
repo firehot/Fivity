@@ -108,7 +108,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_group.png"]]];
 	[bar setTintColor:[[FConfig instance] getFitivityBlue]];
 	
 	PFUser *user = [PFUser currentUser];

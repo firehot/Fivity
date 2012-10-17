@@ -183,6 +183,14 @@
 		6CAA52F216190A5800527B1B /* RateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52F016190A5800527B1B /* RateGroupViewController.m */; };
 		6CAA52F316190A5800527B1B /* RateGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CAA52F116190A5800527B1B /* RateGroupViewController.xib */; };
 		6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52FC16190C0000527B1B /* ReviewsViewController.m */; };
+		6CB05E75162E249200EC9413 /* cell_challenge_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E6F162E249200EC9413 /* cell_challenge_down.png */; };
+		6CB05E76162E249200EC9413 /* cell_challenge_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E70162E249200EC9413 /* cell_challenge_down@2x.png */; };
+		6CB05E77162E249200EC9413 /* cell_challenge_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E71162E249200EC9413 /* cell_challenge_header.png */; };
+		6CB05E78162E249200EC9413 /* cell_challenge_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E72162E249200EC9413 /* cell_challenge_header@2x.png */; };
+		6CB05E79162E249200EC9413 /* cell_challenge.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E73162E249200EC9413 /* cell_challenge.png */; };
+		6CB05E7A162E249200EC9413 /* cell_challenge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E74162E249200EC9413 /* cell_challenge@2x.png */; };
+		6CB05E7D162E297100EC9413 /* FirstChallengeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E7C162E297100EC9413 /* FirstChallengeCell.xib */; };
+		6CB05E80162E2A2500EC9413 /* FirstChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB05E7F162E2A2500EC9413 /* FirstChallengeCell.m */; };
 		6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */; };
 		6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */; };
 		6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB1A72915ACFC1D00C0FF75 /* CoreGraphics.framework */; };
@@ -249,7 +257,6 @@
 		6CCEE45F15F97E4D00DAF41F /* cell_chall_activity.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE45715F97E4D00DAF41F /* cell_chall_activity.png */; };
 		6CCEE46015F97E4D00DAF41F /* cell_chall_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE45815F97E4D00DAF41F /* cell_chall_activity@2x.png */; };
 		6CCEE46215F9829500DAF41F /* ChallengeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46115F9829500DAF41F /* ChallengeCell.xib */; };
-		6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEE46415F9836400DAF41F /* ChallengeCell.m */; };
 		6CCEE46715F9853700DAF41F /* ChallengeDayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46615F9853700DAF41F /* ChallengeDayCell.xib */; };
 		6CCEE46A15F9862C00DAF41F /* bg_chall_img.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46815F9862C00DAF41F /* bg_chall_img.png */; };
 		6CCEE46B15F9862C00DAF41F /* bg_chall_img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CCEE46915F9862C00DAF41F /* bg_chall_img@2x.png */; };
@@ -725,6 +732,15 @@
 		6CAA52F116190A5800527B1B /* RateGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RateGroupViewController.xib; path = Fitivity/RateGroupViewController.xib; sourceTree = "<group>"; };
 		6CAA52FB16190BFF00527B1B /* ReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsViewController.h; sourceTree = "<group>"; };
 		6CAA52FC16190C0000527B1B /* ReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsViewController.m; sourceTree = "<group>"; };
+		6CB05E6F162E249200EC9413 /* cell_challenge_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_challenge_down.png; sourceTree = "<group>"; };
+		6CB05E70162E249200EC9413 /* cell_challenge_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_challenge_down@2x.png"; sourceTree = "<group>"; };
+		6CB05E71162E249200EC9413 /* cell_challenge_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_challenge_header.png; sourceTree = "<group>"; };
+		6CB05E72162E249200EC9413 /* cell_challenge_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_challenge_header@2x.png"; sourceTree = "<group>"; };
+		6CB05E73162E249200EC9413 /* cell_challenge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_challenge.png; sourceTree = "<group>"; };
+		6CB05E74162E249200EC9413 /* cell_challenge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_challenge@2x.png"; sourceTree = "<group>"; };
+		6CB05E7C162E297100EC9413 /* FirstChallengeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstChallengeCell.xib; sourceTree = "<group>"; };
+		6CB05E7E162E2A2500EC9413 /* FirstChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstChallengeCell.h; sourceTree = "<group>"; };
+		6CB05E7F162E2A2500EC9413 /* FirstChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstChallengeCell.m; sourceTree = "<group>"; };
 		6CB1A72115ACFC1D00C0FF75 /* Fitivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fitivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB1A72515ACFC1D00C0FF75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6CB1A72715ACFC1D00C0FF75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -803,8 +819,6 @@
 		6CCEE45715F97E4D00DAF41F /* cell_chall_activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_chall_activity.png; sourceTree = "<group>"; };
 		6CCEE45815F97E4D00DAF41F /* cell_chall_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_chall_activity@2x.png"; sourceTree = "<group>"; };
 		6CCEE46115F9829500DAF41F /* ChallengeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengeCell.xib; sourceTree = "<group>"; };
-		6CCEE46315F9836400DAF41F /* ChallengeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChallengeCell.h; sourceTree = "<group>"; };
-		6CCEE46415F9836400DAF41F /* ChallengeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChallengeCell.m; sourceTree = "<group>"; };
 		6CCEE46615F9853700DAF41F /* ChallengeDayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChallengeDayCell.xib; sourceTree = "<group>"; };
 		6CCEE46815F9862C00DAF41F /* bg_chall_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_chall_img.png; sourceTree = "<group>"; };
 		6CCEE46915F9862C00DAF41F /* bg_chall_img@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_chall_img@2x.png"; sourceTree = "<group>"; };
@@ -1288,6 +1302,12 @@
 		6C7722B215B1F1460040DB1D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6CB05E6F162E249200EC9413 /* cell_challenge_down.png */,
+				6CB05E70162E249200EC9413 /* cell_challenge_down@2x.png */,
+				6CB05E71162E249200EC9413 /* cell_challenge_header.png */,
+				6CB05E72162E249200EC9413 /* cell_challenge_header@2x.png */,
+				6CB05E73162E249200EC9413 /* cell_challenge.png */,
+				6CB05E74162E249200EC9413 /* cell_challenge@2x.png */,
 				F1B77F65160814670067153A /* cell_agenda_day_down.png */,
 				F1B77F66160814670067153A /* cell_agenda_day_down@2x.png */,
 				F1B77F67160814670067153A /* cell_agenda_day.png */,
@@ -1390,6 +1410,8 @@
 				6C623AA515E460B80025DE76 /* ChallengeCell.m */,
 				F19C900015EA551100298980 /* CommentCell.h */,
 				F19C900115EA551100298980 /* CommentCell.m */,
+				6CB05E7E162E2A2500EC9413 /* FirstChallengeCell.h */,
+				6CB05E7F162E2A2500EC9413 /* FirstChallengeCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1404,6 +1426,7 @@
 				6C57B6F215C20BE8000048DD /* ProposedActivityCell.xib */,
 				6CCEE46115F9829500DAF41F /* ChallengeCell.xib */,
 				6CCEE46615F9853700DAF41F /* ChallengeDayCell.xib */,
+				6CB05E7C162E297100EC9413 /* FirstChallengeCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2024,8 +2047,6 @@
 				6C86225B15F55FB7002FF9AD /* ChallengeOverviewViewController.m */,
 				6C67187115F57B88002A3CC1 /* ExerciseViewController.h */,
 				6C67187215F57B88002A3CC1 /* ExerciseViewController.m */,
-				6CCEE46315F9836400DAF41F /* ChallengeCell.h */,
-				6CCEE46415F9836400DAF41F /* ChallengeCell.m */,
 			);
 			name = Challenges;
 			sourceTree = "<group>";
@@ -2521,6 +2542,13 @@
 				6C8AE30B1629C58100C2E45D /* b_done_down@2x.png in Resources */,
 				6C8AE30C1629C58100C2E45D /* b_done.png in Resources */,
 				6C8AE30D1629C58100C2E45D /* b_done@2x.png in Resources */,
+				6CB05E75162E249200EC9413 /* cell_challenge_down.png in Resources */,
+				6CB05E76162E249200EC9413 /* cell_challenge_down@2x.png in Resources */,
+				6CB05E77162E249200EC9413 /* cell_challenge_header.png in Resources */,
+				6CB05E78162E249200EC9413 /* cell_challenge_header@2x.png in Resources */,
+				6CB05E79162E249200EC9413 /* cell_challenge.png in Resources */,
+				6CB05E7A162E249200EC9413 /* cell_challenge@2x.png in Resources */,
+				6CB05E7D162E297100EC9413 /* FirstChallengeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2535,7 +2563,6 @@
 				6C25CD68162072AC008D0924 /* FGalleryPhotoView.m in Sources */,
 				6C25CD69162072AC008D0924 /* FGalleryPhoto.m in Sources */,
 				6C2813FD160677C9006B2DC6 /* AnimatedGif.m in Sources */,
-				6CCEE46515F9836400DAF41F /* ChallengeCell.m in Sources */,
 				6C4C5BD415D1DD4D00E63CD3 /* DDAnnotation.m in Sources */,
 				6C4C5BD515D1DD4F00E63CD3 /* DDAnnotationView.m in Sources */,
 				57E9C05615B5CA74007C7C58 /* NSAttributedString+Attributes.m in Sources */,
@@ -2603,6 +2630,7 @@
 				6CAA52F216190A5800527B1B /* RateGroupViewController.m in Sources */,
 				6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */,
 				6CE8D2A1162203D100A4F9D3 /* EditProfileViewController.m in Sources */,
+				6CB05E80162E2A2500EC9413 /* FirstChallengeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

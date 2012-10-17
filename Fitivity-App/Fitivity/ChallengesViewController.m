@@ -12,9 +12,10 @@
 #import "FTabBarViewController.h"
 #import "SocialSharer.h"
 #import "AppDelegate.h"
+#import "FirstChallengeCell.h"
 
 #define kCellHeight			36.0f
-#define kHeaderHeight		62.0f
+#define kHeaderHeight		60.0f
 
 @interface ChallengesViewController ()
 
@@ -241,9 +242,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ChallengeDayCell" owner:self options:nil];
+	FirstChallengeCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"FirstChallengeCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
     }
 
@@ -253,9 +254,9 @@
 	PFObject *current = [a objectAtIndex:indexPath.row];
 	[current fetchIfNeeded];
 	
-	[cell.textLabel setBackgroundColor:[UIColor clearColor]];
-	[cell.textLabel setTextColor:[UIColor whiteColor]];
-	cell.textLabel.text = [NSString stringWithFormat:@"Day %d", [[current objectForKey:@"dayNum"] intValue]];
+	[cell.title setBackgroundColor:[UIColor clearColor]];
+	[cell.title setTextColor:[UIColor blackColor]];
+	cell.title.text = [NSString stringWithFormat:@"Day %d", [[current objectForKey:@"dayNum"] intValue]];
 	
     return cell;
 }
@@ -263,28 +264,39 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	//Create the view for the header
 	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, kHeaderHeight)];
-	UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(20, 9, 280, 28)];
-	UILabel *length = [[UILabel alloc] initWithFrame:CGRectMake(20, 38, 280, 21)];
+	UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell_challenge_header.png"]];
+	[bg setFrame:view.frame];
+	UILabel *level = [[UILabel alloc] initWithFrame:CGRectMake(5, 8, 53, 21)];
+	UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(7, 30, 53, 21)];
+	UILabel *length = [[UILabel alloc] initWithFrame:CGRectMake(74, 19, 234, 21)];
 	
-	[view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cell_agenda_level.png"]]];
+	
+	[view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_group.png"]]];
+	[level setBackgroundColor:[UIColor clearColor]];
+	[level setTextColor:[UIColor whiteColor]];
 	[title setBackgroundColor:[UIColor clearColor]];
-	[title setTextColor:[UIColor blackColor]];
+	[title setTextColor:[UIColor whiteColor]];
 	[length setBackgroundColor:[UIColor clearColor]];
-	[length setTextColor:[UIColor blackColor]];
+	[length setTextColor:[UIColor whiteColor]];
 	
-	
-	[title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:21]];
+	[level setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+	[title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
 	[length setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
+	[level setTextAlignment:UITextAlignmentCenter];
+	[level setText:@"Level"];
 	[title setTextAlignment:UITextAlignmentCenter];
-	[title setText:[NSString stringWithFormat:@"Level %d", section+1]];
+	[title setText:[NSString stringWithFormat:@"%d", section+1]];
 	[length setTextAlignment:UITextAlignmentCenter];
 	
 	PFObject *o = [[challenges objectAtIndex:section] objectAtIndex:0];
 	[o fetchIfNeeded];
 	[length setText:[o objectForKey:@"levelLength"]];
 	
+	[view addSubview:bg];
+	[view addSubview:level];
 	[view addSubview:title];
 	[view addSubview:length];
+	
 	return view;
 }
 
