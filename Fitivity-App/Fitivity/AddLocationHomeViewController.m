@@ -309,6 +309,7 @@
 	//Initialize the type view
 	[typeView setAlpha:0.0];
 	[typeView setFrame:CGRectMake(0, 0, 320, 367)];
+	[typeView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_group.png"]]];
 	[self.view addSubview:typeView];
 	[self.view sendSubviewToBack:typeView];
 	

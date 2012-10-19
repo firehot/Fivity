@@ -22,7 +22,6 @@
 	NSMutableArray *results;
 	
 	PFObject *groupMember, *group;
-	UIBarButtonItem *joinButton;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil place:(GooglePlacesObject *)p activity:(NSString *)a challenge:(BOOL)c autoJoin:(BOOL)yn;

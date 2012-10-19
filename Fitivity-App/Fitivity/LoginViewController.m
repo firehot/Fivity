@@ -151,14 +151,13 @@
 			}
 			else {
 				if (user.isNew) {
-					NSLog(@"New User");
 					[self requestFacebookData];
-					//[self performSelectorInBackground:@selector(requestFacebookData) withObject:nil];
 				}
 				
-			 //Logged in successfully 
-			 [self dismissModalViewControllerAnimated:YES];
-		 }
+				//Logged in successfully
+				[delegate userLoggedIn];
+				[self dismissModalViewControllerAnimated:YES];
+			}
 		}];
 
 	}

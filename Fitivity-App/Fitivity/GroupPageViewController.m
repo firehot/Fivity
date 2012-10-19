@@ -128,9 +128,9 @@
 		[button setImage:memberImage forState:UIControlStateNormal];
 		[button setImage:memberImageDown forState:UIControlStateHighlighted];
 		[button addTarget:self action:@selector(joinGroup:) forControlEvents:UIControlEventTouchUpInside];
-		button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
+		button.frame = CGRectMake(0.0, 0.0, 62.0, 28.0);
 		
-		joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+		UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = joinButton;
 	}
 	else {
@@ -142,7 +142,7 @@
 		[button addTarget:self action:@selector(joinGroup:) forControlEvents:UIControlEventTouchUpInside];
 		button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
 		
-		joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+		UIBarButtonItem *joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
 		self.navigationItem.rightBarButtonItem = joinButton;
 	}
 }
@@ -174,7 +174,7 @@
 		
 		if (updateGroup) {
 			NSNumber *num = [updateGroup objectForKey:@"number"];
-			if (userJoining && (!autoJoin || alreadyJoined)) {
+			if (userJoining && (!autoJoin || !alreadyJoined)) {
 				//User is joining the group
 				int temp = [num integerValue] + 1;
 				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
@@ -624,24 +624,12 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
 	self.proposedTable.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
     self.activityLabel.text = [place name];
-	
-	
-	UIImage *memberImage = [UIImage imageNamed:@"b_join.png"];
-    UIImage *memberImageDown = [UIImage imageNamed:@"b_join_down.png"];
-	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-	[button setImage:memberImage forState:UIControlStateNormal];
-    [button setImage:memberImageDown forState:UIControlStateHighlighted];
-	[button addTarget:self action:@selector(joinGroup:) forControlEvents:UIControlEventTouchUpInside];
-	button.frame = CGRectMake(0.0, 0.0, 58.0, 40.0);
-	
-	joinButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-	self.navigationItem.rightBarButtonItem = joinButton;
 
 	if (autoJoin) {
 		int64_t delayInSeconds = 2.2;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Complete Group" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review in the about group section" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Complete Group Information" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review in the group information section" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
 		});
 	}

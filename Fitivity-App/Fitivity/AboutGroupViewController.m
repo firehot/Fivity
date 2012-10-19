@@ -56,7 +56,7 @@
 		gallery = [[FGalleryViewController alloc] initWithPhotoSource:self barItems:barItems];
 		[self.navigationController pushViewController:gallery animated:YES];
 	} else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Photos" message:@"There are no photo's for this group yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Photos" message:@"There are no photo's yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
 	}
 }
@@ -94,8 +94,14 @@
 }
 
 - (IBAction)viewReviews:(id)sender {
-	ReviewsViewController *reviews = [[ReviewsViewController alloc] initWithStyle:UITableViewStylePlain group:groupRef];
-	[self.navigationController pushViewController:reviews animated:YES];
+	
+	if (hasRatings) {
+		ReviewsViewController *reviews = [[ReviewsViewController alloc] initWithStyle:UITableViewStylePlain group:groupRef];
+		[self.navigationController pushViewController:reviews animated:YES];
+	} else {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Reviews" message:@"There are no reviews yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+	}
 }
 
 - (IBAction)toggleEdit:(id)sender {
@@ -121,12 +127,35 @@
 	}];
 }
 
+- (void)attemptRatingsQuery {
+	if (![[FConfig instance] connected]) {
+		hasRatings = NO;
+		return;
+	}
+	
+	@synchronized(self) {
+		PFQuery *query = [PFQuery queryWithClassName:@"GroupReviews"];
+		[query whereKey:@"group" equalTo:groupRef];
+		[query whereKey:@"review" notEqualTo:[NSNull null]];
+		[query orderByDescending:@"updatedAt"];
+		[query setLimit:3];
+		
+		PFObject *o = [query getFirstObject];
+		if (o != nil) {
+			hasRatings = YES;
+		} else {
+			hasRatings = NO;
+		}
+	}
+}
+
 /*
  *	Retrieve all of the photos for this group
  */
 - (void)attemptPhotosQuery {
 	
 	if (![[FConfig instance] connected]) {
+		photoURLResults = [[NSMutableArray alloc] init];
 		return;
 	}
 	
@@ -509,13 +538,15 @@
 	
 	[ratingLabel setTextColor:[[FConfig instance] getFitivityGreen]];
 	[self attemptPhotosQuery];
+	[self attemptRatingsQuery];
 	
 	if (groupRef != nil) {
+		[groupRef fetch];
 		[descriptionView setText:[groupRef objectForKey:@"description"]];
 		
 		// If they are part of the group and there is no description yet
-		if (hasAccess && ([descriptionView.text isEqualToString:@""] && [photoURLResults count] == 0)) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Write Description" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review in the about group section." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		if (hasAccess && ([descriptionView.text isEqualToString:@""] && [photoURLResults count] == 0 && !hasRatings)) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Complete Group Information" message:@"To get maximum participation at this group - fill in the description, add photos, rate, or review." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
 		}
 	}

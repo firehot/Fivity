@@ -293,14 +293,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">joinButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="194896560"/>
-					</object>
-					<int key="connectionID">25</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="972906905"/>
 						<reference key="destination" ref="372490531"/>

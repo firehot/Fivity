@@ -92,7 +92,7 @@
 	NSString *paid = [(NSDictionary *)[userInfo objectForKey:@"aps"] objectForKey:@"pa_id"];
 	
 	//This isn't a proposed activity push
-	if (paid == nil) {
+	if (paid == nil && ![paid isEqualToString:@""]) {
 		[PFPush handlePush:userInfo];
 		return;
 	}

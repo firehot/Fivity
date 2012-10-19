@@ -18,7 +18,7 @@
 	
 	FGalleryViewController *gallery;
 	
-	BOOL hasAccess;
+	BOOL hasAccess, hasRatings;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil group:(PFObject *)group joined:(BOOL)j activity:(NSString *)a place:(GooglePlacesObject *)p;
