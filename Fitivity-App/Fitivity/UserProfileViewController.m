@@ -186,17 +186,19 @@
 		int age = [[userAgeLabel.text stringByReplacingOccurrencesOfString:@"Age " withString:@""] intValue];
 		[user setObject:[NSNumber numberWithInt:age] forKey:@"age"];
 	}
-	
 	if (userOcupationLabel.text != nil) {
 		[user setObject:[userOcupationLabel.text stringByReplacingOccurrencesOfString:@" at" withString:@""] forKey:@"occupation"];
 	}
-	
 	if (userWorkLabel.text != nil) {
 		[user setObject:userWorkLabel.text forKey:@"workPlace"];
 	}
-	
-	[user setObject:userBioView.text forKey:@"bio"];
-	[user setObject:userHometownLabel.text forKey:@"hometown"];
+	if (userBioView.text != nil) {
+		[user setObject:userBioView.text forKey:@"bio"];
+	}
+	if (userHometownLabel.text != nil) {
+		[user setObject:userHometownLabel.text forKey:@"hometown"];
+	}
+
 	[user save];
 
 }
