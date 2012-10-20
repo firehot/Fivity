@@ -155,7 +155,7 @@
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ proposed an activity", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
-		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
+		[cell.timeLabel setText:[self stringForDate:[object updatedAt]]];
 		
 	}
 }
@@ -187,7 +187,7 @@
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ proposed a group activity", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
-		[cell.timeLabel setText:[self stringForDate:[pa updatedAt]]];
+		[cell.timeLabel setText:[self stringForDate:[object updatedAt]]];
 	}
 }
 
@@ -208,7 +208,7 @@
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
-		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
+		[cell.timeLabel setText:[self stringForDate:[object updatedAt]]];
 	}
 }
 
@@ -231,7 +231,7 @@
 		[cell.activityLabel setAttributedText:[self colorLabelString:activity]];
 		[cell.titleLabel setText:[NSString stringWithFormat:@"%@ is doing", [user username]]];
 		[cell.milesAwayLabel setText:[self getDistanceAwayString:[group objectForKey:@"location"]]];
-		[cell.timeLabel setText:[self stringForDate:[group updatedAt]]];
+		[cell.timeLabel setText:[self stringForDate:[object updatedAt]]];
 		[self imageView:cell.pictureView setImage:pic styled:YES];
 		
 		[cell setDelegate:self];
