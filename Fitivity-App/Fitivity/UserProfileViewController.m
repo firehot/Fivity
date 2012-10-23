@@ -15,6 +15,8 @@
 #import "NDArtworkPopout.h"
 #import "NSString+StateAbreviator.h"
 
+#define kNoAboutMe	@"To Add information here, unlink with Facebook (in settings) and then choose the edit button that will then be located in your profile."
+
 @interface UserProfileViewController ()
 
 @end
@@ -192,7 +194,7 @@
 	if (userWorkLabel.text != nil) {
 		[user setObject:userWorkLabel.text forKey:@"workPlace"];
 	}
-	if (userBioView.text != nil) {
+	if (userBioView.text != nil && ![userBioView.text isEqualToString:kNoAboutMe]) {
 		[user setObject:userBioView.text forKey:@"bio"];
 	}
 	if (userHometownLabel.text != nil) {
@@ -295,6 +297,10 @@
 				
 				userBioView.text = [result objectForKey:@"bio"];
 				
+				if ([userBioView.text isEqualToString:@""]) {
+					userBioView.text = kNoAboutMe;
+				}
+				
 				//Array of Dictionaries
 				NSArray *education = [result objectForKey:@"education"];
 				//Array of Dictionaries
@@ -336,6 +342,7 @@
 - (void)reloadAfterLogin {
 	userProfile = [PFUser currentUser];
 	[self loadCachedData];
+	[self attemptGetUserGroups];
 }
 
 - (void)loadCachedData {
@@ -347,11 +354,11 @@
 	}
 	
 	userNameLabel.text = [userProfile username];
-	userOcupationLabel.text = [userProfile objectForKey:@"occupation"];
+	userOcupationLabel.text = [[userProfile objectForKey:@"occupation"] stringByAppendingString:@" at"];
 	userAgeLabel.text = [NSString stringWithFormat:@"Age %i", [[userProfile objectForKey:@"age"] intValue]];
 	userHometownLabel.text = [userProfile objectForKey:@"hometown"];
 	userBioView.text = [userProfile objectForKey:@"bio"];
-	userWorkLabel.text = [[userProfile objectForKey:@"workPlace"] stringByAppendingString:@" at"];
+	userWorkLabel.text = [userProfile objectForKey:@"workPlace"];
 }
 
 #pragma mark - EditProfileViewController Delegate
@@ -541,11 +548,6 @@
 			[self performSelectorInBackground:@selector(attemptGetUserGroups) withObject:nil];
 		}
 		
-//		if (userProfile && [PFFacebookUtils isLinkedWithUser:userProfile]) {
-//			//Load FB name and Pic
-//			[self requestFacebookData];
-//		}
-		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadAfterLogin) name:@"loggedIn" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
@@ -562,6 +564,9 @@
 		if (![PFFacebookUtils isLinkedWithUser:userProfile]) {
 			[editButton setHidden:NO];
 		} else {
+			if ([[[PFUser currentUser] objectForKey:@"bio"] isEqualToString:@""]) {
+				userBioView.text = @"";
+			}
 			[editButton setHidden:YES];
 		}
 	} else {

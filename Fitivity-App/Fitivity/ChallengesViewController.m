@@ -92,7 +92,7 @@
 		
 		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 			
-			NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals.", groupType, groupType];
+			NSString *message = [NSString stringWithFormat:@"I am doing the %@ challenge using fitivity to accomplish my %@ goals.", groupType, groupType];
 			
 			NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 										   [[FConfig instance] getFacebookAppID], @"app_id",
@@ -283,6 +283,11 @@
 	[level setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
 	[title setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
 	[length setFont:[UIFont fontWithName:@"Helvetica-Bold" size:14]];
+	
+	[length setAdjustsFontSizeToFitWidth:YES];
+	[length setAdjustsLetterSpacingToFitWidth:YES];
+	[level setMinimumFontSize:10];
+	
 	[level setTextAlignment:UITextAlignmentCenter];
 	[level setText:@"Level"];
 	[title setTextAlignment:UITextAlignmentCenter];

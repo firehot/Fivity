@@ -29,11 +29,22 @@
 - (IBAction)save:(id)sender {
 	
 	PFUser *user = [PFUser currentUser];
-	[user setObject:locationField.text forKey:@"hometown"];
-	[user setObject:[NSNumber numberWithInt:[ageField.text integerValue]] forKey:@"age"];
-	[user setObject:occupationField.text forKey:@"occupation"];
-	[user setObject:bioField.text forKey:@"bio"];
-	[user setObject:workplaceField.text forKey:@"workPlace"];
+	
+	if (locationField.text != nil) {
+		[user setObject:locationField.text forKey:@"hometown"];
+	}
+	if (ageField.text != nil) {
+		[user setObject:[NSNumber numberWithInt:[ageField.text integerValue]] forKey:@"age"];
+	}
+	if (occupationField.text != nil) {
+		[user setObject:occupationField.text forKey:@"occupation"];
+	}
+	if (bioField.text != nil) {
+		[user setObject:bioField.text forKey:@"bio"];
+	}
+	if (workplaceField.text != nil) {
+		[user setObject:workplaceField.text forKey:@"workPlace"];
+	}
 	
 	if (![user save]) {
 		[user saveEventually];

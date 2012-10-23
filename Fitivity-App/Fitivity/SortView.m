@@ -91,9 +91,17 @@
 		[button addTarget:self action:@selector(callDelegate) forControlEvents:UIControlEventTouchUpInside];
 		button.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
 		
+		UIButton *button1 = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button1 setImage:[UIImage imageNamed:@"b_d_cancel.png"] forState:UIControlStateNormal];
+		[button1 setImage:[UIImage imageNamed:@"b_d_cancel_down.png"] forState:UIControlStateHighlighted];
+		[button1 addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+		button1.frame = CGRectMake(0.0, 0.0, 65.0, 40.0);
+		
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithCustomView:button1];
 		UINavigationItem *item = [[UINavigationItem alloc] init];
 		item.rightBarButtonItem = doneButton;
+		item.leftBarButtonItem = cancelButton;
 		item.hidesBackButton = YES;
 		[navBar pushNavigationItem:item animated:NO];
 		

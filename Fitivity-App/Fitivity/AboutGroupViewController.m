@@ -505,6 +505,7 @@
 
 - (void)viewFinishedRatingGroup:(RateGroupViewController *)view {
 	[self getAverageRating];
+	[self attemptRatingsQuery];
 }
 
 #pragma mark - View Lifecycle 
