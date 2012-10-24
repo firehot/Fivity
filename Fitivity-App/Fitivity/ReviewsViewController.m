@@ -40,6 +40,7 @@
 		
 		[query whereKey:@"group" equalTo:group];
 		[query whereKey:@"review" notEqualTo:[NSNull null]];
+		[query whereKey:@"review" notEqualTo:@""];
 		[query orderByDescending:@"updatedAt"];
 		[query setLimit:50];
 		

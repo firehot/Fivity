@@ -118,11 +118,11 @@
 	NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:[groupRef objectId], @"groupID", nil];
 	[PFCloud callFunctionInBackground:@"getAverageRating" withParameters:params  block:^(id object, NSError *error) {
 		if (!error) {
+			[self clearAllStars];
 			[self setCorrectRating:(NSNumber *)object];
 			[self.ratingLabel setText:[self getGroupRatingString:(NSNumber *)object]];
 		} else {
 			[self.ratingLabel setText:[self getGroupRatingString:[NSNumber numberWithInt:0]]];
-			NSLog(@"%@",[error description]);
 		}
 	}];
 }
@@ -137,6 +137,7 @@
 		PFQuery *query = [PFQuery queryWithClassName:@"GroupReviews"];
 		[query whereKey:@"group" equalTo:groupRef];
 		[query whereKey:@"review" notEqualTo:[NSNull null]];
+		[query whereKey:@"review" notEqualTo:@""];
 		[query orderByDescending:@"updatedAt"];
 		[query setLimit:3];
 		
@@ -180,6 +181,16 @@
 			}
 		}];
 	}
+}
+
+- (void)clearAllStars {
+	UIImage *inactive = [UIImage imageNamed:@"star_inactive.png"];
+	
+	[starOne setImage:inactive];
+	[starTwo setImage:inactive];
+	[starThree setImage:inactive];
+	[starFour setImage:inactive];
+	[starFive setImage:inactive];
 }
 
 /*

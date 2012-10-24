@@ -130,9 +130,6 @@
 				//User is unjoining from the group
 				int temp = [num integerValue] - 1;
 				
-				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Count" message:[NSString stringWithFormat:@"Was %d now %d", [num integerValue], temp] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-				[alert show];
-				
 				if (temp == 0) {
 					[updateGroup delete];
 				} else {

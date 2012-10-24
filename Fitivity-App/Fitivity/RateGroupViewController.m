@@ -136,7 +136,7 @@
 - (void)checkIfUserAlreadyRated {
 	PFQuery *query = [PFQuery queryWithClassName:@"GroupReviews"];
 	[query whereKey:@"group" equalTo:group];
-	[query whereKey:@"creator" equalTo:[PFObject objectWithoutDataWithClassName:@"User" objectId:[[PFUser currentUser] objectId]]];
+	[query whereKey:@"creator" equalTo:[PFUser currentUser]];
 	
 	previousReview = [query getFirstObject];
 	if (previousReview == nil) {
@@ -181,18 +181,18 @@
 
 - (IBAction)postReview:(id)sender {
 	if ([[FConfig instance] connected]) {
-		if (starCount != 0 && review.text.length > 2) {
+		if (starCount != 0) {
 			if (!alreadyRated) {
 				[self rateWithNum:starCount];
 			} else {
 				[self updateRatingWithNum:starCount];
 			}
 		} else {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Rating" message:@"You haven't rated & reviewed the app yet..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Rating" message:@"You haven't rated the group yet." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
 		}
 	} else {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to the internet to post a review" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be connected to the internet to post a review!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
 	}
 	[self.review resignFirstResponder];
