@@ -11,7 +11,6 @@
 		5700D1BA15B47107003C96F3 /* DiscoverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5700D1B915B47107003C96F3 /* DiscoverCell.xib */; };
 		575AECA415B6051200324958 /* GroupPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 575AECA215B6051200324958 /* GroupPageViewController.m */; };
 		575AECA515B6051200324958 /* GroupPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575AECA315B6051200324958 /* GroupPageViewController.xib */; };
-		57965609163B5EF0005B5F19 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57965608163B5EF0005B5F19 /* Parse.framework */; };
 		57965612163B5FAF005B5F19 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57965611163B5FAF005B5F19 /* AdSupport.framework */; };
 		57965614163B5FC4005B5F19 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57965613163B5FC4005B5F19 /* Accounts.framework */; };
 		57AAB0C015AF441E00AD51CB /* FitivityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */; };
@@ -55,6 +54,7 @@
 		6C25CD7516207649008D0924 /* photo-gallery-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C25CD6F16207649008D0924 /* photo-gallery-right@2x.png */; };
 		6C25CD7616207649008D0924 /* photo-gallery-trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C25CD7016207649008D0924 /* photo-gallery-trashcan.png */; };
 		6C2813FD160677C9006B2DC6 /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2813FB1606773E006B2DC6 /* AnimatedGif.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		6C3BA73F163C171E00CE455C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3BA73E163C171E00CE455C /* Parse.framework */; };
 		6C3CA0051636FDD2000AB385 /* b_d_cancel_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C3CA0011636FDD2000AB385 /* b_d_cancel_down.png */; };
 		6C3CA0061636FDD2000AB385 /* b_d_cancel_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C3CA0021636FDD2000AB385 /* b_d_cancel_down@2x.png */; };
 		6C3CA0071636FDD2000AB385 /* b_d_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C3CA0031636FDD2000AB385 /* b_d_cancel.png */; };
@@ -511,7 +511,6 @@
 		575AECA115B6051200324958 /* GroupPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupPageViewController.h; sourceTree = "<group>"; };
 		575AECA215B6051200324958 /* GroupPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupPageViewController.m; sourceTree = "<group>"; };
 		575AECA315B6051200324958 /* GroupPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupPageViewController.xib; path = Fitivity/GroupPageViewController.xib; sourceTree = "<group>"; };
-		57965608163B5EF0005B5F19 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		5796560B163B5F60005B5F19 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		57965611163B5FAF005B5F19 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		57965613163B5FC4005B5F19 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -584,6 +583,7 @@
 		6C25CD7016207649008D0924 /* photo-gallery-trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-gallery-trashcan.png"; sourceTree = "<group>"; };
 		6C2813FA1606773E006B2DC6 /* AnimatedGif.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimatedGif.h; sourceTree = "<group>"; };
 		6C2813FB1606773E006B2DC6 /* AnimatedGif.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnimatedGif.m; sourceTree = "<group>"; };
+		6C3BA73E163C171E00CE455C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../ParseStarterProject/Parse.framework; sourceTree = "<group>"; };
 		6C3CA0011636FDD2000AB385 /* b_d_cancel_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b_d_cancel_down.png; sourceTree = "<group>"; };
 		6C3CA0021636FDD2000AB385 /* b_d_cancel_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b_d_cancel_down@2x.png"; sourceTree = "<group>"; };
 		6C3CA0031636FDD2000AB385 /* b_d_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b_d_cancel.png; sourceTree = "<group>"; };
@@ -1109,7 +1109,7 @@
 				6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */,
 				6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */,
 				6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */,
-				57965609163B5EF0005B5F19 /* Parse.framework in Frameworks */,
+				6C3BA73F163C171E00CE455C /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1591,10 +1591,10 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C3BA73E163C171E00CE455C /* Parse.framework */,
 				57965613163B5FC4005B5F19 /* Accounts.framework */,
 				57965611163B5FAF005B5F19 /* AdSupport.framework */,
 				5796560B163B5F60005B5F19 /* Social.framework */,
-				57965608163B5EF0005B5F19 /* Parse.framework */,
 				6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */,
 				6C2030E215EC50030058E03D /* MessageUI.framework */,
 				57C317ED15EBB6A6006253D4 /* Twitter.framework */,
