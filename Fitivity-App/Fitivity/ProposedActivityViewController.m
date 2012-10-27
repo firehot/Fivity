@@ -39,7 +39,7 @@
 @synthesize activityHeader;
 @synthesize creatorPicture;
 @synthesize creatorName;
-@synthesize activityMessage;
+@synthesize message;
 @synthesize activityCreateTime;
 @synthesize placeLabel;
 @synthesize inButton;
@@ -712,13 +712,14 @@
 	[creatorPicture.layer setBorderWidth:2];
 	
 	creatorName.text = [creator objectForKey:@"username"];
-	activityMessage.text = [parent objectForKey:@"activityMessage"];
+	message.text = [parent objectForKey:@"activityMessage"];
 	
-	if (activityMessage.text.length >= kHeaderMoreLimit) {
-		[moreIcon setHidden:NO];
-	} else {
-		[moreIcon setHidden:YES];
-	}
+    [moreIcon setHidden:YES];
+//	if (activityMessage.text.length >= kHeaderMoreLimit) {
+//		[moreIcon setHidden:NO];
+//	} else {
+//		[moreIcon setHidden:YES];
+//	}
 	
 	activityCreateTime.text = [self getFormattedStringForDate:[parent createdAt]];
 
@@ -740,7 +741,7 @@
 	[self setActivityHeader:nil];
 	[self setCreatorPicture:nil];
 	[self setCreatorName:nil];
-	[self setActivityMessage:nil];
+	[self setMessage:nil];
 	[self setActivityCreateTime:nil];
 	[self setActivityFooter:nil];
 	[self setActivityComment:nil];

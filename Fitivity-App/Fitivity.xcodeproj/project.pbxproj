@@ -11,6 +11,9 @@
 		5700D1BA15B47107003C96F3 /* DiscoverCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5700D1B915B47107003C96F3 /* DiscoverCell.xib */; };
 		575AECA415B6051200324958 /* GroupPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 575AECA215B6051200324958 /* GroupPageViewController.m */; };
 		575AECA515B6051200324958 /* GroupPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 575AECA315B6051200324958 /* GroupPageViewController.xib */; };
+		57965609163B5EF0005B5F19 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57965608163B5EF0005B5F19 /* Parse.framework */; };
+		57965612163B5FAF005B5F19 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57965611163B5FAF005B5F19 /* AdSupport.framework */; };
+		57965614163B5FC4005B5F19 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57965613163B5FC4005B5F19 /* Accounts.framework */; };
 		57AAB0C015AF441E00AD51CB /* FitivityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */; };
 		57AAB0C215AF4B1300AD51CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57AAB0C115AF4B1300AD51CB /* QuartzCore.framework */; };
 		57C317EC15EBB687006253D4 /* SocialSharer.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C317EB15EBB687006253D4 /* SocialSharer.m */; };
@@ -89,7 +92,6 @@
 		6C56BEEB160A91B9006D5EEC /* bv2_current_location_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEE7160A91B9006D5EEC /* bv2_current_location_down@2x.png */; };
 		6C56BEEC160A91B9006D5EEC /* bv2_current_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEE8160A91B9006D5EEC /* bv2_current_location.png */; };
 		6C56BEED160A91B9006D5EEC /* bv2_current_location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEE9160A91B9006D5EEC /* bv2_current_location@2x.png */; };
-		6C56BEF2160A945E006D5EEC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C56BEF1160A945E006D5EEC /* Parse.framework */; };
 		6C56BEF7160A95CC006D5EEC /* b_current_location_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEF3160A95CC006D5EEC /* b_current_location_down.png */; };
 		6C56BEF8160A95CC006D5EEC /* b_current_location_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEF4160A95CC006D5EEC /* b_current_location_down@2x.png */; };
 		6C56BEF9160A95CC006D5EEC /* b_current_location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C56BEF5160A95CC006D5EEC /* b_current_location.png */; };
@@ -509,6 +511,10 @@
 		575AECA115B6051200324958 /* GroupPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupPageViewController.h; sourceTree = "<group>"; };
 		575AECA215B6051200324958 /* GroupPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupPageViewController.m; sourceTree = "<group>"; };
 		575AECA315B6051200324958 /* GroupPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GroupPageViewController.xib; path = Fitivity/GroupPageViewController.xib; sourceTree = "<group>"; };
+		57965608163B5EF0005B5F19 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		5796560B163B5F60005B5F19 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		57965611163B5FAF005B5F19 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		57965613163B5FC4005B5F19 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		57AAB0BF15AF441E00AD51CB /* FitivityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FitivityLogo.png; sourceTree = "<group>"; };
 		57AAB0C115AF4B1300AD51CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		57C317EA15EBB687006253D4 /* SocialSharer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialSharer.h; sourceTree = "<group>"; };
@@ -624,7 +630,6 @@
 		6C56BEE7160A91B9006D5EEC /* bv2_current_location_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bv2_current_location_down@2x.png"; sourceTree = "<group>"; };
 		6C56BEE8160A91B9006D5EEC /* bv2_current_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bv2_current_location.png; sourceTree = "<group>"; };
 		6C56BEE9160A91B9006D5EEC /* bv2_current_location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bv2_current_location@2x.png"; sourceTree = "<group>"; };
-		6C56BEF1160A945E006D5EEC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../ParseStarterProject/Parse.framework; sourceTree = "<group>"; };
 		6C56BEF3160A95CC006D5EEC /* b_current_location_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b_current_location_down.png; sourceTree = "<group>"; };
 		6C56BEF4160A95CC006D5EEC /* b_current_location_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b_current_location_down@2x.png"; sourceTree = "<group>"; };
 		6C56BEF5160A95CC006D5EEC /* b_current_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b_current_location.png; sourceTree = "<group>"; };
@@ -1087,6 +1092,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57965614163B5FC4005B5F19 /* Accounts.framework in Frameworks */,
+				57965612163B5FAF005B5F19 /* AdSupport.framework in Frameworks */,
 				6C595D3015ED9F5B0018FD49 /* libsqlite3.0.dylib in Frameworks */,
 				6C2030E315EC50030058E03D /* MessageUI.framework in Frameworks */,
 				57C317EE15EBB6A6006253D4 /* Twitter.framework in Frameworks */,
@@ -1102,7 +1109,7 @@
 				6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */,
 				6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */,
 				6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */,
-				6C56BEF2160A945E006D5EEC /* Parse.framework in Frameworks */,
+				57965609163B5EF0005B5F19 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1584,7 +1591,10 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6C56BEF1160A945E006D5EEC /* Parse.framework */,
+				57965613163B5FC4005B5F19 /* Accounts.framework */,
+				57965611163B5FAF005B5F19 /* AdSupport.framework */,
+				5796560B163B5F60005B5F19 /* Social.framework */,
+				57965608163B5EF0005B5F19 /* Parse.framework */,
 				6C595D2F15ED9F5B0018FD49 /* libsqlite3.0.dylib */,
 				6C2030E215EC50030058E03D /* MessageUI.framework */,
 				57C317ED15EBB6A6006253D4 /* Twitter.framework */,

@@ -36,7 +36,8 @@
 @property (strong, nonatomic) IBOutlet UIView *activityHeader;
 @property (weak, nonatomic) IBOutlet UIImageView *creatorPicture;
 @property (weak, nonatomic) IBOutlet UILabel *creatorName;
-@property (weak, nonatomic) IBOutlet UILabel *activityMessage;
+//@property (weak, nonatomic) IBOutlet UILabel *activityMessage;
+@property (weak, nonatomic) IBOutlet UITextView *message;
 @property (weak, nonatomic) IBOutlet UILabel *activityCreateTime;
 @property (weak, nonatomic) IBOutlet UILabel *placeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *inButton;

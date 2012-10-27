@@ -192,7 +192,8 @@
 }
 
 - (void)configureGroupCell:(DiscoverCell *)cell withObject:(PFObject *)object memberCount:(int)count {
-	if (!object) {
+	   
+    if (!object) {
 		return;
 	}
 		
@@ -264,7 +265,9 @@
 		
 		[HUD hide:YES afterDelay:delay];
 		
-		[self loadObjects];
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
+            [self loadObjects];
+        });
 	}
 }
 
@@ -353,7 +356,9 @@
 		[HUD show:YES];
 		[HUD hide:YES afterDelay:3.0];
 		
-		[self loadObjects];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
+            [self loadObjects];
+        });
 	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"loggedIn" object:self];
@@ -442,7 +447,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DiscoverCell" owner:self options:nil];
 		cell = [nib objectAtIndex:0];
     }
-	
+    
 	[object fetchIfNeeded];
 	
 	//Get the type of the activity
@@ -452,7 +457,7 @@
 	if (type == kCellTypeGroup) {
 		numberOfMemebers = [[object objectForKey:@"number"] integerValue];
 	}
-	
+    
 	switch (type) {
 		case kCellTypeGroup:
 			if (numberOfMemebers > 1) {
@@ -616,7 +621,9 @@
 		[HUD show:YES];
 		[HUD hide:YES afterDelay:3.0];
 		
-		[self loadObjects];
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
+            [self loadObjects];
+        });
 	}
 	
 	[self setLoadedInitialData:YES];

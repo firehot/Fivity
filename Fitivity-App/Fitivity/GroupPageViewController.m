@@ -562,8 +562,14 @@
 	HUD.delegate = self;
 	HUD.mode = MBProgressHUDModeText;
 	HUD.labelText = @"Loading...";
-	
-	[HUD showWhileExecuting:@selector(loadPAViewWithParent:) onTarget:self withObject:[results objectAtIndex:indexPath.row] animated:YES];
+	[HUD show:YES];
+    
+    PFObject *o = [results objectAtIndex:indexPath.row];
+    [o fetchIfNeeded];
+    
+    [self loadPAViewWithParent:o];
+    [HUD hide:YES afterDelay:0.8];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
