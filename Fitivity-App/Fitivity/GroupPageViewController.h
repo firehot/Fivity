@@ -17,7 +17,7 @@
 #import "MBProgressHUD.h"
 
 @interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, ProposedActivityCellDelegate, MBProgressHUDDelegate> {
-    BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel;
+    BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel, joinedFromChallenge;
 	
 	NSMutableArray *results;
 	

@@ -75,6 +75,10 @@
 
 - (IBAction)showChallenges:(id)sender {
 	autoJoin = NO;
+	if (!alreadyJoined) {
+		joinedFromChallenge = YES;
+		[self attemptJoinGroup];
+	}
 	ChallengesViewController *challenge = [[ChallengesViewController alloc] initWithNibName:@"ChallengesViewController" bundle:nil groupType:self.activity];
 	[self.navigationController pushViewController:challenge animated:YES];
 }
@@ -297,6 +301,10 @@
 				HUD.mode = MBProgressHUDModeCustomView;
 				HUD.labelText = @"Joined";
 				
+				if (joinedFromChallenge) {
+					HUD.tag = 44;
+				}
+				
 				[HUD show:YES];
 				[HUD hide:YES afterDelay:1.75];
 			}
@@ -432,6 +440,13 @@
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded
+	
+	if (hud.tag == 44) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Auto-Joined" message:@"Since you were not part of this group, we automatically joined you to it." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		joinedFromChallenge = NO;
+	}
+	
 	[hud removeFromSuperview];
 }
 

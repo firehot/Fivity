@@ -29,5 +29,6 @@
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, retain) NSString *sortCriteria;
 @property (nonatomic, assign) BOOL loadedInitialData;
+@property (nonatomic, assign) BOOL cancelLoad;
 
 @end

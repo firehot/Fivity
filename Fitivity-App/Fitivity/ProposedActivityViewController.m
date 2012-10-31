@@ -446,7 +446,7 @@
 	PFObject *group = [parent objectForKey:@"group"];
 	[creator fetchIfNeeded];
 
-	NSString *message = [NSString stringWithFormat:@"%@ proposes %@ at %@. Here are the details: %@.",	[creator username],
+	NSString *m = [NSString stringWithFormat:@"%@ proposes %@ at %@. Here are the details: %@.",	[creator username],
 						 [group objectForKey:@"activity"],
 						 [group objectForKey:@"place"],
 						 [parent objectForKey:@"activityMessage"]];
@@ -458,7 +458,7 @@
 									   [[FConfig instance] getItunesAppLink], @"link",
 									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
 									   @"Fitivity", @"name",
-									   message, @"caption",
+									   m, @"caption",
 									   @"To join, download the free Fitivity app in the Apple App Store or in Google Play, and participate in physical activities with us.", @"description",
 									   @"Go download this app!",  @"message",
 									   nil];
@@ -468,9 +468,9 @@
 		NSString *tweet = [NSString stringWithFormat:@"I'm playing %@ using fitivity. Download it for free in the Apple app store or Google Play store. Keyword search - fitivity", [group objectForKey:@"activity"]];
         [[SocialSharer sharer] shareMessageWithTwitter:tweet image:nil link:nil];
     } else if ([title isEqualToString:@"SMS"]) {
-        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"%@. Download it in the App Store %@", message, [[FConfig instance] getItunesAppLink]]];
+        [[SocialSharer sharer] shareTextMessage:[NSString stringWithFormat:@"%@. Download it in the App Store %@", m, [[FConfig instance] getItunesAppLink]]];
     } else if ([title isEqualToString:@"Email"]) {
-		NSString *bodyHTML = [NSString stringWithFormat:@"%@ To join, download the free Fitivity app in the Apple App Store or in Google Play, and participate in physical activities with us.<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", message, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
+		NSString *bodyHTML = [NSString stringWithFormat:@"%@ To join, download the free Fitivity app in the Apple App Store or in Google Play, and participate in physical activities with us.<br><br>Download it now in the Apple App Store: <a href=\"%@\">%@</a>", m, [[FConfig instance] getItunesAppLink], [[FConfig instance] getItunesAppLink]];
 		
 		NSString *path = [[NSBundle mainBundle] pathForResource:@"Icon@2x" ofType:@"png"];
 		NSData *picture = [NSData dataWithContentsOfFile:path];

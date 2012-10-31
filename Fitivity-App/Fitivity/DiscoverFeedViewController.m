@@ -225,7 +225,7 @@
 	if (group && user) {
 		[group fetchIfNeeded];
 		[user fetchIfNeeded];
-				
+		
 		PFFile *pic = [user objectForKey:@"image"];
 		
 		NSString *activity = [NSString stringWithFormat:@"%@ at %@", [group objectForKey:@"activity"], [group objectForKey:@"place"]];
@@ -346,6 +346,7 @@
 #pragma mark - LoginViewController Delegate
 
 - (void)userLoggedIn {
+	self.cancelLoad = NO;
 	if ([self.objects count] == 0) {
 		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 		[self.navigationController.view addSubview:HUD];
@@ -408,33 +409,36 @@
 		
 		c = [o objectForKey:@"creator"];
 		[c fetch];
-		[c objectForKey:@"image"];
 	}
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
 // all objects ordered by createdAt descending.
 - (PFQuery *)queryForTable {
-    PFQuery *query = [PFQuery queryWithClassName:self.className];
-	
-	// If no objects are loaded in memory, we look to the cache first to fill the table
-    // and then subsequently do a query against the network.
-    if ([self.objects count] == 0) {
-        query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    }
-	
-	//Need to find all groups/proposed activities that are close by
-	PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
-	[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
-	
-	if (sortCriteria != nil && ![sortCriteria isEqualToString:@"All Activities"]) {
-		[innerGroupQuery whereKey:@"activity" equalTo:sortCriteria];
+    
+	if (!self.cancelLoad) {
+		PFQuery *query = [PFQuery queryWithClassName:self.className];
+		
+		// If no objects are loaded in memory, we look to the cache first to fill the table
+		// and then subsequently do a query against the network.
+		if ([self.objects count] == 0) {
+			query.cachePolicy = kPFCachePolicyCacheThenNetwork;
+		}
+		
+		//Need to find all groups/proposed activities that are close by
+		PFQuery *innerGroupQuery = [PFQuery queryWithClassName:@"Groups"];
+		[innerGroupQuery whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:kMilesRadius];
+		
+		if (sortCriteria != nil && ![sortCriteria isEqualToString:@"All Activities"]) {
+			[innerGroupQuery whereKey:@"activity" equalTo:sortCriteria];
+		}
+		
+		[query whereKey:@"group" matchesQuery:innerGroupQuery];
+		[query orderByDescending:@"updatedAt"];
+		
+		return query;
 	}
-	
-	[query whereKey:@"group" matchesQuery:innerGroupQuery];
-    [query orderByDescending:@"updatedAt"];
-
-    return query;
+	return nil;
 }
 
 // Override to customize the look of a cell representing an object. The default is to display

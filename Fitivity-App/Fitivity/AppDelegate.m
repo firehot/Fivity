@@ -31,7 +31,14 @@
     
 	//Initialize the main view controllers
 	self.openingView = [[OpeningLogoViewController alloc] initWithNibName:@"OpeningLogoViewController" bundle:nil];
-	DiscoverFeedViewController *discoverView = [[DiscoverFeedViewController alloc] init];
+	DiscoverFeedViewController *discoverView = [[DiscoverFeedViewController alloc] initWithStyle:UITableViewStylePlain];
+	
+	if (![self userExistsSanityCheck]) {
+		[PFUser logOut];
+		[discoverView clear];
+		[discoverView setCancelLoad:YES];
+	}
+	
 	ActivityHomeViewController *activity = [[ActivityHomeViewController alloc] initWithNibName:@"ActivityHomeViewController" bundle:nil];
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:[PFUser currentUser]];
 	[profile setMainUser:YES];
@@ -60,6 +67,20 @@
 	[[FConfig instance] setLaunchCount:++num];
 	
     return YES;
+}
+
+- (BOOL)userExistsSanityCheck {
+	if (![PFUser currentUser]) {
+		return NO;
+	}
+	
+	PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+	[query whereKey:@"objectId" equalTo:[[PFUser currentUser] objectId]];
+
+	if ([query getFirstObject] != nil) {
+		return YES;
+	}
+	return NO;
 }
 
 #pragma mark - Facebook login handling 
