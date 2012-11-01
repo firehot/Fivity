@@ -282,7 +282,7 @@
 		6CE8D2A2162203D100A4F9D3 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CE8D2A0162203D100A4F9D3 /* EditProfileViewController.xib */; };
 		6CEFED8015B3641500211CB0 /* ChooseActivityHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */; };
 		6CF2C71115B4EAF9001E3353 /* FitivityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */; };
-		6CF90E141640A9F700F14663 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF90E131640A9F700F14663 /* Parse.framework */; };
+		6CF90E181641E3E700F14663 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CF90E171641E3E700F14663 /* Parse.framework */; };
 		F10C6E9415F05D5B00D64276 /* b_facebook_link_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F10C6E8C15F05D5B00D64276 /* b_facebook_link_down.png */; };
 		F10C6E9515F05D5B00D64276 /* b_facebook_link_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F10C6E8D15F05D5B00D64276 /* b_facebook_link_down@2x.png */; };
 		F10C6E9615F05D5B00D64276 /* b_facebook_link.png in Resources */ = {isa = PBXBuildFile; fileRef = F10C6E8E15F05D5B00D64276 /* b_facebook_link.png */; };
@@ -865,7 +865,7 @@
 		6CEFED7E15B3641500211CB0 /* ChooseActivityHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseActivityHeaderView.h; sourceTree = "<group>"; };
 		6CEFED7F15B3641500211CB0 /* ChooseActivityHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseActivityHeaderView.m; sourceTree = "<group>"; };
 		6CF2C70E15B4EAF9001E3353 /* FitivityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FitivityIcon.png; sourceTree = "<group>"; };
-		6CF90E131640A9F700F14663 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../../ParseStarterProject/Parse.framework; sourceTree = "<group>"; };
+		6CF90E171641E3E700F14663 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		F10C6E8C15F05D5B00D64276 /* b_facebook_link_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b_facebook_link_down.png; path = ../images_settings_v2/b_facebook_link_down.png; sourceTree = "<group>"; };
 		F10C6E8D15F05D5B00D64276 /* b_facebook_link_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "b_facebook_link_down@2x.png"; path = "../images_settings_v2/b_facebook_link_down@2x.png"; sourceTree = "<group>"; };
 		F10C6E8E15F05D5B00D64276 /* b_facebook_link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = b_facebook_link.png; path = ../images_settings_v2/b_facebook_link.png; sourceTree = "<group>"; };
@@ -1111,7 +1111,7 @@
 				6CB1A72615ACFC1D00C0FF75 /* UIKit.framework in Frameworks */,
 				6CB1A72815ACFC1D00C0FF75 /* Foundation.framework in Frameworks */,
 				6CB1A72A15ACFC1D00C0FF75 /* CoreGraphics.framework in Frameworks */,
-				6CF90E141640A9F700F14663 /* Parse.framework in Frameworks */,
+				6CF90E181641E3E700F14663 /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1593,7 +1593,7 @@
 		6CB1A72415ACFC1D00C0FF75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6CF90E131640A9F700F14663 /* Parse.framework */,
+				6CF90E171641E3E700F14663 /* Parse.framework */,
 				57965613163B5FC4005B5F19 /* Accounts.framework */,
 				57965611163B5FAF005B5F19 /* AdSupport.framework */,
 				5796560B163B5F60005B5F19 /* Social.framework */,
@@ -2741,6 +2741,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "465ECAB1-921D-4A75-A186-1C1C03756DCC";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2760,7 +2761,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "90EDAFF5-A143-4DEE-99CD-8236691EC356";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "041D93CF-D8C0-4681-8B74-D5EA93065762";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
