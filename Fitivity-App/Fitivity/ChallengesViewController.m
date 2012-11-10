@@ -210,6 +210,8 @@
 	tableView.backgroundColor = [UIColor clearColor];
 	tableView.separatorColor = [UIColor clearColor];
 	
+	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_group.png"]]];
+	
 	[self shareViewChallenge];
 }
 
