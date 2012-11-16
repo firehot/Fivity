@@ -436,7 +436,6 @@
 		[title setBackgroundColor:[UIColor clearColor]];
 		[title setTextColor:[UIColor whiteColor]];
 		[header addSubview:title];
-		
 		return header;
 	}
 	return nil;

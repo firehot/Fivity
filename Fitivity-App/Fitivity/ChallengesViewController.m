@@ -68,6 +68,7 @@
 		[query whereKey:@"parent" equalTo:parent];
 		[query addAscendingOrder:@"level"];
 		[query addAscendingOrder:@"dayNum"];
+		[query setLimit:300];
 		[query setCachePolicy:kPFCachePolicyNetworkElseCache];
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
 			if (error) {
