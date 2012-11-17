@@ -378,37 +378,52 @@
 - (void)objectsDidLoad:(NSError *)error {
 	[super objectsDidLoad:error];
 	
-	// Use the user's current calendar and time zone
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
-    [calendar setTimeZone:timeZone];
-	
-    // Selectively convert the date components (year, month, day) of the input date
-    NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[NSDate date]];
-	
-    // Set the time components manually
-    [dateComps setHour:0];
-    [dateComps setMinute:0];
-    [dateComps setSecond:0];
-	
-    // Convert back
-    NSDate *beginningOfDay = [calendar dateFromComponents:dateComps];
-	beginningOfDay = [beginningOfDay dateByAddingTimeInterval:-14400];
-	
-	PFUser *c = nil;
-	todayCells = 0;
-	NSDate *temp = nil;
-	
-	for (PFObject *o in [self objects]) {
-		[o fetchInBackgroundWithBlock:nil];
-		temp = [o updatedAt];
-				
-		if ([beginningOfDay compare:temp] == (NSOrderedSame | NSOrderedAscending)) {
-			todayCells++;
+	if (!error) {
+		if (loadCount++ > 1  && self.loadedInitialData && !shownNoItems && [[self objects] count] == 0) {
+			shownNoItems = YES;
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Activity" message:@"There is no activity right now, try refreshing in a little bit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];
+		} else if ([[self objects] count] > 0 && self.loadedInitialData) {
+			shownNoItems = YES; // Prevents showing when method gets called multiple times
 		}
 		
-		c = [o objectForKey:@"creator"];
-		[c fetch];
+		// Use the user's current calendar and time zone
+		NSCalendar *calendar = [NSCalendar currentCalendar];
+		NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
+		[calendar setTimeZone:timeZone];
+		
+		// Selectively convert the date components (year, month, day) of the input date
+		NSDateComponents *dateComps = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[NSDate date]];
+		
+		// Set the time components manually
+		[dateComps setHour:0];
+		[dateComps setMinute:0];
+		[dateComps setSecond:0];
+		
+		// Convert back
+		NSDate *beginningOfDay = [calendar dateFromComponents:dateComps];
+		beginningOfDay = [beginningOfDay dateByAddingTimeInterval:-14400];
+		
+		PFUser *c = nil;
+		todayCells = 0;
+		NSDate *temp = nil;
+		
+		for (PFObject *o in [self objects]) {
+			[o fetchInBackgroundWithBlock:nil];
+			temp = [o updatedAt];
+			
+			if ([beginningOfDay compare:temp] == (NSOrderedSame | NSOrderedAscending)) {
+				todayCells++;
+			}
+			
+			c = [o objectForKey:@"creator"];
+			[c fetch];
+		}
+
+	} else {
+		NSString *message = [error userFriendlyParseErrorDescription:YES];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
 	}
 }
 
@@ -593,20 +608,15 @@
 #pragma mark - CLLocationManager Delegate
 
 - (BOOL) isValidDistance:(CLLocation *)newLocation oldLocation:(CLLocation *)oldLocation {
-    double distance = [newLocation distanceFromLocation:oldLocation] * kMetersToMiles;
-    if (distance > .5) {
-        return NO;
+	if (newLocation.horizontalAccuracy > 0 && newLocation.horizontalAccuracy < 300) {
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
 	
-	if (![self isValidDistance:newLocation oldLocation:oldLocation]) {
-		return;
-	}
-	
-	if (self.loadedInitialData) {
+	if (![self isValidDistance:newLocation oldLocation:oldLocation] || self.loadedInitialData) {
 		return;
 	}
 	
@@ -654,7 +664,7 @@
 		
 		if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];
-			[locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+			[locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
 			[locationManager setDelegate:self];
 			[locationManager setPurpose:@"To find activities close to you."];
 			[locationManager startUpdatingLocation];
@@ -695,6 +705,8 @@
 		
 		sortCriteria = [[FConfig instance] getSortedFeedKey];
 		shownAlert = NO;
+		shownNoItems = NO;
+		loadCount = 0;
 		[self performSelector:@selector(handleReminders) withObject:nil afterDelay:3.0];
     }
     return self;
@@ -703,7 +715,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        shownAlert = NO;
+		shownAlert = NO;
+		shownNoItems = NO;
     }
     return self;
 }

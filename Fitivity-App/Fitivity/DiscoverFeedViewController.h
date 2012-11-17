@@ -19,8 +19,8 @@
 @interface DiscoverFeedViewController : PFQueryTableViewController <CLLocationManagerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, DiscoverCellDelegate, LoginViewControllerDelegate, MBProgressHUDDelegate, SortViewDelegate> {
 	PFGeoPoint *userGeoPoint;
 	
-	int todayCells;
-	BOOL shownAlert;
+	int todayCells, loadCount;
+	BOOL shownAlert, shownNoItems;
 }
 
 - (void)shareApp;
