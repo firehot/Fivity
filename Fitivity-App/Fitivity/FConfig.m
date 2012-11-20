@@ -44,6 +44,8 @@ static FConfig *instance;
 #pragma mark - Singleton Instance
 
 - (void)initInstance {
+    //http://www.fitivitymovement.com/FitivityAppIcon.png - ?xGfxPnN
+    
     //Load past group creation records 
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
