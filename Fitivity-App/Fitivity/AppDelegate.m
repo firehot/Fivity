@@ -66,7 +66,36 @@
 	int num = [[FConfig instance] getLaunchCount];
 	[[FConfig instance] setLaunchCount:++num];
 	
+	[self handleLaunchNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
+	
     return YES;
+}
+
+- (void)handleLaunchNotification:(NSDictionary *)launchData {
+	if (launchData) {
+		tempPushInfo = launchData;
+		NSString *message = [(NSDictionary *)[launchData objectForKey:@"aps"] objectForKey:@"alert"];
+		NSString *paid = [(NSDictionary *)[launchData objectForKey:@"aps"] objectForKey:@"pa_id"];
+		
+		//This isn't a proposed activity push
+		if (paid == nil && ![paid isEqualToString:@""]) {
+			[PFPush handlePush:launchData];
+			return;
+		}
+		
+		if ([PFUser currentUser]) {
+			
+			//Check to see if the user is the one who sent it, if so dont show the message
+			NSRange range = [message rangeOfString:[NSString stringWithFormat:@"%@",[[PFUser currentUser] username]]];
+			if (range.location == NSNotFound) {
+				
+				[PFPush handlePush:launchData];
+				
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Acitivty" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Join", nil];
+				[alert show];
+			}
+		}
+	}
 }
 
 - (BOOL)userExistsSanityCheck {

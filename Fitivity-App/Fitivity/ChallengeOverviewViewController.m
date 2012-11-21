@@ -57,7 +57,7 @@
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
 									   [[FConfig instance] getItunesAppLink], @"link",
-									   @"http://nathanieldoe.com/AppFiles/FitivityArtwork", @"picture",
+									   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 									   @"Fitivity", @"name",
 	                                   message, @"caption",
 									   @"Download the free fitivity app in the Apple App Store or in Google Play", @"description",
