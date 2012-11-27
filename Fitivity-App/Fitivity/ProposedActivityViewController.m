@@ -285,8 +285,25 @@
 	
 	if (![member save]) {
 		[member saveEventually];
-	}
-	else {
+	} else {
+		
+		//Update group member count logic
+		PFQuery *query2 = [PFQuery queryWithClassName:@"ActivityEvent"];
+		[query2 whereKey:@"group" equalTo:group];
+		[query2 whereKey:@"postType" equalTo:[NSNumber numberWithInt:0]];
+		
+		PFObject *updateGroup = [query2 getFirstObject];
+		
+		if (updateGroup) {
+			NSNumber *num = [updateGroup objectForKey:@"number"];
+			int temp = [num integerValue] + 1;
+			[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+			
+			if (![updateGroup save]) {
+				[updateGroup saveEventually];
+			}
+		}
+		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 	}
 }

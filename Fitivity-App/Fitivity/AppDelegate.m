@@ -75,7 +75,7 @@
 	if (launchData) {
 		tempPushInfo = launchData;
 		NSString *message = [(NSDictionary *)[launchData objectForKey:@"aps"] objectForKey:@"alert"];
-		NSString *paid = [(NSDictionary *)[launchData objectForKey:@"aps"] objectForKey:@"pa_id"];
+		NSString *paid = [launchData objectForKey:@"pa_id"];
 		
 		//This isn't a proposed activity push
 		if (paid == nil && ![paid isEqualToString:@""]) {
@@ -88,11 +88,13 @@
 			//Check to see if the user is the one who sent it, if so dont show the message
 			NSRange range = [message rangeOfString:[NSString stringWithFormat:@"%@",[[PFUser currentUser] username]]];
 			if (range.location == NSNotFound) {
-				
-				[PFPush handlePush:launchData];
-				
+								
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Acitivty" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Join", nil];
-				[alert show];
+				int64_t delayInSeconds = 2.0;
+				dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+				dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+					[alert show];
+				});
 			}
 		}
 	}
@@ -139,7 +141,7 @@
 	
 	tempPushInfo = userInfo;
 	NSString *message = [(NSDictionary *)[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-	NSString *paid = [(NSDictionary *)[userInfo objectForKey:@"aps"] objectForKey:@"pa_id"];
+	NSString *paid = [userInfo objectForKey:@"pa_id"];
 	
 	//This isn't a proposed activity push
 	if (paid == nil && ![paid isEqualToString:@""]) {
@@ -152,8 +154,6 @@
 		//Check to see if the user is the one who sent it, if so dont show the message
 		NSRange range = [message rangeOfString:[NSString stringWithFormat:@"%@",[[PFUser currentUser] username]]];
 		if (range.location == NSNotFound) {
-			
-			[PFPush handlePush:userInfo];
 			
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New Acitivty" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Join", nil];
 			[alert show];
