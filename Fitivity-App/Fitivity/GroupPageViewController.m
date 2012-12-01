@@ -11,7 +11,6 @@
 #import "NSError+FITParseUtilities.h"
 #import "NSAttributedString+Attributes.h"
 #import "AboutGroupViewController.h"
-#import "CreateProposeActivityViewController.h"
 #import "ProposedActivityViewController.h"
 #import "ChallengesViewController.h"
 #import "UserProfileViewController.h"
@@ -59,6 +58,7 @@
 		if ([[FConfig instance] canCreatePA]) {
 			//Show the create proposed activity view controller
 			CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"CreateProposeActivityViewController" bundle:nil];
+			[prop setDelegate:self];
 			[prop setGroup:group];
 			[self.navigationController pushViewController:prop animated:YES];
 		}
@@ -434,6 +434,23 @@
 - (void)handleNewProposedActivity {
 	[self performSelectorInBackground:@selector(attemptGetProposedActivities) withObject:nil];
 	[self shareNewActivity];
+}
+
+#pragma mark - CreateProposedActivityViewController Delegate 
+
+//This is a hacky way around currupting the navigation stack. should probably fix eventually.
+- (void)showNewPA:(PFObject *)newActivity {
+	if (newActivity) {
+		ProposedActivityViewController *proposedActivity = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:newActivity];
+		[self.navigationController pushViewController:proposedActivity animated:YES];
+	}
+}
+
+- (void)didCreateProposedActivity:(PFObject *)npa {
+	if (group) {
+		[[FConfig instance] updateGroup:[group objectId] withActivityCount:[group objectForKey:@"activityCount"]];
+	}
+	[self performSelector:@selector(showNewPA:) withObject:npa afterDelay:0.25];
 }
 
 #pragma mark - MBProgressHUDDelegate methods

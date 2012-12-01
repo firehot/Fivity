@@ -17,6 +17,7 @@
 
 @synthesize group;
 @synthesize commentField;
+@synthesize delegate;
 
 #pragma mark - IBAction's 
 
@@ -130,6 +131,10 @@
 				
 				[self updateGroupActivityCount];
 				[[NSNotificationCenter defaultCenter] postNotificationName:@"addedPA" object:self];
+				[self.navigationController popViewControllerAnimated:YES];
+				if ([self.delegate respondsToSelector:@selector(didCreateProposedActivity:)]) {
+					[self.delegate didCreateProposedActivity:activity];
+				}
 			}
 			else if (error) {
 				NSString *errorMessage = @"An unknown error occurred while posting event.";
@@ -137,9 +142,8 @@
 				
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Posting Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
+				[self.navigationController popViewControllerAnimated:YES];
 			}
-			
-			[self.navigationController popViewControllerAnimated:YES];
 		}];
         
 		//Wait before trying to post to feed to ensure that the PA is created in the DB 

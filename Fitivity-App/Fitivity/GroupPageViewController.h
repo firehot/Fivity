@@ -13,10 +13,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "ProposedActivityCell.h"
+#import "CreateProposeActivityViewController.h"
 #import "GooglePlacesObject.h"
 #import "MBProgressHUD.h"
 
-@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, ProposedActivityCellDelegate, MBProgressHUDDelegate> {
+@interface GroupPageViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, ProposedActivityCellDelegate, MBProgressHUDDelegate, CreateProposeActivityViewControllerDelegate> {
     BOOL autoJoin, hasChallenge, alreadyJoined, joinFlag, shouldCancel, joinedFromChallenge;
 	
 	NSMutableArray *results;

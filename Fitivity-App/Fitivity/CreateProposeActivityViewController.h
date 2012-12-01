@@ -15,6 +15,8 @@
 
 #define kMaxCharCount	350
 
+@protocol CreateProposeActivityViewControllerDelegate;
+
 @interface CreateProposeActivityViewController : UIViewController <UITextFieldDelegate, MBProgressHUDDelegate> {
 	
 	PFObject *propActivity;
@@ -23,7 +25,13 @@
 - (IBAction) textFieldDidUpdate:(id)sender;
 
 @property (nonatomic, retain) PFObject *group;
-
+@property (nonatomic, assign) id <CreateProposeActivityViewControllerDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITextField *commentField;
+
+@end
+
+@protocol CreateProposeActivityViewControllerDelegate <NSObject>
+
+- (void)didCreateProposedActivity:(PFObject *)npa;
 
 @end
