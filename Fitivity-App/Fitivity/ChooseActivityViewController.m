@@ -166,6 +166,9 @@
 		case 3:
 			[self.activitiesTable setContentOffset:CGPointMake(0, 225) animated:YES];
 			break;
+		case 4:
+			[self.activitiesTable setContentOffset:CGPointMake(0, 305) animated:YES];
+			break;
 		default:
 			break;
 	}

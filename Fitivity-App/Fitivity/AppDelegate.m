@@ -70,7 +70,6 @@
     PFInstallation *installation = [PFInstallation currentInstallation];
     [installation setObject:@"Fitivity" forKey:@"appName"];
     [installation setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVersion"];
-    [installation setObject:[NSString stringWithFormat:@"%i",[Parse version]] forKey:@"parseVersion"];
     [installation saveEventually];
     
 	[self handleLaunchNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];

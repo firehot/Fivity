@@ -276,9 +276,12 @@ static FConfig *instance;
 		if (!error) {
 			//searchActivities = [NSMutableArray arrayWithArray:objects];
 			searchActivities = [[NSMutableArray alloc] initWithObjects:@"All Activities", nil];
-			
+			NSString *temp = @"";
 			for (PFObject *o in objects) {
-				[searchActivities addObject:[o objectForKey:@"name"]];
+				temp = [o objectForKey:@"name"];
+				if (![searchActivities containsObject:temp]) {
+					[searchActivities addObject:temp];
+				}
 			}
 		}
 	}];
