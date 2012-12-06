@@ -66,6 +66,13 @@
 	int num = [[FConfig instance] getLaunchCount];
 	[[FConfig instance] setLaunchCount:++num];
 	
+    //Update the installation info
+    PFInstallation *installation = [PFInstallation currentInstallation];
+    [installation setObject:@"Fitivity" forKey:@"appName"];
+    [installation setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVersion"];
+    [installation setObject:[NSString stringWithFormat:@"%i",[Parse version]] forKey:@"parseVersion"];
+    [installation saveEventually];
+    
 	[self handleLaunchNotification:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
 	
     return YES;
@@ -242,6 +249,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	// Reset badge count
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0) {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
 	[application setApplicationIconBadgeNumber:0];
 }
 
