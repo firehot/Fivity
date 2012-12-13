@@ -93,6 +93,17 @@
 	
 	ProposedActivityViewController *activity = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:pa];
 	[self.navigationController pushViewController:activity animated:YES];
+	
+	PFQuery *query= [PFQuery queryWithClassName:@"ActivityEvent"];
+	[query whereKey:@"proposedActivity" equalTo:pa];
+	PFObject *ae = [query getFirstObject];
+	
+	if (ae) {
+		[ae setObject:[NSNumber numberWithInt:2] forKey:@"postType"];
+		if (![ae save]) {
+			[ae saveEventually];
+		}
+	}
 }
 
 - (NSAttributedString *)colorLabelString:(NSString *)string {
