@@ -431,16 +431,14 @@
 		[self presentViewController:camera animated:YES completion:nil];
 	} else if ([title isEqualToString:@"Facebook"]) {
 		
-		NSString *message = [NSString stringWithFormat:@"Join the %@ group to do %@ with me and other members of the Fitivity community.", p, activity];
-		
+		NSString *message = [NSString stringWithFormat:@"Join the %@ at %@ with me!", activity, p];
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
 									   [[FConfig instance] getItunesAppLink], @"link",
 									   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 									   @"Fitivity", @"name",
-									   message, @"caption",
 									   @"You can download it in the Apple App Store or in Google Play", @"description",
-									   @"Go download this app!",  @"message",
+									   message,  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];

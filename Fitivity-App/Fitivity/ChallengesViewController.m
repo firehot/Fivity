@@ -24,7 +24,7 @@
 @implementation ChallengesViewController
 
 @synthesize tableView;
-@synthesize groupType, challenges;
+@synthesize groupType, challenges, groupLocation;
 
 #pragma mark - Helper Methods
 
@@ -93,16 +93,14 @@
 		
 		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
 			
-			NSString *message = [NSString stringWithFormat:@"I am doing the %@ challenge using fitivity to accomplish my %@ goals.", groupType, groupType];
-			
+			NSString *message = [NSString stringWithFormat:@"Do the %@ challenge with me at %@.", groupType, groupLocation];
 			NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 										   [[FConfig instance] getFacebookAppID], @"app_id",
 										   [[FConfig instance] getItunesAppLink], @"link",
 										   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 										   @"Fitivity", @"name",
-										   message, @"caption",
 										   @"Download the free fitivity app in the Apple App Store or in Google Play", @"description",
-										   @"Go download this app!",  @"message",
+										   message,  @"message",
 										   nil];
 			
 			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
@@ -129,16 +127,14 @@
     
     if ([title isEqualToString:@"Facebook"]) {
 		
-		NSString *message = [NSString stringWithFormat:@"Do the %@ training challenge using fitivity and accomplish your %@ goals.", groupType, groupType];
-		
+		NSString *message = [NSString stringWithFormat:@"Do the %@ challenge with me at %@.", groupType, groupLocation];
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
 									   [[FConfig instance] getItunesAppLink], @"link",
 									   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 									   @"Fitivity", @"name",
-	                                   message, @"caption",
 									   @"Download the free fitivity app in the Apple App Store or in Google Play", @"description",
-									   @"Go download this app!",  @"message",
+									   message,  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];
@@ -170,13 +166,14 @@
 
 #pragma mark - View Life cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil groupType:(NSString *)type {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil groupType:(NSString *)type groupLocation:(NSString *)location {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		
 		self.navigationItem.title = type;
 		
         self.groupType = type;
+		self.groupLocation = location;
 		if (groupType) {
 			
 			if ([[FConfig instance] connected]) {

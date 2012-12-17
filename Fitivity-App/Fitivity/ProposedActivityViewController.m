@@ -470,14 +470,18 @@
 	
     if ([title isEqualToString:@"Facebook"]) {
 		
+		NSString *fm = [NSString stringWithFormat:@"%@ at %@. %@.",
+					   [group objectForKey:@"activity"],
+					   [group objectForKey:@"place"],
+					   [parent objectForKey:@"activityMessage"]];
+		
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									   [[FConfig instance] getFacebookAppID], @"app_id",
 									   [[FConfig instance] getItunesAppLink], @"link",
 									   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 									   @"Fitivity", @"name",
-									   m, @"caption",
 									   @"To join, download the free Fitivity app in the Apple App Store or in Google Play, and participate in physical activities with us.", @"description",
-									   @"Go download this app!",  @"message",
+									   fm,  @"message",
 									   nil];
 		
         [[SocialSharer sharer] shareWithFacebookUsers:params facebook:[PFFacebookUtils facebook]];

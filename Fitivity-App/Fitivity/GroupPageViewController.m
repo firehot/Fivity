@@ -79,7 +79,7 @@
 		joinedFromChallenge = YES;
 		[self attemptJoinGroup];
 	}
-	ChallengesViewController *challenge = [[ChallengesViewController alloc] initWithNibName:@"ChallengesViewController" bundle:nil groupType:self.activity];
+	ChallengesViewController *challenge = [[ChallengesViewController alloc] initWithNibName:@"ChallengesViewController" bundle:nil groupType:self.activity groupLocation:[place name]];
 	[self.navigationController pushViewController:challenge animated:YES];
 }
 
@@ -103,9 +103,6 @@
 																				activity:self.activity
 																				place:self.place];
 	[self.navigationController pushViewController:about animated:YES];
-	
-//	GroupMembersViewController *members = [[GroupMembersViewController alloc] initWithNibName:@"GroupMembersViewController" bundle:nil place:self.place activity:self.activity];
-//	[self.navigationController pushViewController:members animated:YES];
 }
 
 #pragma mark - Helper Methods
@@ -395,9 +392,8 @@
 										   [[FConfig instance] getItunesAppLink], @"link",
 										   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 										   @"Fitivity", @"name",
-										   message, @"caption",
 										   @"You can download it in in the Apple App Store or in Google Play", @"description",
-										   @"Go download this app!",  @"message",
+										   message,  @"message",
 										   nil];
 			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
 		}
@@ -419,9 +415,8 @@
 										   [[FConfig instance] getItunesAppLink], @"link",
 										   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
 										   @"Fitivity", @"name",
-										   message, @"caption",
 										   @"You can download it in in the Apple App Store or in Google Play", @"description",
-										   @"Go download this app!",  @"message",
+										   message,  @"message",
 										   nil];
 			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
 		}
