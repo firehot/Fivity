@@ -537,7 +537,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil initWithUser:(PFUser *)user {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.userProfile = user;
+		self.userProfile = user;
 		
 		//Make sure that the user exists first (for first launch)
 		if ([PFUser currentUser]) {

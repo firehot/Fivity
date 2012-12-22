@@ -116,8 +116,9 @@
 - (void)shareApp {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Challenge" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
 	
-	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+//	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+	[sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 #pragma mark - UIActionSheetDelegate

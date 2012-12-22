@@ -42,8 +42,9 @@
 - (IBAction)inviteMembers:(id)sender {
 	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Group" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
 	
-	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+//	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+	[sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (IBAction)viewGroupPhotos:(id)sender {
@@ -70,8 +71,9 @@
 	if ([[FConfig instance] connected]) {
 		if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
 			UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Pick Source" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Album", nil];
-			AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-			[sheet showFromTabBar:[[d tabBarView] backTabBar]];
+//			AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//			[sheet showFromTabBar:[[d tabBarView] backTabBar]];
+			[sheet showFromTabBar:self.tabBarController.tabBar];
 		} else {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Available" message:@"This feature is not available for your device" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];

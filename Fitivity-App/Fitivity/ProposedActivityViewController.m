@@ -54,8 +54,9 @@
 - (IBAction)shareApp:(id)sender {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share Activity" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"SMS", @"Email", nil];
 	
-	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+//	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+	[sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (IBAction) textFieldDidUpdate:(id)sender {

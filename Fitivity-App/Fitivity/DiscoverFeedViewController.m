@@ -41,14 +41,30 @@
 
 @synthesize locationManager;
 @synthesize sortCriteria;
+@synthesize loginView;
 
 #pragma mark - Helper Methods 
+
+- (void)login {
+	if ([[FConfig instance] shouldLogIn] && !shownLogin) {
+		if (!loginView) {
+			loginView = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+			[loginView setDelegate:self];
+		}
+		[self presentModalViewController:loginView animated:YES];
+		[self.tabBarController setSelectedIndex:0];
+		shownLogin = YES;
+	}
+}
+
+- (void)dismissChildView {
+	[self dismissModalViewControllerAnimated:NO];
+}
 
 - (void)shareApp {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
 	
-	AppDelegate *d = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [sheet showFromTabBar:[[d tabBarView] backTabBar]];
+	[sheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (void)showSortPicker {
@@ -357,6 +373,11 @@
 #pragma mark - LoginViewController Delegate
 
 - (void)userLoggedIn {
+	if (shownLogin) {
+		[self dismissModalViewControllerAnimated:YES];
+		shownLogin = NO;
+	}
+	
 	self.cancelLoad = NO;
 	if ([self.objects count] == 0) {
 		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -717,6 +738,7 @@
 		sortCriteria = [[FConfig instance] getSortedFeedKey];
 		shownAlert = NO;
 		shownNoItems = NO;
+		shownLogin = NO;
 		loadCount = 0;
 		[self performSelector:@selector(handleReminders) withObject:nil afterDelay:3.0];
     }
@@ -743,6 +765,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+	
+	if ([PFUser currentUser] == nil) {
+        [self login];
+    }
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissChildView) name:@"signedIn" object: nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login) name:@"userLoggedOut" object:nil];
+	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 }
 

@@ -13,12 +13,14 @@
 #import "ActivityHomeViewController.h"
 #import "UserProfileViewController.h"
 #import "DiscoverFeedViewController.h"
+#import "ChooseChallengeAcitivityViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize openingView = _openingView;
-@synthesize tabBarView = _tabBarView;
+@synthesize tabBarController = _tabBarController;
+//@synthesize tabBarView = _tabBarView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -40,13 +42,40 @@
 	}
 	
 	ActivityHomeViewController *activity = [[ActivityHomeViewController alloc] initWithNibName:@"ActivityHomeViewController" bundle:nil];
+	ChooseChallengeAcitivityViewController *challengeActivity = [[ChooseChallengeAcitivityViewController alloc] initWithNibName:@"ChooseChallengeAcitivityViewController" bundle:nil];
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:[PFUser currentUser]];
 	[profile setMainUser:YES];
-	self.tabBarView = [[FTabBarViewController alloc] initWithLeftRootViewController:discoverView centerRootViewController:activity rightRootViewController:profile];
 	
-	[self.openingView setDelegate:self.tabBarView];
+	// Set up the custom tab bar titles
+	[discoverView setTitle:@""];
+	[[discoverView tabBarItem] setTitle:@"Discover"];
+	[[discoverView tabBarItem] setImage:[UIImage imageNamed:@"discover.png"]];
 	
-	self.window.rootViewController = self.tabBarView;
+	[activity setTitle:@""];
+	[[activity tabBarItem] setTitle:@"Start Activity"];
+	[[activity tabBarItem] setImage:[UIImage imageNamed:@"start_activity.png"]];
+	
+	[challengeActivity setTitle:@""];
+	[[challengeActivity tabBarItem] setTitle:@"Challenges"];
+	[[challengeActivity tabBarItem] setImage:[UIImage imageNamed:@"challenge"]];
+	
+	[profile setTitle:@""];
+	[[profile tabBarItem] setTitle:@"Me"];
+	[[profile tabBarItem] setImage:[UIImage imageNamed:@"profile.png"]];
+	
+	// Set up the navigation controllers
+	UINavigationController *navController1 = [[UINavigationController alloc] initWithRootViewController:discoverView];
+	UINavigationController *navController2 = [[UINavigationController alloc] initWithRootViewController:activity];
+	UINavigationController *navController4 = [[UINavigationController alloc] initWithRootViewController:challengeActivity];
+	UINavigationController *navController3 = [[UINavigationController alloc] initWithRootViewController:profile];
+	
+	self.tabBarController = [[UITabBarController alloc] init];
+	self.tabBarController.viewControllers = [NSArray arrayWithObjects:navController1, navController2, navController4, navController3, nil];
+	self.window.rootViewController = self.tabBarController;
+	
+	[self.openingView setDelegate:self];
+	[SocialSharer sharerWithDelegate:self];
+	
 	self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 	
@@ -54,7 +83,7 @@
 	[application setApplicationIconBadgeNumber:0];
 	
 	//Present the opening view
-	[self.tabBarView presentModalViewController:self.openingView animated:NO];
+	[activity presentModalViewController:self.openingView animated:NO];
 	
 	//Register for push notifications
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
@@ -118,6 +147,18 @@
 		return YES;
 	}
 	return NO;
+}
+
+#pragma mark - Opening View Delegate
+
+-(void)viewHasFinishedAnnimating:(OpeningLogoViewController *)view {
+	[view dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - SocialSharer Delegate
+
+- (void)didFinishPostingType:(ShareType)type {
+	
 }
 
 #pragma mark - Facebook login handling 
@@ -212,10 +253,10 @@
 #ifndef DEBUG
 					NSLog(@"Succeeded Posting Comment");
 #endif
-					[self.tabBarView showLeftTab];
-					NSArray *vc = [[self.tabBarView leftNavigationController] viewControllers];
-					DiscoverFeedViewController *d = (DiscoverFeedViewController *)[vc objectAtIndex:0];
-					[d handlePushNotification:pa];
+//					[self.tabBarView showLeftTab];
+//					NSArray *vc = [[self.tabBarView leftNavigationController] viewControllers];
+//					DiscoverFeedViewController *d = (DiscoverFeedViewController *)[vc objectAtIndex:0];
+//					[d handlePushNotification:pa];
 				}
 				else if (error) {
 					NSString *errorMessage = @"An unknown error occurred while joining the group.";

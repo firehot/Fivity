@@ -200,6 +200,16 @@
 		6CAA52F216190A5800527B1B /* RateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52F016190A5800527B1B /* RateGroupViewController.m */; };
 		6CAA52F316190A5800527B1B /* RateGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CAA52F116190A5800527B1B /* RateGroupViewController.xib */; };
 		6CAA52FD16190C0400527B1B /* ReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA52FC16190C0000527B1B /* ReviewsViewController.m */; };
+		6CABDE83168496B800C80DCB /* challenge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE7F168496B800C80DCB /* challenge@2x.png */; };
+		6CABDE84168496B800C80DCB /* discover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE80168496B800C80DCB /* discover@2x.png */; };
+		6CABDE85168496B800C80DCB /* profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE81168496B800C80DCB /* profile@2x.png */; };
+		6CABDE86168496B800C80DCB /* start_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE82168496B800C80DCB /* start_activity@2x.png */; };
+		6CABDE8B168497DF00C80DCB /* challenge.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE87168497DF00C80DCB /* challenge.png */; };
+		6CABDE8C168497DF00C80DCB /* discover.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE88168497DF00C80DCB /* discover.png */; };
+		6CABDE8D168497DF00C80DCB /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE89168497DF00C80DCB /* profile.png */; };
+		6CABDE8E168497DF00C80DCB /* start_activity.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE8A168497DF00C80DCB /* start_activity.png */; };
+		6CABDE9A16850EAB00C80DCB /* ChooseChallengeAcitivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CABDE9816850EAB00C80DCB /* ChooseChallengeAcitivityViewController.m */; };
+		6CABDE9B16850EAB00C80DCB /* ChooseChallengeAcitivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CABDE9916850EAB00C80DCB /* ChooseChallengeAcitivityViewController.xib */; };
 		6CB05E77162E249200EC9413 /* cell_challenge_header.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E71162E249200EC9413 /* cell_challenge_header.png */; };
 		6CB05E78162E249200EC9413 /* cell_challenge_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E72162E249200EC9413 /* cell_challenge_header@2x.png */; };
 		6CB05E7D162E297100EC9413 /* FirstChallengeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB05E7C162E297100EC9413 /* FirstChallengeCell.xib */; };
@@ -763,6 +773,17 @@
 		6CAA52F116190A5800527B1B /* RateGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RateGroupViewController.xib; path = Fitivity/RateGroupViewController.xib; sourceTree = "<group>"; };
 		6CAA52FB16190BFF00527B1B /* ReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReviewsViewController.h; sourceTree = "<group>"; };
 		6CAA52FC16190C0000527B1B /* ReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReviewsViewController.m; sourceTree = "<group>"; };
+		6CABDE7F168496B800C80DCB /* challenge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "challenge@2x.png"; sourceTree = "<group>"; };
+		6CABDE80168496B800C80DCB /* discover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover@2x.png"; sourceTree = "<group>"; };
+		6CABDE81168496B800C80DCB /* profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile@2x.png"; sourceTree = "<group>"; };
+		6CABDE82168496B800C80DCB /* start_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start_activity@2x.png"; sourceTree = "<group>"; };
+		6CABDE87168497DF00C80DCB /* challenge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = challenge.png; sourceTree = "<group>"; };
+		6CABDE88168497DF00C80DCB /* discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discover.png; sourceTree = "<group>"; };
+		6CABDE89168497DF00C80DCB /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
+		6CABDE8A168497DF00C80DCB /* start_activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start_activity.png; sourceTree = "<group>"; };
+		6CABDE9716850EAB00C80DCB /* ChooseChallengeAcitivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseChallengeAcitivityViewController.h; sourceTree = "<group>"; };
+		6CABDE9816850EAB00C80DCB /* ChooseChallengeAcitivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseChallengeAcitivityViewController.m; sourceTree = "<group>"; };
+		6CABDE9916850EAB00C80DCB /* ChooseChallengeAcitivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChooseChallengeAcitivityViewController.xib; path = Fitivity/ChooseChallengeAcitivityViewController.xib; sourceTree = "<group>"; };
 		6CB05E71162E249200EC9413 /* cell_challenge_header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_challenge_header.png; sourceTree = "<group>"; };
 		6CB05E72162E249200EC9413 /* cell_challenge_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_challenge_header@2x.png"; sourceTree = "<group>"; };
 		6CB05E7C162E297100EC9413 /* FirstChallengeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstChallengeCell.xib; sourceTree = "<group>"; };
@@ -1566,6 +1587,58 @@
 			name = Groups;
 			sourceTree = "<group>";
 		};
+		6CABDE7D168496AC00C80DCB /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				F1126D4015DEF02F00E86935 /* app_tab_bar_back_plate.png */,
+				F1126D4115DEF02F00E86935 /* app_tab_bar_back_plate@2x.png */,
+				F1126D3815DE584D00E86935 /* b_start_activity_active.png */,
+				F1126D7E15DFA97E00E86935 /* b_start_activity_active@2x.png */,
+				F1126D7C15DFA97200E86935 /* b_start_activity_down.png */,
+				F1126D3915DE584D00E86935 /* b_start_activity_down@2x.png */,
+				F1126D3A15DE584D00E86935 /* b_start_activity_inactive.png */,
+				F1126D3B15DE584E00E86935 /* b_start_activity_inactive@2x.png */,
+				F1126D2C15DE57B900E86935 /* b_feed_active.png */,
+				F1126D2D15DE57B900E86935 /* b_feed_active@2x.png */,
+				F1126D2E15DE57B900E86935 /* b_feed_down.png */,
+				F1126D2F15DE57B900E86935 /* b_feed_down@2x.png */,
+				F1126D3015DE57B900E86935 /* b_feed_inactive.png */,
+				F1126D3115DE57B900E86935 /* b_feed_inactive@2x.png */,
+				F1126D2015DE566B00E86935 /* b_profile_active.png */,
+				F1126D2115DE566B00E86935 /* b_profile_active@2x.png */,
+				F1126D2215DE566B00E86935 /* b_profile_down.png */,
+				F1126D2315DE566B00E86935 /* b_profile_down@2x.png */,
+				F1126D2415DE566B00E86935 /* b_profile_inactive.png */,
+				F1126D2515DE566B00E86935 /* b_profile_inactive@2x.png */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
+		6CABDE8F16850DB400C80DCB /* Challenges Tab */ = {
+			isa = PBXGroup;
+			children = (
+				6CABDE9716850EAB00C80DCB /* ChooseChallengeAcitivityViewController.h */,
+				6CABDE9816850EAB00C80DCB /* ChooseChallengeAcitivityViewController.m */,
+			);
+			name = "Challenges Tab";
+			sourceTree = "<group>";
+		};
+		6CABDE9016850DC400C80DCB /* Old Code */ = {
+			isa = PBXGroup;
+			children = (
+				6CB1B21515B1A0DC004DDDCA /* TabBar */,
+			);
+			name = "Old Code";
+			sourceTree = "<group>";
+		};
+		6CABDE9116850DFE00C80DCB /* Challenges Tab */ = {
+			isa = PBXGroup;
+			children = (
+				6CABDE9916850EAB00C80DCB /* ChooseChallengeAcitivityViewController.xib */,
+			);
+			name = "Challenges Tab";
+			sourceTree = "<group>";
+		};
 		6CB1A71615ACFC1D00C0FF75 = {
 			isa = PBXGroup;
 			children = (
@@ -1579,6 +1652,7 @@
 				6CB1A72C15ACFC1D00C0FF75 /* Supporting Files */,
 				6CB1A72415ACFC1D00C0FF75 /* Frameworks */,
 				6CB1A72215ACFC1D00C0FF75 /* Products */,
+				6CABDE9016850DC400C80DCB /* Old Code */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1624,10 +1698,10 @@
 				6CA2695A15AE63E900CD205C /* Config */,
 				6CD2F58A15B0E77D0032FA34 /* Categories */,
 				57C317E815EBB608006253D4 /* Social */,
-				6CB1B21515B1A0DC004DDDCA /* TabBar */,
 				6CA2695B15AE640400CD205C /* Opening */,
 				6CDCD5AC15B1AD9300986AA2 /* Discover Stream */,
 				6CDCD5AE15B1AD9E00986AA2 /* Activity */,
+				6CABDE8F16850DB400C80DCB /* Challenges Tab */,
 				6CDCD5AF15B1ADA500986AA2 /* Profile */,
 			);
 			path = Fitivity;
@@ -1667,6 +1741,7 @@
 				6CB1B21415B1A0C7004DDDCA /* Opening */,
 				6CDCD5B215B1ADC200986AA2 /* Discover Stream */,
 				6CDCD5B115B1ADBC00986AA2 /* Activity */,
+				6CABDE9116850DFE00C80DCB /* Challenges Tab */,
 				6CDCD5B015B1ADB500986AA2 /* Profile */,
 			);
 			name = "Interface Files";
@@ -1755,6 +1830,7 @@
 				6CB1B21715B1A10D004DDDCA /* FTabBarViewController.m */,
 			);
 			name = TabBar;
+			path = Fitivity;
 			sourceTree = "<group>";
 		};
 		6CB3EBF715E6E25600BDE38B /* MBProgressHUD */ = {
@@ -1932,26 +2008,15 @@
 		6CC7FB2915AFB71D00D21AA9 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
-				F1126D4015DEF02F00E86935 /* app_tab_bar_back_plate.png */,
-				F1126D4115DEF02F00E86935 /* app_tab_bar_back_plate@2x.png */,
-				F1126D3815DE584D00E86935 /* b_start_activity_active.png */,
-				F1126D7E15DFA97E00E86935 /* b_start_activity_active@2x.png */,
-				F1126D7C15DFA97200E86935 /* b_start_activity_down.png */,
-				F1126D3915DE584D00E86935 /* b_start_activity_down@2x.png */,
-				F1126D3A15DE584D00E86935 /* b_start_activity_inactive.png */,
-				F1126D3B15DE584E00E86935 /* b_start_activity_inactive@2x.png */,
-				F1126D2C15DE57B900E86935 /* b_feed_active.png */,
-				F1126D2D15DE57B900E86935 /* b_feed_active@2x.png */,
-				F1126D2E15DE57B900E86935 /* b_feed_down.png */,
-				F1126D2F15DE57B900E86935 /* b_feed_down@2x.png */,
-				F1126D3015DE57B900E86935 /* b_feed_inactive.png */,
-				F1126D3115DE57B900E86935 /* b_feed_inactive@2x.png */,
-				F1126D2015DE566B00E86935 /* b_profile_active.png */,
-				F1126D2115DE566B00E86935 /* b_profile_active@2x.png */,
-				F1126D2215DE566B00E86935 /* b_profile_down.png */,
-				F1126D2315DE566B00E86935 /* b_profile_down@2x.png */,
-				F1126D2415DE566B00E86935 /* b_profile_inactive.png */,
-				F1126D2515DE566B00E86935 /* b_profile_inactive@2x.png */,
+				6CABDE87168497DF00C80DCB /* challenge.png */,
+				6CABDE88168497DF00C80DCB /* discover.png */,
+				6CABDE89168497DF00C80DCB /* profile.png */,
+				6CABDE8A168497DF00C80DCB /* start_activity.png */,
+				6CABDE7F168496B800C80DCB /* challenge@2x.png */,
+				6CABDE80168496B800C80DCB /* discover@2x.png */,
+				6CABDE81168496B800C80DCB /* profile@2x.png */,
+				6CABDE82168496B800C80DCB /* start_activity@2x.png */,
+				6CABDE7D168496AC00C80DCB /* Old */,
 			);
 			name = "Tab Bar";
 			sourceTree = "<group>";
@@ -2580,6 +2645,15 @@
 				6C90F8FD164EAB7400B03538 /* b_leave_down@2x.png in Resources */,
 				6C90F8FE164EAB7400B03538 /* b_leave.png in Resources */,
 				6C90F8FF164EAB7400B03538 /* b_leave@2x.png in Resources */,
+				6CABDE83168496B800C80DCB /* challenge@2x.png in Resources */,
+				6CABDE84168496B800C80DCB /* discover@2x.png in Resources */,
+				6CABDE85168496B800C80DCB /* profile@2x.png in Resources */,
+				6CABDE86168496B800C80DCB /* start_activity@2x.png in Resources */,
+				6CABDE8B168497DF00C80DCB /* challenge.png in Resources */,
+				6CABDE8C168497DF00C80DCB /* discover.png in Resources */,
+				6CABDE8D168497DF00C80DCB /* profile.png in Resources */,
+				6CABDE8E168497DF00C80DCB /* start_activity.png in Resources */,
+				6CABDE9B16850EAB00C80DCB /* ChooseChallengeAcitivityViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2663,6 +2737,7 @@
 				6CE8D2A1162203D100A4F9D3 /* EditProfileViewController.m in Sources */,
 				6CB05E80162E2A2500EC9413 /* FirstChallengeCell.m in Sources */,
 				6C79301A162F53C700CBD023 /* SecondChallengeCell.m in Sources */,
+				6CABDE9A16850EAB00C80DCB /* ChooseChallengeAcitivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

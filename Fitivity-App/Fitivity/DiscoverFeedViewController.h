@@ -20,12 +20,13 @@
 	PFGeoPoint *userGeoPoint;
 	
 	int todayCells, loadCount;
-	BOOL shownAlert, shownNoItems;
+	BOOL shownAlert, shownNoItems, shownLogin;
 }
 
 - (void)shareApp;
 - (void)handlePushNotification:(PFObject *)pa;
 
+@property (nonatomic, retain) LoginViewController *loginView;
 @property (nonatomic, retain) CLLocationManager *locationManager;
 @property (nonatomic, retain) NSString *sortCriteria;
 @property (nonatomic, assign) BOOL loadedInitialData;
