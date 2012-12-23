@@ -694,6 +694,9 @@
 			userGeoPoint = [PFGeoPoint geoPoint];
 		}
 		
+		[[UIBarButtonItem appearance] setTintColor:[[FConfig instance] getFitivityBlue]];
+		[[FConfig instance] showLogoNavBar:YES];
+		
 		if ([[FConfig instance] connected]) {
 			locationManager = [[CLLocationManager alloc] init];
 			[locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];

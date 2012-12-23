@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 
-@interface ChooseChallengeAcitivityViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+#import "ChooseLocationViewController.h"
+
+@interface ChooseChallengeAcitivityViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ChooseLocationViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *activityTable;
+@property (nonatomic, retain) ChooseLocationViewController *chooseLocationView;
+@property (nonatomic, retain) NSMutableArray *activities;
+@property (nonatomic, retain) NSString *selectedActivity;
+@property (nonatomic, retain) GooglePlacesObject *selectedPlace;
 
 @end
