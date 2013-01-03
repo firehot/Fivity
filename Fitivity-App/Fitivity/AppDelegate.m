@@ -20,7 +20,7 @@
 @synthesize window = _window;
 @synthesize openingView = _openingView;
 @synthesize tabBarController = _tabBarController;
-//@synthesize tabBarView = _tabBarView;
+@synthesize selectedVC = _selectedVC;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -70,6 +70,7 @@
 	UINavigationController *navController3 = [[UINavigationController alloc] initWithRootViewController:profile];
 	
 	self.tabBarController = [[UITabBarController alloc] init];
+	[self.tabBarController setDelegate:self];
 	self.tabBarController.viewControllers = [NSArray arrayWithObjects:navController1, navController2, navController4, navController3, nil];
 	self.window.rootViewController = self.tabBarController;
 	
@@ -149,6 +150,15 @@
 	return NO;
 }
 
+#pragma mark - UITabBarControllerDeleate 
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+	if (!self.selectedVC || ![self.selectedVC isEqual:viewController]) {
+		[self setSelectedVC:viewController];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"changedTab" object:nil];
+	} 
+}
+
 #pragma mark - Opening View Delegate
 
 -(void)viewHasFinishedAnnimating:(OpeningLogoViewController *)view {
@@ -158,7 +168,6 @@
 #pragma mark - SocialSharer Delegate
 
 - (void)didFinishPostingType:(ShareType)type {
-	
 }
 
 #pragma mark - Facebook login handling 

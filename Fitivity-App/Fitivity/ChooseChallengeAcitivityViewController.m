@@ -29,6 +29,10 @@
 	[self setSelectedActivity:nil];
 }
 
+- (void)handlePop {
+	[self.navigationController popToRootViewControllerAnimated:NO];
+}
+
 #pragma mark - Query 
 
 - (void)getChallengeActivities {
@@ -92,7 +96,7 @@
 	 */
 	BOOL challenge = [[FConfig instance] groupHasChallenges:selectedActivity];
 	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:challenge autoJoin:autojoin];
-	[self.navigationController popViewControllerAnimated:NO];
+	[self.navigationController popToRootViewControllerAnimated:NO];
 	[self.navigationController pushViewController:groupView animated:YES];
 	
 	[self resetState];
@@ -162,6 +166,8 @@
 					}
 					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 					[alert show];
+					
+					[self.navigationController popToRootViewControllerAnimated:YES];
 				}
 			}];
 		}
@@ -227,6 +233,7 @@
 	
 	chooseLocationView = [[ChooseLocationViewController alloc] initWithNibName:@"ChooseLocationViewController" bundle:nil];
 	[chooseLocationView setDelegate:self];
+	[self.navigationItem setTitle:@"Back"];
 	[self.navigationController pushViewController:chooseLocationView animated:YES];
 	
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -245,12 +252,19 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+	[self.navigationItem setTitle:@""];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetState) name:@"changedTab" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePop) name:@"changedTab" object:nil];
+	
 	[self.activityTable setBackgroundColor:[UIColor clearColor]];
-	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
-	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_main_location.png"]];
+	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_chall.png"]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -259,6 +273,8 @@
 }
 
 - (void)viewDidUnload {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[self setActivityTable:nil];
 	[super viewDidUnload];
 }

@@ -61,6 +61,10 @@
 	[self dismissModalViewControllerAnimated:NO];
 }
 
+- (void)handlePop {
+	[self.navigationController popToRootViewControllerAnimated:NO];
+}
+
 - (void)shareApp {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Share App" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
 	
@@ -402,6 +406,7 @@
 - (void)showUserProfile:(PFUser *)user {
 	[user fetchIfNeeded];
 	UserProfileViewController *profile = [[UserProfileViewController alloc] initWithNibName:@"UserProfileViewController" bundle:nil initWithUser:user];
+	[self.navigationItem setTitle:@"Back"];
 	[self.navigationController pushViewController:profile animated:YES];
 }
 
@@ -606,6 +611,8 @@
 			GooglePlacesObject *place = [[GooglePlacesObject alloc] initWithName:[group objectForKey:@"place"] latitude:point.latitude longitude:point.longitude placeIcon:nil rating:nil vicinity:nil type:nil reference:nil url:nil addressComponents:nil formattedAddress:nil formattedPhoneNumber:nil website:nil internationalPhone:nil searchTerms:nil distanceInFeet:nil distanceInMiles:nil];
 			GroupPageViewController *groupPage = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:place
 																						 activity:[group objectForKey:@"activity"] challenge:challenge autoJoin:NO];
+			
+			[self.navigationItem setTitle:@"Back"];
 			[self.navigationController pushViewController:groupPage animated:YES];
 			[HUD hide:YES];
 			break;
@@ -615,6 +622,7 @@
 			[selectedPA fetchIfNeeded];
 			ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:selectedPA];
 			
+			[self.navigationItem setTitle:@"Back"];
 			[self.navigationController pushViewController:pa animated:YES];
 			[HUD hide:YES];
 			break;
@@ -624,6 +632,7 @@
 			[selectedPA fetchIfNeeded];
 			ProposedActivityViewController *pa = [[ProposedActivityViewController alloc] initWithNibName:@"ProposedActivityViewController" bundle:nil proposedActivity:selectedPA];
 			
+			[self.navigationItem setTitle:@"Back"];
 			[self.navigationController pushViewController:pa animated:YES];
 			[HUD hide:YES];
 			break;
@@ -774,13 +783,16 @@
     }
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dismissChildView) name:@"signedIn" object: nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login) name:@"userLoggedOut" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePop) name:@"changedTab" object:nil];
 	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+	[self.navigationItem setTitle:@""];
 }
 
 - (void)viewDidUnload {
     [super viewDidUnload];
 	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [locationManager stopUpdatingLocation];
 	[locationManager setDelegate:nil];
 	locationManager = nil;

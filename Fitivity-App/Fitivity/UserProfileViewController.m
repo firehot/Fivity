@@ -37,7 +37,12 @@
 
 - (void) showSettings {
 	SettingsViewController *settings = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+	[self.navigationItem setTitle:@"Back"];
 	[self.navigationController pushViewController:settings animated:YES];
+}
+
+- (void)handlePop {
+	[self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)attemptGetUserGroups {
@@ -458,6 +463,7 @@
 	//Update the local count
 	[[FConfig instance] updateGroup:[g objectId] withActivityCount:[g objectForKey:@"activityCount"]];
 	
+	[self.navigationItem setTitle:@"Back"];
 	[self.navigationController pushViewController:groupPage animated:YES];
 	[updatedGroups setObject:[NSNumber numberWithBool:NO] forKey:[group objectId]];
 }
@@ -548,6 +554,7 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(attemptGetUserGroups) name:@"changedGroup" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestFacebookData) name:@"facebookLogin" object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewDidLoad) name:@"changedInformation" object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePop) name:@"changedTab" object:nil];
     }
     return self;
 }
@@ -570,6 +577,7 @@
 	}
 	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+	[self.navigationItem setTitle:@""];
 }
 
 - (void)viewDidLoad {

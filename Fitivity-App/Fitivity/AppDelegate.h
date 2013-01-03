@@ -15,13 +15,13 @@
 
 @class OpeningLogoViewController, FTabBarViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, OpeningLogoViewControllerDelegate, SocialSharerDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, UITabBarControllerDelegate, OpeningLogoViewControllerDelegate, SocialSharerDelegate> {
 	NSDictionary *tempPushInfo;
 }
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) OpeningLogoViewController *openingView;
 @property (strong, nonatomic) UITabBarController *tabBarController;
-//@property (strong, nonatomic) FTabBarViewController *tabBarView;
+@property (strong, nonatomic) UIViewController *selectedVC;
 
 @end

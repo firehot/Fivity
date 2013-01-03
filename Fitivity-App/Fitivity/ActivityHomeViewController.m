@@ -28,12 +28,14 @@
 - (IBAction)chooseActivity:(id)sender {
 	ChooseActivityViewController *activity = [[ChooseActivityViewController alloc] initWithNibName:@"ChooseActivityViewController" bundle:nil];
 	[activity setDelegate: self];
+	[self.navigationItem setTitle:@"Back"];
 	[self.navigationController pushViewController:activity animated:YES];
 }
 
 - (IBAction)chooseLocation:(id)sender {
 	ChooseLocationViewController *location = [[ChooseLocationViewController alloc] initWithNibName:@"ChooseLocationViewController" bundle:nil];
 	[location setDelegate: self];
+	[self.navigationItem setTitle:@"Back"];
 	[self.navigationController pushViewController:location animated:YES];
 }
 
@@ -52,6 +54,10 @@
 }
 
 #pragma mark - Helper Methods
+
+- (void)handlePop {
+	[self.navigationController popToRootViewControllerAnimated:NO];
+}
 
 - (void)resetState {
     //Reset GUI and vars
@@ -241,6 +247,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
+	[self.navigationItem setTitle:@""];
 }
 
 - (void)viewDidLoad {
@@ -252,9 +259,12 @@
 	hasPickedLocation = NO;
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetState) name:@"changedTab" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePop) name:@"changedTab" object:nil];
 }
 
 - (void)viewDidUnload {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[self setChooseActivityButton:nil];
 	[self setChooseLocationButton:nil];
     [self setActivityLabel:nil];
