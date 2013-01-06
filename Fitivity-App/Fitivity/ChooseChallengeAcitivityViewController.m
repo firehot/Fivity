@@ -7,9 +7,11 @@
 //
 
 #import "ChooseChallengeAcitivityViewController.h"
+#import "ChallengesViewController.h"
 #import "NSError+FITParseUtilities.h"
 #import "ChooseActivityCell.h"
 #import "GroupPageViewController.h"
+#import "SocialSharer.h"
 
 #define kRowHeight		45
 #define kDistanceMileFilter		0.15
@@ -20,7 +22,7 @@
 
 @implementation ChooseChallengeAcitivityViewController
 
-@synthesize activities, activityTable, chooseLocationView, selectedActivity, selectedPlace;
+@synthesize activities, activityTable, chooseLocationView, selectedActivity, selectedPlace, groupRef;
 
 #pragma mark - Helper Methods
 
@@ -31,6 +33,29 @@
 
 - (void)handlePop {
 	[self.navigationController popToRootViewControllerAnimated:NO];
+}
+
+- (void)shareNewGroup {
+	if ([[FConfig instance] shouldShareGroupStart]) {
+		if ([PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+			
+			NSString *message = [NSString stringWithFormat:@"I just joined the %@ group at %@ using fitivity!", selectedActivity, [selectedPlace name]];
+			
+			NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+										   [[FConfig instance] getFacebookAppID], @"app_id",
+										   [[FConfig instance] getItunesAppLink], @"link",
+										   @"http://www.fitivitymovement.com/FitivityAppIcon.png", @"picture",
+										   @"Fitivity", @"name",
+										   @"You can download it in in the Apple App Store or in Google Play", @"description",
+										   message,  @"message",
+										   nil];
+			[[SocialSharer sharer] shareWithFacebook:params facebook:[PFFacebookUtils facebook]];
+		}
+		if ([PFTwitterUtils isLinkedWithUser:[PFUser currentUser]]) {
+			[[SocialSharer sharer] shareMessageWithTwitter:[NSString stringWithFormat:@"I just joined the %@ group at %@ using fitivity!", selectedActivity, [selectedPlace name]] image:nil link:[NSURL URLWithString:[[FConfig instance] getItunesAppLink]]];
+		}
+	}
+	
 }
 
 #pragma mark - Query 
@@ -65,10 +90,32 @@
 	//If we get a result we know that the group has already been created
 	PFObject *result = [query getFirstObject];
 	if (result) {
+		groupRef = result;
 		ret = YES;
 	}
 	
 	return ret;
+}
+
+- (void)attemptUpdateGroupInfo:(BOOL)userJoining objectID:(NSString *)objectID {
+	@synchronized(self) {
+		//Update group member count logic
+		PFQuery *query = [PFQuery queryWithClassName:@"ActivityEvent"];
+		[query whereKey:@"group" equalTo:[PFObject objectWithoutDataWithClassName:@"Groups" objectId:objectID]];
+		[query whereKey:@"postType" equalTo:[NSNumber numberWithInt:0]];
+		
+		PFObject *updateGroup = [query getFirstObject];
+		
+		if (updateGroup) {
+			NSNumber *num = [updateGroup objectForKey:@"number"];
+			if (userJoining) {
+				//User is joining the group
+				int temp = [num integerValue] + 1;
+				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
+			}
+			[updateGroup save];
+		}
+	}
 }
 
 - (BOOL)findUserAlreadyJoined {
@@ -88,16 +135,82 @@
 	return ret;
 }
 
-- (void)showGroupViewWithAutoJoin:(BOOL)autojoin {
+- (void)attemptJoinGroupWithObjectId:(NSString *)objectID updateInfo:(BOOL)update {
+    
+	@synchronized(self) {
+		CLLocationCoordinate2D point = [selectedPlace coordinate];
+		PFGeoPoint *loc = [PFGeoPoint geoPointWithLatitude:point.latitude longitude:point.longitude];
+		
+		PFUser *user = [PFUser currentUser];
+		PFObject *post = [PFObject objectWithClassName:@"GroupMembers"];
+		[post setObject:user forKey:@"user"];
+		[post setObject:selectedActivity forKey:@"activity"];
+		[post setObject:[selectedPlace name] forKey:@"place"];
+		[post setObject:loc forKey:@"location"];
+		
+		if (objectID) {
+			[post setObject:objectID forKey:@"group"];
+		}
+		
+		[post saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+			
+			NSString *errorMessage = @"An unknown error uccoured while joining group.";
+			if (error) {
+				errorMessage = [error userFriendlyParseErrorDescription:YES];
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Group Error" message:errorMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			}
+			if (succeeded) {
+				
+				if (update) {
+					[self attemptUpdateGroupInfo:YES objectID:objectID];
+				}
+				
+				[self shareNewGroup];
+				
+				//Subscribe to notifications
+				if ([[FConfig instance] doesHavePushNotifications]) {
+					NSString *channel = [NSString stringWithFormat:@"Fitivity%@", objectID];
+					[PFPush subscribeToChannelInBackground:channel];
+				}
+				
+				//Notify other classes & user that they joined the group
+				[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
+				
+				MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+				[self.navigationController.view addSubview:HUD];
+				
+				HUD.delegate = self;
+				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+				HUD.mode = MBProgressHUDModeCustomView;
+				HUD.labelText = @"Joined";
+				
+				[HUD show:YES];
+				[HUD hide:YES afterDelay:1.75];
+			}
+		}];
+	}
+}
+
+
+- (void)showGroupViewWithAutoJoin:(BOOL)autojoin groupId:(NSString *)groupID alreadyExists:(BOOL)exists {
 	
 	/*
 	 *	Create the group with the selected information, pop the old view from the stack (unanimated) and present the new one so there is no odd transition.
 	 *	Once the views have finished presenting, reset the state of the picker view.
 	 */
-	BOOL challenge = [[FConfig instance] groupHasChallenges:selectedActivity];
-	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:challenge autoJoin:autojoin];
 	[self.navigationController popToRootViewControllerAnimated:NO];
-	[self.navigationController pushViewController:groupView animated:YES];
+	
+	if (autojoin) {
+		[self attemptJoinGroupWithObjectId:groupID updateInfo:exists];
+	}
+	
+	BOOL challenge = [[FConfig instance] groupHasChallenges:selectedActivity];
+	GroupPageViewController *groupView = [[GroupPageViewController alloc] initWithNibName:@"GroupPageViewController" bundle:nil place:selectedPlace activity:selectedActivity challenge:challenge autoJoin:NO];
+	ChallengesViewController *challengeView = [[ChallengesViewController alloc] initWithNibName:@"ChallengesViewController" bundle:nil groupType:selectedActivity groupLocation:[selectedPlace name]];
+	
+	[self.navigationController pushViewController:groupView animated:NO];
+	[self.navigationController pushViewController:challengeView animated:YES];
 	
 	[self resetState];
 }
@@ -126,6 +239,8 @@
 	if (![[FConfig instance] connected]) {
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to create a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
+		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self resetState];
 		return;
 	}
 	
@@ -134,6 +249,7 @@
 		if (![[FConfig instance] canCreateGroup]) {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Limit Exceeded" message:@"You have already created the max number (5) of groups today." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 			[alert show];
+			[self.navigationController popToRootViewControllerAnimated:YES];
 			[self resetState];
 			return;
 		}
@@ -156,7 +272,7 @@
 					[[FConfig instance] incrementGroupCreationForDate:[NSDate date]];
 					[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 					
-					[self showGroupViewWithAutoJoin:YES];
+					[self showGroupViewWithAutoJoin:YES groupId:[group objectId] alreadyExists:NO];
 					[self attemptPostGroupToFeedWithID:[group objectId]];
 					[[FConfig instance] updateGroup:[group objectId] withActivityCount:[NSNumber numberWithInt:0]];
 				}
@@ -174,15 +290,22 @@
 		else {
 			//If they are already part of the group, just show the group. If they aren't part of the group show it and autojoin
 			if ([self findUserAlreadyJoined]) {
-				[self showGroupViewWithAutoJoin:NO];
+				[self showGroupViewWithAutoJoin:NO groupId:[groupRef objectId] alreadyExists:YES];
 			}
 			else {
-				[self showGroupViewWithAutoJoin:YES];
+				[self showGroupViewWithAutoJoin:YES groupId:[groupRef objectId] alreadyExists:YES];
 			}
 			
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"changedGroup" object:self];
 		}
 	}
+}
+
+#pragma mark - MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[hud removeFromSuperview];
 }
 
 #pragma mark - ChooseLocationViewController Delegate
@@ -255,6 +378,12 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
 	[self.navigationItem setTitle:@""];
+	
+	if (![[FConfig instance] connected]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Connected" message:@"You must be online in order to create a group" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+    }
 }
 
 - (void)viewDidLoad {

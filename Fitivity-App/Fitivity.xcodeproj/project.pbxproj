@@ -66,6 +66,7 @@
 		6C4022B3161E4521008B750D /* b_sort@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4022AF161E4521008B750D /* b_sort@2x.png */; };
 		6C42C50815BA197600ACB549 /* NDArtworkPopout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C50715BA196900ACB549 /* NDArtworkPopout.m */; };
 		6C42C86615D5D5F20067EFA9 /* GooglePlaceAdder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C42C86515D5D5F20067EFA9 /* GooglePlaceAdder.m */; };
+		6C48CFDE16965D5700DCA0E2 /* bg_chall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C48CFDD16965D5700DCA0E2 /* bg_chall.png */; };
 		6C4C5BB915D1D50D00E63CD3 /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */; };
 		6C4C5BBA15D1D50D00E63CD3 /* AddLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */; };
 		6C4C5BC815D1DD3800E63CD3 /* Pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C4C5BC215D1DD3800E63CD3 /* Pin.png */; };
@@ -180,8 +181,6 @@
 		6C90F8FF164EAB7400B03538 /* b_leave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C90F8FB164EAB7400B03538 /* b_leave@2x.png */; };
 		6C91D3A215B8E9D90074E7D6 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */; };
 		6C91D3A415B8EA080074E7D6 /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C91D3A315B8EA080074E7D6 /* SettingsCell.xib */; };
-		6C966A2B1695023A00B818F2 /* bg_chall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C966A291695023A00B818F2 /* bg_chall.png */; };
-		6C966A2C1695023A00B818F2 /* bg_chall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C966A2A1695023A00B818F2 /* bg_chall@2x.png */; };
 		6CA138CF15B21C8600C1E1EC /* LocationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA138CD15B21C8600C1E1EC /* LocationMapViewController.m */; };
 		6CA138D015B21C8600C1E1EC /* LocationMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */; };
 		6CA138D715B21E8F00C1E1EC /* MapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CA138D615B21E8B00C1E1EC /* MapPin.m */; };
@@ -611,6 +610,7 @@
 		6C42C50715BA196900ACB549 /* NDArtworkPopout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NDArtworkPopout.m; sourceTree = "<group>"; };
 		6C42C86415D5D5F20067EFA9 /* GooglePlaceAdder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlaceAdder.h; sourceTree = "<group>"; };
 		6C42C86515D5D5F20067EFA9 /* GooglePlaceAdder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlaceAdder.m; sourceTree = "<group>"; };
+		6C48CFDD16965D5700DCA0E2 /* bg_chall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_chall.png; sourceTree = "<group>"; };
 		6C4C5BB615D1D50D00E63CD3 /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
 		6C4C5BB715D1D50D00E63CD3 /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
 		6C4C5BB815D1D50D00E63CD3 /* AddLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddLocationViewController.xib; path = Fitivity/AddLocationViewController.xib; sourceTree = "<group>"; };
@@ -750,8 +750,6 @@
 		6C91D3A015B8E9D90074E7D6 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCell.h; sourceTree = "<group>"; };
 		6C91D3A115B8E9D90074E7D6 /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCell.m; sourceTree = "<group>"; };
 		6C91D3A315B8EA080074E7D6 /* SettingsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
-		6C966A291695023A00B818F2 /* bg_chall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_chall.png; sourceTree = "<group>"; };
-		6C966A2A1695023A00B818F2 /* bg_chall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg_chall@2x.png"; sourceTree = "<group>"; };
 		6CA138CC15B21C8600C1E1EC /* LocationMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationMapViewController.h; sourceTree = "<group>"; };
 		6CA138CD15B21C8600C1E1EC /* LocationMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationMapViewController.m; sourceTree = "<group>"; };
 		6CA138CE15B21C8600C1E1EC /* LocationMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LocationMapViewController.xib; path = Fitivity/LocationMapViewController.xib; sourceTree = "<group>"; };
@@ -1763,8 +1761,7 @@
 		6CB1A75215ACFF7000C0FF75 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				6C966A291695023A00B818F2 /* bg_chall.png */,
-				6C966A2A1695023A00B818F2 /* bg_chall@2x.png */,
+				6C48CFDD16965D5700DCA0E2 /* bg_chall.png */,
 				6CCEE46815F9862C00DAF41F /* bg_chall_img.png */,
 				6CCEE46915F9862C00DAF41F /* bg_chall_img@2x.png */,
 				F19C901915EA56DE00298980 /* bg_main_group.png */,
@@ -2660,8 +2657,7 @@
 				6CABDE8D168497DF00C80DCB /* profile.png in Resources */,
 				6CABDE8E168497DF00C80DCB /* start_activity.png in Resources */,
 				6CABDE9B16850EAB00C80DCB /* ChooseChallengeAcitivityViewController.xib in Resources */,
-				6C966A2B1695023A00B818F2 /* bg_chall.png in Resources */,
-				6C966A2C1695023A00B818F2 /* bg_chall@2x.png in Resources */,
+				6C48CFDE16965D5700DCA0E2 /* bg_chall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,11 +35,11 @@
 	self.openingView = [[OpeningLogoViewController alloc] initWithNibName:@"OpeningLogoViewController" bundle:nil];
 	DiscoverFeedViewController *discoverView = [[DiscoverFeedViewController alloc] initWithStyle:UITableViewStylePlain];
 	
-	if (![self userExistsSanityCheck]) {
-		[PFUser logOut];
-		[discoverView clear];
-		[discoverView setCancelLoad:YES];
-	}
+//	if (![self userExistsSanityCheck]) {
+//		[PFUser logOut];
+//		[discoverView clear];
+//		[discoverView setCancelLoad:YES];
+//	}
 	
 	ActivityHomeViewController *activity = [[ActivityHomeViewController alloc] initWithNibName:@"ActivityHomeViewController" bundle:nil];
 	ChooseChallengeAcitivityViewController *challengeActivity = [[ChooseChallengeAcitivityViewController alloc] initWithNibName:@"ChooseChallengeAcitivityViewController" bundle:nil];
