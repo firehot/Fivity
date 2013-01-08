@@ -183,10 +183,10 @@
 				HUD.delegate = self;
 				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 				HUD.mode = MBProgressHUDModeCustomView;
-				HUD.labelText = @"Joined";
+				HUD.labelText = @"Stored in Profile";
 				
 				[HUD show:YES];
-				[HUD hide:YES afterDelay:1.75];
+				[HUD hide:YES afterDelay:3.00];
 			}
 		}];
 	}

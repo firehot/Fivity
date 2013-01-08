@@ -279,22 +279,13 @@
 	if (![sortCriteria isEqualToString:criteria]) {
 		sortCriteria = criteria;
 		
-		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 		[self.navigationController.view addSubview:HUD];
 		
 		HUD.delegate = self;
 		HUD.mode = MBProgressHUDModeIndeterminate;
 		HUD.labelText = @"Loading...";
 		[HUD show:YES];
-		
-		NSTimeInterval delay = 5.5;
-		if ([[FConfig instance] connected]) {
-			if ([[FConfig instance] currentNetworkStatus] == ReachableViaWiFi) {
-				delay = 3.0;
-			}
-		}
-		
-		[HUD hide:YES afterDelay:delay];
 		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
             [self loadObjects];
@@ -384,15 +375,6 @@
 	
 	self.cancelLoad = NO;
 	if ([self.objects count] == 0) {
-		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-		[self.navigationController.view addSubview:HUD];
-		
-		HUD.delegate = self;
-		HUD.mode = MBProgressHUDModeIndeterminate;
-		HUD.labelText = @"Loading...";
-		[HUD show:YES];
-		[HUD hide:YES afterDelay:3.0];
-		
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
             [self loadObjects];
         });
@@ -412,18 +394,35 @@
 
 #pragma mark - PFQueryTableViewController 
 
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	
+//	if ([[self objects] count] == 0 && !reloading) {
+//		reloading = YES;
+//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
+//            [self loadObjects];
+//        });
+//	}
+	
+	return [super tableView:tableView numberOfRowsInSection:section];
+}
+
+- (void)loadObjects {
+	[super loadObjects];
+	
+	if (!HUD || [HUD isHidden]) {
+		HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeIndeterminate;
+		HUD.labelText = @"Loading...";
+		[HUD show:YES];
+	}
+}
+
 - (void)objectsDidLoad:(NSError *)error {
 	[super objectsDidLoad:error];
 	
 	if (!error) {
-		if (loadCount++ > 1  && self.loadedInitialData && !shownNoItems && [[self objects] count] == 0) {
-			shownNoItems = YES;
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Activity" message:@"There is no activity right now, try refreshing in a little bit" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			[alert show];
-		} else if ([[self objects] count] > 0 && self.loadedInitialData) {
-			shownNoItems = YES; // Prevents showing when method gets called multiple times
-		}
-		
 		// Use the user's current calendar and time zone
 		NSCalendar *calendar = [NSCalendar currentCalendar];
 		NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
@@ -456,11 +455,24 @@
 			c = [o objectForKey:@"creator"];
 			[c fetch];
 		}
-
+		
+		if (![self loadedInitialData]) {
+			[self setLoadedInitialData:YES];
+		}
 	} else {
 		NSString *message = [error userFriendlyParseErrorDescription:YES];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];
+	}
+	
+	// Hide the loading HUD if it is currently showing
+	if (HUD && ![HUD isHidden])  {
+		[HUD hide:YES];
+	}
+	
+	// Set reloading status
+	if (reloading) {
+		reloading = NO;
 	}
 }
 
@@ -574,7 +586,7 @@
 		return;
 	}
 	
-	MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+	HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
 	[self.navigationController.view addSubview:HUD];
 	
 	HUD.delegate = self;
@@ -667,21 +679,11 @@
 	userGeoPoint = [PFGeoPoint geoPointWithLatitude:newLocation.coordinate.latitude longitude:newLocation.coordinate.longitude];
 	
 	if ([self.objects count] == 0) {
-		MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-		[self.navigationController.view addSubview:HUD];
-		
-		HUD.delegate = self;
-		HUD.mode = MBProgressHUDModeIndeterminate;
-		HUD.labelText = @"Loading...";
-		[HUD show:YES];
-		[HUD hide:YES afterDelay:3.0];
-		
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
             [self loadObjects];
         });
 	}
-	
-	[self setLoadedInitialData:YES];
+
 	[self.tableView reloadData];
 }
 
@@ -749,10 +751,9 @@
 		
 		sortCriteria = [[FConfig instance] getSortedFeedKey];
 		shownAlert = NO;
-		shownNoItems = NO;
 		shownLogin = NO;
-		loadCount = 0;
-		[self performSelector:@selector(handleReminders) withObject:nil afterDelay:3.0];
+		reloading = NO;
+		[self performSelector:@selector(handleReminders) withObject:nil afterDelay:4.0];
     }
     return self;
 }
@@ -761,7 +762,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		shownAlert = NO;
-		shownNoItems = NO;
     }
     return self;
 }
@@ -774,6 +774,16 @@
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.pngg"]];
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
     self.tableView.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
+//	
+//	if (!HUD || [HUD isHidden]) {
+//		HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+//		[self.navigationController.view addSubview:HUD];
+//		
+//		HUD.delegate = self;
+//		HUD.mode = MBProgressHUDModeIndeterminate;
+//		HUD.labelText = @"Loading...";
+//		[HUD show:YES];
+//	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {

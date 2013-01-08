@@ -55,7 +55,7 @@
 	autoJoin = NO;
 	if (alreadyJoined) {
 		
-		if ([[FConfig instance] canCreatePA]) {
+		if (![[FConfig instance] canCreatePA]) {
 			//Show the create proposed activity view controller
 			CreateProposeActivityViewController *prop = [[CreateProposeActivityViewController alloc] initWithNibName:@"CreateProposeActivityViewController" bundle:nil];
 			[prop setDelegate:self];
@@ -123,8 +123,8 @@
 - (void)updateJoiningGUI {
 	//When the user is part of the group display the unjoin button otherwise display the join button
 	if (alreadyJoined) {
-		UIImage *memberImage = [UIImage imageNamed:@"b_leave.png"];
-		UIImage *memberImageDown = [UIImage imageNamed:@"b_leave_down.png"];
+		UIImage *memberImage = [UIImage imageNamed:@"leave.png"];
+		UIImage *memberImageDown = [UIImage imageNamed:@"leave_down.png"];
 		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 		[button setImage:memberImage forState:UIControlStateNormal];
 		[button setImage:memberImageDown forState:UIControlStateHighlighted];
@@ -296,14 +296,14 @@
 				HUD.delegate = self;
 				HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 				HUD.mode = MBProgressHUDModeCustomView;
-				HUD.labelText = @"Joined";
+				HUD.labelText = @"Stored in Profile";
 				
 				if (joinedFromChallenge) {
 					HUD.tag = 44;
 				}
 				
 				[HUD show:YES];
-				[HUD hide:YES afterDelay:1.75];
+				[HUD hide:YES afterDelay:3.00];
 			}
 		}];
 	}
@@ -445,7 +445,7 @@
 	if (group) {
 		[[FConfig instance] updateGroup:[group objectId] withActivityCount:[group objectForKey:@"activityCount"]];
 	}
-	[self performSelector:@selector(showNewPA:) withObject:npa afterDelay:0.25];
+	[self performSelector:@selector(showNewPA:) withObject:npa afterDelay:0.45];
 }
 
 #pragma mark - MBProgressHUDDelegate methods
