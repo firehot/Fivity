@@ -189,7 +189,7 @@
 				//User has just created and autojoined the group
 				return;
 			}
-			[updateGroup save];
+			[updateGroup saveInBackground];
 		}
 	}
 }

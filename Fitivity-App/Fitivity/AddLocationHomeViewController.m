@@ -49,7 +49,7 @@
 	self.submitButton.enabled = NO;
 	
 	//Configure the object
-	__block GooglePlaceAdder *adder = [[GooglePlaceAdder alloc]init];
+	__block GooglePlaceAdder *adder = [[GooglePlaceAdder alloc] init];
 	[adder setDelegate:self];
 	
 	//Create the data for googles API call
@@ -132,13 +132,20 @@
 #pragma mark - AddLocationViewController Delegate
 
 - (void)userDidSelectLocation:(NSDictionary *)addressInfo {
+	
+	[self.navigationController popViewControllerAnimated:YES];
+	
+	if (!addressInfo || ![addressInfo objectForKey:@"address"] || ![addressInfo objectForKey:@"city"] || ![addressInfo objectForKey:@"state"] || ![addressInfo objectForKey:@"zip_code"]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Fields Missing" message:@"Not all fields could be filled in from your pin drop, please fill them in manually." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
+	
 	//Update GUI
 	[addressField setText:[addressInfo objectForKey:@"address"]];
 	[cityField setText:[addressInfo objectForKey:@"city"]];
 	[stateField setText:[addressInfo objectForKey:@"state"]];
 	[zipField setText:[addressInfo objectForKey:@"zip_code"]];
-	
-	[self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITextField Delegate 
@@ -203,6 +210,12 @@
 - (void) didFinishSendingNewPlace:(NSDictionary *)ref {
 	
 	[self fadeTypeView:NO];
+	
+	if (!ref) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong while creating this place..." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];
+		return;
+	}
 	
 	//The status key if successful should be 'OK'
 	NSString *status = [ref objectForKey:@"status"];

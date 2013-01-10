@@ -167,7 +167,8 @@ static SocialSharer *instance;
 	MFMessageComposeViewController *smsView = [[MFMessageComposeViewController alloc] init];
     smsView.messageComposeDelegate = self;
 	[smsView setBody:text];
-	[smsView.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
+//	[smsView.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
+	[smsView setTitle:@""];
 	
 	if ([delegate respondsToSelector:@selector(presentModalViewController:animated:)]) {
 		[((UIViewController *)delegate) presentModalViewController:smsView animated:YES];
@@ -224,6 +225,11 @@ static SocialSharer *instance;
 
 - (void)facebookViewControllerDoneWasPressed:(id)sender {
 
+	HUD.delegate = self;
+	HUD.mode = MBProgressHUDModeDeterminate;
+	HUD.labelText = @"Posting...";
+	[HUD show:YES];
+	
     NSMutableArray *ids = [[NSMutableArray alloc] init];
 	
     // we pick up the users from the selection, and create a string that we use to update the text view
@@ -278,7 +284,6 @@ static SocialSharer *instance;
 	HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 	HUD.labelText = @"Done";
 	
-	[HUD show:YES];
 	[HUD hide:YES afterDelay:kHUDShowDuration];
 	
 	if ([delegate respondsToSelector:@selector(didFinishPostingType:)]) {

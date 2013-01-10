@@ -120,9 +120,7 @@
 	
 	if (ae) {
 		[ae setObject:[NSNumber numberWithInt:2] forKey:@"postType"];
-		if (![ae save]) {
-			[ae saveEventually];
-		}
+		[ae saveInBackground];
 	}
 }
 
@@ -365,6 +363,11 @@
 	[hud removeFromSuperview];
 }
 
+#pragma mark - SocialSharer Delegate
+
+- (void)didFinishPostingType:(ShareType)type {
+}
+
 #pragma mark - LoginViewController Delegate
 
 - (void)userLoggedIn {
@@ -392,17 +395,25 @@
 	[self.navigationController pushViewController:profile animated:YES];
 }
 
-#pragma mark - PFQueryTableViewController 
+#pragma mark - PFQueryTableViewController
 
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {	
-//	if ([[self objects] count] == 0 && !reloading) {
-//		reloading = YES;
-//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
-//            [self loadObjects];
-//        });
-//	}
-	
-	return [super tableView:tableView numberOfRowsInSection:section];
+// Check if there are really 0 objects
+- (void)checkLoadObjecstSanityCheck {
+	if ([[self objects] count] == 0) {
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,(unsigned long)NULL), ^(void) {
+            
+			if ([HUD isHidden]) {
+				[self.navigationController.view addSubview:HUD];
+				
+				HUD.delegate = self;
+				HUD.mode = MBProgressHUDModeIndeterminate;
+				HUD.labelText = @"Loading...";
+				[HUD show:YES];
+			}
+			
+			[self loadObjects];
+        });
+	}
 }
 
 - (void)loadObjects {
@@ -455,10 +466,6 @@
 			c = [o objectForKey:@"creator"];
 			[c fetch];
 		}
-		
-		if (![self loadedInitialData]) {
-			[self setLoadedInitialData:YES];
-		}
 	} else {
 		NSString *message = [error userFriendlyParseErrorDescription:YES];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading Error" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -474,6 +481,13 @@
 	if (reloading) {
 		reloading = NO;
 	}
+	
+	int64_t delayInSeconds = 4.0;
+	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+		[self checkLoadObjecstSanityCheck];
+	});
+	
 }
 
 // Override to customize what kind of query to perform on the class. The default is to query for
@@ -684,6 +698,10 @@
         });
 	}
 
+	if (![self loadedInitialData]) {
+		[self setLoadedInitialData:YES];
+	}
+	
 	[self.tableView reloadData];
 }
 
@@ -729,6 +747,8 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 10;
+		
+		[self setLoadingViewEnabled:YES];
         
 		UIImage *shareApp = [UIImage imageNamed:@"b_share.png"];
         UIImage *shareAppDown = [UIImage imageNamed:@"b_share_down.png"];
@@ -770,20 +790,20 @@
     [super viewDidLoad];
 	
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"fitivity_logo.png"] forBarMetrics:UIBarMetricsDefault];
-    
+	
 	self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.pngg"]];
 	self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_buttons_space.png"]];
     self.tableView.separatorColor = [UIColor colorWithRed:178.0/255.0f green:216.0/255.0f blue:254.0/255.0f alpha:1];
-//	
-//	if (!HUD || [HUD isHidden]) {
-//		HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-//		[self.navigationController.view addSubview:HUD];
-//		
-//		HUD.delegate = self;
-//		HUD.mode = MBProgressHUDModeIndeterminate;
-//		HUD.labelText = @"Loading...";
-//		[HUD show:YES];
-//	}
+
+	if (!HUD || [HUD isHidden]) {
+		HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+		[self.navigationController.view addSubview:HUD];
+		
+		HUD.delegate = self;
+		HUD.mode = MBProgressHUDModeIndeterminate;
+		HUD.labelText = @"Loading...";
+		[HUD show:YES];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {

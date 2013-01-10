@@ -133,7 +133,7 @@
 	}
 	
 	//Perform after slight delay so that the reference to the place is valid
-	[self performSelector:@selector(determineNavigationPop) withObject:nil afterDelay:0.3];
+	[self performSelector:@selector(determineNavigationPop) withObject:nil afterDelay:0.5];
 }
 
 #pragma mark - MBProgressHUDDelegate methods

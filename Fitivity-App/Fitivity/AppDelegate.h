@@ -15,7 +15,7 @@
 
 @class OpeningLogoViewController, FTabBarViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, UITabBarControllerDelegate, OpeningLogoViewControllerDelegate, SocialSharerDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, UITabBarControllerDelegate, OpeningLogoViewControllerDelegate> {
 	NSDictionary *tempPushInfo;
 }
 

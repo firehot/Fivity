@@ -46,9 +46,7 @@
 		[user setObject:workplaceField.text forKey:@"workPlace"];
 	}
 	
-	if (![user save]) {
-		[user saveEventually];
-	}
+	[user saveInBackground];
 	
 	if ([delegate respondsToSelector:@selector(userDidUpdateProfile)]) {
 		[delegate userDidUpdateProfile];

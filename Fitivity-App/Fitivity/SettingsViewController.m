@@ -458,14 +458,14 @@ bool shareActivity;
 	if ([title isEqualToString:@"Done"] && alertView.tag == 1) {
 		PFUser *user = [PFUser currentUser];
 		[user setUsername:[[alertView textFieldAtIndex:0] text]];
-		[user save];
+		[user saveInBackground];
 		[self.accountInfoTable reloadData];
 	}
 	//Changing Email
 	else if ([title isEqualToString:@"Done"] && alertView.tag == 2) {
 		PFUser *user = [PFUser currentUser];
 		[user setEmail:[[alertView textFieldAtIndex:0] text]];
-		[user save];
+		[user saveInBackground];
 		[self.accountInfoTable reloadData];
 	}
 }
@@ -476,11 +476,11 @@ bool shareActivity;
 	//Get the picture, update the GUI and send to server
 	UIImage *choosenPic = [info objectForKey:@"UIImagePickerControllerEditedImage"];
 	PFFile *sendPic = [PFFile fileWithData:UIImagePNGRepresentation(choosenPic)];
-	[sendPic save];
+	[sendPic saveInBackground];
 	
 	PFUser *user = [PFUser currentUser];
 	[user setObject:sendPic forKey:@"image"];
-	[user save];
+	[user saveInBackground];
 	
 	//Notify the user profile view that the picture changed
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"changedInformation" object:self];

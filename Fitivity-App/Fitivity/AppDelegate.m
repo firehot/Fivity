@@ -75,7 +75,7 @@
 	self.window.rootViewController = self.tabBarController;
 	
 	[self.openingView setDelegate:self];
-	[SocialSharer sharerWithDelegate:self];
+	[SocialSharer sharerWithDelegate:discoverView];
 	
 	self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -163,11 +163,6 @@
 
 -(void)viewHasFinishedAnnimating:(OpeningLogoViewController *)view {
 	[view dismissModalViewControllerAnimated:YES];
-}
-
-#pragma mark - SocialSharer Delegate
-
-- (void)didFinishPostingType:(ShareType)type {
 }
 
 #pragma mark - Facebook login handling 

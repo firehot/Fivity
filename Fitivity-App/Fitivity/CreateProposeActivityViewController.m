@@ -50,9 +50,7 @@
 			[updateGroup setObject:[NSNumber numberWithInt:[num integerValue] + 1] forKey:@"activityCount"];
 			
 			//Save the group
-			if (![updateGroup save]) {
-				[updateGroup saveEventually];
-			}
+			[updateGroup saveInBackground];
 		}
 	}
 }

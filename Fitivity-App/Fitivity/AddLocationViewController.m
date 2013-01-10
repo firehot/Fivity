@@ -54,7 +54,8 @@
 				currentAddress = [NSString stringWithFormat:@"%@", [values objectAtIndex:0]];
 			}
 			
-			annotation.subtitle = currentAddress;
+			
+			annotation.subtitle = currentAddress ? currentAddress : @"";
 			
 			[self.mapView selectAnnotation:annotation animated:NO];
 		}];

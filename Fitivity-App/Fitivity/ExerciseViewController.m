@@ -78,6 +78,7 @@
         exercise = event;
 		[exercise fetchIfNeeded];
 		
+		firstView = NO;
 		self.navigationItem.title = [exercise objectForKey:@"description"];
     }
     return self;
@@ -128,6 +129,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg_location_header.png"] forBarMetrics:UIBarMetricsDefault];
+	
+	if (!firstView) {
+		firstView = YES;
+	} else if (isVideo) {
+		// Coming back from a video play and pressing done button
+		[self.navigationController popViewControllerAnimated:NO];
+	}
 }
 
 - (void)viewDidUnload {

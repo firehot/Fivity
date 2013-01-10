@@ -136,10 +136,10 @@
 				int temp = [num integerValue] - 1;
 				
 				if (temp == 0) {
-					[updateGroup delete];
+					[updateGroup deleteInBackground];
 				} else {
 					[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
-					[updateGroup save];
+					[updateGroup saveInBackground];
 				}
 			}
 		}
@@ -181,7 +181,7 @@
 	
 	//Upload to parse for future use
 	PFFile *imageFile = [PFFile fileWithData:UIImagePNGRepresentation(profilePicImg)];
-	[imageFile save];
+	[imageFile saveInBackground];
 	
 	PFUser *user = [PFUser currentUser];
 	[user setObject:imageFile forKey:@"image"];
@@ -203,7 +203,7 @@
 		[user setObject:userHometownLabel.text forKey:@"hometown"];
 	}
 
-	[user save];
+	[user saveInBackground];
 
 }
 

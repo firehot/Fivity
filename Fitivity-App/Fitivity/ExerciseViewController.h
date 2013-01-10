@@ -14,7 +14,7 @@
 @interface ExerciseViewController : UIViewController {
 	PFObject *exercise;
 	
-	BOOL isVideo;
+	BOOL isVideo, firstView;
 	NSURL *videoURL;
 }
 

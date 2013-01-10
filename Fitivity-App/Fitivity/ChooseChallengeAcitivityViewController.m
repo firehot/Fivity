@@ -113,7 +113,7 @@
 				int temp = [num integerValue] + 1;
 				[updateGroup setObject:[NSNumber numberWithInt:temp] forKey:@"number"];
 			}
-			[updateGroup save];
+			[updateGroup saveInBackground];
 		}
 	}
 }
@@ -229,9 +229,7 @@
 		[event setObject:[NSNumber numberWithInt:0] forKey:@"postType"];
 		
 		//If it doesn't save the first time, don't worry about it and try again in the future.
-		if (![event save]) {
-			[event saveEventually];
-		}
+		[event saveInBackground];
 	}
 }
 
